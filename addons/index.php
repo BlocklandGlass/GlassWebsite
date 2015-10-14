@@ -36,12 +36,12 @@ require_once('../../html/class/BoardManager.php');
 			foreach($boards as $board) {
 				$subcat[$board->getSubCategory()][] = $board;
 			}
-			foreach($subcat as $subName=>$sub) {
+      foreach($subcat as $subName=>$sub) {
 				echo "<tr>
-					<th width=\"670px\" colspan=\"2\">" . $subName . "</th>
+					<th colspan=\"3\">" . $subName . "</th>
 				</tr>";
 				foreach($sub as $board) {
-					echo "<tr><td><a href=\"board.php?id=" . $board->getId() . "\"><image src=\"icon/icons16/" . $board->getImage() . ".png\" />   " . $board->getName() . "</a></td><td style=\"float: right; text-align:center;\">" . $board->getCount() . "</td></tr>";
+					echo "<tr><td><image src=\"http://blocklandglass.com/icon/icons32/" . $board->getImage() . ".png\" /></td><td><a href=\"http://blocklandglass.com/board.php?id=" . $board->getId() . "\">   " . $board->getName() . "</a></td><td>" . $board->getCount() . "</td></tr>";
 				}
 			}
       ?>
