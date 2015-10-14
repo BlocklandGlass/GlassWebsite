@@ -95,18 +95,18 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-p > a {
+.maincontainer a {
   font-weight: bold;
   text-decoration: none;
   color: inherit;
 }
 
-p > a:hover {
+.maincontainer a:hover {
   color: #ccc;
   text-decoration: underline;
 }
 
-p > a:visited {
+.maincontainer a:visited {
   font-weight: bold;
 }
 
@@ -131,6 +131,7 @@ p > a:visited {
   max-width: 960px;
   margin: 0 auto;
   font-size: 14pt;
+  padding: 15px;
 }
 
 .maincontainer > p {
