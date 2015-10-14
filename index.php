@@ -4,7 +4,8 @@
 	<h1>Blockland Glass</h1>
 	<h2>A service for the community, by the community</h2>
 	<a href="dl.php" class="btn blue"><b>Download</b> v1.1.0-alpha.1</a><br />
-	<a href="http://blocklandglass.com" class="btn green">Classic Site</a><br /><br />
+	<a href="http://blocklandglass.com" class="btn green">Classic Site</a><br />
+	<a href="addons" class="btn yellow">Add-Ons</a><br /><br />
 </div>
 <div class="maincontainer">
 	<p>
