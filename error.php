@@ -53,8 +53,33 @@
     </style>
 </head>
 <body>
-    <h1>Page Not Found</h1>
-    <p>Sorry, but the page you were trying to view does not exist.</p>
+
+<?php
+//based on: http://stackoverflow.com/a/16553247
+
+// If it's a 403, just bump it up to a 404
+$status = $_SERVER['REDIRECT_STATUS'];
+if($status == 403)
+{
+	$status = 404;
+}
+
+switch($status)
+{
+	case 400:
+		header("HTTP/1.0 400 Bad Request", true, 400);
+		echo "<h1>An Error Occurred</h1>\n<p>Code: $status Bad Request</p>";
+		break;
+	case 500:
+		header("HTTP/1.0 500 Server Error", true, 500);
+		echo "<h1>An Error Occurred</h1>\n<p>Code: $status Server Error</p>";
+		break;
+	default:
+		header("HTTP/1.0 404 Not Found", true, 404);
+		echo "<h1>Page Not Found</h1>\n<p>Sorry, but the page you were trying to view does not exist.</p>";
+}
+?>
+
 </body>
 </html>
 <!-- IE needs 512+ bytes: http://blogs.msdn.com/b/ieinternals/archive/2010/08/19/http-error-pages-in-internet-explorer.aspx -->
