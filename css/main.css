@@ -110,7 +110,31 @@ textarea {
   font-weight: bold;
 }
 
-.headcontainer {
+.navcontainer {
+  height: 65px;
+
+  margin: none;
+
+  background-color: #2ecc71;
+  width: 100%;
+
+  text-align: center;
+  color: #fff;
+
+  -webkit-box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.5);
+  box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.5);
+}
+
+.navcontent {
+  max-width: 960px;
+  margin: 0 auto;
+  font-size: 14pt;
+  padding: 15px;
+  text-align: left;
+}
+
+.bigheadcontainer {
   height: 500px;
 
   margin: none;
@@ -122,8 +146,8 @@ textarea {
   text-align: center;
   color: #fff;
 
-  -webkit-box-shadow: inset 0px -7px 5px 0px rgba(0,0,0,0.5);
-  -moz-box-shadow: inset 0px -7px 5px 0px rgba(0,0,0,0.5);
+  -webkit-box-shadow: inset 0px -4px 7px 0px rgba(0,0,0,0.5);
+  -moz-box-shadow: inset 0px -4px 7px 0px rgba(0,0,0,0.5);
   box-shadow: inset 0px -4px 7px 0px rgba(0,0,0,0.5);
 }
 
@@ -138,13 +162,30 @@ textarea {
   text-align: left;
 }
 
-.navigation {
-  display: inline;
-  float: right;
+.addontable {
+  width: 100%;
 }
 
-.navigation > li {
-  display: inline-block;
+.addontable td:first-child {
+  width: 75px;
+}
+
+.addontable td:last-child {
+  width: 200px;
+  text-align: center;
+}
+
+.addontable td {
+  padding: 15px;
+}
+
+.addontable thead {
+  font-weight: bold;
+  text-align: center;
+}
+
+.addontable tbody {
+  font-size: 16pt;
 }
 
 .btn {

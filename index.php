@@ -1,6 +1,6 @@
 <?php require_once(realpath(dirname(__FILE__) . "/private/header.php")); ?>
 
-<div class="headcontainer">
+<div class="bigheadcontainer">
 	<h1>Blockland Glass</h1>
 	<h2>A service for the community, by the community</h2>
 	<a href="dl.php" class="btn blue"><b>Download</b> v1.1.0-alpha.1</a><br />
@@ -27,4 +27,5 @@
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 	</p>
 </div>
+
 <?php require_once(realpath(dirname(__FILE__) . "/private/footer.php")); ?>
