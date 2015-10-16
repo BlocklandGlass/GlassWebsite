@@ -32,14 +32,14 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
       $page = 1;
     }
 
-    $pages = ceil($boardObject->getCount()/2);
+    $pages = ceil($boardObject->getCount()/10);
     if($pages >= 7) {
       if($page < 4) {
         for($i = 0; $i < 4; $i++) {
           if($i+1 == $page) {
-            echo "[<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>]";
+            echo "[<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>] ";
           } else {
-            echo "<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>";
+            echo "<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a> ";
           }
         }
         echo " ... ";
@@ -47,7 +47,20 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
         <a href="?id=<?php echo $boardObject->getId() . "&page=" . ($pages-1); ?>"><?php echo $pages-1; ?></a>
         <a href="?id=<?php echo $boardObject->getId() . "&page=" . $pages; ?>"><?php echo $pages; ?></a>
         <?php
-      }
+      } else if($pages-3 < $page) {
+        ?>
+        <a href="?id=<?php echo $boardObject->getId() . "&page=1"; ?>">1</a>
+        <a href="?id=<?php echo $boardObject->getId() . "&page=2"; ?>">2</a>
+        <?php
+        echo " ... ";
+        for($i = $pages-4; $i < $pages; $i++) {
+          if($i+1 == $page) {
+            echo "[<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>] ";
+          } else {
+            echo "<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a> ";
+          }
+        }
+      } else {
       ?>
       <a href="?id=<?php echo $boardObject->getId(); ?>&page=1">1</a>
       <a href="?id=<?php echo $boardObject->getId(); ?>&page=2">2</a>
@@ -59,12 +72,13 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
       <a href="?id=<?php echo $boardObject->getId() . "&page=" . ($pages-1); ?>"><?php echo $pages-1; ?></a>
       <a href="?id=<?php echo $boardObject->getId() . "&page=" . $pages; ?>"><?php echo $pages; ?></a>
       <?php
+      }
     } else {
       for($i = 0; $i < $pages; $i++) {
         if($i+1 == $page) {
-          echo "[<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>]";
+          echo "[<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>] ";
         } else {
-          echo "<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>";
+          echo "<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a> ";
         }
       }
     }
@@ -79,7 +93,7 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
         <td>Downloads</td>
       </tr>
       <?php
-      $addons = $boardObject->getAddons(($page-1)*2, 2);
+      $addons = $boardObject->getAddons(($page-1)*10, 10);
 			foreach($addons as $addon) {
         ?>
         <tr>
