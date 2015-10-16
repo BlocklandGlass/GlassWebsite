@@ -25,9 +25,9 @@ class BoardObject {
 		return $this->subCategory;
 	}
 
-	function getAddons($lower, $upper) {
+	function getAddons($offset, $limit) {
 		if(isset($lower) && isset($upper)) {
-			return AddonManager::getFromBoardId($this->id, false, $lower, $upper);
+			return AddonManager::getFromBoardId($this->id, false, $limit, $offset);
 		} else {
 			return AddonManager::getFromBoardId($this->id);
 		}
