@@ -151,7 +151,7 @@ textarea {
 }
 
 .bigheadcontainer {
-  height: 500px;
+  min-height: 500px;
 
   margin: none;
   padding: 15px;
