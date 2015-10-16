@@ -34,12 +34,19 @@ class AddonManager {
 		return $ret;
 	}
 
-	public static function getFromBoardId($id, $bargain = false) {
+	public static function getFromBoardId($id, $bargain = false, $limit = 0, $offset = 0) {
 		$ret = array();
 
 		$db = new DatabaseManager();
-		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE board='" . $db->sanitize($id) . "' AND bargain='" . $bargain . "' AND deleted=0 ORDER BY `name` asc");
-		while($obj = $res->fetch_object()) {
+    if($limit != 0) {
+      $lowerBound = $offset;
+      $upperBound = $offset+$limit;
+      $res = $db->query("SELECT `id` FROM `addon_addons` WHERE board='" . $db->sanitize($id) . "' AND bargain='" . $bargain . "' AND deleted=0 ORDER BY `name` asc LIMIT $lowerBound, $upperBound");
+    } else {
+		  $res = $db->query("SELECT `id` FROM `addon_addons` WHERE board='" . $db->sanitize($id) . "' AND bargain='" . $bargain . "' AND deleted=0 ORDER BY `name` asc");
+    }
+
+    while($obj = $res->fetch_object()) {
 			$ret[$obj->id] = AddonManager::getFromId($obj->id);
 		}
 		return $ret;

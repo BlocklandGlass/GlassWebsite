@@ -25,8 +25,12 @@ class BoardObject {
 		return $this->subCategory;
 	}
 
-	function getAddons() {
-		return AddonManager::getFromBoardId($this->id);
+	function getAddons($lower, $upper) {
+		if(isset($lower) && isset($upper)) {
+			return AddonManager::getFromBoardId($this->id, false, $lower, $upper);
+		} else {
+			return AddonManager::getFromBoardId($this->id);
+		}
 	}
 
 	function getId() {

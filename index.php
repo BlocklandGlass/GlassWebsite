@@ -1,4 +1,7 @@
-<?php require_once(realpath(dirname(__FILE__) . "/private/header.php")); ?>
+<?php
+require_once(realpath(dirname(__FILE__) . "/private/header.php"));
+require_once(realpath(dirname(__FILE__) . "/private/navigationbar.php"));
+?>
 
 <div class="bigheadcontainer">
 	<h1>Blockland Glass</h1>

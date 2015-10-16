@@ -43,7 +43,12 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
         <td>Downloads</td>
       </tr>
       <?php
-      $addons = $boardObject->getAddons();
+      if(isset($_GET['page'])) {
+        $page = $_GET['page'];
+      } else {
+        $page = 0;
+      }
+      $addons = $boardObject->getAddons($page*10, 10);
 			foreach($addons as $addon) {
         ?>
         <tr>

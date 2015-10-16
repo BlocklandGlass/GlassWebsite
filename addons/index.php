@@ -1,9 +1,9 @@
 <?php
-$_PAGETITLE = "Glass | Add-Ons";
-require_once(realpath(dirname(__DIR__) . "/private/header.php"));
-
 require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
 
+$_PAGETITLE = "Glass | Add-Ons";
+
+require_once(realpath(dirname(__DIR__) . "/private/header.php"));
 require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>
 <div class="maincontainer">
