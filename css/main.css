@@ -200,6 +200,19 @@ textarea {
   background-color: #15B358;
 }
 
+.dlbtn {
+  text-align: center;
+  line-height: 10pt;
+  font-weight: normal !important;
+  text-decoration: none !important;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.dlbtn:hover {
+  color: #000 !important;
+}
+
 .btn {
   border-radius: 5px;
   padding: 15px 25px;
