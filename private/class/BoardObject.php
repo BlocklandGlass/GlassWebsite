@@ -26,7 +26,7 @@ class BoardObject {
 	}
 
 	function getAddons($offset, $limit) {
-		if(isset($lower) && isset($upper)) {
+		if(isset($limit)) {
 			return AddonManager::getFromBoardId($this->id, false, $limit, $offset);
 		} else {
 			return AddonManager::getFromBoardId($this->id);
