@@ -16,6 +16,7 @@ if(isset($_GET['id'])) {
   die();
 }
 
+
 $_PAGETITLE = "Glass | " . $boardObject->getName();
 require_once(realpath(dirname(__DIR__) . "/private/header.php"));
 require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
@@ -24,15 +25,32 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
   <h1 style="text-align:center"><?php echo $boardObject->getName(); ?></h1>
   <a href="/addons">Add-Ons</a> >> <a href="#"><?php echo $boardObject->getName() ?></a>
   <div class="pagenav">
-    <a href="#">1</a>
-    <a href="#">2</a>
-    ...
-    <a href="#">5</a>
-    <a href="#">6</a>
-    <a href="#">7</a>
-    ...
-    <a href="#">11</a>
-    <a href="#">12</a>
+    <?php
+    if(isset($_GET['page'])) {
+      $page = $_GET['page'];
+    } else {
+      $page = 1;
+    }
+
+    $pages = ceil($boardObject->getCount()/2);
+    if($pages >= 7) {
+      ?>
+      <a href="?board=<?php echo $boardObject->getId(); ?>&page=1">1</a>
+      <a href="?board=<?php echo $boardObject->getId(); ?>&page=2">2</a>
+      ...
+      <a href="?board=<?php echo $boardObject->getId() . "&page=" . ($page-1); ?>"><?php echo $page-1; ?></a>
+      [<a href="?board=<?php echo $boardObject->getId() . "&page=" . $page; ?>"><?php echo $page; ?></a>]
+      <a href="?board=<?php echo $boardObject->getId() . "&page=" . ($page+1); ?>"><?php echo $page+1; ?></a>
+      ...
+      <a href="?board=<?php echo $boardObject->getId() . "&page=" . ($pages-1); ?>"><?php echo $pages-1; ?></a>
+      <a href="?board=<?php echo $boardObject->getId() . "&page=" . $pages; ?>"><?php echo $pages; ?></a>
+      <?php
+    } else {
+      for($i = 0; $i < $pages; $i++) {
+        echo "<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>";
+      }
+    }
+    ?>
   </div>
 	<table class="boardtable">
     <tbody>
@@ -43,12 +61,7 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
         <td>Downloads</td>
       </tr>
       <?php
-      if(isset($_GET['page'])) {
-        $page = $_GET['page'];
-      } else {
-        $page = 0;
-      }
-      $addons = $boardObject->getAddons($page*10, 10);
+      $addons = $boardObject->getAddons(($page-1)*2, 2);
 			foreach($addons as $addon) {
         ?>
         <tr>

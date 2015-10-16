@@ -39,9 +39,7 @@ class AddonManager {
 
 		$db = new DatabaseManager();
     if($limit != 0) {
-      $lowerBound = $offset;
-      $upperBound = $offset+$limit;
-      $res = $db->query("SELECT `id` FROM `addon_addons` WHERE board='" . $db->sanitize($id) . "' AND bargain='" . $bargain . "' AND deleted=0 ORDER BY `name` asc LIMIT $lowerBound, $upperBound");
+      $res = $db->query("SELECT `id` FROM `addon_addons` WHERE board='" . $db->sanitize($id) . "' AND bargain='" . $bargain . "' AND deleted=0 ORDER BY `name` asc LIMIT $offset, $limit");
     } else {
 		  $res = $db->query("SELECT `id` FROM `addon_addons` WHERE board='" . $db->sanitize($id) . "' AND bargain='" . $bargain . "' AND deleted=0 ORDER BY `name` asc");
     }
