@@ -2,18 +2,8 @@
 $_PAGETITLE = "Glass | Add-On Name";
 require_once(realpath(dirname(__DIR__) . "/private/header.php"));
 
-require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
-
-//LEGACY CODE, EXAMPLE ONLY
-//require_once('../../html/class/BoardManager.php');
+require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>
-
-<div class="navcontainer">
-  <div class="navcontent">
-    <!-- temporary nav -->
-	  <a class="homebtn" href="/">Blockland Glass</a>
-  </div>
-</div>
 <div class="maincontainer">
   <span style="font-size: 9pt;"><a href="/addons/">Add-Ons</a> >> <a href="#">Some Board</a> >> <a href="#">My Add-On</a></span>
 	<h2>My Add-On</h2>

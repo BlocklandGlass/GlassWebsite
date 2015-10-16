@@ -133,6 +133,33 @@ textarea {
   font-size: 1em;
   padding: 8px;
   text-align: left;
+  vertical-align: middle;
+}
+
+.navcontent > ul {
+  position: relative;
+  display: inline-block;
+  float: right;
+  margin: 0;
+  padding: 5px;
+}
+
+.navcontent > ul > li {
+  text-decoration: none;
+  text-indent: none;
+  display: inline-block;
+}
+
+.navbtn {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+.navbtn:hover {
+  background-color: #48E68B;
 }
 
 .bigheadcontainer {
@@ -187,6 +214,20 @@ textarea {
 
 .addontable tbody {
   font-size: 1em;
+}
+
+.addonheader td {
+  padding: 5px;
+  background-color: #ddd;
+}
+
+.addonheader:first-of-type td {
+  border-radius: 10px 10px 0 0;
+}
+
+.addonheader:last-of-type td {
+  height: 22px;
+  border-radius: 0 0 10px 10px;
 }
 
 .homebtn {
