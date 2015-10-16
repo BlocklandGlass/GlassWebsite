@@ -112,7 +112,7 @@ textarea {
 }
 
 .navcontainer {
-  height: 65px;
+  max-height: 65px;
 
   margin: none;
 
@@ -127,27 +127,39 @@ textarea {
   box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.5);
 }
 
-.navcontainer a {
-  font-weight: bold;
-  text-decoration: none;
-  color: inherit;
-}
-
-.navcontainer a:hover {
-  color: #ccc;
-  text-decoration: underline;
-}
-
-.navcontainer a:visited {
-  font-weight: bold;
-}
-
 .navcontent {
   max-width: 960px;
   margin: 0 auto;
-  font-size: 14pt;
-  padding: 15px;
+  font-size: 1em;
+  padding: 8px;
   text-align: left;
+  vertical-align: middle;
+}
+
+.navcontent > ul {
+  position: relative;
+  display: inline-block;
+  float: right;
+  margin: 0;
+  padding: 5px;
+}
+
+.navcontent > ul > li {
+  text-decoration: none;
+  text-indent: none;
+  display: inline-block;
+}
+
+.navbtn {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+.navbtn:hover {
+  background-color: #48E68B;
 }
 
 .bigheadcontainer {
@@ -192,7 +204,7 @@ textarea {
 }
 
 .addontable td {
-  padding: 15px;
+  padding: 10px;
 }
 
 .addontable thead {
@@ -201,7 +213,45 @@ textarea {
 }
 
 .addontable tbody {
-  font-size: 16pt;
+  font-size: 1em;
+}
+
+.addonheader td {
+  padding: 5px;
+  background-color: #ddd;
+}
+
+.addonheader:first-of-type td {
+  border-radius: 10px 10px 0 0;
+}
+
+.addonheader:last-of-type td {
+  height: 22px;
+  border-radius: 0 0 10px 10px;
+}
+
+.homebtn {
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 20px;
+  text-decoration: none;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+  background-color: #15B358;
+}
+
+.dlbtn {
+  text-align: center;
+  line-height: 10pt;
+  font-weight: normal !important;
+  text-decoration: none !important;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.dlbtn:hover {
+  color: #000 !important;
 }
 
 .btn {
