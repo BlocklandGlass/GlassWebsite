@@ -263,6 +263,10 @@ textarea {
   text-align: left;
 }
 
+.boardtable tr:nth-child(2n+1) {
+  background-color: #eee;
+}
+
 .boardheader td {
   padding: 5px;
   background-color: #ddd;
@@ -270,8 +274,12 @@ textarea {
   text-align: center !important;
 }
 
-.boardheader:first-of-type td {
-  border-radius: 10px 10px 0 0;
+.boardheader:first-of-type td:first-child {
+  border-radius: 10px 0 0 0;
+}
+
+.boardheader:first-of-type td:last-child {
+  border-radius: 0 10px 0 0;
 }
 
 .boardheader:last-of-type td {
