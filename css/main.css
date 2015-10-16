@@ -112,7 +112,7 @@ textarea {
 }
 
 .navcontainer {
-  height: 65px;
+  max-height: 65px;
 
   margin: none;
 
@@ -127,26 +127,11 @@ textarea {
   box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.5);
 }
 
-.navcontainer a {
-  font-weight: bold;
-  text-decoration: none;
-  color: inherit;
-}
-
-.navcontainer a:hover {
-  color: #ccc;
-  text-decoration: underline;
-}
-
-.navcontainer a:visited {
-  font-weight: bold;
-}
-
 .navcontent {
   max-width: 960px;
   margin: 0 auto;
-  font-size: 14pt;
-  padding: 15px;
+  font-size: 1em;
+  padding: 8px;
   text-align: left;
 }
 
@@ -192,7 +177,7 @@ textarea {
 }
 
 .addontable td {
-  padding: 15px;
+  padding: 10px;
 }
 
 .addontable thead {
@@ -201,7 +186,18 @@ textarea {
 }
 
 .addontable tbody {
-  font-size: 16pt;
+  font-size: 1em;
+}
+
+.homebtn {
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 20px;
+  text-decoration: none;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+  background-color: #15B358;
 }
 
 .btn {

@@ -11,7 +11,7 @@ require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
 <div class="navcontainer">
   <div class="navcontent">
     <!-- temporary nav -->
-	  <b><a href="/">Blockland Glass</a></b>
+	  <a class="homebtn" href="/">Blockland Glass</a>
   </div>
 </div>
 <div class="maincontainer">
