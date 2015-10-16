@@ -95,6 +95,7 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+
 .maincontainer a {
   font-weight: bold;
   text-decoration: none;
@@ -124,6 +125,21 @@ textarea {
   -webkit-box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.5);
   -moz-box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.5);
   box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.5);
+}
+
+.navcontainer a {
+  font-weight: bold;
+  text-decoration: none;
+  color: inherit;
+}
+
+.navcontainer a:hover {
+  color: #ccc;
+  text-decoration: underline;
+}
+
+.navcontainer a:visited {
+  font-weight: bold;
 }
 
 .navcontent {
@@ -167,11 +183,11 @@ textarea {
 }
 
 .addontable td:first-child {
-  width: 75px;
+  text-align: center;
 }
 
 .addontable td:last-child {
-  width: 200px;
+  max-width: 200px;
   text-align: center;
 }
 

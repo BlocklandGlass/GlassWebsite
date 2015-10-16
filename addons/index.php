@@ -2,8 +2,10 @@
 $_PAGETITLE = "Glass | Add-Ons";
 require_once(realpath(dirname(__DIR__) . "/private/header.php"));
 
+require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
+
 //LEGACY CODE, EXAMPLE ONLY
-require_once('../../html/class/BoardManager.php');
+//require_once('../../html/class/BoardManager.php');
 ?>
 
 <div class="navcontainer">
@@ -14,19 +16,7 @@ require_once('../../html/class/BoardManager.php');
 </div>
 <div class="maincontainer">
 	<table class="addontable">
-    <thead>
-      <tr>
-        <td>i</td>
-        <td>Category</td>
-        <td>Submissions</td>
-      </tr>
-    </thead>
     <tbody>
-      <tr>
-        <td>image</td>
-        <td><a href="#">Weapons</a></td>
-        <td>0</td>
-      </tr>
       <?php
       $boards = BoardManager::getAllBoards();
 			usort($boards, function($a, $b) {
