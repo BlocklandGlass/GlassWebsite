@@ -28,7 +28,7 @@ require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
 			}
       foreach($subcat as $subName=>$sub) {
 				echo "<tr>
-					<th colspan=\"3\">" . $subName . "</th>
+					<th colspan=\"3\"><b>$subName</b></th>
 				</tr>";
 				foreach($sub as $board) {
 					echo "<tr><td><image src=\"http://blocklandglass.com/icon/icons32/" . $board->getImage() . ".png\" /></td><td><a href=\"http://blocklandglass.com/board.php?id=" . $board->getId() . "\">   " . $board->getName() . "</a></td><td>" . $board->getCount() . "</td></tr>";
