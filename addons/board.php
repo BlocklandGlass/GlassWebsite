@@ -34,20 +34,38 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 
     $pages = ceil($boardObject->getCount()/2);
     if($pages >= 7) {
+      if($page < 4) {
+        for($i = 0; $i < 4; $i++) {
+          if($i+1 == $page) {
+            echo "[<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>]";
+          } else {
+            echo "<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>";
+          }
+        }
+        echo " ... ";
+        ?>
+        <a href="?id=<?php echo $boardObject->getId() . "&page=" . ($pages-1); ?>"><?php echo $pages-1; ?></a>
+        <a href="?id=<?php echo $boardObject->getId() . "&page=" . $pages; ?>"><?php echo $pages; ?></a>
+        <?php
+      }
       ?>
-      <a href="?board=<?php echo $boardObject->getId(); ?>&page=1">1</a>
-      <a href="?board=<?php echo $boardObject->getId(); ?>&page=2">2</a>
+      <a href="?id=<?php echo $boardObject->getId(); ?>&page=1">1</a>
+      <a href="?id=<?php echo $boardObject->getId(); ?>&page=2">2</a>
       ...
-      <a href="?board=<?php echo $boardObject->getId() . "&page=" . ($page-1); ?>"><?php echo $page-1; ?></a>
-      [<a href="?board=<?php echo $boardObject->getId() . "&page=" . $page; ?>"><?php echo $page; ?></a>]
-      <a href="?board=<?php echo $boardObject->getId() . "&page=" . ($page+1); ?>"><?php echo $page+1; ?></a>
+      <a href="?id=<?php echo $boardObject->getId() . "&page=" . ($page-1); ?>"><?php echo $page-1; ?></a>
+      [<a href="?id=<?php echo $boardObject->getId() . "&page=" . $page; ?>"><?php echo $page; ?></a>]
+      <a href="?id=<?php echo $boardObject->getId() . "&page=" . ($page+1); ?>"><?php echo $page+1; ?></a>
       ...
-      <a href="?board=<?php echo $boardObject->getId() . "&page=" . ($pages-1); ?>"><?php echo $pages-1; ?></a>
-      <a href="?board=<?php echo $boardObject->getId() . "&page=" . $pages; ?>"><?php echo $pages; ?></a>
+      <a href="?id=<?php echo $boardObject->getId() . "&page=" . ($pages-1); ?>"><?php echo $pages-1; ?></a>
+      <a href="?id=<?php echo $boardObject->getId() . "&page=" . $pages; ?>"><?php echo $pages; ?></a>
       <?php
     } else {
       for($i = 0; $i < $pages; $i++) {
-        echo "<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>";
+        if($i+1 == $page) {
+          echo "[<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>]";
+        } else {
+          echo "<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>";
+        }
       }
     }
     ?>
