@@ -122,9 +122,9 @@ textarea {
   text-align: center;
   color: #fff;
 
-  -webkit-box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.5);
-  -moz-box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.5);
-  box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.5);
+  -webkit-box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.3);
+  -moz-box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.3);
+  box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.3);
 }
 
 .navcontent {
@@ -137,10 +137,12 @@ textarea {
 }
 
 .navcontent > ul {
+  height: 38px;
+  vertical-align: middle;
   position: relative;
   display: inline-block;
   float: right;
-  margin: 0;
+  margin: 7px;
   padding: 5px;
 }
 
@@ -194,7 +196,12 @@ textarea {
   width: 100%;
 }
 
+.addontable tr:hover {
+  background-color: #f6f6f6;
+}
+
 .addontable td:first-child {
+  width: 64px;
   text-align: center;
 }
 
@@ -228,6 +235,53 @@ textarea {
 .addonheader:last-of-type td {
   height: 22px;
   border-radius: 0 0 10px 10px;
+}
+
+.boardtable {
+  width: 100%;
+}
+
+.boardtable tr:hover {
+  background-color: #f6f6f6;
+}
+
+.boardtable td {
+  padding: 10px;
+}
+
+.boardtable thead {
+  font-weight: bold;
+  text-align: center;
+}
+
+.boardtable tbody {
+  font-size: 1em;
+  text-align: center;
+}
+
+.boardtable td:first-of-type {
+  text-align: left;
+}
+
+.boardheader td {
+  padding: 5px;
+  background-color: #ddd;
+  font-weight: bold;
+  text-align: center !important;
+}
+
+.boardheader:first-of-type td {
+  border-radius: 10px 10px 0 0;
+}
+
+.boardheader:last-of-type td {
+  height: 36px;
+  padding: 0;
+  border-radius: 0 0 10px 10px;
+}
+
+.pagenav {
+  float: right;
 }
 
 .homebtn {

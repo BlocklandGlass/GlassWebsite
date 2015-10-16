@@ -23,7 +23,7 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 					<td colspan=\"3\"><b>$subName</b></td>
 				</tr>";
 				foreach($sub as $board) {
-					echo "<tr><td><image src=\"http://blocklandglass.com/icon/icons32/" . $board->getImage() . ".png\" /></td><td><a href=\"http://blocklandglass.com/board.php?id=" . $board->getId() . "\">   " . $board->getName() . "</a></td><td>" . $board->getCount() . "</td></tr>";
+					echo "<tr><td><image src=\"http://blocklandglass.com/icon/icons32/" . $board->getImage() . ".png\" /></td><td><a href=\"board.php?id=" . $board->getId() . "\">   " . $board->getName() . "</a></td><td>" . $board->getCount() . "</td></tr>";
 				}
 			}
       ?>
