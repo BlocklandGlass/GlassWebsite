@@ -26,9 +26,11 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
   <i>Coming soon!</i></div>
   <p>Clear from the community's multiple requests and attempts for a save gallery, it's quite a popular idea. We plan on finally tackling the social sharing of your hours of work on your builds.</p>
   <p>Want a little taste of what's to come? Check out this!</p>
-  <canvas id="canvas">
-		If you can see this, your browser may not support HTML 5
-	</canvas>
+  <a href="viewer.php">
+    <canvas id="canvas">
+  		If you can see this, your browser may not support HTML 5
+  	</canvas>
+  </a>
 
 	<div id="overlay" onclick = "NBL.pop_menu();">
 	</div>
