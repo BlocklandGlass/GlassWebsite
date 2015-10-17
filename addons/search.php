@@ -14,7 +14,7 @@ $db = new DatabaseManager();
 $result = $db->query("SELECT * FROM `addon_addons` WHERE `name` LIKE '%" . $db->sanitize($_POST['query']) . "%'");
 ?>
 <div class="maincontainer">
-	<h2>Search Results for <u><?php echo $_POST['query']; ?></u></h2>
+	<h2>Search Results for <u><?php echo(filter_var($_POST['query'], FILTER_SANITIZE_STRING) . "\n"); ?></u></h2>
 	<hr />
 	<?php
 	while($row = $result->fetch_object()) {
