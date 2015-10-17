@@ -2,22 +2,19 @@
 require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
 
 $_PAGETITLE = "Glass | Builds";
-
 $_OPENHEAD = true;
 require_once(realpath(dirname(__DIR__) . "/private/header.php"));
 ?>
-  <script src="./hand.js"></script>
-  <script src="./babylon.js"></script>
+  <script src="./res/babylon.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="./NBL.js"></script>
-  <link rel="stylesheet" href="./NBL.css">
+  <script src="./res/NBL.js"></script>
+  <link rel="stylesheet" href="./res/NBL.css">
 
   <?php
   $testfile = "./res/House.bls";
   echo("<script type=\"text/javascript\">");
   echo("var targetUrl = \"" . $testfile . "\";");
   echo("</script>");
-
   ?>
   </head>
   <body onload="NBL.javascript_init();">

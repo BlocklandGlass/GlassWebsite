@@ -7,7 +7,9 @@ var NBL = NBL || {};
 		window.addEventListener("keydown", this.onKeyDown);
 		document.getElementById('files').addEventListener('change', this.handleFileSelect, false);
 		window.addEventListener("resize", this.resizeFunc);
-		document.getElementById("viewer_nav_container").tick_position = 0;
+		if(document.getElementById("viewer_nav_container") !== null) {
+			document.getElementById("viewer_nav_container").tick_position = 0;
+		}
 		window.addEventListener("mousemove", function (e) {
 			if(e.pageY < 48 && !(e.buttons & 1))
 				NBL.shownavbar();
@@ -75,7 +77,7 @@ var NBL = NBL || {};
 		var maxx;
 		var maxy;
 		var maxz;
-       
+
 		for(; line<saveData.length; line++)
 		{
 			if(saveData[line].substr(0, 2) == "+-" || saveData[line] === "")
@@ -300,11 +302,13 @@ var NBL = NBL || {};
 		window.clearTimeout(this.navbar_tick);
 		var element = document.getElementById("viewer_nav_container");
 
-		if(element.tick_position > -64)
-		{
-			element.tick_position -= 2;
-			element.style.top = (element.tick_position) + "px";
-			this.navbar_tick = setTimeout(NBL.hidenavbar, 10);
+		if(element !== null) {
+			if(element.tick_position > -64)
+			{
+				element.tick_position -= 2;
+				element.style.top = (element.tick_position) + "px";
+				this.navbar_tick = setTimeout(NBL.hidenavbar, 10);
+			}
 		}
 	}
 
@@ -313,11 +317,13 @@ var NBL = NBL || {};
 		window.clearTimeout(this.navbar_tick);
 		var element = document.getElementById("viewer_nav_container");
 
-		if(element.tick_position < 0)
-		{
-			element.tick_position += 2;
-			element.style.top = (element.tick_position) + "px";
-			this.navbar_tick = setTimeout(NBL.shownavbar, 10);
+		if(element !== null) {
+			if(element.tick_position < 0)
+			{
+				element.tick_position += 2;
+				element.style.top = (element.tick_position) + "px";
+				this.navbar_tick = setTimeout(NBL.shownavbar, 10);
+			}
 		}
 	}
 
@@ -412,9 +418,9 @@ var NBL = NBL || {};
 			scene.activeCamera = NBL.camera;
 			NBL.camera.attachControl(canvas, false);
 			NBL.camera.keysUp.push(87); // W
-			NBL.camera.keysLeft.push(65); // A 
-			NBL.camera.keysDown.push(83); // S 
-			NBL.camera.keysRight.push(68); // D 
+			NBL.camera.keysLeft.push(65); // A
+			NBL.camera.keysDown.push(83); // S
+			NBL.camera.keysRight.push(68); // D
 			NBL.camera.inertia = 0.6;
 			NBL.camera.angularSensibility = 900;
 			NBL.camera.maxCameraSpeed = 80;
