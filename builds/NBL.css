@@ -1,0 +1,60 @@
+html, body
+{
+/*	font-family:"open sans","helvetica neue",helvetica,arial,sans-serif; */
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+
+a
+{
+	color: #f60;
+	text-decoration: none;
+}
+
+button
+{
+	color: #fff;
+	float: left;
+}
+
+h2
+{
+	text-align: center;
+}
+
+a#overlay_close
+{
+	float: right;
+	margin-left: 8px;
+}
+
+canvas#canvas
+{
+	width: 100%;
+	height: 100%;
+	touch-action: none;
+}
+
+div#overlay
+{
+	display: none;
+	position: fixed;
+	background: #000;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	text-align: center;
+}
+
+div#overlay_info
+{
+	display: none;
+	position: fixed;
+	background: #FFF;
+	overflow: auto;
+	padding: 18px;
+}
