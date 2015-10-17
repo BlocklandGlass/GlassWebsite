@@ -21,8 +21,10 @@
         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Quicksand" />
 
         <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
+    <?php if(!isset($_OPENHEAD)) { ?>
     </head>
     <body>
+    <?php } ?>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
