@@ -134,7 +134,7 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
             <image src="http://blocklandglass.com/icon/icons16/star.png" />
             <image src="http://blocklandglass.com/icon/icons16/star.png" />
           </td>
-          <td>413</td>
+          <td><?php echo ($addon->getDownloads(1) + $addon->getDownloads(2)); ?></td>
         </tr>
         <?php
       }

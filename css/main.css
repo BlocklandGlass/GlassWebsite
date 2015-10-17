@@ -192,7 +192,29 @@ textarea {
   text-align: left;
 }
 
+.searchbar {
+  float: right;
+  display: block;
+
+  margin: 10px auto;
+  width: 25%;
+
+  font-size: 16pt;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.searchbar:hover {
+  background-color: #eee;
+}
+
+.searchbar:active {
+  background-color: #eee;
+  border: 1px solid #ccf;
+}
+
 .addontable {
+  margin: 0 auto;
   width: 100%;
 }
 

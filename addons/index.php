@@ -7,6 +7,10 @@ require_once(realpath(dirname(__DIR__) . "/private/header.php"));
 require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>
 <div class="maincontainer">
+  <form action="search.php" method="post">
+    <input class="searchbar" type="text" name="query" />
+  </form>
+
 	<table class="addontable">
     <tbody>
       <?php
