@@ -5,6 +5,8 @@ require_once(realpath(dirname(__DIR__) . "/private/class/AddonObject.php"));
 require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
 require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
 
+require_once(realpath(dirname(__DIR__) . "/private/lib/Parsedown.php"));
+
 if(isset($_GET['id'])) {
   try {
     $addonObject = AddonManager::getFromId($_GET['id']);
@@ -59,7 +61,12 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
     <image src="http://blocklandglass.com/icon/icons32/<?php echo $boardObject->getImage() ?>.png" /> <?php echo $boardObject->getName() ?>
   </p>
   <p>
-    <?php echo $addonObject->getDescription() ?>
+    <?php
+      $Parsedown = new Parsedown();
+			$Parsedown->setBreaksEnabled(true);
+			$Parsedown->setMarkupEscaped(true);
+
+			echo $Parsedown->text($addonObject->getDescription()); ?>
   </p>
   <div style="text-align: center">
     <a href="http://blocklandglass.com/addon.php?id=<?php echo $addonObject->getId(); ?>" class="btn dlbtn green"><b>Stable</b><span style="font-size:9pt"><br />v1.1.0</span></a>

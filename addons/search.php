@@ -1,6 +1,8 @@
 <?php
 require_once(realpath(dirname(__DIR__) . "/private/class/DatabaseManager.php"));
 
+require_once(realpath(dirname(__DIR__) . "/private/lib/Parsedown.php"));
+
 $_PAGETITLE = "Glass | Search Results";
 
 require_once(realpath(dirname(__DIR__) . "/private/header.php"));
@@ -18,11 +20,18 @@ $result = $db->query("SELECT * FROM `addon_addons` WHERE `name` LIKE '%" . $db->
 	while($row = $result->fetch_object()) {
 		echo "<p><b><a href=\"addon.php?id=$row->id\">$row->name</a></b><br />";
 		if(strlen($row->description) > 200) {
-			$desc = substr($row->description, 200) . "...";
+			$desc = substr($row->description, 0, 200) . " ...";
 		} else {
 			$desc = $row->description;
 		}
-		echo $desc . "</p>";
+
+		$Parsedown = new Parsedown();
+		$Parsedown->setBreaksEnabled(true);
+		$Parsedown->setMarkupEscaped(true);
+
+		echo $Parsedown->text($desc);
+
+		echo "</p><br />";
 	}
 	?>
 </div>
