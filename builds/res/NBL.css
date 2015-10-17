@@ -58,3 +58,10 @@ div#overlay_info
 	overflow: auto;
 	padding: 18px;
 }
+
+div#viewer_nav_container
+{
+	height: 64px;
+	width: 100%;
+	position: absolute;
+}

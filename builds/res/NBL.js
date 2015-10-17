@@ -1,11 +1,19 @@
 var NBL = NBL || {};
 (function ()
 {
+	//and unfortunate mix of camelCase and snake_case
 	NBL.javascript_init = function ()
 	{
 		window.addEventListener("keydown", this.onKeyDown);
 		document.getElementById('files').addEventListener('change', this.handleFileSelect, false);
 		window.addEventListener("resize", this.resizeFunc);
+		document.getElementById("viewer_nav_container").tick_position = 0;
+		window.addEventListener("mousemove", function (e) {
+			if(e.pageY < 48 && !(e.buttons & 1))
+				NBL.shownavbar();
+			else if(e.pageY > 80 && document.getElementById("overlay").style.display != "block")
+				NBL.hidenavbar();
+		});
 		this.render_init();
 
 		if(targetUrl === undefined)
@@ -15,6 +23,8 @@ var NBL = NBL || {};
 		}
 		else
 		{
+			this.hidenavbar();
+
 			$.get(targetUrl, function (data){
 				NBL.loadBLSData(data);
 			});
@@ -31,9 +41,9 @@ var NBL = NBL || {};
 
 			NBL.loadBLSData(contents);
 		};
-		console.log("one");
+		//console.log("one");
 		r.readAsText(f);
-		console.log("three");
+		//console.log("three");
 	};
 
 	NBL.loadBLSData = function (data)
@@ -65,7 +75,7 @@ var NBL = NBL || {};
 		var maxx;
 		var maxy;
 		var maxz;
-
+       
 		for(; line<saveData.length; line++)
 		{
 			if(saveData[line].substr(0, 2) == "+-" || saveData[line] === "")
@@ -78,7 +88,7 @@ var NBL = NBL || {};
 
 				if(quoteindex == -1)
 				{
-					console.log("Found a weird line, skipping...");
+					//console.log("Found a weird line, skipping...");
 					continue;
 				}
 				var uiname = saveData[line].substr(0, quoteindex);
@@ -125,7 +135,7 @@ var NBL = NBL || {};
 		avgx /= brickcount;
 		avgy /= brickcount;
 		avgz /= brickcount;
-		console.log("aiming camera at " + avgx + " " + avgy + " " + avgz);
+		//console.log("aiming camera at " + avgx + " " + avgy + " " + avgz);
 		this.camera.position = new BABYLON.Vector3(maxx + 15, maxy + 15, maxz + 15);
 		this.camera.setTarget(new BABYLON.Vector3(avgx, avgy, avgz));
 	};
@@ -142,13 +152,13 @@ var NBL = NBL || {};
 			//check if basic ramp
 			if(uiname.indexOf("Ramp") != -1 && !jsonobj.n && !jsonobj.e && !jsonobj.w)
 			{
-				console.log("Ramping up: " + uiname);
+				//console.log("Ramping up: " + uiname);
 				mesh = new BABYLON.Mesh("mesh", this.scene);
-				console.log("part 1");
+				//console.log("part 1");
 				var indicies = [];
 				var positions = [];
 				//var normals = [];
-				console.log("part 1.5");
+				//console.log("part 1.5");
 
 				//bottom face
 				positions.push(0.5, -0.5, 0.5); //0
@@ -161,7 +171,7 @@ var NBL = NBL || {};
 				//normals.push(-0.5, -0.5, -0.5);
 				indicies.push(0);indicies.push(1);indicies.push(2);
 				indicies.push(3);indicies.push(2);indicies.push(1);
-				console.log("part 2");
+				//console.log("part 2");
 
 				if(uiname.indexOf("Corner") != -1 && !jsonobj.s)
 				{
@@ -179,7 +189,7 @@ var NBL = NBL || {};
 					//normals.push(-0.5, 0.5, -0.5);
 					indicies.push(6);indicies.push(5);indicies.push(4);
 					indicies.push(5);indicies.push(6);indicies.push(7);
-					console.log("part 3");
+					//console.log("part 3");
 
 					////bevel on front
 					positions.push(0.5, -0.4, 0.5); //8
@@ -191,7 +201,7 @@ var NBL = NBL || {};
 					indicies.push(0);indicies.push(2);indicies.push(9);
 					indicies.push(10);indicies.push(1);indicies.push(0);
 					indicies.push(8);indicies.push(10);indicies.push(0);
-					console.log("part 4");
+					//console.log("part 4");
 
 					//slopes
 					indicies.push(9);indicies.push(6);indicies.push(4);
@@ -220,7 +230,7 @@ var NBL = NBL || {};
 					//normals.push(-0.5, 0.5, -0.5);
 					indicies.push(6);indicies.push(5);indicies.push(4);
 					indicies.push(5);indicies.push(6);indicies.push(7);
-					console.log("part 3");
+					//console.log("part 3");
 
 					////bevel on front
 					positions.push(0.5, -0.4, 0.5); //8
@@ -229,17 +239,17 @@ var NBL = NBL || {};
 					//normals.push(-0.5, -0.4, 0.5);
 					indicies.push(0);indicies.push(9);indicies.push(8);
 					indicies.push(0);indicies.push(2);indicies.push(9);
-					console.log("part 4");
+					//console.log("part 4");
 
 					//slope
 					indicies.push(8);indicies.push(9);indicies.push(4);
 					indicies.push(9);indicies.push(6);indicies.push(4);
-					console.log("part 5");
+					//console.log("part 5");
 
 					//back
 					indicies.push(5);indicies.push(7);indicies.push(1);
 					indicies.push(7);indicies.push(3);indicies.push(1);
-					console.log("part 6");
+					//console.log("part 6");
 
 					//sides
 					indicies.push(1);indicies.push(4);indicies.push(5);
@@ -248,12 +258,16 @@ var NBL = NBL || {};
 					indicies.push(2);indicies.push(3);indicies.push(6);
 					indicies.push(0);indicies.push(8);indicies.push(4);
 					indicies.push(2);indicies.push(6);indicies.push(9);
-					console.log("part 7");
+					//console.log("part 7");
 				}
-				mesh.setVerticesData(BABYLON.VertexBuffer.PositionKind, positions, true);
+				mesh.setVerticesData(BABYLON.VertexBuffer.PositionKind, positions, false);
 				mesh.setIndices(indicies);
 				//mesh.setVerticesData(BABYLON.VertexBuffer.NormalKind, normals, true);
-				console.log("part 8");
+				//console.log("part 8");
+			}
+			else if(uiname.indexOf("Round") != -1 && !jsonobj.n && !jsonobj.e && !jsonobj.w && !jsonobj.s)
+			{
+				mesh = BABYLON.Mesh.CreateCylinder("cylinder", 1, 1, 1, 8, this.scene, false);
 			}
 			else
 			{
@@ -280,6 +294,32 @@ var NBL = NBL || {};
 				break;
 		}
 	};
+
+	NBL.hidenavbar = function ()
+	{
+		window.clearTimeout(this.navbar_tick);
+		var element = document.getElementById("viewer_nav_container");
+
+		if(element.tick_position > -64)
+		{
+			element.tick_position -= 2;
+			element.style.top = (element.tick_position) + "px";
+			this.navbar_tick = setTimeout(NBL.hidenavbar, 10);
+		}
+	}
+
+	NBL.shownavbar = function ()
+	{
+		window.clearTimeout(this.navbar_tick);
+		var element = document.getElementById("viewer_nav_container");
+
+		if(element.tick_position < 0)
+		{
+			element.tick_position += 2;
+			element.style.top = (element.tick_position) + "px";
+			this.navbar_tick = setTimeout(NBL.shownavbar, 10);
+		}
+	}
 
 	NBL.toggleMenu = function ()
 	{
@@ -312,6 +352,7 @@ var NBL = NBL || {};
 
 		this.fade(overlay, 0.7);
 		this.fade(overlay_info, 1.0);
+		this.shownavbar();
 	};
 
 	NBL.pop_menu = function ()
@@ -320,6 +361,7 @@ var NBL = NBL || {};
 		var overlay_info = document.getElementById("overlay_info");
 		overlay.style.display = "none";
 		overlay_info.style.display = "none";
+		this.hidenavbar();
 	};
 
 	NBL.fade = function (element, val, callback)
@@ -370,23 +412,16 @@ var NBL = NBL || {};
 			scene.activeCamera = NBL.camera;
 			NBL.camera.attachControl(canvas, false);
 			NBL.camera.keysUp.push(87); // W
-			NBL.camera.keysLeft.push(65); // A
-			NBL.camera.keysDown.push(83); // S
-			NBL.camera.keysRight.push(68); // D
+			NBL.camera.keysLeft.push(65); // A 
+			NBL.camera.keysDown.push(83); // S 
+			NBL.camera.keysRight.push(68); // D 
 			NBL.camera.inertia = 0.6;
 			NBL.camera.angularSensibility = 900;
-			NBL.camera.maxCameraSpeed = 5000;
-			NBL.camera.cameraAcceleration = 5;
+			NBL.camera.maxCameraSpeed = 80;
+			NBL.camera.cameraAcceleration = 0.1;
 
 			NBL.light = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), scene);
 			NBL.light.groundColor = new BABYLON.Color3(1, 1, 0.984);
-
-			NBL.box = BABYLON.Mesh.CreateBox("mesh", 3, scene);
-//			NBL.box.showBoundingBox = true;
-
-			NBL.material = new BABYLON.StandardMaterial("std", scene);
-			NBL.material.diffuseColor = new BABYLON.Color3(0.5, 0.5, 0.5);
-			NBL.box.material = NBL.material;
 
 			return scene;
 		})();
@@ -394,9 +429,20 @@ var NBL = NBL || {};
 		this.engine.runRenderLoop(this.renderLoop);
 	};
 
+	NBL.loaddummyblock = function ()
+	{
+			this.box = BABYLON.Mesh.CreateBox("mesh", 3, this.scene);
+			var material = new BABYLON.StandardMaterial("std", this.scene);
+			material.diffuseColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+			this.box.material = material;
+	}
+
 	NBL.renderLoop = function ()
 	{
-		NBL.box.position.y = 3*Math.sin(NBL.frame / 50);
+		if(NBL.box)
+		{
+			NBL.box.position.y = 3*Math.sin(NBL.frame / 50);
+		}
 		NBL.frame++;
 		NBL.scene.render();
 	};
@@ -407,7 +453,8 @@ var NBL = NBL || {};
 		overlay_info.style.left = (0.5*(overlay.offsetWidth - overlay_info.offsetWidth)) + "px";
 		NBL.engine.resize();
 	};
-	$.getJSON( "res/brickdata.json", function (data) {
+
+	$.getJSON("res/brickdata.json", function (data) {
 		NBL.brickData = data;
 	});
 })();
