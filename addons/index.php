@@ -8,7 +8,7 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>
 <div class="maincontainer">
   <form action="search.php" method="post">
-    <input class="searchbar" type="text" name="query" />
+    <input class="searchbar" type="text" name="query" placeholder="Search..."/>
   </form>
 
 	<table class="addontable">
