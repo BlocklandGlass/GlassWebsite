@@ -39,11 +39,11 @@ var NBL = NBL || {};
 	NBL.loadBLSData = function (data)
 	{
 		var saveData = data.split("\n");
-        
+
 		//warning(1), descsize(1), desc(descsize), colortable(64), linecount(1)
 		var line = parseInt(saveData[1]) + 2;
 		var material = new Array(64);
-        
+
 		for(var i=0; i<64; i++)
 		{
 			material[i] = new BABYLON.StandardMaterial("std", NBL.scene);
@@ -65,7 +65,7 @@ var NBL = NBL || {};
 		var maxx;
 		var maxy;
 		var maxz;
-        
+
 		for(; line<saveData.length; line++)
 		{
 			if(saveData[line].substr(0, 2) == "+-" || saveData[line] === "")
@@ -364,28 +364,28 @@ var NBL = NBL || {};
 		this.scene = (function ()
 		{
 			var scene = new BABYLON.Scene(NBL.engine);
-			scene.clearColor = new BABYLON.Color3(0, 0, 0.2);
+			scene.clearColor = new BABYLON.Color3(1, 1, 0.984);
 
 			NBL.camera = new BABYLON.FreeCamera("Camera", new BABYLON.Vector3(0, 0, -7), scene);
 			scene.activeCamera = NBL.camera;
 			NBL.camera.attachControl(canvas, false);
 			NBL.camera.keysUp.push(87); // W
-			NBL.camera.keysLeft.push(65); // A 
-			NBL.camera.keysDown.push(83); // S 
-			NBL.camera.keysRight.push(68); // D 
+			NBL.camera.keysLeft.push(65); // A
+			NBL.camera.keysDown.push(83); // S
+			NBL.camera.keysRight.push(68); // D
 			NBL.camera.inertia = 0.6;
 			NBL.camera.angularSensibility = 900;
 			NBL.camera.maxCameraSpeed = 5000;
 			NBL.camera.cameraAcceleration = 5;
 
 			NBL.light = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), scene);
-			NBL.light.groundColor = new BABYLON.Color3(0.5, 0, 0.5);
+			NBL.light.groundColor = new BABYLON.Color3(1, 1, 0.984);
 
 			NBL.box = BABYLON.Mesh.CreateBox("mesh", 3, scene);
 //			NBL.box.showBoundingBox = true;
 
 			NBL.material = new BABYLON.StandardMaterial("std", scene);
-			NBL.material.diffuseColor = new BABYLON.Color3(0.5, 0, 0.5);
+			NBL.material.diffuseColor = new BABYLON.Color3(0.5, 0.5, 0.5);
 			NBL.box.material = NBL.material;
 
 			return scene;
