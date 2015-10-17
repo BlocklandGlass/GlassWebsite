@@ -2,6 +2,8 @@
 require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
 require_once(realpath(dirname(__DIR__) . "/private/class/AddonManager.php"));
 require_once(realpath(dirname(__DIR__) . "/private/class/AddonObject.php"));
+require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
+require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
 
 if(isset($_GET['id'])) {
   try {
@@ -97,8 +99,34 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 			foreach($addons as $addon) {
         ?>
         <tr>
-          <td style="width: 50%"><?php echo $addon->getName() ?></td>
-          <td><a href="#">Jincux</a> and <a href="#">Nexus</a></td>
+          <td style="width: 33%"><?php echo $addon->getName() ?></td>
+          <td style="font-size: 11pt"><?php
+            $authors = $addon->getAuthors();
+            if(sizeof($authors) == 1) {
+              $uo = new UserHandler();
+              $uo->initFromId($authors[0]->id);
+              echo "<a href=\"#\">" . $uo->getName() . "</a>";
+            } else if(sizeof($authors) == 2) {
+              $uo = new UserHandler();
+              $uo->initFromId($authors[0]->id);
+              $uo2 = new UserHandler();
+              $uo2->initFromId($authors[1]->id);
+              echo "<a href=\"#\">" . $uo->getName() . "</a>";
+              echo " and ";
+              echo "<a href=\"#\">" . $uo2->getName() . "</a>";
+            } else {
+              $count = sizeof($authors);
+              foreach($authors as $num=>$auth) {
+                $uo = new UserHandler();
+                $uo->initFromId($auth->id);
+                if($count-$num == 1) {
+                  echo "and <a href=\"#\">" . $uo->getName() . "</a>";
+                } else {
+                  echo "<a href=\"#\">" . $uo->getName() . "</a>, ";
+                }
+              }
+            }
+            ?></td>
           <td>
             <image src="http://blocklandglass.com/icon/icons16/star.png" />
             <image src="http://blocklandglass.com/icon/icons16/star.png" />

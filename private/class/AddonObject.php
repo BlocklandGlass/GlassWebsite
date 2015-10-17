@@ -6,13 +6,14 @@ require_once dirname(__FILE__) . '/AddonManager.php';
 //require_once dirname(__FILE__) . '/FileObject.php';
 
 //TODO This is one of the classes that needs some major cleaning
+//TODO A lot of the add-on management functions need to be cleaned and organized
 
 class AddonObject {
 	private $id;
 	private $name;
 	private $fileName;
 
-	private $authorBlid;
+	private $authorDat;
 	private $author; //UserHandler
 
 	private $files; //array {stable, unstable, dev}
@@ -71,7 +72,7 @@ class AddonObject {
 		$this->isBargain = $obj->bargain;
 		$this->isDanger = $obj->danger;
 
-		$this->authorBlid = $obj->author;
+		$this->authorDat = $obj->author;
 
 		$this->description = $obj->description;
 		$this->ratingData = $obj->ratingInfo;
@@ -242,14 +243,62 @@ class AddonObject {
 			return;
 		}
 
-		//return author object, dont construct until needed!
-		if(!is_object($this->author)) {
-			$author = new UserHandler();
-			$author->initFromBLID($this->authorBlid);
-			$this->author = $author;
+		if(is_int($this->authorDat+0)) {
+			//LEGACY SUPPORT
+			if(!is_object($this->author)) {
+				$author = new UserHandler();
+				$author->initFromBLID($this->authorDat);
+				$this->author = $author;
+			}
+
+			$ad = array();
+			$auth = $ad[] = new stdClass();
+			$auth->id = $author->getId();
+			$auth->role = "main";
+			$auth->owner = true;
+			$this->authorDat = json_encode($ad);
+			// TODO do something here to send this back to the database
 		}
 
-		return $this->author;
+		$this->authors = json_decode($this->authorDat);
+		// [ { "id": 6, "owner": true, "role": "main" }, { "id": 7, "role": "modeler" } ]
+		foreach($this->authors as $author) {
+			if($author->owner == true) {
+				$ao = new UserHandler();
+				$ao->initFromId($author->id);
+				return $ao;
+			}
+		}
+	}
+
+	public function getAuthors() {
+		if(!$this->isInit()) {
+			throw new Exception('AddonObject not init');
+			return;
+		}
+
+		$this->authors = json_decode($this->authorDat);
+
+		if(!is_array($this->authors)) {
+			//LEGACY SUPPORT
+			if(!is_object($this->author)) {
+				$author = new UserHandler();
+				$author->initFromBLID($this->authorDat);
+				$this->author = $author;
+			}
+
+			$ad = array();
+			$auth = $ad[] = new stdClass();
+			$auth->id = $author->getId();
+			$auth->role = "main";
+			$auth->owner = true;
+			$this->authorDat = json_encode($ad);
+			$this->authors = $ad;
+			// TODO do something here to send this back to the database
+		}
+
+		$this->authors = json_decode($this->authorDat);
+		return $this->authors;
 	}
 
 	public function getFilename() {
