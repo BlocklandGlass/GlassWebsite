@@ -61,9 +61,11 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
   <p>
     <?php echo $addonObject->getDescription() ?>
   </p>
-  <a href="dl.php" class="btn dlbtn green"><b>Stable</b><span style="font-size:9pt"><br />v1.1.0</span></a>
-  <a href="dl.php" class="btn dlbtn yellow"><b>Unstable</b><span style="font-size:9pt"><br />v1.1.0-alpha.1</span></a>
-  <a href="dl.php" class="btn dlbtn red"><b>Development</b><span style="font-size:9pt"><br />v1.1.0-alpha.6</span></a><br />
+  <div style="text-align: center">
+    <a href="http://blocklandglass.com/addon.php?id=<?php echo $addonObject->getId(); ?>" class="btn dlbtn green"><b>Stable</b><span style="font-size:9pt"><br />v1.1.0</span></a>
+    <a href="http://blocklandglass.com/addon.php?id=<?php echo $addonObject->getId(); ?>" class="btn dlbtn yellow"><b>Unstable</b><span style="font-size:9pt"><br />v1.1.0-alpha.1</span></a>
+    <a href="http://blocklandglass.com/addon.php?id=<?php echo $addonObject->getId(); ?>" class="btn dlbtn red"><b>Development</b><span style="font-size:9pt"><br />v1.1.0-alpha.6</span></a><br />
+  </div>
 </div>
 
 <?php require_once(realpath(dirname(__DIR__) . "/private/footer.php")); ?>
