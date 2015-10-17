@@ -99,7 +99,7 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 			foreach($addons as $addon) {
         ?>
         <tr>
-          <td style="width: 33%"><?php echo $addon->getName() ?></td>
+          <td style="width: 33%"><a href="addon.php?id=<?php echo $addon->getId(); ?>"><?php echo $addon->getName() ?></a></td>
           <td style="font-size: 11pt"><?php
             $authors = $addon->getAuthors();
             if(sizeof($authors) == 1) {
