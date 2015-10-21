@@ -464,3 +464,4 @@ var NBL = NBL || {};
 		NBL.brickData = data;
 	});
 })();
+$(document).ready(NBL.javascript_init());
