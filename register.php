@@ -14,10 +14,11 @@
 
 	//check to see if log in was attempted/successfull
 
-	if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['verify'])) {
+	if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['verify']) && $_POST['blid']) {
 		$username = $_POST['username'];
 		$password = $_POST['password'];
 		$password_check = $_POST['verify'];
+		$blid = trim($_POST['blid']);
 		$safe_username = apply_custom_filter($username);
 
 		if($username !== $safe_username || strlen($safe_username) < 3 || strlen($safe_username) > 20) {
@@ -26,6 +27,8 @@
 			$status_message = "Your passwords do not match.";
 		} else if(strlen($password) < 4) {
 			$status_message = "Your password must be at least 4 characters";
+		} else if(!is_numeric($blid)) {
+			$status_message = "Invalid BL_ID";
 		} else {
 			require_once(realpath(dirname(__FILE__) . "/private/class/DatabaseManager.php"));
 			$database = new DatabaseManager();
@@ -33,7 +36,7 @@
 			//if($database
 			//	$status_message = "That username is already taken.  Please try another.";
 			//can never be too safe
-			$resource = $database->query("SELECT * FROM USERS WHERE username = '" . $database->sanitize($safe_username) . "'");
+			$resource = $database->query("SELECT * FROM `users` WHERE `username` = '" . $database->sanitize($safe_username) . "' OR `blid`='" . $database->sanitize($blid) . "'");
 
 			if(!$resource) {
 				$status_message = "An internal database error occurred";
@@ -42,7 +45,7 @@
     		$salt = substr($intermediateSalt, 0, 6);
     		$hash = hash("sha256", $password . $salt);
 
-				$database->query("INSERT INTO users (username, password, salt) VALUES ('" . $database->sanitize($safe_username) . "', '" . $database->sanitize($hash) . "', '" . $database->sanitize($salt) . "')");
+				$database->query("INSERT INTO users (username, password, salt, blid) VALUES ('" . $database->sanitize($safe_username) . "', '" . $database->sanitize($hash) . "', '" . $database->sanitize($salt) . "', '" . $database->sanitize($blid) . "')");
 				$_SESSION['justregistered'] = 1;
 				header("Location: /login.php");
 				die();
@@ -54,12 +57,13 @@
 	$_PAGETITLE = "Glass | Register";
 	include(realpath(dirname(__FILE__) . "/private/header.php"));
 	include(realpath(dirname(__FILE__) . "/private/navigationbar.php"));
-
-	if(isset($status_message)) {
-		echo("<p>An Error has occurred: " . $status_message . "</p>");
-	}
 ?>
 <div class="maincontainer">
+	<?php
+	if(isset($status_message)) {
+		echo("<p class=\"center\">An Error has occurred: " . $status_message . "</p>");
+	}
+	?>
 	<form action="register.php" method="post">
 		<table class="formtable">
 			<tbody>
@@ -67,6 +71,7 @@
 				<tr><td>Username:</td><td><input type="text" name="username" id="username"></td></tr>
 				<tr><td>Password:</td><td><input type="password" name="password" id="password"></td></tr>
 				<tr><td>Verify Password:</td><td><input type="password" name="verify" id="verify"></td></tr>
+				<tr><td>BLID:</td><td><input type="text" name="blid" id="blid"></td></tr>
 				<tr><td class="center" colspan="2"><input type="submit"></td></tr>
 			</tbody>
 		</table>
