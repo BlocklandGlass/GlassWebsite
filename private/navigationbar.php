@@ -7,7 +7,7 @@
 			<li><a href="/builds" class="navbtn">Builds</a></li>
 			<li><a href="/stat" class="navbtn">Statistics</a></li>
 			<?php
-				if(isset($_SESSION['logged_in']))
+				if(isset($_SESSION['loggedin']))
 				{
 					echo("<li><a href=\"/user.php\" class=\"navbtn\">My Account</a></li>");
 					echo("<li><a href=\"/logout.php\" class=\"navbtn\">Log Out</a></li>");
