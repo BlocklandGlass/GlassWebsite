@@ -111,6 +111,18 @@ textarea {
   font-weight: bold;
 }
 
+.maincontainer .center {
+  text-align: center;
+}
+
+.formtable {
+  margin: 0 auto;
+}
+
+.formtable td {
+  padding: 10px;
+}
+
 .navcontainer {
   max-height: 65px;
 
