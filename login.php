@@ -38,7 +38,7 @@
 					$salt = $row->salt;
 					if($hash == hash("sha256", $password . $salt)) {
 						$_SESSION['loggedin'] = 1;
-						$_SESSION['uid'] = $row['id'];
+						$_SESSION['uid'] = $row->id;
 						$_SESSION['username'] = $row->username;
 						header("Location: /index.php");
 						$resource->close();
