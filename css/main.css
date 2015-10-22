@@ -96,6 +96,59 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+input[type="text"], input[type="password"] {
+  float: right;
+  display: block;
+
+  margin: 10px auto;
+  padding: 5px;
+
+  font-size: 16pt;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+input[type="text"]:hover, input[type="password"]:hover {
+  background-color: #eee;
+}
+
+input[type="text"]:active, input[type="password"]:active {
+  background-color: #eee;
+  border: 1px solid #ccf;
+}
+
+.blue {
+}
+
+.blue:hover {
+}
+
+input[type="submit"] {
+  border-radius: 5px;
+  padding: 15px 25px;
+  font-size: 22px;
+  text-decoration: none;
+  margin: 20px;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+
+  border: none;
+
+  background-color: #55acee;
+  box-shadow: 0px 5px 0px 0px #3C93D5;
+}
+
+input[type="submit"]:active {
+  background-color: #6FC6FF;
+
+  border: none;
+
+  transform: translate(0px, 5px);
+  -webkit-transform: translate(0px, 5px);
+  box-shadow: 0px 1px 0px 0px;
+}
+
 .maincontainer a {
   font-weight: bold;
   text-decoration: none;
@@ -121,6 +174,7 @@ textarea {
 
 .formtable td {
   padding: 10px;
+  vertical-align: middle;
 }
 
 .navcontainer {
