@@ -1,0 +1,3 @@
+[submodule "ParseTS"]
+	path = private/lib/ParseTS
+	url = https://github.com/BlocklandGlass/ParseTS.git
