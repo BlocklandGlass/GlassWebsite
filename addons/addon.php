@@ -74,6 +74,9 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
     <a href="http://blocklandglass.com/addon.php?id=<?php echo $addonObject->getId(); ?>" class="btn dlbtn red"><b>Development</b><span style="font-size:9pt"><br />v1.1.0-alpha.6</span></a><br />
   </div>
   <hr />
+  <a href="displayTest.php">Script Breakdown</a><br />
+  <a href="scriptDisplay.php">Script Analysis</a>
+  <hr />
   <div class="comments">
     <table>
       <tbody>
