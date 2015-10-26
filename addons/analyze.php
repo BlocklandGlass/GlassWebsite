@@ -15,7 +15,7 @@ function parseTS_dir($dir) {
 }
 
 function parseTS($file) {
-  $cmd = realpath(dirname(__DIR__)) . '/private/lib/parsets lint "' . $file . '"';
+  $cmd = realpath(dirname(__DIR__)) . '/private/lib/parsets lint ' . escapeshellarg(realpath($file));
 
   $res = shell_exec($cmd);
   return json_decode($res);
