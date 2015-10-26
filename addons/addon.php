@@ -73,6 +73,19 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
     <a href="http://blocklandglass.com/addon.php?id=<?php echo $addonObject->getId(); ?>" class="btn dlbtn yellow"><b>Unstable</b><span style="font-size:9pt"><br />v1.1.0-alpha.1</span></a>
     <a href="http://blocklandglass.com/addon.php?id=<?php echo $addonObject->getId(); ?>" class="btn dlbtn red"><b>Development</b><span style="font-size:9pt"><br />v1.1.0-alpha.6</span></a><br />
   </div>
+  <hr />
+  <div class="comments">
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            Jincux<br />9789<br />Administrator
+          </td>
+          <td>Some long profound comment about how amazing this is</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <?php require_once(realpath(dirname(__DIR__) . "/private/footer.php")); ?>
