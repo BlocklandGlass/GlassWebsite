@@ -286,6 +286,9 @@ input[type="submit"]:active {
   width: 100%;
 }
 
+.addontable tr {
+}
+
 .addontable tr:hover {
   background-color: #f6f6f6;
 }
@@ -302,6 +305,7 @@ input[type="submit"]:active {
 
 .addontable td {
   padding: 10px;
+  height: 32px;
 }
 
 .addontable thead {

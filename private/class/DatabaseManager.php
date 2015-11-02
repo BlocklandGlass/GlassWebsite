@@ -37,8 +37,7 @@ class DatabaseManager {
 
 			$this->mysqli = new mysqli("localhost", $this->username, $this->password, $this->database);
 			if($this->mysqli->connect_error) {
-				//redirect to error page?
-				echo "DATABASE ERROR!"; //temp TODO
+				throw new Exception("Unable to connect to database: " .  $this->mysqli->connect_error);
 			}
 		}
 	}
@@ -69,6 +68,10 @@ class DatabaseManager {
 
 	public function sanitize($sql) {
 		return $this->mysqli->real_escape_string($sql);
+	}
+
+	public function error() {
+		return $this->mysqli->error;
 	}
 }
 ?>

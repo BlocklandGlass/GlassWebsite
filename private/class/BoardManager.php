@@ -19,9 +19,16 @@ class BoardManager {
 
 		$db = new DatabaseManager();
 		$res = $db->query("SELECT `id` FROM `addon_boards`");
+
+		if(!$res) {
+			throw new Exception("Error getting data from database: " . $db->error());
+		}
+
 		while($obj = $res->fetch_object()) {
 			$ret[$obj->id] = BoardManager::getFromId($obj->id);
 		}
+		//improves performance with simultaneous connections
+		$res->close();
 		return $ret;
 	}
 }

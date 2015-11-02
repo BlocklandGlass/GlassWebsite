@@ -39,19 +39,26 @@
 			$resource = $database->query("SELECT * FROM `users` WHERE `username` = '" . $database->sanitize($safe_username) . "' OR `blid`='" . $database->sanitize($blid) . "'");
 
 			if(!$resource) {
-				$status_message = "An internal database error occurred";
+				$status_message = "An internal database error occurred: " . $database->error();
 			} else if($resource->num_rows === 0) {
 				$intermediateSalt = md5(uniqid(rand(), true));
-    		$salt = substr($intermediateSalt, 0, 6);
-    		$hash = hash("sha256", $password . $salt);
+				$salt = substr($intermediateSalt, 0, 6);
+				$hash = hash("sha256", $password . $salt);
 
-				$database->query("INSERT INTO users (username, password, salt, blid) VALUES ('" . $database->sanitize($safe_username) . "', '" . $database->sanitize($hash) . "', '" . $database->sanitize($salt) . "', '" . $database->sanitize($blid) . "')");
-				$_SESSION['justregistered'] = 1;
-				header("Location: /login.php");
-				die();
+				if($database->query("INSERT INTO users (username, password, salt, blid) VALUES ('" . $database->sanitize($safe_username) . "', '" . $database->sanitize($hash) . "', '" . $database->sanitize($salt) . "', '" . $database->sanitize($blid) . "')"))
+				{
+					$_SESSION['justregistered'] = 1;
+					header("Location: /login.php");
+					$resource->close();
+					die();
+				} else {
+					$status_message = "Error adding new user into databse: " . $database->error();
+				}
 			} else {
 				$status_message = "That username is already taken";
 			}
+			//improves performance with simultaneous connections
+			$resource->close();
 		}
 	}
 	$_PAGETITLE = "Glass | Register";
