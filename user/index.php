@@ -27,7 +27,7 @@ $userObject = UserManager::getFromId($_SESSION['uid']);
 							$board = $ao->getBoard();
 						?>
 						<div class="useraddon">
-              <a href="#"><img style="width: 1.2em;" src="http://blocklandglass.com/icon/icons32/<?php echo $board->getImage(); ?>.png" /> <span style="font-size: 1.2em; font-weight:bold;"><?php echo $ao->getName(); ?></span></a>
+              <a href="/addons/addon.php?id=<?php echo $ao->getId(); ?>"><img style="width: 1.2em;" src="http://blocklandglass.com/icon/icons32/<?php echo $board->getImage(); ?>.png" /> <span style="font-size: 1.2em; font-weight:bold;"><?php echo $ao->getName(); ?></span></a>
               <br />
               <span style="font-size: 0.8em;">
                 <a href="#">Update</a> | <a href="#">Edit</a> | <a href="#">Repository</a> | <a href="#">Delete</a>
