@@ -477,6 +477,25 @@ input[type="submit"]:active {
   background-color: #FFDE29;
 }
 
+.userhome {
+  width: 100%;
+}
+
+.userhome td {
+  vertical-align: top;
+  font-size: 1em;
+}
+
+.useraddon {
+  background-color: #eee;
+  border-radius: 15px;
+  padding: 15px;
+  margin: 5px;
+}
+
+.useraddon a {
+  font-weight: normal;
+}
 
 
 
