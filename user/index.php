@@ -11,7 +11,8 @@ require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
         <td style="width: 50%">
           <p>
             <h3>Recent Activity</h3>
-            <div style="background-color: #eee; border-radius: 15px; padding: 5px; margin: 0;"><a href="#">Jincux</a> commented on <a href="#">Blockland Glass</a><br /><span style="font-size: 0.8em;">Yesterday, 4:20pm</span></div>
+            <div style="background-color: #eee; border-radius: 15px; padding: 15px; margin: 5px;"><a href="#">Jincux</a> commented on <a href="#">Blockland Glass</a><br /><span style="font-size: 0.8em;">Yesterday, 4:20pm</span></div>
+            <div style="background-color: #eee; border-radius: 15px; padding: 15px; margin: 5px;">You were promoted to <b>Administrator</b><br /><span style="font-size: 0.8em;">Yesterday, 11:48am</span></div>
           </p>
         </td>
         <td>

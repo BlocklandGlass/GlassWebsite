@@ -81,7 +81,7 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
     <table>
       <tbody>
         <tr style="vertical-align:top">
-          <td>
+          <td style="width: 150px;">
             <a href="#">Jincux</a><br /><span style="font-size: .8em;">9789<br />Administrator</span>
           </td>
           <td>Some long profound comment about how amazing this is</td>
