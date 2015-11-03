@@ -80,9 +80,9 @@ require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
   <div class="comments">
     <table>
       <tbody>
-        <tr>
+        <tr style="vertical-align:top">
           <td>
-            Jincux<br />9789<br />Administrator
+            <a href="#">Jincux</a><br /><span style="font-size: .8em;">9789<br />Administrator</span>
           </td>
           <td>Some long profound comment about how amazing this is</td>
         </tr>

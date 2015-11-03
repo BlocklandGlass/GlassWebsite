@@ -17,21 +17,25 @@ $result = $db->query("SELECT * FROM `addon_addons` WHERE `name` LIKE '%" . $db->
 	<h2>Search Results for <u><?php echo(filter_var($_POST['query'], FILTER_SANITIZE_STRING) . "\n"); ?></u></h2>
 	<hr />
 	<?php
-	while($row = $result->fetch_object()) {
-		echo "<p><b><a href=\"addon.php?id=$row->id\">$row->name</a></b><br />";
-		if(strlen($row->description) > 200) {
-			$desc = substr($row->description, 0, 200) . " ...";
-		} else {
-			$desc = $row->description;
+	if($result->num_rows) {
+		while($row = $result->fetch_object()) {
+			echo "<p><b><a href=\"addon.php?id=$row->id\">$row->name</a></b><br />";
+			if(strlen($row->description) > 200) {
+				$desc = substr($row->description, 0, 200) . " ...";
+			} else {
+				$desc = $row->description;
+			}
+
+			$Parsedown = new Parsedown();
+			$Parsedown->setBreaksEnabled(true);
+			$Parsedown->setMarkupEscaped(true);
+
+			echo $Parsedown->text($desc);
+
+			echo "</p><br />";
 		}
-
-		$Parsedown = new Parsedown();
-		$Parsedown->setBreaksEnabled(true);
-		$Parsedown->setMarkupEscaped(true);
-
-		echo $Parsedown->text($desc);
-
-		echo "</p><br />";
+	} else {
+		echo "We couldn't find anything. Sorry about that.";
 	}
 	?>
 </div>
