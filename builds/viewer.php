@@ -1,6 +1,6 @@
 <?php
-$_PAGETITLE = "Glass | Build Viewer";
-include(realpath(dirname(__DIR__) . "/private/header.php"));
+	$_PAGETITLE = "Glass | Build Viewer";
+	include(realpath(dirname(__DIR__) . "/private/header.php"));
 ?>
 
 <canvas id="canvas">
@@ -19,15 +19,18 @@ include(realpath(dirname(__DIR__) . "/private/header.php"));
 </div>
 
 <div id="viewer_nav_container">
-<?php include(realpath(dirname(__DIR__) . "/private/navigationbar.php")); ?>
+	<?php include(realpath(dirname(__DIR__) . "/private/navigationbar.php")); ?>
 </div>
 
 <script src="./res/babylon.js"></script>
 <link rel="stylesheet" href="./res/NBL.css">
 <script type="text/javascript">
 <?php
-$testfile = "./res/House.bls";
-echo("var targetUrl = \"" . $testfile . "\";");
+	$testfile = "./res/Arch of Constantine.bls";
+	//$testfile = "./res/House.bls";
+	echo("var targetUrl = \"" . $testfile . "\";");
+
+	//even though the jquery is redundant, it seems I need to include it before NBL.js
 ?>
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
