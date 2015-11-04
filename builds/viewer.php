@@ -26,8 +26,8 @@
 <link rel="stylesheet" href="./res/NBL.css">
 <script type="text/javascript">
 <?php
-	$testfile = "./res/Arch of Constantine.bls";
-	//$testfile = "./res/House.bls";
+	//$testfile = "./res/Arch of Constantine.bls";
+	$testfile = "./res/House.bls";
 	echo("var targetUrl = \"" . $testfile . "\";");
 
 	//even though the jquery is redundant, it seems I need to include it before NBL.js
