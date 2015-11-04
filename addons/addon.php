@@ -73,6 +73,7 @@ include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 				$Parsedown->setBreaksEnabled(true);
 				$Parsedown->setMarkupEscaped(true);
 
+<<<<<<< HEAD
 				//this might need to be escaped as well, not too sure what goes on underneath
 				echo $Parsedown->text($addonObject->getDescription()); ?>
 	</p>
@@ -88,6 +89,31 @@ include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 	<div class="comments">
 	<?php include(realpath(dirname(__FILE__) . "/getComments.php")); ?>
 	</div>
+=======
+			echo $Parsedown->text($addonObject->getDescription()); ?>
+  </p>
+  <div style="text-align: center">
+    <a href="http://blocklandglass.com/addon.php?id=<?php echo $addonObject->getId(); ?>" class="btn dlbtn green"><b>Stable</b><span style="font-size:9pt"><br />v1.1.0</span></a>
+    <a href="http://blocklandglass.com/addon.php?id=<?php echo $addonObject->getId(); ?>" class="btn dlbtn yellow"><b>Unstable</b><span style="font-size:9pt"><br />v1.1.0-alpha.1</span></a>
+    <a href="http://blocklandglass.com/addon.php?id=<?php echo $addonObject->getId(); ?>" class="btn dlbtn red"><b>Development</b><span style="font-size:9pt"><br />v1.1.0-alpha.6</span></a><br />
+  </div>
+  <hr />
+  <a href="displayTest.php">Script Breakdown</a><br />
+  <a href="scriptDisplay.php">Script Analysis</a>
+  <hr />
+  <div class="comments">
+    <table>
+      <tbody>
+        <tr style="vertical-align:top">
+          <td style="width: 150px;">
+            <a href="#">Jincux</a><br /><span style="font-size: .8em;">9789<br />Administrator</span>
+          </td>
+          <td>Some long profound comment about how amazing this is</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+>>>>>>> 4053c50123e3300c9248c4ecdc6308463b48e6e6
 </div>
 
 <?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>

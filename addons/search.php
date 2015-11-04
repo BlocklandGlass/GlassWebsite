@@ -16,23 +16,27 @@ $result = $db->query("SELECT * FROM `addon_addons` WHERE `deleted` = 0 AND `name
 	<h2>Search Results for <u><?php htmlspecialchars($_POST['query']) . "\n"); ?></u></h2>
 	<hr />
 	<?php
-	while($row = $result->fetch_object()) {
-		echo "<p><b><a href=\"addon.php?id=$row->id\">" . htmlspecialchars($row->name) . "</a></b><br />";
+	if($result->num_rows) {
+		while($row = $result->fetch_object()) {
+			echo "<p><b><a href=\"addon.php?id=" . $row->id . "\">" . htmlspecialchars($row->name) . "</a></b><br />";
 
-		if(strlen($row->description) > 200) {
-			$desc = substr($row->description, 0, 200) . " ...";
-		} else {
-			$desc = $row->description;
+			if(strlen($row->description) > 200) {
+				$desc = substr($row->description, 0, 200) . " ...";
+			} else {
+				$desc = $row->description;
+			}
+
+			$Parsedown = new Parsedown();
+			$Parsedown->setBreaksEnabled(true);
+			$Parsedown->setMarkupEscaped(true);
+
+			//may need escaping
+			echo $Parsedown->text($desc);
+
+			echo "</p><br />";
 		}
-
-		$Parsedown = new Parsedown();
-		$Parsedown->setBreaksEnabled(true);
-		$Parsedown->setMarkupEscaped(true);
-
-		//may need escaping
-		echo $Parsedown->text($desc);
-
-		echo "</p><br />";
+	} else {
+		echo "We couldn't find anything. Sorry about that.";
 	}
 	$result->close();
 	?>

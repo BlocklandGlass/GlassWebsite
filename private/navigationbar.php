@@ -9,8 +9,8 @@
 			<?php
 				if(isset($_SESSION['loggedin']))
 				{
-					echo "<li><a href=\"/user\" class=\"navbtn\">" . htmlspecialchars($_SESSION['username']) . "</a></li>";
-					echo "<li><a href=\"/logout\" class=\"navbtn\">Log Out</a></li>";
+					echo "<li><a href=\"/user/\" class=\"navbtn\">" . htmlspecialchars($_SESSION['username']) . "</a></li>";
+					echo "<li><a href=\"/logout.php\" class=\"navbtn\">Log Out</a></li>";
 				}
 				else
 				{
