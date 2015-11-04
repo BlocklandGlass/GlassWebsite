@@ -10,11 +10,11 @@ class UserHandler {
 	private $groupData;
 
 
-
+	//recommend to choose "ID" or "Id" and stick with it
 	public function initFromId($id) {
 		$db = new DatabaseManager();
 
-		$result = $db->query("SELECT `username`,`blid`,`id`,`groups` FROM `users` WHERE id='" . $id . "';");
+		$result = $db->query("SELECT `username`,`blid`,`id`,`groups` FROM `users` WHERE id='" . $db->sanitize($id) . "';");
 		if($obj = $result->fetch_object()) {
 			$initialized = true;
 			$this->setUsername($obj->username);
@@ -32,7 +32,8 @@ class UserHandler {
 	public function initFromBLID($blid) {
 		$db = new DatabaseManager();
 
-		$result = $db->query("SELECT `username`,`blid`,`id`,`groups` FROM `users` WHERE blid='" . $blid . "';");
+		//maybe I'm putting condoms on condoms
+		$result = $db->query("SELECT `username`,`blid`,`id`,`groups` FROM `users` WHERE blid='" . $db->sanitize($blid) . "';");
 		if($obj = $result->fetch_object()) {
 			$initialized = true;
 			$this->setUsername($obj->username);
@@ -48,6 +49,7 @@ class UserHandler {
 
 	public function submitReviewerApp() {
     // TODO Should this be a user function or handled seperately?
+	//I think all the code involving reviews and approval should be in one location
 		$db = new DatabaseManager();
 
 		$db->query("INSERT INTO `user_reviewer_app` (uid, submitted, response) VALUES ('"
