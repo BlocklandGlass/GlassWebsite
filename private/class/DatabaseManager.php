@@ -8,37 +8,25 @@ class DatabaseManager {
 	private $mysqli;
 
 	function __construct() {
-		if(!is_file(dirname(__FILE__) . "/mysql.json")) {
-			$json = new stdClass();
-			$json->database = "blocklandglass";
-			$json->username = "user";
-			$json->password = "default";
-			$json->configured = false;
-			file_put_contents(dirname(__FILE__) . "/mysql.json", json_encode($json));
-			$this->sendToSetup();
-		} else {
-			$databaseData = json_decode(file_get_contents(dirname(__FILE__) . "/mysql.json"));
+		//memory cached for performance
+		//infinite persistence is not guaranteed, however
+		$keyData = apc_fetch('mysqlKey');
 
-			if(!is_object($databaseData)) {
-				$this->sendToSetup();
-			} else if($databaseData->username == "user" && $databaseData->password == "default") {
-				$this->sendToSetup();
+		if($keyData === false) {
+			if(!is_file(dirname(__FILE__) . "/key.json")) {
+				throw new Exception("Key file not found");
+			} else {
+				$keyData = json_decode(file_get_contents(dirname(__FILE__) . "/key.json"));
+				apc_store('mysqlKey', $keyData);
 			}
+		}
+		$this->database = $keyData->database;
+		$this->username = $keyData->username;
+		$this->password = $keyData->password;
+		$this->mysqli = new mysqli("localhost", $this->username, $this->password, $this->database);
 
-			$this->database = $databaseData->database;
-			$this->username = $databaseData->username;
-			$this->password = $databaseData->password;
-
-			if(!$databaseData->configured) {
-				$this->createNewDatabase();
-				$databaseData->configured = true;
-				file_put_contents(dirname(__FILE__) . "/mysql.json", json_encode($databaseData));
-			}
-
-			$this->mysqli = new mysqli("localhost", $this->username, $this->password, $this->database);
-			if($this->mysqli->connect_error) {
-				throw new Exception("Unable to connect to database: " .  $this->mysqli->connect_error);
-			}
+		if($this->mysqli->connect_error) {
+			throw new Exception("Unable to connect to database: " .  $this->mysqli->connect_error);
 		}
 	}
 
@@ -46,19 +34,8 @@ class DatabaseManager {
 		$this->mysqli->close();
 	}
 
-	private function sendToSetup() {
-		header('Location: /setup.php');
-	}
-
-	function createNewDatabase() {
-		// TODO
-		// haven't tested thoroughly
-		$command = "mysql -u{$this->username} -p{$this->password} -hlocalhost < ";
-
-		exec($command . realpath(dirname(__FILE__) . "/db.sql") , $output, $status);
-	}
-
-	public function fetchMysqli() { //this should be used extremely rarely
+	public function fetchMysqli() {
+		//this should be used extremely rarely
 		return $this->mysqli;
 	}
 

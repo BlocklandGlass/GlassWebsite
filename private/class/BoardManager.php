@@ -1,35 +1,69 @@
 <?php
-require_once dirname(__FILE__) . "/DatabaseManager.php";
 require_once dirname(__FILE__) . "/BoardObject.php";
 
-class BoardManager {
-	private static $classname = "BoardObject";
-	private static $instances = array();
+//it might be possible to put the requirement inline to avoid unnecessary file system calls
+require_once(dirname(__FILE__) . "/DatabaseManager.php");
 
+class BoardManager {
 	public static function getFromId($id) {
-		if(isset(BoardManager::$instances[$id]) && is_object(BoardManager::$instances[$id])) {
-			return BoardManager::$instances[$id];
-		} else {
-			return BoardManager::$instances[$id] = new BoardManager::$classname($id);
+		//force $id to be an integer
+		$id += 0;
+		$boardObj = apc_fetch('boardObject_' . $id);
+
+		if($boardObj === false) {
+			$boardObj = new BoardObject($id);
+			apc_store('boardObject_' . $id);
 		}
+		return $boardObj;
 	}
 
 	public static function getAllBoards() {
-		$ret = array();
+		$boardData = BoardManager::getBoardIndexData();
+		return $boardData;
+	}
 
-		$db = new DatabaseManager();
-		$res = $db->query("SELECT `id` FROM `addon_boards`");
+	public static function getBoardIndexFromId($id) {
+		$id += 0;
+		$boardData = BoardManager::getBoardIndexData();
 
-		if(!$res) {
-			throw new Exception("Error getting data from database: " . $db->error());
+		return $boardData[$id];
+	}
+
+	private static function getBoardIndexData() {
+		$boardData = apc_fetch('boardIndexData');
+
+		if($boardData === false) {
+			$database = new DatabaseManager();
+
+			//I would like to eliminate subcategories if possible
+			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_boards` (
+				`id` INT AUTO_INCREMENT,
+				`name` VARCHAR(20) NOT NULL,
+				`icon` VARCHAR(24) NOT NULL,
+				`subCategory` VARCHAR(20) NOT NULL,
+				PRIMARY KEY (id))")) {
+				throw new Exception("Error attempting to create addon_boards table: " . $database->error());
+			}
+			$resource = $database->query("SELECT * FROM `addon_boards`");
+
+			if(!$resource) {
+				throw new Exception("Error getting data from database: " . $database->error());
+			}
+			$boardData = array();
+
+			while($row = $resource->fetch_object()) {
+				//$boardObj = BoardManager::getFromId($row->id);
+				$boardData[$row->id] = array(
+					"id" => $row->id,
+					"name" => $row->name,
+					"icon" => $row->icon,
+					"subCategory" => $row->subcategory
+				);
+			}
+			$resource->close();
+			apc_store('boardIndexData', $boardData);
 		}
-
-		while($obj = $res->fetch_object()) {
-			$ret[$obj->id] = BoardManager::getFromId($obj->id);
-		}
-		//improves performance with simultaneous connections
-		$res->close();
-		return $ret;
+		return $boardData;
 	}
 }
 ?>
