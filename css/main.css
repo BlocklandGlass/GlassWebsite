@@ -176,7 +176,6 @@ input[type="submit"]:active {
   padding: 10px;
   vertical-align: middle;
 }
-
 .navcontainer {
   max-height: 65px;
 
@@ -501,8 +500,31 @@ input[type="submit"]:active {
   font-weight: normal;
 }
 
+.comments {
+  width: 800px;
+  margin: 0 auto;
+  background-color: #e8f4f8;
+  border-radius: 10px;
+}
 
+.commenttable tr {
+  margin-bottom: 50px;
+  border-bottom: 1px solid #bbb;
+}
 
+.commenttable tr:last-child {
+  border-bottom: none;
+}
+
+.commenttable td {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.commenttable {
+  margin: 15px;
+  padding: 0;
+}
 
 
 

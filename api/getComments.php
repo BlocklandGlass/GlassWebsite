@@ -1,4 +1,4 @@
-<table>
+<table class="commenttable">
 <tbody>
 <?php
 	//This page is designed to be requested by ajax
