@@ -1,4 +1,4 @@
-//exports all brick datablocks as a json array
+//exports all brick datablocks as a json object
 //NOTE: degree symbol is output as 0xb0
 //this may require a manual fix
 //converting to utf-8 and back to ansi seems to fix?
@@ -32,7 +32,7 @@ function export_brickdata(%filepath)
          %file.writeline("\t},");
       }
    }
-      %file.writeline("\t\"count\" : " @ %count);
+   %file.writeline("\t\"count\" : " @ %count);
    %file.writeline("}");
    %file.close();
    %file.delete();

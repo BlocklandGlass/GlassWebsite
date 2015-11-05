@@ -1,5 +1,6 @@
 <?php
-require_once dirname(__FILE__) . "/BoardObject.php";
+//require_once dirname(__FILE__) . "/BoardObject.php";
+require_once(dirname(__FILE__) . "/AddonManager.php");
 
 //it might be possible to put the requirement inline to avoid unnecessary file system calls
 require_once(dirname(__FILE__) . "/DatabaseManager.php");
@@ -8,13 +9,8 @@ class BoardManager {
 	public static function getFromId($id) {
 		//force $id to be an integer
 		$id += 0;
-		$boardObj = apc_fetch('boardObject_' . $id);
-
-		if($boardObj === false) {
-			$boardObj = new BoardObject($id);
-			apc_store('boardObject_' . $id);
-		}
-		return $boardObj;
+		$boardData = BoardManager::getBoardIndexData();
+		return $boardData[$id];
 	}
 
 	public static function getAllBoards() {
@@ -22,12 +18,12 @@ class BoardManager {
 		return $boardData;
 	}
 
-	public static function getBoardIndexFromId($id) {
+/*	public static function getBoardIndexFromId($id) {
 		$id += 0;
 		$boardData = BoardManager::getBoardIndexData();
 
 		return $boardData[$id];
-	}
+	}*/
 
 	private static function getBoardIndexData() {
 		$boardData = apc_fetch('boardIndexData');
@@ -57,7 +53,8 @@ class BoardManager {
 					"id" => $row->id,
 					"name" => $row->name,
 					"icon" => $row->icon,
-					"subCategory" => $row->subcategory
+					"subCategory" => $row->subcategory,
+					"count" => AddonManager::getCountFromBoard($row->id)
 				);
 			}
 			$resource->close();

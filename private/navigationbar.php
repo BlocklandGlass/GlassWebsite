@@ -11,7 +11,7 @@
 				{
 					//for some reason these only work for me with .php at the end
 					//it might have to do with my version of apache
-					echo "<li><a href=\"/user.php\" class=\"navbtn\">" . htmlspecialchars($_SESSION['username']) . "</a></li>";
+					echo "<li><a href=\"/user/\" class=\"navbtn\">" . htmlspecialchars($_SESSION['username']) . "</a></li>";
 					echo "<li><a href=\"/logout.php\" class=\"navbtn\">Log Out</a></li>";
 				}
 				else

@@ -1,6 +1,6 @@
 <?php
 	require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
-	require_once dirname(__DIR__) . "/private/class/BoardManager.php";
+//	require_once dirname(__DIR__) . "/private/class/BoardManager.php";
 
 	$_PAGETITLE = "Glass | Add-Ons";
 
@@ -33,9 +33,9 @@
 				//echo "<tr><td><image src=\"http://blocklandglass.com/icon/icons32/" . $board->getImage() . ".png\" /></td><td><a href=\"board.php?id=" . $board->getId() . "\">   " . htmlspecialchars($board->getName()) . "</a></td><td>" . $board->getCount() . "</td></tr>";
 				echo "<tr><td><image src=\"http://blocklandglass.com/icon/icons32/" . $board["icon"] . ".png\" /></td>";
 				echo "<td><a href=\"board.php?id=" . $board["id"] . "\">   " . htmlspecialchars($board["name"]) . "</a></td>";
-				$obj = new BoardObject($board["id"]);
-				$count = $obj->getCount();
-				echo "<td>" . $count . "</td></tr>";
+//				$obj = BoardManager::getFromId($board["id"]);
+//				$count = $obj->getCount();
+				echo "<td>" . $board["count"] . "</td></tr>";
 			}
 		}
 		?>

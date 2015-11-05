@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/DatabaseManager.php';
 require_once dirname(__FILE__) . '/AddonObject.php';
+
 class AddonManager {
 	private static $classname = "AddonObject";
 	private static $instances = array();
@@ -92,6 +93,57 @@ class AddonManager {
 			$ret[$obj->id] = AddonManager::getFromId($obj->id);
 		}
 		return $ret;
+	}
+
+	public static function getCountFromBoard($boardID) {		
+		$count = apc_fetch('boardData_count_' . $boardID);
+
+		if($count === false) {
+			$database = new DatabaseManager();
+			AddonManager::verifyTable($database);
+			$resource = $database->query("SELECT COUNT(*) FROM `addon_addons` WHERE board='" . $boardID . "'  AND deleted=0");
+
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
+			}
+			$count = $resource->fetch_row()[0];
+			$resource->close();
+
+			//Cache result for 1 hour
+			//Ideally we cache indefinitely and flush the value when it updates
+			//But I get the feeling that we may forget and end up with stale values
+			apc_store('boardData_count_' . $boardID, $count, 3600);
+		}
+		return $count;
+	}
+
+	private static function verifyTable($database) {
+		/*TO DO:
+			screenshots
+			tags
+			approval info should probably be in a different table
+			do we really need stable vs testing vs dev?
+			bargain/danger should probably be boards
+			figure out how data is split between addon and file
+		*/
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_addons` (
+			id INT AUTO_INCREMENT,
+			board INT NOT NULL,
+			author INT NOT NULL,
+			name VARCHAR(30) NOT NULL,
+			filename TEXT NOT NULL,
+			description TEXT NOT NULL DEFAULT '',
+			file INT NOT NULL,
+			deleted TINYINT NOT NULL DEFAULT 0,
+			dependencies TEXT NOT NULL DEFAULT '',
+			downloads_web INT NOT NULL DEFAULT 0,
+			downloads_ingame INT NOT NULL DEFAULT 0,
+			downloads_update INT NOT NULL DEFAULT 0,
+			updaterInfo TEXT NOT NULL,
+			approvalInfo TEXT NOT NULL,
+			PRIMARY KEY (id))")) {
+			throw new Exception("Failed to create table addon_addons: " . $database->error());
+		}
 	}
 }
 ?>
