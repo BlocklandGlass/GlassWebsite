@@ -14,7 +14,7 @@
 				}
 				else
 				{
-					echo "<li><a href=\"/login\" class=\"navbtn\">Log In</a></li>";
+					echo "<li><a href=\"/login.php\" class=\"navbtn\">Log In</a></li>";
 				}
 			?>
 		</ul>
