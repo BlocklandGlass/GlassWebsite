@@ -14,7 +14,7 @@
 	} else {
 		if($result->num_rows == 0) {
 			echo("<tr style=\"vertical-align:top\">");
-			echo("<td style=\"width: 150px;\">");
+			echo("<td colspan=\"2\" style=\"text-align: center;\">");
 			echo("There are no comments here yet.");
 			echo("</td></tr>");
 		} else {
