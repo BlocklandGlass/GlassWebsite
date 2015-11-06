@@ -8,12 +8,12 @@ class AddonManager {
 	//private static $instances = array();
 	private static $cacheTime = 3600;
 
-	public static function getFromId($id, $resource) {
+	public static function getFromId($id, $resource = false) {
 		$addonObject = apc_fetch('addonObject_' . $id);
 
 		if($addonObject === false)
 		{
-			if(isset($resource)) {
+			if($resource !== false) {
 				$addonObject = new AddonObject($resource);
 				apc_store('addonObject_' . $id, $addonObject, AddonManager::$cacheTime);
 			} else {
@@ -66,7 +66,7 @@ class AddonManager {
 	}
 
 	public static function getFromBoardId($id, $bargain = false, $limit = 0, $offset = 0) {
-		$boardAddons = apc_fetch('boardAddons_' . $id)
+		$boardAddons = apc_fetch('boardAddons_' . $id);
 
 		if($boardAddons === false) {
 			$boardAddons = array();
@@ -91,7 +91,7 @@ class AddonManager {
 			//}
 
 			while($row = $resource->fetch_object()) {
-				$boardAddons[$obj->id] = AddonManager::getFromId($row->id, $row);
+				$boardAddons[$row->id] = AddonManager::getFromId($row->id, $row);
 			}
 			$resource->close();
 		}
@@ -131,7 +131,7 @@ class AddonManager {
 			$authorAddons = array();
 			$database = new DatabaseManager();
 			AddonManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `addon_addons` WHERE author='" . database->sanitize($blid) . "'");
+			$resource = $database->query("SELECT * FROM `addon_addons` WHERE author='" . $database->sanitize($blid) . "'");
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());

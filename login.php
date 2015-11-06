@@ -89,6 +89,11 @@
 			</tbody>
 		</table>
 		<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
+		<?php
+			if(isset($_POST['redirect'])) {
+				echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($_POST['redirect']) . "\">");
+			}
+		?>
 	</form>
 	<p class="center">Don't have an account? <a href="register.php">Register</a></p>
 </div>

@@ -27,7 +27,7 @@ class BoardManager {
 		return $boardData;
 	}
 
-	function getAddonsFromBoard($id, $offset, $limit) {
+	public static function getAddonsFromBoard($id, $offset, $limit) {
 		if(isset($limit)) {
 			return AddonManager::getFromBoardId($id, false, $limit, $offset);
 		} else {

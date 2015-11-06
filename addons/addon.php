@@ -8,7 +8,7 @@
 
 	if(isset($_GET['id'])) {
 		try {
-			$addonObject = AddonManager::getFromId($_GET['id']);
+			$addonObject = AddonManager::getFromId($_GET['id'] + 0);
 			$boardObject = $addonObject->getBoard();
 		} catch(Exception $e) {
 			//board doesn't exist
@@ -28,7 +28,7 @@
 <div class="maincontainer">
 	<?php
 		echo "<span style=\"font-size: 9pt;\"><a href=\"/addons/\">Add-Ons</a> >> ";
-		echo "<a href=\"board.php?id=" . $boardObject["id"] . "\">" . htmlspecialchars($boardObject["name"]) . "</a> >> ";
+		echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . htmlspecialchars($boardObject->getName()) . "</a> >> ";
 		echo "<a href=\"#\">" . htmlspecialchars($addonObject->getName()) . "</a></span>";
 		echo "<h2>" . htmlspecialchars($addonObject->getName()) . "</h2>";
 		//<span style="font-size: 9pt;"><a href="/addons/">Add-Ons</a> >> <a href="board.php?id=<?php echo $boardObject->getId() ? >"><?php echo htmlspecialchars($boardObject->getName()); ? ></a> >> <a href="#"><?php echo htmlspecialchars($addonObject->getName()); ? ></a></span>
@@ -65,7 +65,7 @@
 		}
 		?>
 		<br />
-		<image src="http://blocklandglass.com/icon/icons32/<?php echo $boardObject["icon"] ?>.png" /> <?php echo htmlspecialchars($boardObject["name"]) ?>
+		<image src="http://blocklandglass.com/icon/icons32/<?php echo $boardObject->getIcon() ?>.png" /> <?php echo htmlspecialchars($boardObject->getName()) ?>
 	</p>
 	<p>
 		<?php

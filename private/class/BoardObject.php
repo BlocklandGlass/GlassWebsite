@@ -15,11 +15,11 @@ class BoardObject {
 		$this->id = $resource->id;
 		$this->name = $resource->name;
 		$this->icon = $resource->icon;
-		$this->subCategory = $resource->sub;
-		$this->count => AddonManager::getCountFromBoard($this->id);
+		$this->subCategory = $resource->subCategory;
+		$this->count = AddonManager::getCountFromBoard($this->id);
 	}
 
-	function getId() {
+	function getID() {
 		return $this->id;
 	}
 

@@ -21,13 +21,13 @@
 				}
 				//these forms are a bit redundant but i'm not sure if login and logout will stay identical
 			?>
-			<form class="hidden" id="logoutForm" action="/logout.php">
+			<form class="hidden" id="logoutForm" action="/logout.php" method="post">
 				<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
-				<input type="hidden" name="<?php echo(htmlspecialchars($_SERVER['REQUEST_URI'])); ?>">
+				<input type="hidden" name="redirect" value="<?php echo(htmlspecialchars($_SERVER['REQUEST_URI'])); ?>">
 			</form>
-			<form class="hidden" id="loginForm" action="/login.php">
+			<form class="hidden" id="loginForm" action="/login.php" method="post">
 				<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
-				<input type="hidden" name="<?php echo(htmlspecialchars($_SERVER['REQUEST_URI'])); ?>">
+				<input type="hidden" name="redirect" value="<?php echo(htmlspecialchars($_SERVER['REQUEST_URI'])); ?>">
 			</form>
 		</ul>
 	</div>

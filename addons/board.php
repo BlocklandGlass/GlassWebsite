@@ -7,7 +7,7 @@
 
 	if(isset($_GET['id'])) {
 		try {
-			$boardObject = BoardManager::getFromId($_GET['id']);
+			$boardObject = BoardManager::getFromId($_GET['id'] + 0);
 		} catch(Exception $e) {
 			//board doesn't exist
 			header('Location: /addons');
@@ -17,39 +17,40 @@
 		header('Location: /addons');
 		die();
 	}
-	$_PAGETITLE = "Glass | " . $boardObject["name"];
+	$_PAGETITLE = "Glass | " . $boardObject->getName();
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>
 <div class="maincontainer">
-	<h1 style="text-align:center"><?php echo $boardObject["name"]; ?></h1>
-	<a href="/addons">Add-Ons</a> >> <a href="#"><?php echo $boardObject["name"] ?></a>
+	<h1 style="text-align:center"><?php echo $boardObject->getName(); ?></h1>
+	<a href="/addons">Add-Ons</a> >> <a href="#"><?php echo $boardObject->getName() ?></a>
 	<div class="pagenav">
 <?php
 	if(isset($_GET['page'])) {
-		$page = $_GET['page'];
+		//easy way to force an integer
+		$page = $_GET['page'] + 0;
 	} else {
 		$page = 1;
 	}
-	$pages = ceil($boardObject["count"]/10);
+	$pages = ceil($boardObject->getCount()/10);
 
 	if($pages >= 7) {
 		if($page < 4) {
 			for($i = 0; $i < 4; $i++) {
 				if($i+1 == $page) {
-					echo "[<a href=\"board.php?id=" . $boardObject["id"] . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>] ";
+					echo "[<a href=\"board.php?id=" . $boardObject->getID() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>] ";
 				} else {
-					echo "<a href=\"board.php?id=" . $boardObject["id"] . "&page=" . ($i+1) . "\">" . ($i+1) . "</a> ";
+					echo "<a href=\"board.php?id=" . $boardObject->getID() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a> ";
 				}
 			}
 			echo " ... ";
 
 			//TO DO: switch this over to ajax requests
-			echo "<a href=\"?id=" . $boardObject["id"] . "&page=" . ($pages-1) . "\">" . $pages-1 . "</a>";
-			echo "<a href=\"?id=" . $boardObject["id"] . "&page=" . $pages . "\">" . $pages . "</a>";
+			echo "<a href=\"?id=" . $boardObject->getID() . "&page=" . ($pages-1) . "\">" . $pages-1 . "</a>";
+			echo "<a href=\"?id=" . $boardObject->getID() . "&page=" . $pages . "\">" . $pages . "</a>";
 		} else if($pages-3 < $page) {
-			echo "<a href=\"?id=" . $boardObject["id"] . "&page=1\">1</a>";
-			echo "<a href=\"?id=" . $boardObject["id"] . "&page=2\">2</a>";
+			echo "<a href=\"?id=" . $boardObject->getID() . "&page=1\">1</a>";
+			echo "<a href=\"?id=" . $boardObject->getID() . "&page=2\">2</a>";
 			echo " ... ";
 
 			for($i = $pages-4; $i < $pages; $i++) {
@@ -60,23 +61,23 @@
 				}
 			}
 		} else { ?>
-			<a href="?id=<?php echo $boardObject["id"] ?>&page=1">1</a>
-			<a href="?id=<?php echo $boardObject["id"] ?>&page=2">2</a>
+			<a href="?id=<?php echo $boardObject->getID() ?>&page=1">1</a>
+			<a href="?id=<?php echo $boardObject->getID() ?>&page=2">2</a>
 			...
-			<a href="?id=<?php echo $boardObject["id"] . "&page=" . ($page-1); ?>"><?php echo $page-1; ?></a>
-			[<a href="?id=<?php echo $boardObject["id"] . "&page=" . $page; ?>"><?php echo $page; ?></a>]
-			<a href="?id=<?php echo $boardObject["id"] . "&page=" . ($page+1); ?>"><?php echo $page+1; ?></a>
+			<a href="?id=<?php echo $boardObject->getID() . "&page=" . ($page-1); ?>"><?php echo $page-1; ?></a>
+			[<a href="?id=<?php echo $boardObject->getID() . "&page=" . $page; ?>"><?php echo $page; ?></a>]
+			<a href="?id=<?php echo $boardObject->getID() . "&page=" . ($page+1); ?>"><?php echo $page+1; ?></a>
 			...
-			<a href="?id=<?php echo $boardObject["id"] . "&page=" . ($pages-1); ?>"><?php echo $pages-1; ?></a>
-			<a href="?id=<?php echo $boardObject["id"] . "&page=" . $pages; ?>"><?php echo $pages; ?></a>
+			<a href="?id=<?php echo $boardObject->getID() . "&page=" . ($pages-1); ?>"><?php echo $pages-1; ?></a>
+			<a href="?id=<?php echo $boardObject->getID() . "&page=" . $pages; ?>"><?php echo $pages; ?></a>
 			<?php
 		}
 	} else {
 		for($i = 0; $i < $pages; $i++) {
 			if($i+1 == $page) {
-				echo "[<a href=\"board.php?id=" . $boardObject["id"] . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>] ";
+				echo "[<a href=\"board.php?id=" . $boardObject->getID() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>] ";
 			} else {
-				echo "<a href=\"board.php?id=" . $boardObject["id"] . "&page=" . ($i+1) . "\">" . ($i+1) . "</a> ";
+				echo "<a href=\"board.php?id=" . $boardObject->getID() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a> ";
 				}
 			}
 	}
@@ -92,7 +93,8 @@
 		</tr>
 <?php
 	//$addons = $boardObject->getAddons(($page-1)*10, 10);
-	$addons = AddonManager::getFromBoardId($boardObject["id"], false, ($page-1)*10, 10);
+	//$addons = AddonManager::getFromBoardId($boardObject->getID(), false, ($page-1)*10, 10);
+	$addons = BoardManager::getAddonsFromBoard($boardObject->getID(), ($page-1)*10, 10);
 
 	foreach($addons as $addon) { ?>
 		<tr>
@@ -142,4 +144,4 @@
 	</table>
 </div>
 
-<?php require_once(realpath(dirname(__DIR__) . "/private/footer.php")); ?>
+<?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>

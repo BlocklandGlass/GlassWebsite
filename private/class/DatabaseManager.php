@@ -26,7 +26,18 @@ class DatabaseManager {
 		$this->mysqli = new mysqli("localhost", $this->username, $this->password, $this->database);
 
 		if($this->mysqli->connect_error) {
-			throw new Exception("Unable to connect to database: " .  $this->mysqli->connect_error);
+			$this->mysqli = new mysqli("localhost", $this->username, $this->password);
+
+			if($this->mysqli->connect_error) {
+				throw new Exception("Failed to connect to localhost with provided credentials: " . $this->mysqli->connect_error);
+			}
+
+			if(!$this->mysqli->select_db($this->database)) {
+				if(!($this->query("CREATE DATABASE IF NOT EXISTS `" . $this->sanitize($this->database) . "`") &&
+					$this->query("USE `" . $this->sanitize($this->database) . "`"))) {
+					throw new Exception("Unable to start database: " .  $this->mysqli->connect_error);
+				}
+			}
 		}
 	}
 

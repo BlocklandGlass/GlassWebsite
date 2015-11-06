@@ -6,7 +6,7 @@ class AccountManager {
 	//in this case the only cache hits will be for people who mistype their password
 	private static $cacheTime = 60;
 
-	public static function login($username, $password) {
+	public static function login($username, $password, $redirect) {
 		//$safe_username = filterUsername($username);
         //
 		//if($username !== $safe_username) {
@@ -25,7 +25,12 @@ class AccountManager {
 			$_SESSION['loggedin'] = 1;
 			$_SESSION['uid'] = $loginDetails['uid'];
 			$_SESSION['username'] = $loginDetails['username'];
-			header("Location: /index.php");
+
+			if(isset($redirect)) {
+				header("Location: " . $redirect);
+			} else {
+				header("Location: /index.php");
+			}
 			$resource->close();
 			//no need to cache on a successful login
 			die();
@@ -68,7 +73,12 @@ class AccountManager {
 		if($database->query("INSERT INTO users (username, password, salt, blid) VALUES ('" . $database->sanitize($safe_username) . "', '" . $database->sanitize($hash) . "', '" . $database->sanitize($salt) . "', '" . $database->sanitize($blid) . "')"))
 		{
 			$_SESSION['justregistered'] = 1;
-			header("Location: /login.php");
+
+			if(isset($redirect)) {
+				header("Location: " . $redirect);
+			} else {
+				header("Location: /index.php");
+			}
 			die();
 		} else {
 			throw new Exception("Error adding new user into databse: " . $database->error());
@@ -151,7 +161,7 @@ class AccountManager {
 			apc_store('loginAttempt_' . $username, $loginDetails, AccountManager::$cacheTime);
 			$loginDetails = apc_store('loginDetails_' . $username);
 		}
-		return $loginDetails
+		return $loginDetails;
 	}
 
 	//private static function filterUsername($input) {
