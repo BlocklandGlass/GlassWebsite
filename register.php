@@ -1,6 +1,5 @@
-<?php session_start(); ?>
-
-<?php
+<?php session_start();
+include(realpath(dirname(__FILE__) . "/private/class/AccountManager.php"));
 	if(isset($_SESSION['loggedin'])) {
 		header("Location: /index.php");
 		die();
@@ -18,8 +17,8 @@
 
 	//check to see if log in was attempted/successfull
 
-	if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['verify']) && isset($_POST['blid'])) {
-		$username = $_POST['username'];
+	if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['verify']) && isset($_POST['blid'])) {
+		$email = $_POST['email'];
 		$password = $_POST['password'];
 		$password_check = $_POST['verify'];
 		$blid = trim($_POST['blid']);
@@ -27,9 +26,9 @@
 
 		if(isset($_POST['redirect'])) {
 			$redirect = $_POST['redirect'];
-			$status_message = AccountManager::register($username, $password, $password_check, $blid, $redirect);
+			$status_message = AccountManager::register($email, $password, $password_check, $blid, $redirect);
 		} else {
-			$status_message = AccountManager::register($username, $password, $password_check, $blid, $redirect);
+			$status_message = AccountManager::register($email, $password, $password_check, $blid);
 		}
 	}
 	$_PAGETITLE = "Glass | Register";
@@ -46,10 +45,10 @@
 		<table class="formtable">
 			<tbody>
 				<tr><td class="center" colspan="2"><h2>Register</h2></td></tr>
-				<tr><td>Username:</td><td><input type="text" name="username" id="username"></td></tr>
+				<tr><td>E-Mail Address:</td><td><input type="text" name="email" id="email"></td></tr>
+				<tr><td>BLID:</td><td><input type="text" name="blid" id="blid"></td></tr>
 				<tr><td>Password:</td><td><input type="password" name="password" id="password"></td></tr>
 				<tr><td>Verify Password:</td><td><input type="password" name="verify" id="verify"></td></tr>
-				<tr><td>BLID:</td><td><input type="text" name="blid" id="blid"></td></tr>
 				<tr><td class="center" colspan="2"><input type="submit"></td></tr>
 			</tbody>
 		</table>

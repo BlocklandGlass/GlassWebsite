@@ -83,7 +83,7 @@
 		<table class="formtable">
 			<tbody>
 				<tr><td class="center" colspan="2"><h2>Log In</h2></td></tr>
-				<tr><td>Username:</td><td><input type="text" name="username" id="username"></td></tr>
+				<tr><td>E-mail or BLID:</td><td><input type="text" name="username" id="username"></td></tr>
 				<tr><td>Password:</td><td><input type="password" name="password" id="password"></td></tr>
 				<tr><td class="center" colspan="2"><input type="submit"></td></tr>
 			</tbody>

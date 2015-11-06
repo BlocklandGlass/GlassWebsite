@@ -6,15 +6,27 @@ class AccountManager {
 	//in this case the only cache hits will be for people who mistype their password
 	private static $cacheTime = 60;
 
-	public static function login($username, $password, $redirect) {
+	public static function login($identifier, $password, $redirect = "") {
+		if(is_numeric($identifier)) {
+			$blid = intval($identifier);
+			if(is_int($blid)) {
+				$loginDetails = AccountManager::getLoginDetailsFromBLID($blid);
+			} else {
+				return "Invalid e-mail/bl_id";
+			}
+		} else if(filter_var($identifier, FILTER_VALIDATE_EMAIL)) {
+			$email = $identifier;
+			$loginDetails = AccountManager::getLoginDetailsFromEmail($email);
+		} else {
+			return "Invalid e-mail/bl_id";
+		}
 		//$safe_username = filterUsername($username);
         //
 		//if($username !== $safe_username) {
 		//	return "Invalid username/password provided.  You may only use letters, numbers, spaces, periods, underscores, forward slashes, and dashes.";
 		//}
-		$hash = $loginDetails['password'];
+		$hash = $loginDetails['hash'];
 		$salt = $loginDetails['salt'];
-		$loginDetails = AccountManager::getLoginDetails($username);
 
 		if(!$loginDetails) {
 			//username not found
@@ -23,10 +35,10 @@ class AccountManager {
 
 		if($hash == hash("sha256", $password . $salt)) {
 			$_SESSION['loggedin'] = 1;
-			$_SESSION['uid'] = $loginDetails['uid'];
+			$_SESSION['blid'] = $loginDetails['blid'];
 			$_SESSION['username'] = $loginDetails['username'];
 
-			if(isset($redirect)) {
+			if($redirect !== "") {
 				header("Location: " . $redirect);
 			} else {
 				header("Location: /index.php");
@@ -43,34 +55,42 @@ class AccountManager {
 		return "Incorrect username and/or password";
 	}
 
-	public static function register($username, $password1, $password2, $blid) {
-		if(!validUsername($username)) {
+	public static function register($email, $password1, $password2, $blid) {
+		/*if(!validUsername($username)) {
 			return "Invalid username provided.  You must use 3-20 characters and may only use letters, numbers, spaces, periods, underscores, forward slashes, and dashes.";
+		}*/
+
+		if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			return "Invalid e-mail address";
 		}
 
 		if($password1 !== $password2) {
 			return "Your passwords do not match.";
 		}
 
-		if(strlen($password) < 4) {
+		if(strlen($password1) < 4) {
 			return "Your password must be at least 4 characters";
 		}
 
 		if(!is_numeric($blid)) {
 			return "INVALID BL_ID";
 		}
-		$loginDetails = AccountManager::getLoginDetails($username);
+		$loginDetails1 = AccountManager::getLoginDetailsFromBLID($blid);
+		$loginDetails2 = AccountManager::getLoginDetailsFromEmail($email);
 
-		if($loginDetails) {
-			return "That username is already taken.  Please try another.";
+		if($loginDetails1) {
+			return "That BL_ID is already in use!";
+		} else if($loginDetails2) {
+			return "That e-mail address is already in use.";
 		}
+
 		$database = new DatabaseManager();
 		//AccountManager::verifyTable($database);
 		$intermediateSalt = md5(uniqid(rand(), true));
 		$salt = substr($intermediateSalt, 0, 6);
-		$hash = hash("sha256", $password . $salt);
+		$hash = hash("sha256", $password1 . $salt);
 
-		if($database->query("INSERT INTO users (username, password, salt, blid) VALUES ('" . $database->sanitize($safe_username) . "', '" . $database->sanitize($hash) . "', '" . $database->sanitize($salt) . "', '" . $database->sanitize($blid) . "')"))
+		if($database->query("INSERT INTO users (password, salt, blid, email) VALUES ('" . $database->sanitize($hash) . "', '" . $database->sanitize($salt) . "', '" . $database->sanitize($blid) . "', '" . $database->sanitize($email) . "')"))
 		{
 			$_SESSION['justregistered'] = 1;
 
@@ -130,13 +150,13 @@ class AccountManager {
 	//	}
 	//}
 
-	private static function getLoginDetails($username) {
-		$loginDetails = apc_fetch('loginDetails_' . $username);
+	private static function getLoginDetailsFromEmail($email) {
+		$loginDetails = apc_fetch('loginDetails_' . $email);
 
 		if($loginDetails === false) {
 			$database = new DatabaseManager();
 			AccountManager::verifyTable($database);
-			$resource = $database->query("SELECT password, salt, id, username FROM users WHERE username = '" . $database->sanitize($username) . "'");
+			$resource = $database->query("SELECT password, salt, blid, username, email FROM users WHERE `email` = '" . $database->sanitize($email) . "'");
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
@@ -146,11 +166,13 @@ class AccountManager {
 				return false;
 			}
 
+			$resultObj = $resource->fetch_object();
+
 			$loginDetails = [
-				"hash" => $resource[0]->password,
-				"salt" => $resource[0]->salt,
-				"uid" => $resource[0]->id,
-				"username" => $resource[0]->username
+				"hash" => $resultObj->password,
+				"salt" => $resultObj->salt,
+				"blid" => $resultObj->blid, //no need to come up with two numerical identifiers
+				"username" => $resultObj->username //we might need to change this to pull from the user-log (from in-game auth); alternatively, have the user-log update the username var
 			];
 			$resource->close();
 
@@ -158,8 +180,44 @@ class AccountManager {
 			//	$hash = $row->password;
 			//	$salt = $row->salt;
 			//}
-			apc_store('loginAttempt_' . $username, $loginDetails, AccountManager::$cacheTime);
-			$loginDetails = apc_store('loginDetails_' . $username);
+			apc_store('loginAttempt_' . $email, $loginDetails, AccountManager::$cacheTime);
+			//$loginDetails = apc_fetch('loginDetails_' . $email); //causing error?
+		}
+		return $loginDetails;
+	}
+
+	private static function getLoginDetailsFromBLID($blid) {
+		$loginDetails = apc_fetch('loginDetails_' . $blid);
+
+		if($loginDetails === false) {
+			$database = new DatabaseManager();
+			AccountManager::verifyTable($database);
+			$resource = $database->query("SELECT password, salt, blid, username, email FROM users WHERE `blid` = '" . $database->sanitize($blid) . "'");
+
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
+			}
+
+			if($resource->num_rows === 0) {
+				return false;
+			}
+
+			$resultObj = $resource->fetch_object();
+
+			$loginDetails = [
+				"hash" => $resultObj->password,
+				"salt" => $resultObj->salt,
+				"blid" => $resultObj->blid, //no need to come up with two numerical identifiers
+				"username" => $resultObj->username //we might need to change this to pull from the user-log (from in-game auth); alternatively, have the user-log update the username var
+			];
+			$resource->close();
+
+			//while($row = $resource->fetch_object()) {
+			//	$hash = $row->password;
+			//	$salt = $row->salt;
+			//}
+			apc_store('loginAttempt_' . $blid, $loginDetails, AccountManager::$cacheTime);
+			//$loginDetails = apc_fetch('loginDetails_' . $blid); - causing error?
 		}
 		return $loginDetails;
 	}
@@ -179,18 +237,18 @@ class AccountManager {
 	private static function verifyTable($database) {
 		//maybe replace verified/banned with 'status'
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `users` (
-			id INT AUTO_INCREMENT,
 			username VARCHAR(20) NOT NULL,
 			displayname VARCHAR(20) NOT NULL,
 			blid INT NOT NULL DEFAULT '-1',
 			password VARCHAR(64) NOT NULL,
+			email VARCHAR(64) NOT NULL,
 			salt VARCHAR(10) NOT NULL,
 			session_last_active TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 			groups MEDIUMTEXT,
 			verified TINYINT NOT NULL DEFAULT 0,
 			banned TINYINT NOT NULL DEFAULT 0,
-			admin TINYINT NOT NULL DEFAULT 0
-			PRIMARY KEY (id))")) {
+			admin TINYINT NOT NULL DEFAULT 0,
+			PRIMARY KEY (blid))")) {
 			throw new Exception("Error creating users table: " . $database->error());
 		}
 	}

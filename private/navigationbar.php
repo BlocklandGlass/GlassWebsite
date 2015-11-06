@@ -8,9 +8,13 @@
 			<li><a href="/stat" class="navbtn">Statistics</a></li>
 			<?php
 				if(isset($_SESSION['loggedin'])) {
-					//for some reason these only work for me with .php at the end
-					//it might have to do with my version of apache
-					echo "<li><a href=\"/user\" class=\"navbtn\">" . htmlspecialchars($_SESSION['username']) . "</a></li>";
+					$name = "BLID_" . htmlspecialchars($_SESSION['blid']);
+					if(isset($_SESSION['username'])) {
+						if($_SESSION['username'] != "") {
+							$name = htmlspecialchars($_SESSION['username']);
+						}
+					}
+					echo "<li><a href=\"/user\" class=\"navbtn\">" . $name . "</a></li>";
 					echo "<li><a href=\"/logout.php\" class=\"navbtn\" onclick=\"document.getElementById('logoutForm').submit(); return false;\">Log Out</a></li>";
 				} else {
 					echo "<li><a href=\"/login.php\" class=\"navbtn\" onclick=\"document.getElementById('loginForm').submit(); return false;\">Log In</a></li>";
