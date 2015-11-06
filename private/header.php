@@ -1,8 +1,7 @@
 <?php
-if(!isset($_SESSION))
-{
-	session_start();
-}
+	if(!isset($_SESSION)) {
+		session_start();
+	}
 ?>
 
 <!doctype html>
@@ -11,9 +10,9 @@ if(!isset($_SESSION))
 		<meta charset="utf-8">
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<?php if(isset($_PAGETITLE)) {
-		echo '<title>' . $_PAGETITLE . '</title>';
+			echo '<title>' . $_PAGETITLE . '</title>';
 		} else {
-		echo '<title>Blockland Glass</title>';
+			echo '<title>Blockland Glass</title>';
 		}
 		?>
 		<meta name="description" content="">

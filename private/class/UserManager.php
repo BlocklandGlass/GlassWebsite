@@ -31,7 +31,7 @@ class UserManager {
 			throw new Exception("No Session!");
 		}
 
-		if($_SESSION['logged']) {
+		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
 			return UserManager::getFromId($_SESSION['uid']);
 		} else {
 			return false;

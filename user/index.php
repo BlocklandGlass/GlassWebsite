@@ -1,11 +1,20 @@
 <?php
-	//require this one since we need to make sure session_start() is called
-	require(realpath(dirname(__DIR__) . "/private/header.php"));
+	session_start();
+
+	if(!isset($_SESSION['loggedin']) || !$_SESSION['loggedin']) {
+		header("Location: /login.php");
+		die();
+	}
+	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonManager.php"));
-	//require_once(realpath(dirname(__DIR__) . "/private/class/BoardObject.php"));
+	require_once(realpath(dirname(__DIR__) . "/private/class/BoardObject.php"));
 	$userObject = UserManager::getFromId($_SESSION['uid']);
+
+	if(!userObject) {
+		throw new Exception("Invalid user id: " . $_SESSION['uid']);
+	}
 ?>
 <div class="maincontainer">
 	<span style="font-size: 1.5em;">Hey there, <b><?php echo $_SESSION['username']; ?></b></span>
@@ -23,7 +32,8 @@
 					<p>
 						<h3>My Add-Ons</h3>
 						<?php
-						$addons = AddonManager::getFromAuthor($userObject);
+						$addons = AddonManager::getFromAuthor($userObject->getBLID());
+
 						foreach($addons as $ao) {
 							$board = $ao->getBoard();
 							?>

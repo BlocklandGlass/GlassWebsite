@@ -6,6 +6,10 @@
 		die();
 	}
 
+	if(!isset($_SESSION['csrftoken'])) {
+		$_SESSION['csrftoken'] = rand();
+	}
+
 	function apply_custom_filter($input) {
 		//the only characters allowed are a-z, A-Z, 0-9, '.', '/', '-', '_', ' '
 		//there are more characters allowed in filepaths, but I will add those cases as they come up

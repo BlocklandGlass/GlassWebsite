@@ -1,16 +1,25 @@
 <?php
-//require_once dirname(__FILE__) . "/BoardObject.php";
-require_once(dirname(__FILE__) . "/AddonManager.php");
+require_once dirname(__FILE__) . "/BoardObject.php";
 
 //it might be possible to put the requirement inline to avoid unnecessary file system calls
 require_once(dirname(__FILE__) . "/DatabaseManager.php");
 
+/*TO DO:
+	System to update cached data
+*/
+
 class BoardManager {
 	public static function getFromId($id) {
 		//force $id to be an integer
-		$id += 0;
+		//actually, $id should be filtered on input, not in these classes
+		//$id += 0;
 		$boardData = BoardManager::getBoardIndexData();
-		return $boardData[$id];
+
+		if(isset($boardData[$id])) {
+			return $boardData[$id];
+		} else {
+			return false;
+		}
 	}
 
 	public static function getAllBoards() {
@@ -18,12 +27,13 @@ class BoardManager {
 		return $boardData;
 	}
 
-/*	public static function getBoardIndexFromId($id) {
-		$id += 0;
-		$boardData = BoardManager::getBoardIndexData();
-
-		return $boardData[$id];
-	}*/
+	function getAddonsFromBoard($id, $offset, $limit) {
+		if(isset($limit)) {
+			return AddonManager::getFromBoardId($id, false, $limit, $offset);
+		} else {
+			return AddonManager::getFromBoardId($id);
+		}
+	}
 
 	private static function getBoardIndexData() {
 		$boardData = apc_fetch('boardIndexData');
@@ -48,14 +58,7 @@ class BoardManager {
 			$boardData = array();
 
 			while($row = $resource->fetch_object()) {
-				//$boardObj = BoardManager::getFromId($row->id);
-				$boardData[$row->id] = array(
-					"id" => $row->id,
-					"name" => $row->name,
-					"icon" => $row->icon,
-					"subCategory" => $row->subcategory,
-					"count" => AddonManager::getCountFromBoard($row->id)
-				);
+				$boardData[$row->id] = new BoardObject($row);
 			}
 			$resource->close();
 			apc_store('boardIndexData', $boardData);
