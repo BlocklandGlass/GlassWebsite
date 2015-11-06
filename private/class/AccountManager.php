@@ -6,56 +6,45 @@ class AccountManager {
 	//in this case the only cache hits will be for people who mistype their password
 	private static $cacheTime = 60;
 
-	public static function login($identifier, $password, $redirect = "") {
+	public static function login($identifier, $password, $redirect = "/index.php") {
 		if(is_numeric($identifier)) {
 			$blid = intval($identifier);
+
 			if(is_int($blid)) {
 				$loginDetails = AccountManager::getLoginDetailsFromBLID($blid);
+
+				if(!$loginDetails) {
+					return "This BL_ID has not been verified yet, please use your Email instead";
+				}
 			} else {
-				return "Invalid e-mail/bl_id";
+				return "Invalid BL_ID";
 			}
-		} else if(filter_var($identifier, FILTER_VALIDATE_EMAIL)) {
+		} elseif(filter_var($identifier, FILTER_VALIDATE_EMAIL)) {
 			$email = $identifier;
 			$loginDetails = AccountManager::getLoginDetailsFromEmail($email);
 		} else {
 			return "Invalid e-mail/bl_id";
 		}
-		//$safe_username = filterUsername($username);
-        //
-		//if($username !== $safe_username) {
-		//	return "Invalid username/password provided.  You may only use letters, numbers, spaces, periods, underscores, forward slashes, and dashes.";
-		//}
 		$hash = $loginDetails['hash'];
 		$salt = $loginDetails['salt'];
 
 		if(!$loginDetails) {
 			//username not found
-			return "Incorrect username and/or password";
+			return "Incorrect login credentials";
 		}
 
-		if($hash == hash("sha256", $password . $salt)) {
+		if($hash === hash("sha256", $password . $salt)) {
 			$_SESSION['loggedin'] = 1;
 			$_SESSION['blid'] = $loginDetails['blid'];
 			$_SESSION['username'] = $loginDetails['username'];
-
-			if($redirect !== "") {
-				header("Location: " . $redirect);
-			} else {
-				header("Location: /index.php");
-			}
-			$resource->close();
-			//no need to cache on a successful login
+			header("Location: " . $redirect);
+//			$resource->close();
 			die();
 		}
-
-		//if(isset($flag)) {
-		//	apc_store('loginAttempt_' . $username, $loginDetails, AccountManager::$cacheTime);
-		//}
-		//password does not match username
-		return "Incorrect username and/or password";
+		return "Incorrect login credentials";
 	}
 
-	public static function register($email, $password1, $password2, $blid) {
+	public static function register($email, $password1, $password2, $blid, $redirect = "/index.php") {
 		/*if(!validUsername($username)) {
 			return "Invalid username provided.  You must use 3-20 characters and may only use letters, numbers, spaces, periods, underscores, forward slashes, and dashes.";
 		}*/
@@ -90,135 +79,78 @@ class AccountManager {
 		$salt = substr($intermediateSalt, 0, 6);
 		$hash = hash("sha256", $password1 . $salt);
 
-		if($database->query("INSERT INTO users (password, salt, blid, email) VALUES ('" . $database->sanitize($hash) . "', '" . $database->sanitize($salt) . "', '" . $database->sanitize($blid) . "', '" . $database->sanitize($email) . "')"))
-		{
-			$_SESSION['justregistered'] = 1;
+		//long if statement because oh well
+		//I am assuming 'groups' is a json array, so by default it is "[]"
+		if($database->query("INSERT INTO users (password, salt, blid, email, groups, username) VALUES ('" .
+			$database->sanitize($hash) . "', '" .
+			$database->sanitize($salt) . "', '" .
+			$database->sanitize($blid) . "', '" .
+			$database->sanitize($email) . "', '" .
+			$database->sanitize("[]") . "', '" .
+			$database->sanitize("Blockhead" . $blid) . "')")) {
+			//$_SESSION['justregistered'] = 1;
+			//header("Location: " . $redirect);
 
-			if(isset($redirect)) {
-				header("Location: " . $redirect);
-			} else {
-				header("Location: /index.php");
-			}
+			//I think this is the only way to do a redirect containing post information
+			echo("<!doctype html><head><meta charset=\"utf-8\"></head><body>");
+			echo("<form class=\"hidden\" action=\"/login.php\" name=\"redirectForm\" method=\"post\">");
+			echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($redirect) . "\">");
+			echo("<input type=\"hidden\" name=\"justregistered\" value=\"1\">");
+			echo("</form>");
+			echo("<script language=\"JavaScript\">document.redirectForm.submit();</submit>");
+			echo("</body></html>");
 			die();
 		} else {
 			throw new Exception("Error adding new user into databse: " . $database->error());
 		}
 	}
 
-
-
-	//	$safe_username = filterUsername($username);
-    //
-	//	if($username !== $safe_username || strlen($safe_username) < 3 || strlen($safe_username) > 20) {
-	//		return "Invalid username provided.  You must use 3-20 characters and may only use letters, numbers, spaces, periods, underscores, forward slashes, and dashes.";
-	//	}	else if($password !== $password_check) {
-	//		$status_message = "Your passwords do not match.";
-	//	} else if(strlen($password) < 4) {
-	//		$status_message = "Your password must be at least 4 characters";
-	//	} else if(!is_numeric($blid)) {
-	//		$status_message = "Invalid BL_ID";
-	//	} else {
-	//		require_once(realpath(dirname(__FILE__) . "/private/class/DatabaseManager.php"));
-	//		$database = new DatabaseManager();
-    //
-	//		//if($database
-	//		//	$status_message = "That username is already taken.  Please try another.";
-	//		//can never be too safe
-	//		$resource = $database->query("SELECT * FROM `users` WHERE `username` = '" . $database->sanitize($safe_username) . "' OR `blid`='" . $database->sanitize($blid) . "'");
-    //
-	//		if(!$resource) {
-	//			$status_message = "An internal database error occurred: " . $database->error();
-	//		} else if($resource->num_rows === 0) {
-	//			$intermediateSalt = md5(uniqid(rand(), true));
-	//			$salt = substr($intermediateSalt, 0, 6);
-	//			$hash = hash("sha256", $password . $salt);
-    //
-	//			if($database->query("INSERT INTO users (username, password, salt, blid) VALUES ('" . $database->sanitize($safe_username) . "', '" . $database->sanitize($hash) . "', '" . $database->sanitize($salt) . "', '" . $database->sanitize($blid) . "')"))
-	//			{
-	//				$_SESSION['justregistered'] = 1;
-	//				header("Location: /login.php");
-	//				$resource->close();
-	//				die();
-	//			} else {
-	//				$status_message = "Error adding new user into databse: " . $database->error();
-	//			}
-	//		} else {
-	//			$status_message = "That username is already taken";
-	//		}
-	//		//improves performance with simultaneous connections
-	//		$resource->close();
-	//	}
-	//}
-
 	private static function getLoginDetailsFromEmail($email) {
-		$loginDetails = apc_fetch('loginDetails_' . $email);
+		$loginDetails = apc_fetch('loginDetailsFromEmail_' . $email);
 
 		if($loginDetails === false) {
 			$database = new DatabaseManager();
-			AccountManager::verifyTable($database);
-			$resource = $database->query("SELECT password, salt, blid, username, email FROM users WHERE `email` = '" . $database->sanitize($email) . "'");
-
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-
-			if($resource->num_rows === 0) {
-				return false;
-			}
-
-			$resultObj = $resource->fetch_object();
-
-			$loginDetails = [
-				"hash" => $resultObj->password,
-				"salt" => $resultObj->salt,
-				"blid" => $resultObj->blid, //no need to come up with two numerical identifiers
-				"username" => $resultObj->username //we might need to change this to pull from the user-log (from in-game auth); alternatively, have the user-log update the username var
-			];
-			$resource->close();
-
-			//while($row = $resource->fetch_object()) {
-			//	$hash = $row->password;
-			//	$salt = $row->salt;
-			//}
-			apc_store('loginAttempt_' . $email, $loginDetails, AccountManager::$cacheTime);
+			$query = "SELECT password, salt, blid, username FROM users WHERE `email` = '" . $database->sanitize($email) . "'";
+			$loginDetails = AccountManager::buildLoginDetailsFromQuery($database, $query);
+			apc_store('loginDetailsFromEmail_' . $email, $loginDetails, AccountManager::$cacheTime);
 			//$loginDetails = apc_fetch('loginDetails_' . $email); //causing error?
 		}
 		return $loginDetails;
 	}
 
 	private static function getLoginDetailsFromBLID($blid) {
-		$loginDetails = apc_fetch('loginDetails_' . $blid);
+		$loginDetails = apc_fetch('loginDetailsFromBLID_' . $blid);
 
 		if($loginDetails === false) {
 			$database = new DatabaseManager();
-			AccountManager::verifyTable($database);
-			$resource = $database->query("SELECT password, salt, blid, username, email FROM users WHERE `blid` = '" . $database->sanitize($blid) . "'");
+			$query = "SELECT password, salt, blid, username FROM users WHERE `blid` = '" . $database->sanitize($blid) . "' AND  `verified` = 1";
+			$loginDetails = AccountManager::buildLoginDetailsFromQuery($database, $query);
+			apc_store('loginDetailsFromBLID_' . $blid, $loginDetails, AccountManager::$cacheTime);
+			//$loginDetails = apc_fetch('loginDetails_' . $blid); - causing error?
+		}
+		return $loginDetails;
+	}
 
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
+	private static function buildLoginDetailsFromQuery($database, $query) {
+		AccountManager::verifyTable($database);
+		$resource = $database->query($query);
 
-			if($resource->num_rows === 0) {
-				return false;
-			}
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
+		}
 
+		if($resource->num_rows === 0) {
+			$loginDetails = false;
+		} else {
 			$resultObj = $resource->fetch_object();
-
 			$loginDetails = [
 				"hash" => $resultObj->password,
 				"salt" => $resultObj->salt,
 				"blid" => $resultObj->blid, //no need to come up with two numerical identifiers
 				"username" => $resultObj->username //we might need to change this to pull from the user-log (from in-game auth); alternatively, have the user-log update the username var
 			];
-			$resource->close();
-
-			//while($row = $resource->fetch_object()) {
-			//	$hash = $row->password;
-			//	$salt = $row->salt;
-			//}
-			apc_store('loginAttempt_' . $blid, $loginDetails, AccountManager::$cacheTime);
-			//$loginDetails = apc_fetch('loginDetails_' . $blid); - causing error?
 		}
+		$resource->close();
 		return $loginDetails;
 	}
 
@@ -228,17 +160,20 @@ class AccountManager {
 	//	return preg_replace("/[^a-zA-Z0-9\.\-\/\_\ ]/", "", $input);
 	//}
 
-	private static function validUsername($username) {
-		//the allowed characters are a-z, A-Z, 0-9, '.', '/', '-', '_', ' '
-		//requires between 3 and 20 characters (inclusive)
-		return preg_match("/[^a-zA-Z0-9\.\-\/\_\ ]{3,20}/", $username);
-	}
+	//private static function validUsername($username) {
+	//	//the allowed characters are a-z, A-Z, 0-9, '.', '/', '-', '_', ' '
+	//	//requires between 3 and 20 characters (inclusive)
+	//	return preg_match("/[^a-zA-Z0-9\.\-\/\_\ ]{3,20}/", $username);
+	//}
 
 	private static function verifyTable($database) {
 		//maybe replace verified/banned with 'status'
+		//the issue with using only blid and not keeping our own identifier
+		//is that people can try and register other blids and lock them out
+		//the workaround is to have a separate table for unregistered users
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `users` (
+			uid INT AUTO_INCREMENT,
 			username VARCHAR(20) NOT NULL,
-			displayname VARCHAR(20) NOT NULL,
 			blid INT NOT NULL DEFAULT '-1',
 			password VARCHAR(64) NOT NULL,
 			email VARCHAR(64) NOT NULL,
@@ -248,7 +183,7 @@ class AccountManager {
 			verified TINYINT NOT NULL DEFAULT 0,
 			banned TINYINT NOT NULL DEFAULT 0,
 			admin TINYINT NOT NULL DEFAULT 0,
-			PRIMARY KEY (blid))")) {
+			PRIMARY KEY (uid))")) {
 			throw new Exception("Error creating users table: " . $database->error());
 		}
 	}

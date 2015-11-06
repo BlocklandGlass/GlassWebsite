@@ -71,7 +71,7 @@
 ?>
 <div class="maincontainer">
 	<?php
-	if(isset($_SESSION['justregistered']) && $_SESSION['justregistered'] == 1) {
+	if(isset($_POST['justregistered']) && $_POST['justregistered'] == 1) {
 		echo("<p class=\"center\">Thank you for registering!  Please log in to continue.</p>");
 	}
 

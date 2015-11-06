@@ -8,13 +8,14 @@
 			<li><a href="/stat" class="navbtn">Statistics</a></li>
 			<?php
 				if(isset($_SESSION['loggedin'])) {
-					$name = "BLID_" . htmlspecialchars($_SESSION['blid']);
-					if(isset($_SESSION['username'])) {
-						if($_SESSION['username'] != "") {
-							$name = htmlspecialchars($_SESSION['username']);
-						}
-					}
-					echo "<li><a href=\"/user\" class=\"navbtn\">" . $name . "</a></li>";
+					//we will make the default username be BLID_XXXX instead
+					//$name = "BLID_" . htmlspecialchars($_SESSION['blid']);
+					//if(isset($_SESSION['username'])) {
+					//	if($_SESSION['username'] != "") {
+					//		$name = htmlspecialchars($_SESSION['username']);
+					//	}
+					//}
+					echo "<li><a href=\"/user\" class=\"navbtn\">" . htmlspecialchars($_SESSION['username']) . "</a></li>";
 					echo "<li><a href=\"/logout.php\" class=\"navbtn\" onclick=\"document.getElementById('logoutForm').submit(); return false;\">Log Out</a></li>";
 				} else {
 					echo "<li><a href=\"/login.php\" class=\"navbtn\" onclick=\"document.getElementById('loginForm').submit(); return false;\">Log In</a></li>";
