@@ -14,34 +14,46 @@ class AccountManager {
 				$loginDetails = AccountManager::getLoginDetailsFromBLID($blid);
 
 				if(!$loginDetails) {
-					return "This BL_ID has not been verified yet, please use your Email instead";
+					return [
+						"message" => "This BL_ID has not been verified yet, please use your E-mail instead"
+					];
 				}
 			} else {
-				return "Invalid BL_ID";
+				return [
+					"message" => "Invalid BL_ID"
+				];
 			}
 		} elseif(filter_var($identifier, FILTER_VALIDATE_EMAIL)) {
 			$email = $identifier;
 			$loginDetails = AccountManager::getLoginDetailsFromEmail($email);
 		} else {
-			return "Invalid e-mail/bl_id";
+			return [
+				"message" => "Invalid E-mail/BL_ID"
+			];
 		}
-		$hash = $loginDetails['hash'];
-		$salt = $loginDetails['salt'];
 
 		if(!$loginDetails) {
 			//username not found
-			return "Incorrect login credentials";
+			return [
+				"message" => "Incorrect login credentials"
+			];
 		}
+		$hash = $loginDetails['hash'];
+		$salt = $loginDetails['salt'];
 
 		if($hash === hash("sha256", $password . $salt)) {
 			$_SESSION['loggedin'] = 1;
 			$_SESSION['blid'] = $loginDetails['blid'];
 			$_SESSION['username'] = $loginDetails['username'];
-			header("Location: " . $redirect);
-//			$resource->close();
-			die();
+			//header("Location: " . $redirect);
+			//die();
+			return [
+				"redirect" => $redirect
+			];
 		}
-		return "Incorrect login credentials";
+		return [
+			"message" => "Incorrect login credentials"
+		];
 	}
 
 	public static function register($email, $password1, $password2, $blid, $redirect = "/index.php") {
@@ -50,27 +62,39 @@ class AccountManager {
 		}*/
 
 		if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-			return "Invalid e-mail address";
+			return [
+				"message" => "Invalid e-mail address"
+			];
 		}
 
 		if($password1 !== $password2) {
-			return "Your passwords do not match.";
+			return [
+				"message" => "Your passwords do not match."
+			];
 		}
 
 		if(strlen($password1) < 4) {
-			return "Your password must be at least 4 characters";
+			return [
+				"message" => "Your password must be at least 4 characters"
+			];
 		}
 
 		if(!is_numeric($blid)) {
-			return "INVALID BL_ID";
+			return [
+				"message" => "INVALID BL_ID"
+			];
 		}
 		$loginDetails1 = AccountManager::getLoginDetailsFromBLID($blid);
 		$loginDetails2 = AccountManager::getLoginDetailsFromEmail($email);
 
 		if($loginDetails1) {
-			return "That BL_ID is already in use!";
+			return [
+				"message" => "That BL_ID is already in use!"
+			];
 		} else if($loginDetails2) {
-			return "That e-mail address is already in use.";
+			return [
+				"message" => "That E-mail address is already in use."
+			];
 		}
 
 		$database = new DatabaseManager();
@@ -92,14 +116,18 @@ class AccountManager {
 			//header("Location: " . $redirect);
 
 			//I think this is the only way to do a redirect containing post information
-			echo("<!doctype html><head><meta charset=\"utf-8\"></head><body>");
-			echo("<form class=\"hidden\" action=\"/login.php\" name=\"redirectForm\" method=\"post\">");
-			echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($redirect) . "\">");
-			echo("<input type=\"hidden\" name=\"justregistered\" value=\"1\">");
-			echo("</form>");
-			echo("<script language=\"JavaScript\">document.redirectForm.submit();</submit>");
-			echo("</body></html>");
-			die();
+			//echo("<!doctype html><head><meta charset=\"utf-8\"></head><body>");
+			//echo("<form class=\"hidden\" action=\"/login.php\" name=\"redirectForm\" method=\"post\">");
+			//echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($redirect) . "\">");
+			//echo("<input type=\"hidden\" name=\"justregistered\" value=\"1\">");
+			//echo("<input type=\"submit\" value=\"Click here if your browser does not automatically redirect you\">");
+			//echo("</form>");
+			//echo("<script language=\"JavaScript\">document.redirectForm.submit();</script>");
+			//echo("</body></html>");
+			//die();
+			return [
+				"redirect" => $redirect
+			];
 		} else {
 			throw new Exception("Error adding new user into databse: " . $database->error());
 		}
@@ -160,19 +188,18 @@ class AccountManager {
 	//	return preg_replace("/[^a-zA-Z0-9\.\-\/\_\ ]/", "", $input);
 	//}
 
-	//private static function validUsername($username) {
-	//	//the allowed characters are a-z, A-Z, 0-9, '.', '/', '-', '_', ' '
-	//	//requires between 3 and 20 characters (inclusive)
-	//	return preg_match("/[^a-zA-Z0-9\.\-\/\_\ ]{3,20}/", $username);
-	//}
+	private static function validUsername($username) {
+		//usernames need to be between 1 and 20 characters (inclusive) and cannot contain newlines
+		return preg_match("/.{1,20}/", $username);
+	}
 
 	private static function verifyTable($database) {
 		//maybe replace verified/banned with 'status'
 		//the issue with using only blid and not keeping our own identifier
 		//is that people can try and register other blids and lock them out
 		//the workaround is to have a separate table for unregistered users
+		//I think having KEY (blid) might work however
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `users` (
-			uid INT AUTO_INCREMENT,
 			username VARCHAR(20) NOT NULL,
 			blid INT NOT NULL DEFAULT '-1',
 			password VARCHAR(64) NOT NULL,
@@ -183,7 +210,7 @@ class AccountManager {
 			verified TINYINT NOT NULL DEFAULT 0,
 			banned TINYINT NOT NULL DEFAULT 0,
 			admin TINYINT NOT NULL DEFAULT 0,
-			PRIMARY KEY (uid))")) {
+			KEY (blid))")) {
 			throw new Exception("Error creating users table: " . $database->error());
 		}
 	}
