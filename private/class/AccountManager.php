@@ -56,7 +56,7 @@ class AccountManager {
 		];
 	}
 
-	public static function register($email, $password1, $password2, $blid, $redirect = "/index.php") {
+	public static function register($email, $password1, $password2, $blid) {
 		//if(!AccountManager::validUsername($username)) {
 		//	return [
 		//		"message" => "Invalid username provided. You may only use up to 20 characters."
@@ -114,7 +114,7 @@ class AccountManager {
 			$database->sanitize($email) . "', '" .
 			$database->sanitize("[]") . "', '" .
 			$database->sanitize("Blockhead" . $blid) . "')")) {
-			$_SESSION['justregistered'] = 1;
+			//$_SESSION['justregistered'] = 1;
 			//header("Location: " . $redirect);
 
 			//I think this is the only way to do a redirect containing post information

@@ -47,7 +47,7 @@
 	<div class="center" id="registerStatus" style="display: none;">
 		<?php echo("<p>" . htmlspecialchars($registerStatus['message']) . "</p>"); ?>
 	</div>
-	<form action="register.php" method="post" id="mainRegisterForm">
+	<form action="/register.php" method="post" id="mainRegisterForm">
 		<table class="formtable">
 			<tbody>
 				<tr><td class="center" colspan="2"><h2>Register</h2></td></tr>
@@ -65,6 +65,14 @@
 		?>
 	</form>
 </div>
+<form class="hidden" action="/login.php" method="post" id="redirectToLoginForm">
+<?php
+	if(isset($_POST['redirect'])) {
+		echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($_POST['redirect']) . "\">");
+	}
+?>
+	<input type="hidden" name="justregistered" value="1">
+</form>
 <script type="text/javascript">
 //http://jsperf.com/escape-html-special-chars/11
 function escapeHtml(text) {
@@ -93,7 +101,9 @@ $(document).ready(function () {
 			globalvar = response;
 
 			if(response.hasOwnProperty('redirect')) {
-				window.location.replace(response.redirect);
+				$("#redirectToLoginForm").get(0).setAttribute('action', escapeHtml(response.redirect));
+				$("#redirectToLoginForm").submit();
+				//window.location.replace(response.redirect);
 			} else {
 				$("#registerStatus").html("<p>" + escapeHtml(response.message) + "</p>");
 			}

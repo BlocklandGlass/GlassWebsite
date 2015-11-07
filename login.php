@@ -30,7 +30,17 @@
 			}
 		?>
 	</form>
-	<p class="center">Don't have an account? <a href="register.php">Register</a></p>
+<?php
+	if(isset($_POST['redirect'])) {
+		echo("<p class=\"center\">Don't have an account? <a href=\"register.php\" onclick=\"document.getElementById('redirectToRegisterForm').submit(); return false;\">Register</a></p>");
+		echo("<form class=\"hidden\" action=\"/register.php\" method=\"post\" id=\"redirectToRegisterForm\">");
+		echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($_POST['redirect']) . "\">");
+		echo("</form>");
+	} else {
+		echo("<p class=\"center\">Don't have an account? <a href=\"register.php\">Register</a></p>");
+	}
+?>
+
 </div>
 <div class="hidden" id="preloadImage">
 	<img src="/img/loading.gif" />
@@ -49,6 +59,7 @@ function escapeHtml(text) {
 		return map[m];
 	});
 }
+
 $(document).ready(function () {
 	if($("#loginStatus").children().html() === "Form incomplete.") {
 		$("#loginStatus").hide();
