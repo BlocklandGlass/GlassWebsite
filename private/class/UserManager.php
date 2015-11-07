@@ -4,6 +4,7 @@ require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 
 class UserManager {
 	private static $cacheTime = 600;
+	private static $credentialsCacheTime = 60;
 
 	public static function getFromBLID($blid) {
 		$userObject = apc_fetch('userObject_' . $blid);
@@ -156,7 +157,7 @@ class UserManager {
 			$database = new DatabaseManager();
 			$query = "SELECT password, salt, blid, username FROM users WHERE `email` = '" . $database->sanitize($email) . "'";
 			$loginDetails = UserManager::buildLoginDetailsFromQuery($database, $query);
-			apc_store('loginDetailsFromEmail_' . $email, $loginDetails, UserManager::$cacheTime);
+			apc_store('loginDetailsFromEmail_' . $email, $loginDetails, UserManager::$credentialsCacheTime);
 		}
 		return $loginDetails;
 	}
@@ -168,7 +169,7 @@ class UserManager {
 			$database = new DatabaseManager();
 			$query = "SELECT password, salt, blid, username FROM users WHERE `blid` = '" . $database->sanitize($blid) . "' AND  `verified` = 1";
 			$loginDetails = UserManager::buildLoginDetailsFromQuery($database, $query);
-			apc_store('loginDetailsFromBLID_' . $blid, $loginDetails, UserManager::$cacheTime);
+			apc_store('loginDetailsFromBLID_' . $blid, $loginDetails, UserManager::$credentialsCacheTime);
 		}
 		return $loginDetails;
 	}

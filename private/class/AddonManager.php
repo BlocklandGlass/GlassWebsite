@@ -4,9 +4,8 @@ require_once dirname(__FILE__) . '/AddonObject.php';
 
 //this should be the only class to interact with table `addon_addons`
 class AddonManager {
-	//private static $classname = "AddonObject";
-	//private static $instances = array();
 	private static $cacheTime = 3600;
+	private static $searchCacheTime = 600;
 
 	public static function getFromId($id, $resource = false) {
 		$addonObject = apc_fetch('addonObject_' . $id);
@@ -14,7 +13,6 @@ class AddonManager {
 		if($addonObject === false) {
 			if($resource !== false) {
 				$addonObject = new AddonObject($resource);
-				//apc_store('addonObject_' . $id, $addonObject, AddonManager::$cacheTime);
 			} else {
 				$database = new DatabaseManager();
 				AddonManager::verifyTable($database);
@@ -25,7 +23,7 @@ class AddonManager {
 				}
 
 				if($resource->num_rows == 0) {
-					return false;
+					$addonObject = false;
 				}
 				$addonObject = new AddonObject($resource->fetch_object());
 				$resource->close();
@@ -34,6 +32,53 @@ class AddonManager {
 			apc_store('addonObject_' . $id, $addonObject, AddonObject::getCacheTime());
 		}
 		return $addonObject;
+	}
+
+	public static function searchAddons($name = false, $blid = false, $board = false, $tag = false) {
+		//Caching this seems difficult and can cause issues with stale data easily
+		//oh well whatever
+		$cacheString = serialize([
+			"name" => $name,
+			"blid" => $blid,
+			"board" => $board,
+			"tag" => $tag
+		]);
+		$searchAddons = apc_fetch('searchAddons_' . $cacheString);
+
+		if($cacheString === false) {
+			$database = new DatabaseManager();
+			AddonManager::verifyTable($database);
+			$query = "SELECT * FROM `addon_addons` WHERE ";
+
+			if($name !== false) {
+				$query .= "`name` LIKE '%" . $database->sanitize($name) . "%' AND ";
+			}
+
+			if($blid !== false) {
+				$query .= "`blid` = '" . $database->sanitize($blid) . "' AND ";
+			}
+
+			if($board !== false) {
+				$query .= "`board` = '" . $database->sanitize($blid) . "' AND ";
+			}
+
+			if($tag !== false) {
+				$query .= "`tags` LIKE '%" . $database->sanitize($tag) . "%' AND ";
+			}
+			$query .= "`deleted` = 0";
+			$resource = $database->query($query);
+
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
+			}
+			$searchAddons = [];
+
+			while($row = $resource->fetch_object()) {
+				$searchAddons[] = AddonManager::getFromID($row->id, $row);
+			}
+			apc_store('searchAddons_' . $cacheString, $searchAddons, AddonManager::$searchCacheTime);
+		}
+		return $searchAddons;
 	}
 
 	public static function getUnapproved() {
@@ -56,7 +101,7 @@ class AddonManager {
 	}
 
 	public static function getFromBoardId($id, $bargain = false, $limit = 0, $offset = 0) {
-		$boardAddons = apc_fetch('boardAddons_' . $id);
+		$boardAddons = apc_fetch('boardAddons_' . $id . '_' . $limit . '_' . $offset);
 
 		if($boardAddons === false) {
 			$boardAddons = array();
@@ -78,34 +123,35 @@ class AddonManager {
 				$boardAddons[$row->id] = AddonManager::getFromId($row->id, $row);
 			}
 			$resource->close();
+			$boardAddons = apc_store('boardAddons_' . $id . '_' . $limit . '_' . $offset, $boardAddons, AddonManager::$cacheTime);
 		}
 		return $boardAddons;
 	}
 
 	//bargain bin should probably just be a board instead of a flag in the database
-	public static function getBargain() {
-		$ret = array();
-
-		$db = new DatabaseManager();
-		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE bargain=1 AND deleted=0 AND danger=0");
-		while($obj = $res->fetch_object()) {
-			$ret[$obj->id] = AddonManager::getFromId($obj->id);
-		}
-		$res->close();
-		return $ret;
-	}
+//	public static function getBargain() {
+//		$ret = array();
+//
+//		$db = new DatabaseManager();
+//		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE bargain=1 AND deleted=0 AND danger=0");
+//		while($obj = $res->fetch_object()) {
+//			$ret[$obj->id] = AddonManager::getFromId($obj->id);
+//		}
+//		$res->close();
+//		return $ret;
+//	}
 
 	//this should probably be a board too
-	public static function getDangerous() {
-		$ret = array();
-
-		$db = new DatabaseManager();
-		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE deleted=0 AND danger=1");
-		while($obj = $res->fetch_object()) {
-			$ret[$obj->id] = AddonManager::getFromId($obj->id);
-		}
-		return $ret;
-	}
+//	public static function getDangerous() {
+//		$ret = array();
+//
+//		$db = new DatabaseManager();
+//		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE deleted=0 AND danger=1");
+//		while($obj = $res->fetch_object()) {
+//			$ret[$obj->id] = AddonManager::getFromId($obj->id);
+//		}
+//		return $ret;
+//	}
 
 	//this function should probably take a blid or aid instead of an object
 	public static function getFromAuthor($blid) {

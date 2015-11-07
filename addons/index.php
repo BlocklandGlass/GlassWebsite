@@ -19,12 +19,10 @@
 		//We should probably redo part of it anyway to reflect tags
 		$boards = BoardManager::getAllBoards();
 		usort($boards, function($a, $b) {
-			//return strcmp($a["name"], $b["name"]);
 			return strcmp($a->getName(), $b->getName());
 		});
 		$subcat = array();
 		foreach($boards as $board) {
-			//$subcat[$board["subCategory"]][] = $board;
 			$subcat[$board->getSubCategory()][] = $board;
 		}
 		foreach($subcat as $subName=>$sub) {
@@ -32,14 +30,8 @@
 				<td colspan=\"3\"><b>" . htmlspecialchars($subName) . "</b></td>
 			</tr>";
 			foreach($sub as $board) {
-				//echo "<tr><td><image src=\"http://blocklandglass.com/icon/icons32/" . $board->getImage() . ".png\" /></td><td><a href=\"board.php?id=" . $board->getId() . "\">   " . htmlspecialchars($board->getName()) . "</a></td><td>" . $board->getCount() . "</td></tr>";
-				//echo "<tr><td><image src=\"http://blocklandglass.com/icon/icons32/" . $board["icon"] . ".png\" /></td>";
 				echo "<tr><td><image src=\"http://blocklandglass.com/icon/icons32/" . $board->getIcon() . ".png\" /></td>";
-				//echo "<td><a href=\"board.php?id=" . $board["id"] . "\">   " . htmlspecialchars($board["name"]) . "</a></td>";
 				echo "<td><a href=\"board.php?id=" . $board->getID() . "\">   " . htmlspecialchars($board->getName()) . "</a></td>";
-//				$obj = BoardManager::getFromId($board["id"]);
-//				$count = $obj->getCount();
-				//echo "<td>" . $board["count"] . "</td></tr>";
 				echo "<td>" . $board->getCount() . "</td></tr>";
 			}
 		}

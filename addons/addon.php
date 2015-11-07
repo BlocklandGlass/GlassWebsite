@@ -73,7 +73,7 @@
 			$Parsedown->setBreaksEnabled(true);
 			$Parsedown->setMarkupEscaped(true);
 
-			//this might need to be escaped as well, not too sure what goes on underneath
+			//External links appearing in the description should open in a new tab and switch to that tab instead of replacing the current one
 			echo $Parsedown->text($addonObject->getDescription());
 		?>
 	</p>
@@ -91,9 +91,9 @@
 	</div>
 </div>
 <script type="text/javascript">
-function buildCommentSection(data) {
-
-}
+//function buildCommentSection(data) {
+//
+// }
 
 $(document).ready(function () {
 	$("#commentSection").load("/ajax/getComments.php");

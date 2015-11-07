@@ -21,7 +21,7 @@ class CommentManager {
 				}
 
 				if($resource->num_rows == 0) {
-					return false;
+					commentObject = false;
 				}
 				$commentObject = new CommentObject($resource->fetch_object());
 				$resource->close();
