@@ -5,14 +5,14 @@ require_once(dirname(__FILE__) . "/AddonManager.php");
 //and ended up with basically the original version
 //here it is purely a data storage class
 class BoardObject {
-	private $id;
-	private $name;
-	private $icon;
-	private $subCategory;
-	private $count;
+	public $id;
+	public $name;
+	public $icon;
+	public $subCategory;
+	public $count;
 
 	public function __construct($resource) {
-		$this->id = $resource->id;
+		$this->id = intval($resource->id);
 		$this->name = $resource->name;
 		$this->icon = $resource->icon;
 		$this->subCategory = $resource->subCategory;

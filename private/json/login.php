@@ -22,13 +22,13 @@
 					"message" => "Cross Site Request Forgery Detected!"
 				];
 			} else {
-				require_once(realpath(dirname(__DIR__) . "/class/AccountManager.php"));
+				require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
 
 				if(isset($_POST['redirect'])) {
 					$redirect = $_POST['redirect'];
-					$response = AccountManager::login($username, $password, $redirect);
+					$response = UserManager::login($username, $password, $redirect);
 				} else {
-					$response = AccountManager::login($username, $password);
+					$response = UserManager::login($username, $password);
 				}
 			}
 		} else {

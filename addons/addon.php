@@ -86,9 +86,20 @@
 	<a href="displayTest.php">Script Breakdown</a><br />
 	<a href="scriptDisplay.php">Script Analysis</a>
 	<hr />
-	<div class="comments">
-	<?php include(realpath(dirname(__DIR__) . "/api/getComments.php")); ?>
+	<div class="comments" id="commentSection">
+	<?php include(realpath(dirname(__DIR__) . "/ajax/getComments.php")); ?>
 	</div>
 </div>
+<script type="text/javascript">
+function buildCommentSection(data) {
 
+}
+
+$(document).ready(function () {
+	$("#commentSection").load("/ajax/getComments.php");
+	//$.getJSON("/ajax/getComments.php", function (data) {
+	//	$("#commentSection").html(data);
+	//});
+});
+</script>
 <?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>

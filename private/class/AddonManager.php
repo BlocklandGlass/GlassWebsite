@@ -11,11 +11,10 @@ class AddonManager {
 	public static function getFromId($id, $resource = false) {
 		$addonObject = apc_fetch('addonObject_' . $id);
 
-		if($addonObject === false)
-		{
+		if($addonObject === false) {
 			if($resource !== false) {
 				$addonObject = new AddonObject($resource);
-				apc_store('addonObject_' . $id, $addonObject, AddonManager::$cacheTime);
+				//apc_store('addonObject_' . $id, $addonObject, AddonManager::$cacheTime);
 			} else {
 				$database = new DatabaseManager();
 				AddonManager::verifyTable($database);
@@ -28,23 +27,14 @@ class AddonManager {
 				if($resource->num_rows == 0) {
 					return false;
 				}
-				$addonObject = new AddonObject($resource[0]);
+				$addonObject = new AddonObject($resource->fetch_object());
 				$resource->close();
 			}
 			//cache result for one hour
-			apc_store('addonObject_' . $id, $addonObject, AddonManager::$cacheTime);
+			apc_store('addonObject_' . $id, $addonObject, AddonObject::getCacheTime());
 		}
 		return $addonObject;
 	}
-
-	//	if(isset(AddonManager::$instances[$id])) {
-	//		return AddonManager::$instances[$id];
-	//	} else {
-	//		$obj = new AddonManager::$classname();
-	//		$obj->initFromId($id);
-	//		return AddonManager::$instances[$id] = $obj;
-	//	}
-	//}
 
 	public static function getUnapproved() {
 		$ret = array();
@@ -83,12 +73,6 @@ class AddonManager {
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
 			}
-
-			//if($limit != 0) {
-			//	$res = $db->query("SELECT `id` FROM `addon_addons` WHERE board='" . $db->sanitize($id) . "' AND bargain='" . $bargain . "' AND deleted=0 ORDER BY `name` asc LIMIT $offset, $limit");
-			//} else {
-			//	$res = $db->query("SELECT `id` FROM `addon_addons` WHERE board='" . $db->sanitize($id) . "' AND bargain='" . $bargain . "' AND deleted=0 ORDER BY `name` asc");
-			//}
 
 			while($row = $resource->fetch_object()) {
 				$boardAddons[$row->id] = AddonManager::getFromId($row->id, $row);
@@ -145,15 +129,6 @@ class AddonManager {
 		}
 		return $authorAddons;
 	}
-	//	$ret = array();
-    //
-	//	$db = new DatabaseManager();
-	//	//$res = $db->query("SELECT `id` FROM `addon_addons` WHERE author='" . database->sanitize($blid) . "'");
-	//	while($obj = $res->fetch_object()) {
-	//		$ret[$obj->id] = AddonManager::getFromId($obj->id);
-	//	}
-	//	return $ret;
-	//}
 
 	//from a caching perspective, I already have each board cached, so I would like to avoid duplicate data
 	//oh well, this function isn't actually used anyway

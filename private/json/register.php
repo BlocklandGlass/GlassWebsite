@@ -9,7 +9,7 @@
 		];
 	} else {
 		if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['verify']) && isset($_POST['blid'])) {
-			require_once(realpath(dirname(__DIR__) . "/class/AccountManager.php"));
+			require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
 
 			$email = $_POST['email'];
 			$password = $_POST['password'];
@@ -17,15 +17,10 @@
 			$blid = $_POST['blid'];
 			//I don't think it is actually necessary to check csrf token for registration
 
-			//if(isset($_POST['redirect'])) {
-			//	$redirect = $_POST['redirect'];
-			//	$response = AccountManager::register($email, $password, $password_check, $blid, $redirect);
-			// } else {
-				$response = AccountManager::register($email, $password, $password_check, $blid);
-			// }
+			$response = UserManager::register($email, $password, $password_check, $blid);
 		} else {
 			$response = [
-				"message" => "Some form data was not received."
+				"message" => "Form Incomplete."
 			];
 		}
 	}

@@ -6,39 +6,6 @@
 		header("Location: " . $registerStatus['redirect']);
 		die();
 	}
-//session_start();
-//include(realpath(dirname(__FILE__) . "/private/class/AccountManager.php"));
-//	if(isset($_SESSION['loggedin'])) {
-//		header("Location: /index.php");
-//		die();
-//	}
-
-	//if(!isset($_SESSION['csrftoken'])) {
-	//	$_SESSION['csrftoken'] = rand();
-	//}
-
-	//function apply_custom_filter($input) {
-	//	//the only characters allowed are a-z, A-Z, 0-9, '.', '/', '-', '_', ' '
-	//	//there are more characters allowed in filepaths, but I will add those cases as they come up
-	//	return preg_replace("/[^a-zA-Z0-9\.\-\/\_\ ]/", "", $input);
-	//}
-
-	//check to see if log in was attempted/successfull
-
-	//if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['verify']) && isset($_POST['blid'])) {
-	//	$email = $_POST['email'];
-	//	$password = $_POST['password'];
-	//	$password_check = $_POST['verify'];
-	//	$blid = trim($_POST['blid']);
-	//	//I don't think it is actually necessary to check csrf token for registration
-    //
-	//	if(isset($_POST['redirect'])) {
-	//		$redirect = $_POST['redirect'];
-	//		$status_message = AccountManager::register($email, $password, $password_check, $blid, $redirect);
-	//	} else {
-	//		$status_message = AccountManager::register($email, $password, $password_check, $blid);
-	//	}
-	//}
 	$_PAGETITLE = "Glass | Register";
 	include(realpath(dirname(__FILE__) . "/private/header.php"));
 	include(realpath(dirname(__FILE__) . "/private/navigationbar.php"));
@@ -87,6 +54,7 @@ function escapeHtml(text) {
 		return map[m];
 	});
 }
+
 $(document).ready(function () {
 	$("#registerStatus").hide();
 	$("#mainRegisterForm").submit(function () {
@@ -103,7 +71,6 @@ $(document).ready(function () {
 			if(response.hasOwnProperty('redirect')) {
 				$("#redirectToLoginForm").get(0).setAttribute('action', escapeHtml(response.redirect));
 				$("#redirectToLoginForm").submit();
-				//window.location.replace(response.redirect);
 			} else {
 				$("#registerStatus").html("<p>" + escapeHtml(response.message) + "</p>");
 			}

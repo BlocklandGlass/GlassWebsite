@@ -28,6 +28,8 @@ require_once dirname(__FILE__) . '/AddonManager.php';
 //TODO A lot of the add-on management functions need to be cleaned and organized
 
 class AddonObject {
+	private static $cacheTime = 3600;
+
 	private $id;
 	private $name;
 	private $fileName;
@@ -59,6 +61,10 @@ class AddonObject {
 	private $init = false;
 
 	private $deleted;
+
+	public static function getCacheTime() {
+		return AddonObject::$cacheTime();
+	}
 
 	public function isInit() {
 		return $this->init;

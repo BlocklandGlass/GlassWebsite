@@ -7,7 +7,9 @@
 
 	require_once(realpath(dirname(__DIR__) . "/private/class/DatabaseManager.php"));
 	$database = new DatabaseManager();
-	$result = $database->query("SELECT * FROM `addon_comments` WHERE `aid` = '" . $database->sanitize($_GET['id']) . "'");
+
+	//the "and `verified` = 1 can be deleted if we decide to force blid database entries to be unique
+	$result = $database->query("SELECT * FROM `addon_comments` WHERE `blid` = '" . $database->sanitize($_GET['blid']) . "' AND `verified` = 1");
 
 	if(!$result) {
 		echo("Database error: " . $database->error());
