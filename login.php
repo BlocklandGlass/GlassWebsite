@@ -11,7 +11,7 @@
 	include(realpath(dirname(__FILE__) . "/private/navigationbar.php"));
 ?>
 <div class="maincontainer">
-	<div class="center" id="loginStatus" style="display: none;">
+	<div class="center" id="loginStatus">
 		<?php echo("<p>" . htmlspecialchars($loginStatus['message']) . "</p>"); ?>
 	</div>
 	<form action="login.php" method="post" id="mainLoginForm">
@@ -50,6 +50,9 @@ function escapeHtml(text) {
 	});
 }
 $(document).ready(function () {
+	if($("#loginStatus").children().html() === "Form incomplete.") {
+		$("#loginStatus").hide();
+	}
 	$("#mainLoginForm").submit(function () {
 		$("#loginStatus").html("<p><img src=\"/img/loading.gif\" /></p>");
 
@@ -68,11 +71,6 @@ $(document).ready(function () {
 				$("#loginStatus").html("<p>" + escapeHtml(response.message) + "</p>");
 			}
 		}, "json");
-
-		if(!$("#loginStatus").is(":visible")) {
-			$("#loginStatus").html("<img src=\"/img/loading.gif\" />");
-			$("#loginStatus").slideDown();
-		}
 		return false;
 	});
 });

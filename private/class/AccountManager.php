@@ -57,9 +57,11 @@ class AccountManager {
 	}
 
 	public static function register($email, $password1, $password2, $blid, $redirect = "/index.php") {
-		/*if(!validUsername($username)) {
-			return "Invalid username provided.  You must use 3-20 characters and may only use letters, numbers, spaces, periods, underscores, forward slashes, and dashes.";
-		}*/
+		//if(!AccountManager::validUsername($username)) {
+		//	return [
+		//		"message" => "Invalid username provided. You may only use up to 20 characters."
+		//	];
+		//}
 
 		if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			return [
@@ -78,6 +80,7 @@ class AccountManager {
 				"message" => "Your password must be at least 4 characters"
 			];
 		}
+		$blid = trim($blid);
 
 		if(!is_numeric($blid)) {
 			return [
@@ -96,7 +99,6 @@ class AccountManager {
 				"message" => "That E-mail address is already in use."
 			];
 		}
-
 		$database = new DatabaseManager();
 		//AccountManager::verifyTable($database);
 		$intermediateSalt = md5(uniqid(rand(), true));
@@ -112,7 +114,7 @@ class AccountManager {
 			$database->sanitize($email) . "', '" .
 			$database->sanitize("[]") . "', '" .
 			$database->sanitize("Blockhead" . $blid) . "')")) {
-			//$_SESSION['justregistered'] = 1;
+			$_SESSION['justregistered'] = 1;
 			//header("Location: " . $redirect);
 
 			//I think this is the only way to do a redirect containing post information
@@ -126,7 +128,7 @@ class AccountManager {
 			//echo("</body></html>");
 			//die();
 			return [
-				"redirect" => $redirect
+				"redirect" => "/login.php"
 			];
 		} else {
 			throw new Exception("Error adding new user into databse: " . $database->error());

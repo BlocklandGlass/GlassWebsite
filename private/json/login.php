@@ -32,13 +32,14 @@
 				}
 			}
 		} else {
-			if(isset($_POST['justregistered']) && $_POST['justregistered'] == 1) {
+			if(isset($_SESSION['justregistered']) && $_SESSION['justregistered'] == 1) {
 				$response = [
 					"message" => "Thank you for registering!  Please log in to continue."
 				];
+				$_SESSION['justregistered'] = 0;
 			} else {
 				$response = [
-					"message" => "Some form data was not received."
+					"message" => "Form incomplete."
 				];
 			}
 		}
