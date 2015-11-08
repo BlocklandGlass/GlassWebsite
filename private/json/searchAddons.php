@@ -2,32 +2,32 @@
 	require_once(realpath(dirname(__DIR__) . "/class/AddonManager.php"));
 	$searchArray = [];
 
-	if(isset($_GET['query'])) {
-		$searchArray['name'] = $_GET['query'];
+	if(isset($_POST['query'])) {
+		$searchArray['name'] = $_POST['query'];
 	}
 
-	if(isset($_GET['author'])) {
-		$searchArray['blid'] = intval($_GET['author']);
+	if(isset($_POST['blid'])) {
+		$searchArray['blid'] = intval($_POST['blid']);
 	}
 
-	if(isset($_GET['board'])) {
-		$searchArray['board'] = intval($_GET['board']);
+	if(isset($_POST['board'])) {
+		$searchArray['board'] = intval($_POST['board']);
 	}
 
-	if(isset($_GET['tag'])) {
-		$searchArrau['tag'] = $_GET['tag'];
+	if(isset($_POST['tag'])) {
+		$searchArrau['tag'] = $_POST['tag'];
 	}
 
-	if(isset($_GET['offset'])) {
-		$searchArray['offset'] = intval($_GET['offset']);
+	if(isset($_POST['offset'])) {
+		$searchArray['offset'] = intval($_POST['offset']);
 	}
 
-	if(isset($_GET['limit'])) {
-		$searchArray['limit'] = intval($_GET['limit']);
+	if(isset($_POST['limit'])) {
+		$searchArray['limit'] = intval($_POST['limit']);
 	}
 
-	if(isset($_GET['sort'])) {
-		$searchArray['sort'] = intval($_GET['sort']);
+	if(isset($_POST['sort'])) {
+		$searchArray['sort'] = intval($_POST['sort']);
 	}
 	$response = AddonManager::searchAddons($searchArray);
 	return $response;

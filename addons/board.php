@@ -5,6 +5,9 @@
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
 	//require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
 
+	//TO DO: rewrite this page to use /private/json/getBoardAddonsWithUsers.php
+	//	And probably an ajax page to go with it
+
 	if(isset($_GET['id'])) {
 		try {
 			$boardObject = BoardManager::getFromId($_GET['id'] + 0);
@@ -146,6 +149,8 @@
 		<td><?php echo ($addon->getDownloads(1) + $addon->getDownloads(2)); ?></td>
 		</tr><?php
 	}
+
+	//TO DO: page number links should also appear at the bottom, probably inside of the grey footer
 ?>
 		<tr class="boardheader">
 			<td colspan="4"></td>
