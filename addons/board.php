@@ -1,9 +1,9 @@
 <?php
 	require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonManager.php"));
-	require_once(realpath(dirname(__DIR__) . "/private/class/AddonObject.php"));
+	//require_once(realpath(dirname(__DIR__) . "/private/class/AddonObject.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
-	require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
+	//require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
 
 	if(isset($_GET['id'])) {
 		try {
@@ -93,14 +93,14 @@
 		</tr>
 <?php
 	//$addons = $boardObject->getAddons(($page-1)*10, 10);
-	//$addons = AddonManager::getFromBoardId($boardObject->getID(), false, ($page-1)*10, 10);
-	$addons = BoardManager::getAddonsFromBoard($boardObject->getID(), ($page-1)*10, 10);
+	$addons = AddonManager::getFromBoardId($boardObject->getID(), ($page-1)*10, 10);
+	//$addons = BoardManager::getAddonsFromBoardID($boardObject->getID(), ($page-1)*10, 10);
 
 	foreach($addons as $addon) { ?>
 		<tr>
 		<td style="width: 33%"><a href="addon.php?id=<?php echo $addon->getId(); ?>"><?php echo $addon->getName() ?></a></td>
 		<td style="font-size: 11pt"><?php
-		$authors = $addon->getAuthors();
+		$authors = $addon->getAuthorInfo();
 		if(sizeof($authors) == 1) {
 			$uo = new UserHandler();
 			$uo->initFromId($authors[0]->id);

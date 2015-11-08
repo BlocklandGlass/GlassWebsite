@@ -1,21 +1,17 @@
 <?php
-class CommentObject {
+class RatingObject {
 	//these are public because this makes them instantly convertible to json
 	//this is purely a data storage class anyway
 	public $id;
 	public $blid;
 	public $aid;
-	public $comment;
-	public $timestamp;
-	public $lastedit;
+	public $rating;
 
 	public function __construct($resource) {
 		$this->id = intval($resource->id);
 		$this->blid = intval($resource->blid);
 		$this->aid = intval($resource->aid);
-		$this->comment = $resource->comment;
-		$this->timestamp = $resource->timestamp;
-		$this->lastedit = $resource->lastedit;
+		$this->rating = intval($resource->rating);
 	}
 
 	public function getID() {
@@ -30,16 +26,8 @@ class CommentObject {
 		return $this->aid;
 	}
 
-	public function getComment() {
-		return $this->comment;
-	}
-
-	public function getTimeStamp() {
-		return $this->timestamp;
-	}
-
-	public function getLastEdit() {
-		return $this->lastedit;
+	public function getRating() {
+		return $this->rating;
 	}
 }
 ?>

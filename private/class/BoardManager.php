@@ -1,8 +1,8 @@
 <?php
-require_once dirname(__FILE__) . "/BoardObject.php";
+require_once(realpath(dirname(__FILE__) . "/BoardObject.php"));
 
 //it might be possible to put the requirement inline to avoid unnecessary file system calls
-require_once(dirname(__FILE__) . "/DatabaseManager.php");
+require_once(realpath(dirname(__FILE__) . "/DatabaseManager.php"));
 
 /*TO DO:
 	System to update cached data
@@ -27,11 +27,11 @@ class BoardManager {
 		return $boardData;
 	}
 
-	public static function getAddonsFromBoard($id, $offset, $limit) {
+	public static function getAddonsFromBoardID($id, $offset, $limit) {
 		if(isset($limit)) {
-			return AddonManager::getFromBoardId($id, false, $limit, $offset);
+			return AddonManager::getFromBoardID($id, $offset, $limit);
 		} else {
-			return AddonManager::getFromBoardId($id);
+			return AddonManager::getFromBoardID($id);
 		}
 	}
 

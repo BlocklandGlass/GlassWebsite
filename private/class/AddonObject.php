@@ -1,23 +1,126 @@
 <?php
 
-//this should be the only class to interact with `addon_files`
-//class AddonObject {
-//			id INT AUTO_INCREMENT,
-//			board INT NOT NULL,
-//			author INT NOT NULL,
-//			name VARCHAR(30) NOT NULL,
-//			filename TEXT NOT NULL,
-//			description TEXT NOT NULL DEFAULT '',
-//			file INT NOT NULL,
-//			deleted TINYINT NOT NULL DEFAULT 0,
-//			dependencies TEXT NOT NULL DEFAULT '',
-//			downloads_web INT NOT NULL DEFAULT 0,
-//			downloads_ingame INT NOT NULL DEFAULT 0,
-//			downloads_update INT NOT NULL DEFAULT 0,
-//			updaterInfo TEXT NOT NULL,
-//			approvalInfo TEXT NOT NULL,
-//}
+//this should be the only class to interact with `addon_files` ?
+//Actually it should probably be a purely data class to follow suit with others
 
+class AddonObject {
+	//public fields are ones automatically converted to json
+	public $id;
+	public $board;
+	public $blid;
+	public $name;
+	public $description;
+	public $downloads;
+	public $approved;
+	public $rating;
+	public $versionInfo;
+	public $authorInfo;
+	public $file;
+
+	private $filename;
+	private $deleted;
+	private $dependencies;
+	private $webDownloads;
+	private $ingameDownloads;
+	private $updateDownloads;
+	private $reviewInfo;
+
+	public function __construct($resource) {
+		$this->webDownloads = intval($resource->webDownloads);
+		$this->ingameDownloads = intval($resource->ingameDownloads);
+		$this->updateDownloads = intval($resource->updateDownloads);
+		$this->downloads = $this->webDownloads + $this->ingameDownloads + $this->updateDownloads;
+
+		$this->id = intval($resource->id);
+		$this->board = intval($resource->board);
+		$this->blid = intval($resource->blid);
+		$this->name = $resource->name;
+		$this->description = $resource->description;
+		$this->approved = intval($resource->approved);
+		$this->rating = floatval($resource->rating);
+		$this->versionInfo = json_decode($resource->versionInfo);
+		$this->AuthorInfo = json_decode($resource->versionInfo);
+		$this->file = intval($resource->file);
+
+		$this->filename = $resource->filename;
+		$this->deleted = intval($resource->deleted);
+		$this->dependencies = $resource->dependencies;
+		$this->reviewInfo = json_decode($resource->reviewInfo);
+	}
+
+	public function getID() {
+		return $this->id;
+	}
+
+	public function getBoard() {
+		return $this->board;
+	}
+
+	public function getBLID() {
+		return $this->blid;
+	}
+
+	public function getName() {
+		return $this->name;
+	}
+
+	public function getDescription() {
+		return $this->description;
+	}
+
+	public function getDownloads() {
+		return $this->downloads;
+	}
+
+	public function getApproved() {
+		return $this->approved;
+	}
+
+	public function getRating() {
+		return $this->rating;
+	}
+
+	public function getVersionInfo() {
+		return $this->versionInfo;
+	}
+
+	public function getAuthorInfo() {
+		return $this->authorInfo;
+	}
+
+	public function getFileName() {
+		return $this->filename;
+	}
+
+	public function getDeleted() {
+		return $this->deleted;
+	}
+
+	public function getFile() {
+		return $this->file;
+	}
+
+	public function getDependencies() {
+		return $this->dependencies;
+	}
+
+	public function getWebDownloads() {
+		return $this->downloads_web;
+	}
+
+	public function getIngameDownloads() {
+		return $this->downloads_ingame;
+	}
+
+	public function getUpdateDownloads() {
+		return $this->downloads_update;
+	}
+
+	public function getReviewInfo() {
+		return $this->reviewInfo;
+	}
+}
+/*
 require_once dirname(__FILE__) . '/DatabaseManager.php';
 require_once dirname(__FILE__) . '/BoardManager.php';
 //require_once dirname(__FILE__) . '/UserHandler.php';
@@ -587,21 +690,21 @@ class AddonObject {
 
 function make_thumb($src, $dest, $desired_width) {
 
-	/* read the source image */
+	// read the source image 
 	$source_image = imagecreatefrompng($src);
 	$width = imagesx($source_image);
 	$height = imagesy($source_image);
 
-	/* find the "desired height" of this thumbnail, relative to the desired width  */
+	// find the "desired height" of this thumbnail, relative to the desired width  
 	$desired_height = floor($height * ($desired_width / $width));
 
-	/* create a new, "virtual" image */
+	// create a new, "virtual" image 
 	$virtual_image = imagecreatetruecolor($desired_width, $desired_height);
 
-	/* copy source image at a resized size */
+	// copy source image at a resized size 
 	imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);
 
-	/* create the physical thumbnail image to its destination */
+	// create the physical thumbnail image to its destination 
 	imagepng($virtual_image, $dest);
 }
 
@@ -650,5 +753,6 @@ function Zip($source, $destination) {
     return $zip->close();
 }
 }
+*/
 
 ?>

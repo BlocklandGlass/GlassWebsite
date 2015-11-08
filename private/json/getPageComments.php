@@ -1,10 +1,10 @@
 <?php
-	if(!isset($_GET['blid'])) {
+	if(!isset($_GET['aid'])) {
 		return [];
 	}
 	require_once(realpath(dirname(__DIR__) . "/class/CommentManager.php"));
-	$blid = $_GET['blid'] + 0; //force it to be a number
-	$response = CommentManager::getCommentsFromBLID($blid);
+	$aid = $_GET['aid'] + 0; //force it to be a number
+	$response = CommentManager::getCommentsFromAddon($aid);
 
 	return $response;
 

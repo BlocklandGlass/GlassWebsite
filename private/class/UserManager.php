@@ -1,5 +1,5 @@
 <?php
-require_once(realpath(dirname(__FILE__) . '/UserHandler.php'));
+//require_once(realpath(dirname(__FILE__) . '/UserHandler.php'));
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 
 class UserManager {

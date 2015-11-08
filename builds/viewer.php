@@ -26,6 +26,8 @@
 <link rel="stylesheet" href="./res/NBL.css">
 <script type="text/javascript">
 <?php
+	//TO DO: add a toolbar at the bottom with things like "upload", "save", "clear", etc
+
 	//$testfile = "./res/Arch of Constantine.bls";
 	$testfile = "./res/House.bls";
 	echo("var targetUrl = \"" . $testfile . "\";");
