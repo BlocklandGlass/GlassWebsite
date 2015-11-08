@@ -9,7 +9,7 @@ require_once(realpath(dirname(__FILE__) . "/DatabaseManager.php"));
 */
 
 class BoardManager {
-	public static function getFromId($id) {
+	public static function getFromID($id) {
 		//force $id to be an integer
 		//actually, $id should be filtered on input, not in these classes
 		//$id += 0;

@@ -101,23 +101,33 @@
 		<td style="width: 33%"><a href="addon.php?id=<?php echo $addon->getId(); ?>"><?php echo $addon->getName() ?></a></td>
 		<td style="font-size: 11pt"><?php
 		$authors = $addon->getAuthorInfo();
+
+		//This system should probably be rethought
 		if(sizeof($authors) == 1) {
-			$uo = new UserHandler();
-			$uo->initFromId($authors[0]->id);
+			//$uo = new UserHandler();
+			//$uo->initFromId($authors[0]->id);
+			$uo = UserManager::getFromBLID($authors[0]->blid);
 			echo "<a href=\"#\">" . $uo->getName() . "</a>";
 		} else if(sizeof($authors) == 2) {
-			$uo = new UserHandler();
-			$uo->initFromId($authors[0]->id);
+			//$uo = new UserHandler();
+			//$uo->initFromId($authors[0]->id);
+			$uo = UserManager::getFromBLID($authors[0]->blid);
 			$uo2 = new UserHandler();
 			$uo2->initFromId($authors[1]->id);
+			$uo2 = UserManager::getFromBLID($authors[1]->blid);
 			echo "<a href=\"#\">" . $uo->getName() . "</a>";
 			echo " and ";
 			echo "<a href=\"#\">" . $uo2->getName() . "</a>";
 		} else {
 			$count = sizeof($authors);
-			foreach($authors as $num=>$auth) {
-				$uo = new UserHandler();
-				$uo->initFromId($auth->id);
+			//echo("DATA: ");
+			//print_r($authors);
+
+			foreach($authors as $num=>$author) {
+				//$uo = new UserHandler();
+				//$uo->initFromId($auth->id);
+				$uo = UserManager::getFromBLID($author->blid);
+
 				if($count-$num == 1) {
 					echo "and <a href=\"#\">" . $uo->getName() . "</a>";
 				} else {

@@ -3,13 +3,13 @@
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonObject.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
-	require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
+//	require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/lib/Parsedown.php"));
 
 	if(isset($_GET['id'])) {
 		try {
 			$addonObject = AddonManager::getFromId($_GET['id'] + 0);
-			$boardObject = $addonObject->getBoard();
+			$boardObject = BoardManager::getFromID($addonObject->getBoard());
 		} catch(Exception $e) {
 			//board doesn't exist
 			header('Location: /addons');
@@ -36,25 +36,29 @@
 	?>
 	<p>
 		<image src="http://blocklandglass.com/icon/icons32/user.png" /> By <?php
-		$authors = $addonObject->getAuthors();
+		$authors = $addonObject->getAuthorInfo();
 
 		if(sizeof($authors) == 1) {
-			$uo = new UserHandler();
-			$uo->initFromId($authors[0]->id);
+			//$uo = new UserHandler();
+			//$uo->initFromId($authors[0]->id);
+			$uo = UserManager::getFromBLID($authors[0]->blid);
 			echo "<a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>";
 		} else if(sizeof($authors) == 2) {
-			$uo = new UserHandler();
-			$uo->initFromId($authors[0]->id);
-			$uo2 = new UserHandler();
-			$uo2->initFromId($authors[1]->id);
+			//$uo = new UserHandler();
+			//$uo->initFromId($authors[0]->id);
+			$uo = UserManager::getFromBLID($authors[0]->blid);
+			//$uo2 = new UserHandler();
+			//$uo2->initFromId($authors[1]->id);
+			$uo2 = UserManager::getFromBLID($authors[1]->blid);
 			echo "<a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>";
 			echo " and ";
 			echo "<a href=\"#\">" . htmlspecialchars($uo2->getName()) . "</a>";
 		} else {
 			$count = sizeof($authors);
-			foreach($authors as $num=>$auth) {
-				$uo = new UserHandler();
-				$uo->initFromId($auth->id);
+			foreach($authors as $num=>$author) {
+				//$uo = new UserHandler();
+				//$uo->initFromId($auth->id);
+				$uo = UserManager::getFromBLID($author->blid);
 
 				if($count-$num == 1) {
 					echo "and <a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>";
