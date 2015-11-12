@@ -1,6 +1,6 @@
 <?php
-require_once dirname(__FILE__) . '/DatabaseManager.php';
-require_once dirname(__FILE__) . '/AddonObject.php';
+require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
+require_once(realpath(dirname(__FILE__) . '/AddonObject.php'));
 
 //this should be the only class to interact with table `addon_addons`
 class AddonManager {
@@ -16,9 +16,9 @@ class AddonManager {
 	public static $SORTRATINGDESC = 5;
 
 	public static function getFromID($id, $resource = false) {
-		$addonObject = apc_fetch('addonObject_' . $id);
+		$addonObject = apc_fetch('addonObject_' . $id, $success);
 
-		if($addonObject === false) {
+		if($success === false) {
 			if($resource !== false) {
 				$addonObject = new AddonObject($resource);
 			} else {
@@ -51,6 +51,8 @@ class AddonManager {
 	 *  	$offset - (INT) offset for results
 	 *  	$limit - (INT) maximum number of results to return, defaults to 10
 	 *  	$sort - (INT) a number representing the sorting method, defaults to ORDER BY `name` ASC
+	 *  
+	 *  	Needs to be updated to reflect new tag system
 	 */
 	public static function searchAddons($search) { //$name = false, $blid = false, $board = false, $tag = false) {
 		//Caching this seems difficult and can cause issues with stale data easily
@@ -289,7 +291,7 @@ class AddonManager {
 		return $count;
 	}
 
-	private static function verifyTable($database) {
+	public static function verifyTable($database) {
 		/*TO DO:
 			- screenshots
 			- tags
@@ -306,25 +308,28 @@ class AddonManager {
 			- I think users should just credit people in their descriptions
 			instead of having a dedicated authorInfo json object
 		*/
+		require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
+		require_once(realpath(dirname(__FILE__) . '/BoardManager.php'));
+		UserManager::verifyTable($database);
+		BoardManager::verifyTable($database);
+
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_addons` (
-			id INT AUTO_INCREMENT,
-			board INT NOT NULL,
-			blid INT NOT NULL,
-			name VARCHAR(30) NOT NULL,
-			filename TEXT NOT NULL,
-			description TEXT NOT NULL,
-			file INT NOT NULL,
-			deleted TINYINT NOT NULL DEFAULT 0,
-			approved TINYINT NOT NULL DEFAULT 0,
-			dependencies TEXT,
-			webDownloads INT NOT NULL DEFAULT 0,
-			ingameDownloads INT NOT NULL DEFAULT 0,
-			updateDownloads INT NOT NULL DEFAULT 0,
-			versionInfo TEXT NOT NULL,
-			authorInfo TEXT NOT NULL,
-			reviewInfo TEXT NOT NULL,
-			rating FLOAT,
-			PRIMARY KEY (id))")) {
+			`id` INT AUTO_INCREMENT,
+			`board` INT NOT NULL,
+			`blid` INT NOT NULL,
+			`name` VARCHAR(30) NOT NULL,
+			`filename` TEXT NOT NULL,
+			`description` TEXT NOT NULL,
+			`deleted` TINYINT NOT NULL DEFAULT 0,
+			`approved` TINYINT NOT NULL DEFAULT 0,
+			`uploadDate` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+			`versionInfo` TEXT NOT NULL,
+			`authorInfo` TEXT NOT NULL,
+			`reviewInfo` TEXT NOT NULL,
+			`rating` FLOAT,
+			FOREIGN KEY (`blid`) REFERENCES users(`blid`),
+			FOREIGN KEY (`board`) REFERENCES addon_boards(`id`),
+			PRIMARY KEY (`id`))")) {
 			throw new Exception("Failed to create table addon_addons: " . $database->error());
 		}
 	}

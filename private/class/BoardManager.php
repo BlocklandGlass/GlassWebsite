@@ -40,16 +40,7 @@ class BoardManager {
 
 		if($boardData === false) {
 			$database = new DatabaseManager();
-
-			//I would like to eliminate subcategories if possible
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_boards` (
-				`id` INT AUTO_INCREMENT,
-				`name` VARCHAR(20) NOT NULL,
-				`icon` VARCHAR(24) NOT NULL,
-				`subCategory` VARCHAR(20) NOT NULL,
-				PRIMARY KEY (id))")) {
-				throw new Exception("Error attempting to create addon_boards table: " . $database->error());
-			}
+			BoardManager::verifyTable($database);
 			$resource = $database->query("SELECT * FROM `addon_boards`");
 
 			if(!$resource) {
@@ -64,6 +55,17 @@ class BoardManager {
 			apc_store('boardIndexData', $boardData);
 		}
 		return $boardData;
+	}
+
+	public static function verifyTable($database) {
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_boards` (
+			`id` INT AUTO_INCREMENT,
+			`name` VARCHAR(20) NOT NULL,
+			`icon` VARCHAR(24) NOT NULL,
+			`subCategory` VARCHAR(20) NOT NULL,
+			PRIMARY KEY (`id`))")) {
+			throw new Exception("Error attempting to create addon_boards table: " . $database->error());
+		}
 	}
 }
 ?>

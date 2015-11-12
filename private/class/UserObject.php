@@ -8,7 +8,6 @@ class UserObject {
 
 	private $verified;
 	private $email;
-	private $groups;
 
 	public function __construct($resource) {
 		$this->username = $resource->username;
@@ -17,11 +16,14 @@ class UserObject {
 		$this->admin = intval($resource->admin);
 		$this->verified = intval($resource->verified);
 		$this->email = $resource->email;
-		$this->groups = json_decode($resource->groups);
 	}
 
 	public function getUserName() {
 		return $this->username;
+	}
+
+	public function getID() {
+		return $this->getBLID();
 	}
 
 	public function getBLID() {
@@ -42,10 +44,6 @@ class UserObject {
 
 	public function getEmail() {
 		return $this->email;
-	}
-
-	public function getGroups() {
-		return $this->groups;
 	}
 }
 ?>

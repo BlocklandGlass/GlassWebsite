@@ -6,13 +6,17 @@ class UserManager {
 	private static $cacheTime = 600;
 	private static $credentialsCacheTime = 60;
 
+	public static function getFromID($id) {
+		return getFromBLID($id);
+	}
+
 	public static function getFromBLID($blid) {
 		$userObject = apc_fetch('userObject_' . $blid);
 
 		if($userObject === false) {
 			$database = new DatabaseManager();
 			UserManager::verifyTable($database);
-			$resource = $database->query("SELECT username, blid, banned, admin, verified, email, groups FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "' AND `verified` = 1");
+			$resource = $database->query("SELECT username, blid, banned, admin, verified, email FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "' AND `verified` = 1");
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
@@ -31,7 +35,8 @@ class UserManager {
 
 	public static function getCurrent() {
 		if(!isset($_SESSION)) {
-			throw new Exception("No Session!");
+			//throw new Exception("No Session!");
+			return false;
 		}
 
 		if(isset($_SESSION['blid'])) {
@@ -105,7 +110,7 @@ class UserManager {
 
 		if(strlen($password1) < 4) {
 			return [
-				"message" => "Your password must be at least 4 characters"
+				"message" => "Your password must be at least 4 characters."
 			];
 		}
 		$blid = trim($blid);
@@ -120,7 +125,7 @@ class UserManager {
 
 		if($loginDetails1) {
 			return [
-				"message" => "That BL_ID is already in use!"
+				"message" => "That BL_ID is already in use! Contact administration if you believe this is a mistake."
 			];
 		} else if($loginDetails2) {
 			return [
@@ -146,7 +151,7 @@ class UserManager {
 				"redirect" => "/login.php"
 			];
 		} else {
-			throw new Exception("Error adding new user into databse: " . $database->error());
+			throw new Exception("Error adding new user into database: " . $database->error());
 		}
 	}
 
@@ -197,24 +202,24 @@ class UserManager {
 		return $loginDetails;
 	}
 
-	private static function validUsername($username) {
+	public static function validUsername($username) {
 		//usernames need to be between 1 and 20 characters (inclusive) and cannot contain newlines
 		return preg_match("/.{1,20}/", $username);
 	}
 
-	private static function verifyTable($database) {
+	public static function verifyTable($database) {
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `users` (
-			username VARCHAR(20) NOT NULL,
-			blid INT NOT NULL DEFAULT '-1',
-			password VARCHAR(64) NOT NULL,
-			email VARCHAR(64) NOT NULL,
-			salt VARCHAR(10) NOT NULL,
-			session_last_active TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-			groups MEDIUMTEXT,
-			verified TINYINT NOT NULL DEFAULT 0,
-			banned TINYINT NOT NULL DEFAULT 0,
-			admin TINYINT NOT NULL DEFAULT 0,
-			KEY (blid))")) {
+			`username` VARCHAR(20) NOT NULL,
+			`blid` INT NOT NULL DEFAULT '-1',
+			`password` VARCHAR(64) NOT NULL,
+			`email` VARCHAR(64) NOT NULL,
+			`salt` VARCHAR(10) NOT NULL,
+			`registration_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+			`session_last_active` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+			`verified` TINYINT NOT NULL DEFAULT 0,
+			`banned` TINYINT NOT NULL DEFAULT 0,
+			`admin` TINYINT NOT NULL DEFAULT 0,
+			KEY (`blid`))")) {
 			throw new Exception("Error creating users table: " . $database->error());
 		}
 	}

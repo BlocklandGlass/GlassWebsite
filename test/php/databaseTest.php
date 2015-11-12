@@ -1,5 +1,5 @@
 <?php
-require_once("../../private/class/databaseManager.php");
+require_once("../../private/class/DatabaseManager.php");
 
 class DatabaseTest extends PHPUnit_Framework_TestCase {
 	public function testError() {

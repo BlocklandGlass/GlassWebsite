@@ -1,4 +1,7 @@
 <?php
+require_once(realpath(dirname(__FILE__) . "/DependencyManager.php"));
+require_once(realpath(dirname(__FILE__) . "/TagManager.php"));
+require_once(realpath(dirname(__FILE__) . "/StatManager.php"));
 
 //this should be the only class to interact with `addon_files` ?
 //Actually it should probably be a purely data class to follow suit with others
@@ -10,26 +13,27 @@ class AddonObject {
 	public $blid;
 	public $name;
 	public $description;
-	public $downloads;
+	//public $downloads;
 	public $approved;
 	public $rating;
 	public $versionInfo;
 	public $authorInfo;
-	public $file;
+	//public $file;
+	//public $dependencies;
+	//public $tags
 
 	private $filename;
 	private $deleted;
-	private $dependencies;
-	private $webDownloads;
-	private $ingameDownloads;
-	private $updateDownloads;
+	//private $webDownloads;
+	//private $ingameDownloads;
+	//private $updateDownloads;
 	private $reviewInfo;
 
 	public function __construct($resource) {
-		$this->webDownloads = intval($resource->webDownloads);
-		$this->ingameDownloads = intval($resource->ingameDownloads);
-		$this->updateDownloads = intval($resource->updateDownloads);
-		$this->downloads = $this->webDownloads + $this->ingameDownloads + $this->updateDownloads;
+		//$this->webDownloads = intval($resource->webDownloads);
+		//$this->ingameDownloads = intval($resource->ingameDownloads);
+		//$this->updateDownloads = intval($resource->updateDownloads);
+		//$this->downloads = $this->webDownloads + $this->ingameDownloads + $this->updateDownloads;
 
 		$this->id = intval($resource->id);
 		$this->board = intval($resource->board);
@@ -40,11 +44,10 @@ class AddonObject {
 		$this->rating = floatval($resource->rating);
 		$this->versionInfo = json_decode($resource->versionInfo);
 		$this->authorInfo = json_decode($resource->authorInfo);
-		$this->file = intval($resource->file);
+		//$this->file = intval($resource->file);
 
 		$this->filename = $resource->filename;
 		$this->deleted = intval($resource->deleted);
-		$this->dependencies = $resource->dependencies;
 		$this->reviewInfo = json_decode($resource->reviewInfo);
 	}
 
@@ -96,28 +99,40 @@ class AddonObject {
 		return $this->deleted;
 	}
 
-	public function getFile() {
-		return $this->file;
-	}
-
-	public function getDependencies() {
-		return $this->dependencies;
-	}
-
-	public function getWebDownloads() {
-		return $this->downloads_web;
-	}
-
-	public function getIngameDownloads() {
-		return $this->downloads_ingame;
-	}
-
-	public function getUpdateDownloads() {
-		return $this->downloads_update;
-	}
+	//public function getFile() {
+	//	return $this->file;
+	//}
+    //
+	//public function getDependencies() {
+	//	return $this->dependencies;
+	//}
+    //
+	//public function getWebDownloads() {
+	//	return $this->downloads_web;
+	//}
+    //
+	//public function getIngameDownloads() {
+	//	return $this->downloads_ingame;
+	//}
+    //
+	//public function getUpdateDownloads() {
+	//	return $this->downloads_update;
+	//}
 
 	public function getReviewInfo() {
 		return $this->reviewInfo;
+	}
+
+	public function getDependencies() {
+		return DependencyManager::getDependenciesFromAddonID($this->id);
+	}
+
+	public function getTags() {
+		return TagManager::getTagsFromAddonID($this->id);
+	}
+
+	public function getTotalDownloads() {
+		return StatManager::getTotalAddonDownloads($this->id);
 	}
 }
 /*

@@ -7,7 +7,7 @@ class RatingManager {
 	private static $userCacheTime = 180;
 	private static $objectCacheTime = 3600;
 
-	public static getFromID($id, $resource = false) {
+	public static function getFromID($id, $resource = false) {
 		$ratingObject = apc_fetch('ratingObject_' . $id);
 
 		if($ratingObject === false) {
@@ -23,7 +23,7 @@ class RatingManager {
 				}
 
 				if($resource->num_rows == 0) {
-					ratingObject = false;
+					$ratingObject = false;
 				}
 				$ratingObject = new RatingObject($resource->fetch_object());
 				$resource->close();
@@ -77,13 +77,15 @@ class RatingManager {
 		return $addonRatings;
 	}
 
-	private static function verifyTable($database) {
+	public static function verifyTable($database) {
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_ratings` (
-			id INT AUTO_INCREMENT,
-			blid INT NOT NULL,
-			aid INT NOT NULL,
-			rating TINYINT NOT NULL,
-			PRIMARY KEY (id))")) {
+			`id` INT AUTO_INCREMENT,
+			`blid` INT NOT NULL,
+			`aid` INT NOT NULL,
+			`rating` TINYINT NOT NULL,
+			FOREIGN KEY (`blid`) REFERENCES users(`blid`),
+			FOREIGN KEY (`aid`) REFERENCES addon_addons(`id`),
+			PRIMARY KEY (`id`))")) {
 			throw new Exception("Unable to create table addon_ratings: " . $database->error());
 		}
 	}

@@ -4,7 +4,7 @@ require_once dirname(__FILE__) . '/CommentObject.php';
 
 class CommentManager {
 	private static $userCacheTime = 180;
-	private static $addonCacheTime = 180
+	private static $addonCacheTime = 180;
 	private static $objectCacheTime = 600;
 
 	public static $SORTDATEASC = 0;
@@ -26,7 +26,7 @@ class CommentManager {
 				}
 
 				if($resource->num_rows == 0) {
-					commentObject = false;
+					$commentObject = false;
 				}
 				$commentObject = new CommentObject($resource->fetch_object());
 				$resource->close();
@@ -58,7 +58,7 @@ class CommentManager {
 		return $userComments;
 	}
 
-	public static function getCommentsFromAddon($aid, $offset = 0, $limit = 15, $sort = CommentManager::$SORTDATEASC) {
+	public static function getCommentsFromAddon($aid, $offset = 0, $limit = 15, $sort = 0) {
 		$cacheString = serialize([
 			"aid" => $aid,
 			"offset" => $offset,
@@ -70,7 +70,7 @@ class CommentManager {
 		if($addonComments === false) {
 			$database = new DatabaseManager();
 			CommentManager::verifyTable($database);
-			$query = "SELECT * FROM `addon_comments` WHERE `aid` = '" . $database->sanitize($aid) . "' LIMIT '" . $database->sanitize($offset) . "', '" . $database->sanitize($limit) . "' ORDER BY ");
+			$query = "SELECT * FROM `addon_comments` WHERE `aid` = '" . $database->sanitize($aid) . "' LIMIT '" . $database->sanitize($offset) . "', '" . $database->sanitize($limit) . "' ORDER BY ";
 
 			switch($sort) {
 				case CommentManager::$SORTDATEASC:
@@ -98,15 +98,17 @@ class CommentManager {
 		return $addonComments;
 	}
 
-	private static function verifyTable($database) {
+	public static function verifyTable($database) {
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_comments` (
-			id INT AUTO_INCREMENT,
-			blid INT NOT NULL,
-			aid INT NOT NULL,
-			comment TEXT NOT NULL,
-			timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-			lastedit TIMESTAMP,
-			PRIMARY KEY (id))")) {
+			`id` INT AUTO_INCREMENT,
+			`blid` INT NOT NULL,
+			`aid` INT NOT NULL,
+			`comment` TEXT NOT NULL,
+			`timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+			`lastedit` TIMESTAMP,
+			FOREIGN KEY (`blid`) REFERENCES users(`blid`),
+			FOREIGN KEY (`aid`) REFERENCES addon_addons(`id`),
+			PRIMARY KEY (`id`))")) {
 			throw new Exception("Unable to create table addon_comments: " . $database->error());
 		}
 	}

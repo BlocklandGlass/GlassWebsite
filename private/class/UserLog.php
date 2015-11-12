@@ -1,6 +1,7 @@
 <?php
 require_once(realpath(dirname(__FILE__) . "/DatabaseManager.php"));
 
+//this should be merged with the UserManager class
 class UserLog {
 	//only cache for 60 seconds
 	//in this case the only cache hits will be for people who mistype their password
