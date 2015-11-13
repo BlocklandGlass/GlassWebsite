@@ -5,7 +5,7 @@ class BuildManager {
 	private static $objectCacheTime = 180; //3 minutes, enough time for someone to preview the build and then download it
 	private static $userBuildsCacheTime = 60;
 
-	public static getFromID($id, $resource = false) {
+	public static function getFromID($id, $resource = false) {
 		$buildObject = apc_fetch('buildObject_' . $id, $success);
 
 		if($success === false) {
@@ -55,6 +55,9 @@ class BuildManager {
 	}
 
 	public static function verifyTable($database) {
+		require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
+		UserManager::verifyTable($database); //we need users table to exist before we can create this one
+
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `build_builds` (
 			`id` INT NOT NULL AUTO_INCREMENT,
 			`blid` INT NOT NULL,
@@ -62,8 +65,11 @@ class BuildManager {
 			`filename` TEXT NOT NULL,
 			`bricks` INT NOT NULL DEFAULT 0,
 			`description` TEXT,
-			FOREIGN KEY `blid` REFERENCES users(`blid`),
-			PRIMARY KEY `id` (`id`))")) {
+			FOREIGN KEY (`blid`)
+				REFERENCES users(`blid`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			PRIMARY KEY (`id`))")) {
 			throw new Exception("Error creating builds table: " . $database->error());
 		}
 	}

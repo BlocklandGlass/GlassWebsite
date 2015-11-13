@@ -8,6 +8,7 @@ require_once("../../private/class/GroupManager.php");
 require_once("../../private/class/StatManager.php");
 require_once("../../private/class/DependencyManager.php");
 require_once("../../private/class/CommentManager.php");
+require_once("../../private/class/BuildManager.php");
 require_once("../../private/class/RatingManager.php");
 
 class TestManager {
@@ -22,8 +23,19 @@ class TestManager {
 		if(strpos($name, "test" === false)) {
 			throw new Exception("Database may not be safe to run tests on");
 		}
+
 		//addon_addons, addon_boards, addon_tags, addon_tagmap, group_groups, group_usermap, addon_comments, addon_ratings
-		if(!$database->query("DROP TABLE IF EXISTS addon_tags")) {
+		if(!$database->query("SET FOREIGN_KEY_CHECKS=0")) {
+			throw new Exception("Database error: " . $database->error());
+		}
+
+		if(!$database->query("DROP TABLE IF EXISTS addon_tagmap, addon_tags, addon_dependency,
+			addon_addons, addon_boards, addon_comments, addon_ratings, addon_stats,
+			users, build_builds, group_groups, group_usermap, statistics")) {
+			throw new Exception("Database error: " . $database->error());
+		}
+
+		if(!$database->query("SET FOREIGN_KEY_CHECKS=1")) {
 			throw new Exception("Database error: " . $database->error());
 		}
 		apc_clear_cache();
@@ -40,7 +52,12 @@ class TestManager {
 		DependencyManager::verifyTable($database);
 		CommentManager::verifyTable($database);
 		RatingManager::verifyTable($database);
+		BuildManager::verifyTable($database);
 		StatManager::verifyTable($database);
+
+		if(!$database->query("INSERT INTO `addon_boards` (name, icon, subCategory) VALUES ('testboard', 'brokenimage', 'testcategory')")) {
+			throw new Exception("Database error: " . $database->error());
+		}
 
 		if(!$database->query("INSERT INTO `users` (username, blid, password, email, salt, verified) VALUES ('testuser', '4833', '1d8436e97ef95a7a6151f47b909167c77cfe1985ee5500efa8d46cfe825abc59', 'email@email.com', '273eb4', '1')")) {
 			throw new Exception("Database error: " . $database->error());
@@ -51,11 +68,7 @@ class TestManager {
 			throw new Exception("Database error: " . $database->error());
 		}
 
-		if(!$database->query("INSERT INTO `addon_boards` (name, icon, subCategory) VALUES ('testboard', 'brokenimage', 'testcategory')")) {
-			throw new Exception("Database error: " . $database->error());
-		}
-
-		if(!$database->query("INSERT INTO `addon_tags` (name, icon, base_color, icon) VALUES ('dum tag', 'ff6600', 'brokenimage')")) {
+		if(!$database->query("INSERT INTO `addon_tags` (name, base_color, icon) VALUES ('dum tag', 'ff6600', 'brokenimage')")) {
 			throw new Exception("Database error: " . $database->error());
 		}
 

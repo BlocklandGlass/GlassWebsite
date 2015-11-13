@@ -97,8 +97,12 @@ class UserTest extends PHPUnit_Framework_TestCase {
 	public function testGetFromBLID2() {
 		$this->testRegisterSuccess();
 		$response = UserManager::getFromBLID(1234);
+		$this->assertFalse($response);
+		$response = UserManager::getAllAccountsFromBLID(1234);
 		$this->assertNotEquals(false, $response);
-		$this->assertEquals(1234, $response->getBLID());
+		$this->assertEquals(1, count($response));
+		$acc = $response[0];
+		$this->assertEquals(1234, $acc->getBLID());
 	}
 }
 ?>

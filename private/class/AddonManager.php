@@ -314,7 +314,7 @@ class AddonManager {
 		BoardManager::verifyTable($database);
 
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_addons` (
-			`id` INT AUTO_INCREMENT,
+			`id` INT NOT NULL AUTO_INCREMENT,
 			`board` INT NOT NULL,
 			`blid` INT NOT NULL,
 			`name` VARCHAR(30) NOT NULL,
@@ -322,7 +322,7 @@ class AddonManager {
 			`description` TEXT NOT NULL,
 			`deleted` TINYINT NOT NULL DEFAULT 0,
 			`approved` TINYINT NOT NULL DEFAULT 0,
-			`uploadDate` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+			`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			`versionInfo` TEXT NOT NULL,
 			`authorInfo` TEXT NOT NULL,
 			`reviewInfo` TEXT NOT NULL,

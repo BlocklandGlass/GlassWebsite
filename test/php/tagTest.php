@@ -1,5 +1,6 @@
 <?php
 require_once("TestManager.php"); //will include all classes we need
+require_once("../../private/class/TagObject.php");
 
 class TagTest extends PHPUnit_Framework_TestCase {
 	protected function setUp() {
@@ -9,9 +10,11 @@ class TagTest extends PHPUnit_Framework_TestCase {
 
 	public function testGetTag1() {
 		$response = TagManager::getTagsFromAddonID(1);
+		//print_r($response);
 		$this->assertNotEquals(false, $response);
 		$this->assertEquals(1, count($response));
-		$this->assertEquals('dum tag', $response[0]->getName());
+		$obj = $response[0];
+		$this->assertEquals('dum tag', $obj->getName());
 	}
 
 	public function testGetTag2() {
@@ -23,6 +26,7 @@ class TagTest extends PHPUnit_Framework_TestCase {
 
 	public function testAddTag() {
 		$response = TagManager::createTagForAddonID("new tag", "0000ff", "brokenimage", 1);
+		//echo("did work");
 		$this->assertTrue($response);
 		$tag = TagManager::getFromID(2);
 		$this->assertNotEquals(false, $tag);

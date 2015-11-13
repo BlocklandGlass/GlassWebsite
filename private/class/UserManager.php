@@ -1,6 +1,7 @@
 <?php
 //require_once(realpath(dirname(__FILE__) . '/UserHandler.php'));
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
+require_once(realpath(dirname(__FILE__) . '/UserObject.php'));
 
 class UserManager {
 	private static $cacheTime = 600;
@@ -26,6 +27,29 @@ class UserManager {
 				$userObject = false;
 			} else {
 				$userObject = new UserObject($resource->fetch_object());
+			}
+			$resource->close();
+			apc_store('userObject_' . $blid, $userObject, UserManager::$cacheTime);
+		}
+		return $userObject;
+	}
+
+	//includes accounts that have not been activated
+	public static function getAllAccountsFromBLID($blid) {
+		$userObject = apc_fetch('allUserObjects_' . $blid);
+
+		if($userObject === false) {
+			$database = new DatabaseManager();
+			UserManager::verifyTable($database);
+			$resource = $database->query("SELECT username, blid, banned, admin, verified, email FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "'");
+
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
+			}
+			$userObject = [];
+
+			while($row = $resource->fetch_object()) {
+				$userObject[] = new UserObject($row);
 			}
 			$resource->close();
 			apc_store('userObject_' . $blid, $userObject, UserManager::$cacheTime);
@@ -139,12 +163,11 @@ class UserManager {
 
 		//long if statement because oh well
 		//I am assuming 'groups' is a json array, so by default it is "[]"
-		if($database->query("INSERT INTO users (password, salt, blid, email, groups, username) VALUES ('" .
+		if($database->query("INSERT INTO users (password, salt, blid, email, username) VALUES ('" .
 			$database->sanitize($hash) . "', '" .
 			$database->sanitize($salt) . "', '" .
 			$database->sanitize($blid) . "', '" .
 			$database->sanitize($email) . "', '" .
-			$database->sanitize("[]") . "', '" .
 			$database->sanitize("Blockhead" . $blid) . "')")) {
 
 			return [

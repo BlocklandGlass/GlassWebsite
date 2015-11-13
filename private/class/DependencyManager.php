@@ -139,7 +139,7 @@ class DependencyManager {
 			`target` INT NOT NULL,
 			`requirement` INT NOT NULL,
 			FOREIGN KEY (`target`) REFERENCES addon_addons(id),
-			FOREIGN KEY (`requirement`) REFERENCES addon_tags(id),
+			FOREIGN KEY (`requirement`) REFERENCES addon_addons(id),
 			PRIMARY KEY (`id`))")) {
 			throw new Exception("Error creating dependency table: " . $database->error());
 		}

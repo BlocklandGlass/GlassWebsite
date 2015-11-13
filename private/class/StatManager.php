@@ -247,6 +247,16 @@ class StatManager {
 	}
 
 	public static function verifyTable($database) {
+		require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
+		require_once(realpath(dirname(__FILE__) . '/TagManager.php'));
+		require_once(realpath(dirname(__FILE__) . '/BuildManager.php'));
+		require_once(realpath(dirname(__FILE__) . '/GroupManager.php'));
+		require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
+		UserManager::verifyTable($database);
+		AddonManager::verifyTable($database);
+		TagManager::verifyTable($database);
+		BuildManager::verifyTable($database);
+
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_stats` (
 			`aid` INT NOT NULL,
 			`totalDownloads` INT NOT NULL DEFAULT 0,
@@ -254,7 +264,10 @@ class StatManager {
 			`webDownloads` INT NOT NULL DEFAULT 0,
 			`ingameDownloads` INT NOT NULL DEFAULT 0,
 			`updateDownloads` INT NOT NULL DEFAULT 0,
-			FOREIGN KEY `aid` REFERENCES addon_addons(`id`))")) {
+			FOREIGN KEY (`aid`)
+				REFERENCES addon_addons(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE)")) {
 			throw new Exception("Failed to create addon stats table: " . $database->error());
 		}
 
@@ -262,7 +275,10 @@ class StatManager {
 			`bid` INT NOT NULL,
 			`totalDownloads` INT NOT NULL DEFAULT 0,
 			`iterationDownloads` INT NOT NULL DEFAULT 0,
-			FOREIGN KEY `bid` REFERENCES build_builds(`id`))")) {
+			FOREIGN KEY (`bid`)
+				REFERENCES build_builds(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE)")) {
 			throw new Exception("Failed to create build stats table: " . $database->error());
 		}
 
@@ -270,7 +286,10 @@ class StatManager {
 			`tid` INT NOT NULL,
 			`totalDownloads` INT NOT NULL DEFAULT 0,
 			`iterationDownloads` INT NOT NULL DEFAULT 0,
-			FOREIGN KEY (`tid`) REFERENCES addon_tags(`id`))")) {
+			FOREIGN KEY (`tid`)
+				REFERENCES addon_tags(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE)")) {
 			throw new Exception("Failed to create tag stats table: " . $database->error());
 		}
 

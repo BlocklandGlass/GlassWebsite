@@ -34,7 +34,7 @@ class AddonObject {
 		//$this->ingameDownloads = intval($resource->ingameDownloads);
 		//$this->updateDownloads = intval($resource->updateDownloads);
 		//$this->downloads = $this->webDownloads + $this->ingameDownloads + $this->updateDownloads;
-
+		//print_r($resource);
 		$this->id = intval($resource->id);
 		$this->board = intval($resource->board);
 		$this->blid = intval($resource->blid);
@@ -72,7 +72,7 @@ class AddonObject {
 	}
 
 	public function getDownloads() {
-		return $this->downloads;
+		return $this->getTotalDownloads();
 	}
 
 	public function getApproved() {
