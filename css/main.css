@@ -199,6 +199,7 @@ input[type="submit"]:active {
   padding: 8px;
   text-align: left;
   vertical-align: middle;
+  overflow: hidden;
 }
 
 .navcontent > ul {
@@ -216,6 +217,14 @@ input[type="submit"]:active {
   text-decoration: none;
   text-indent: none;
   display: inline-block;
+}
+
+.navmenu {
+	display: inline-block;
+}
+
+.mobilemenu {
+	display: none;
 }
 
 .navbtn {
@@ -258,14 +267,13 @@ input[type="submit"]:active {
   text-align: left;
 }
 
+.searchcontainer {
+	margin-top: -8px;
+	float: right;
+}
+
 .searchbar {
-  float: right;
   display: block;
-
-  margin: 10px auto;
-  width: 25%;
-  padding: 5px;
-
   font-size: 16pt;
   border-radius: 5px;
   border: 1px solid #ccc;
@@ -526,7 +534,28 @@ input[type="submit"]:active {
   padding: 0;
 }
 
+.videomask {
+	position: relative;
+	width: 320px;
+	-webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+	border-radius: 20px; 
+	overflow: hidden;
+	margin: 10px;
+}
 
+.boardtitle {
+	width: 100%;
+	text-align: center;
+	color: #fff;
+	position: absolute;
+	font-weight: bold;
+	font-size: 150%;
+	text-shadow:
+		#000 0px 0px 4px,
+		#000 0px 0px 4px,
+		#000 0px 0px 4px;
+	-webkit-font-smoothing: antialiased;
+}
 
 
 

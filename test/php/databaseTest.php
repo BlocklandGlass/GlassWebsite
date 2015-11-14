@@ -1,8 +1,9 @@
 <?php
-require_once("../../private/class/DatabaseManager.php");
+require_once("TestManager.php");
 
 class DatabaseTest extends PHPUnit_Framework_TestCase {
 	public function testError() {
+		TestManager::clearDatabase();
 		$database = new DatabaseManager();
 		$resource = $database->query("SELECT `garbage` FROM `thingthatdoesnotexist`");
 		$this->assertEquals(false, $resource);
@@ -10,6 +11,7 @@ class DatabaseTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testBasicQuery() {
+		TestManager::loadBasicDummyData();
 		$database = new DatabaseManager();
 		$resource = $database->query("SHOW TABLES");
 		$this->assertNotEquals(false, $resource);

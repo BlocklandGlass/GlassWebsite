@@ -55,7 +55,7 @@ class TestManager {
 		BuildManager::verifyTable($database);
 		StatManager::verifyTable($database);
 
-		if(!$database->query("INSERT INTO `addon_boards` (name, icon, subCategory) VALUES ('testboard', 'brokenimage', 'testcategory')")) {
+		if(!$database->query("INSERT INTO `addon_boards` (name, video, description) VALUES ('General Content', 'general_content_bg', 'Bricks, Events, Sounds, Prints, Environments, and much more!')")) {
 			throw new Exception("Database error: " . $database->error());
 		}
 

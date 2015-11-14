@@ -267,6 +267,8 @@ class TagManager {
 	}
 
 	public static function verifyTable($database) {
+		AddonManager::verifyTable($database);
+
 		//to do: change addon_tags to something more general so build and stuff can be tagged
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_tags` (
 			`id` INT NOT NULL AUTO_INCREMENT,

@@ -23,8 +23,7 @@ class BoardManager {
 	}
 
 	public static function getAllBoards() {
-		$boardData = BoardManager::getBoardIndexData();
-		return $boardData;
+		return BoardManager::getBoardIndexData();
 	}
 
 	public static function getAddonsFromBoardID($id, $offset, $limit) {
@@ -61,8 +60,8 @@ class BoardManager {
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_boards` (
 			`id` INT AUTO_INCREMENT,
 			`name` VARCHAR(20) NOT NULL,
-			`icon` VARCHAR(24) NOT NULL,
-			`subCategory` VARCHAR(20) NOT NULL,
+			`video` VARCHAR(24) NOT NULL,
+			`description` VARCHAR(255),
 			PRIMARY KEY (`id`))")) {
 			throw new Exception("Error attempting to create addon_boards table: " . $database->error());
 		}

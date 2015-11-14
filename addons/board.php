@@ -25,6 +25,7 @@
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>
 <div class="maincontainer">
+	<?php include(realpath(dirname(__DIR__) . "/private/searchbar.php")); ?>
 	<h1 style="text-align:center"><?php echo $boardObject->getName(); ?></h1>
 	<a href="/addons">Add-Ons</a> >> <a href="#"><?php echo $boardObject->getName() ?></a>
 	<div class="pagenav">

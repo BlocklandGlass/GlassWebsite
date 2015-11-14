@@ -78,13 +78,24 @@ class RatingManager {
 	}
 
 	public static function verifyTable($database) {
+		require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
+		require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
+		UserManager::verifyTable($database);
+		AddonManager::verifyTable($database);
+
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_ratings` (
 			`id` INT AUTO_INCREMENT,
 			`blid` INT NOT NULL,
 			`aid` INT NOT NULL,
 			`rating` TINYINT NOT NULL,
-			FOREIGN KEY (`blid`) REFERENCES users(`blid`),
-			FOREIGN KEY (`aid`) REFERENCES addon_addons(`id`),
+			FOREIGN KEY (`blid`)
+				REFERENCES users(`blid`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			FOREIGN KEY (`aid`)
+				REFERENCES addon_addons(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
 			throw new Exception("Unable to create table addon_ratings: " . $database->error());
 		}

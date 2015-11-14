@@ -242,7 +242,8 @@ class UserManager {
 			`verified` TINYINT NOT NULL DEFAULT 0,
 			`banned` TINYINT NOT NULL DEFAULT 0,
 			`admin` TINYINT NOT NULL DEFAULT 0,
-			KEY (`blid`))")) {
+			KEY (`blid`),
+			UNIQUE KEY (`email`))")) {
 			throw new Exception("Error creating users table: " . $database->error());
 		}
 	}

@@ -69,7 +69,7 @@
 		}
 		?>
 		<br />
-		<image src="http://blocklandglass.com/icon/icons32/<?php echo $boardObject->getIcon() ?>.png" /> <?php echo htmlspecialchars($boardObject->getName()) ?>
+		<image src="http://blocklandglass.com/icon/icons32/<?php echo $boardObject->getIcon() //this has to change ?>.png" /> <?php echo htmlspecialchars($boardObject->getName()) ?>
 	</p>
 	<p>
 		<?php

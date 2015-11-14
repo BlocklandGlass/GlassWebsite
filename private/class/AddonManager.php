@@ -327,8 +327,14 @@ class AddonManager {
 			`authorInfo` TEXT NOT NULL,
 			`reviewInfo` TEXT NOT NULL,
 			`rating` FLOAT,
-			FOREIGN KEY (`blid`) REFERENCES users(`blid`),
-			FOREIGN KEY (`board`) REFERENCES addon_boards(`id`),
+			FOREIGN KEY (`blid`)
+				REFERENCES users(`blid`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			FOREIGN KEY (`board`)
+				REFERENCES addon_boards(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
 			throw new Exception("Failed to create table addon_addons: " . $database->error());
 		}
