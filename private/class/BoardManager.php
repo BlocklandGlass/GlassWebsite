@@ -36,6 +36,7 @@ class BoardManager {
 
 	private static function getBoardIndexData() {
 		$boardData = apc_fetch('boardIndexData');
+		$boardData = false;
 
 		if($boardData === false) {
 			$database = new DatabaseManager();

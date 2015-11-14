@@ -24,7 +24,7 @@ class BoardObject {
 		return $this->video;
 	}
 
-	function getddescription() {
+	function getDescription() {
 		return $this->description;
 	}
 
