@@ -540,14 +540,71 @@ input[type="submit"]:active {
 	-webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
 	border-radius: 10px;
 	overflow: hidden;
-	margin: 10px;
 }
 
-.boarddesc {
-  font-weight: normal;
-  font-size: 1em;
+.videooverlay {
+	position: absolute;
+	border-radius: 10px;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+
+	-webkit-transition: all ease 0.5s;
+	-moz-transition: all ease 0.5s;
+	-o-transition: all ease 0.5s;
+	-ms-transition: all ease 0.5s ;
+	transition: all ease 0.5s ;
+
+	-webkit-box-shadow: inset 0px 0px 12px 0px rgba(0,0,0,0.2);
+	-moz-box-shadow: inset 0px 0px 12px 0px rgba(0,0,0,0.2);
+	box-shadow: inset 0px 0px 12px 0px rgba(0,0,0,0.2);
 }
 
+.videooverlay:hover {
+	-webkit-box-shadow: inset 0px 0px 12px 8px rgba(0,0,0,0.4);
+	-moz-box-shadow: inset 0px 0px 12px 8px rgba(0,0,0,0.4);
+	box-shadow: inset 0px 0px 12px 8px rgba(0,0,0,0.4);
+}
+
+.boardtitle {
+	width: 100%;
+	text-align: center;
+	color: #fff;
+	font-weight: bold;
+	font-size: 150%;
+	text-shadow:
+		#000 0px 0px 4px,
+		#000 0px 0px 4px,
+		#000 0px 0px 4px;
+	-webkit-font-smoothing: antialiased;
+}
+
+.videooverlay .boarddesc {
+	width: 100%;
+	text-align: center;
+	color: #fff;
+	opacity: 0.0;
+	font-weight: normal;
+	font-size: 100%;
+	text-shadow:
+		#000 0px 0px 4px,
+		#000 0px 0px 4px,
+		#000 0px 0px 4px;
+	-webkit-font-smoothing: antialiased;
+
+	-webkit-transition: all ease 1s;
+	-moz-transition: all ease 1s;
+	-o-transition: all ease 1s;
+	-ms-transition: all ease 1s ;
+	transition: all ease 1s ;
+}
+
+.videooverlay:hover .boarddesc {
+	opacity: 1.0;
+}
+
+/*
 .boardbutton {
   padding: 10px;
 }
@@ -555,8 +612,8 @@ input[type="submit"]:active {
 .boardbutton > div {
   background-repeat: no-repeat;
   border-radius: 10px;
-  height: 250px;
-  width: 270px;
+  height: 180px;
+  width: 320px;
 
   vertical-align: top;
   color: #ffffff;
@@ -577,6 +634,7 @@ input[type="submit"]:active {
   -ms-transition: all ease 0.5s ;
   transition: all ease 0.5s ;
 }
+
 
 .boardbutton a:hover {
   color: #fff;
@@ -609,10 +667,7 @@ input[type="submit"]:active {
 
   background: rgba(0,0,0,.3);
 }
-
-.boardtitle {
-  font-size: 2em;
-}
+*/
 
 
 

@@ -8,7 +8,7 @@
 <table style="margin-left: auto;margin-right: auto;">
 <tbody>
 <tr>
-<td class="center" colspan="2"><h3>Board Directory</h3></td>
+<td class="center" colspan="2"><h3 style="-webkit-margin-before: 0em;">Board Directory</h3></td>
 
 <?php
 	$boards = BoardManager::getAllBoards();
@@ -21,13 +21,16 @@
 		$alternator = !$alternator;
 		?>
 		<td class="boardbutton">
-			<div style="background-image:url('/img/<?php echo $board->getVideo() ?>.png');">
-				<a href="/addons/board.php?id=<?php echo $board->getID() ?>">
-					<div class="boardbuttoncontent">
-						<div>
-							<h2><?php echo $board->getName(); ?></h2>
-							<div class="boarddesc"><?php echo $board->getDescription(); ?></div>
-						</div>
+			<div class="videomask">
+				<a href="/addons/board.php?id=<?php echo($board->getID()); ?>">
+					<video class="background_video" width="320" height="180" poster="/img/<?php echo($board->getVideo()); ?>.png" loop>
+						<source src="/img/<?php echo($board->getVideo()); ?>.webm">
+						<source src="/img/<?php echo($board->getVideo()); ?>.mp4">
+						Your browser does not support video tags.
+					</video>
+					<div class="videooverlay">
+						<p class="boardtitle"><?php echo $board->getName(); ?></p>
+						<p class="boarddesc"><?php echo $board->getDescription(); ?></p>
 					</div>
 				</a>
 			</div>
@@ -51,10 +54,10 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-	$(".background_video").hover(function () {
-		this.play();
+	$(".videooverlay").hover(function () {
+		this.previousElementSibling.play();
 	}, function () {
-		this.pause();
+		this.previousElementSibling.pause();
 	});
 });
 </script>
