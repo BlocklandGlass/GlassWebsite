@@ -177,7 +177,7 @@ input[type="submit"]:active {
   vertical-align: middle;
 }
 .navcontainer {
-  max-height: 65px;
+  max-height: 64px;
 
   margin: none;
 
@@ -223,8 +223,31 @@ input[type="submit"]:active {
 	display: inline-block;
 }
 
-.mobilemenu {
+#mobilemenubutton {
+	display: inline-block;
+	float: right;
+	font-size: 2em;
+	margin-right: 8px;
+	text-decoration: none;
+	color: #fff;
+}
+
+.navcontent .mobilemenu {
 	display: none;
+	background-color: #2ecc71;
+	z-index: 10;
+	clear: right;
+	height: auto;
+	padding: 8px;
+	margin: 0px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.navcontent .mobilemenu > li {
+	display: block;
+	padding: 8px;
+	font-size:
 }
 
 .navbtn {
@@ -540,6 +563,7 @@ input[type="submit"]:active {
 	-webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
 	border-radius: 10px;
 	overflow: hidden;
+	margin: 8px;
 }
 
 .videooverlay {
