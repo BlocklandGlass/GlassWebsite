@@ -1,6 +1,4 @@
-//idk just testing stuff
 function toggleMobileMenu() {
-	console.log("tog");
 	$(".mobilemenu").slideToggle();
 }
 
@@ -13,8 +11,8 @@ function checkNavbar() {
 
 	if($("#navcontent").height() > $("#navcontainer").height()) {
 		if(!document.getElementById("mobilemenubutton")) {
-			console.log("do thing!");
 			$("#navcontent > ul").addClass("mobilemenu").before("<a href='javascript:toggleMobileMenu();' id='mobilemenubutton'>|||</a>");
+			$(".navcontent .mobilemenu").removeAttr("style");
 		}
 	} else {
 		$("#navcontent > ul").show();
@@ -23,10 +21,5 @@ function checkNavbar() {
 
 $(document).ready(function () {
 	checkNavbar()
-	//$("#mobilemenubutton").click(function () {
-	//	$(".mobilemenu").slideToggle();
-	//});
 });
 $(window).resize(checkNavbar);
-
-
