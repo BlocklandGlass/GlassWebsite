@@ -10,11 +10,14 @@
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/BoardObject.php"));
-	$userObject = UserManager::getFromId($_SESSION['uid']);
+	require_once(realpath(dirname(__DIR__) . "/private/class/NotificationObject.php"));
+	$userObject = UserManager::getCurrent();
 
-	if(!userObject) {
+	if(!$userObject) {
+		var_dump($_SESSION);
 		throw new Exception("Invalid user id: " . $_SESSION['uid']);
 	}
+
 ?>
 <div class="maincontainer">
 	<span style="font-size: 1.5em;">Hey there, <b><?php echo $_SESSION['username']; ?></b></span>
@@ -24,15 +27,25 @@
 				<td style="width: 50%">
 					<p>
 						<h3>Recent Activity</h3>
-						<div style="background-color: #eee; border-radius: 15px; padding: 15px; margin: 5px;"><a href="#">Jincux</a> commented on <a href="#">Blockland Glass</a><br /><span style="font-size: 0.8em;">Yesterday, 4:20pm</span></div>
-						<div style="background-color: #eee; border-radius: 15px; padding: 15px; margin: 5px;">You were promoted to <b>Administrator</b><br /><span style="font-size: 0.8em;">Yesterday, 11:48am</span></div>
-					</p>
+						<?php
+						$note = new NotificationObject(new stdClass());
+						$note->testVars();
+
+						$notifications = array($note); // TODO NotifcationManager::getFromUser(9789, 10);
+						foreach($notifications as $noteObject) {
+							echo '<div style="background-color: #eee; border-radius: 15px; padding: 15px; margin: 5px;">';
+							echo $noteObject->toHTML();
+							echo '<br /><span style="font-size: 0.8em;">' . $noteObject->getDate() . '</span>';
+							echo '</div>';
+						}
+						?>
+						</p>
 				</td>
 				<td>
 					<p>
 						<h3>My Add-Ons</h3>
 						<?php
-						$addons = AddonManager::getFromAuthor($userObject->getBLID());
+						$addons = AddonManager::getFromBLID($userObject->getBLID());
 
 						foreach($addons as $ao) {
 							$board = $ao->getBoard();

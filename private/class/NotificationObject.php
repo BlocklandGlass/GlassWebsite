@@ -1,0 +1,54 @@
+<?php
+class NotificationObject {
+	//public fields will automatically be put into json
+	public $user;
+	public $id;
+	public $date;
+	public $params;
+  public $text;
+
+	public function __construct($resource) {
+		$this->user = @intval($resource->blid);
+		$this->id = @intval($resource->id);
+		$this->params = @json_decode($resource->params);
+		$this->text = @$resource->text;
+    $this->date = @$resource->date;
+	}
+
+  public function testVars() {
+    $this->params = json_decode('{
+      "vars": [
+      {"type":"user", "blid":9789},
+      {"type":"addon", "id":2}
+      ]
+    }');
+    $this->text = '$1 liked $2';
+    $this->date = "2015-11-15 13:37:19";
+  }
+
+  public function getDate() {
+    return $this->date;
+  }
+
+  public function toHTML() {
+    $returnHtml = $this->text;
+    foreach($this->params->vars as $i => $var) {
+      $html = "<s>invalid</s>";
+      switch($var->type) {
+        case "user":
+          $user = UserManager::getFromBLID($var->blid);
+          $html = "<a href=\"/user/view.php?blid=" . $var->blid . "\">" . $user->getUserName() . "</a>";
+          break;
+
+        case "addon":
+          $addon = AddonManager::getFromID($var->id);
+          $html = "<a href=\"/addons/addon.php?id=" . $var->id . "\">" . $addon->getName() . "</a>";
+          break;
+      }
+      $returnHtml = str_replace('$' . ($i+1), $html, $returnHtml);
+    }
+
+    return $returnHtml;
+  }
+}
+?>

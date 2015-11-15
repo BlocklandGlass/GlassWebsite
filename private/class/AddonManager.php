@@ -24,7 +24,7 @@ class AddonManager {
 			} else {
 				$database = new DatabaseManager();
 				AddonManager::verifyTable($database);
-				$resource = $database->query("SELECT * FROM `addon_addons` WHERE `id` = '" . $database->sanitize($id) . "' AND DELETED = 0");
+				$resource = $database->query("SELECT * FROM `addon_addons` WHERE `id` = '" . $database->sanitize($id) . "'");
 
 				if(!$resource) {
 					throw new Exception("Database error: " . $database->error());
@@ -33,6 +33,7 @@ class AddonManager {
 				if($resource->num_rows == 0) {
 					$addonObject = false;
 				}
+				var_dump($resource->fetch_object());
 				$addonObject = new AddonObject($resource->fetch_object());
 				$resource->close();
 			}
@@ -51,7 +52,7 @@ class AddonManager {
 	 *  	$offset - (INT) offset for results
 	 *  	$limit - (INT) maximum number of results to return, defaults to 10
 	 *  	$sort - (INT) a number representing the sorting method, defaults to ORDER BY `name` ASC
-	 *  
+	 *
 	 *  	Needs to be updated to reflect new tag system
 	 */
 	public static function searchAddons($search) { //$name = false, $blid = false, $board = false, $tag = false) {
@@ -269,7 +270,7 @@ class AddonManager {
 		return $ret;
 	}
 
-	public static function getCountFromBoard($boardID) {		
+	public static function getCountFromBoard($boardID) {
 		$count = apc_fetch('boardData_count_' . $boardID);
 
 		if($count === false) {

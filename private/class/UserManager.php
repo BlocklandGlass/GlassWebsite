@@ -12,9 +12,8 @@ class UserManager {
 	}
 
 	public static function getFromBLID($blid) {
-		$userObject = apc_fetch('userObject_' . $blid);
-
-		if($userObject === false) {
+		$userObject = apc_fetch('userObject_' . $blid, $success);
+		if($success === false) {
 			$database = new DatabaseManager();
 			UserManager::verifyTable($database);
 			$resource = $database->query("SELECT username, blid, banned, admin, verified, email FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "' AND `verified` = 1");
@@ -64,7 +63,7 @@ class UserManager {
 		}
 
 		if(isset($_SESSION['blid'])) {
-			return getFromBLID($_SESSION['blid']);
+			return UserManager::getFromBLID($_SESSION['blid']);
 		} else {
 			return false;
 		}
