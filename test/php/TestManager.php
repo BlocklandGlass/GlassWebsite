@@ -59,6 +59,14 @@ class TestManager {
 			throw new Exception("Database error: " . $database->error());
 		}
 
+		if(!$database->query("INSERT INTO `addon_boards` (name, video, description) VALUES ('Minigames', 'minigames_bg', 'Weapons, Vehicles, Gamemodes, and all your gaming needs!')")) {
+			throw new Exception("Database error: " . $database->error());
+		}
+
+		if(!$database->query("INSERT INTO `addon_boards` (name, video, description) VALUES ('Bargain Bin', 'bargain_bin_bg', 'A home for \'special\' content.')")) {
+			throw new Exception("Database error: " . $database->error());
+		}
+
 		if(!$database->query("INSERT INTO `users` (username, blid, password, email, salt, verified) VALUES ('testuser', '4833', '1d8436e97ef95a7a6151f47b909167c77cfe1985ee5500efa8d46cfe825abc59', 'email@email.com', '273eb4', '1')")) {
 			throw new Exception("Database error: " . $database->error());
 		}
