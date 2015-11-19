@@ -54,23 +54,44 @@ class BuildManager {
 		return $userBuilds;
 	}
 
-	public static function verifyTable($database) {
-		require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
-		UserManager::verifyTable($database); //we need users table to exist before we can create this one
+	public static function verifyTable($database) {		*/
+		if($database->debug()) {
+			require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
+			require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
+			UserManager::verifyTable($database); //we need users table to exist before we can create this one
+			AddonManager::verifyTable($database);
 
-		if(!$database->query("CREATE TABLE IF NOT EXISTS `build_builds` (
-			`id` INT NOT NULL AUTO_INCREMENT,
-			`blid` INT NOT NULL,
-			`name` VARCHAR(16) NOT NULL,
-			`filename` TEXT NOT NULL,
-			`bricks` INT NOT NULL DEFAULT 0,
-			`description` TEXT,
-			FOREIGN KEY (`blid`)
-				REFERENCES users(`blid`)
-				ON UPDATE CASCADE
-				ON DELETE CASCADE,
-			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error creating builds table: " . $database->error());
+			if(!$database->query("CREATE TABLE IF NOT EXISTS `build_builds` (
+				`id` INT NOT NULL AUTO_INCREMENT,
+				`blid` INT NOT NULL,
+				`name` VARCHAR(16) NOT NULL,
+				`filename` TEXT NOT NULL,
+				`bricks` INT NOT NULL DEFAULT 0,
+				`description` TEXT,
+				FOREIGN KEY (`blid`)
+					REFERENCES users(`blid`)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE,
+				PRIMARY KEY (`id`))")) {
+				throw new Exception("Error creating builds table: " . $database->error());
+			}
+
+			//to do: probably should move this to another class, maybe make dependencyManager more general
+			if(!$database->query("CREATE TABLE IF NOT EXISTS `build_dependency` (
+				`od` INT NOT NULL AUTO_INCREMENT,
+				`bid` INT NOT NULL,
+				`aid` INT NOT NULL,
+				FOREIGN KEY (`bid`)
+					REFERENCES build_builds(`id`)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE,
+				FOREIGN KEY (`aid`)
+					REFERENCES addon_addons(`id`)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE,
+				PRIMARY KEY (`id`))")) {
+				throw new Exception("unable to create build dependency table");
+			}
 		}
 	}
 }

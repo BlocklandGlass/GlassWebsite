@@ -48,7 +48,7 @@ class AddonManager {
 	 *  	$name - (STRING) string to search for in addon name
 	 *  	$blid - (INT) BLID of addon uploader
 	 *  	$board - (INT) id of board to search in
-	 *  	$tag - (STRING) a single tag to search for in the tag string
+	 *  	$tag - (INT ARRAY) an array of integers representing tag ids
 	 *  	$offset - (INT) offset for results
 	 *  	$limit - (INT) maximum number of results to return, defaults to 10
 	 *  	$sort - (INT) a number representing the sorting method, defaults to ORDER BY `name` ASC
@@ -125,7 +125,7 @@ class AddonManager {
 			$searchAddons = [];
 
 			while($row = $resource->fetch_object()) {
-				$searchAddons[] = AddonManager::getFromID($row->id, $row);
+				$searchAddons[] = AddonManager::getFromID($row->id, $row)->getID();
 			}
 			$resource->close();
 			apc_store('searchAddons_' . $cacheString, $searchAddons, AddonManager::$searchCacheTime);
@@ -149,7 +149,7 @@ class AddonManager {
 			$unapprovedAddons = [];
 
 			while($row = $resource->fetch_object()) {
-				$unapprovedAddons[] = AddonManager::getFromID($row->id, $row);
+				$unapprovedAddons[] = AddonManager::getFromID($row->id, $row)->getID();
 			}
 			$resource->close();
 			apc_store('unapprovedAddons', $unapprovedAddons, AddonManager::$searchCacheTime);
@@ -197,7 +197,7 @@ class AddonManager {
 			$boardAddons = [];
 
 			while($row = $resource->fetch_object()) {
-				$boardAddons[] = AddonManager::getFromID($row->id, $row);
+				$boardAddons[] = AddonManager::getFromID($row->id, $row)->getID();
 			}
 			$resource->close();
 			apc_store('boardAddons_' . $id . '_' . $offset . '_' . $limit, $boardAddons, AddonManager::$searchCacheTime);
@@ -292,6 +292,30 @@ class AddonManager {
 		return $count;
 	}
 
+	//returns an array of just the ids in order
+	//we should really be doing that more instead of caching entire objects in multiple places
+	public static function getNewestAddonIDs($count = 10) {
+		$newestAddonIDs = apc_fetch('newestAddonIDs_' . $count, $success);
+
+		if($success === false) {
+			$database = new DatabaseManager();
+			StatManager::verifyTable($database);
+			$resource = $database->query("SELECT * FROM `addon_addons` ORDER BY `uploadDate` DESC LIMIT '" . $database->sanitize($count) . "'");
+
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
+			}
+			$newestAddonIDs = [];
+
+			while($row = $resource->fetch_object()) {
+				$newestAddonIDs[] = AddonManager::getFromID($row->aid, $row)->getID();
+			}
+			$resource->close();
+			apc_store('newestAddonIDs_' . $count, $newestAddonIDs, StatManager::$objectCacheTime);
+		}
+		return $newestAddonIDs;
+	}
+
 	public static function verifyTable($database) {
 		/*TO DO:
 			- screenshots
@@ -309,35 +333,36 @@ class AddonManager {
 			- I think users should just credit people in their descriptions
 			instead of having a dedicated authorInfo json object
 		*/
-		require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
-		require_once(realpath(dirname(__FILE__) . '/BoardManager.php'));
-		UserManager::verifyTable($database);
-		BoardManager::verifyTable($database);
+		if($database->debug()) {
+			require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
+			require_once(realpath(dirname(__FILE__) . '/BoardManager.php'));
+			UserManager::verifyTable($database);
+			BoardManager::verifyTable($database);
 
-		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_addons` (
-			`id` INT NOT NULL AUTO_INCREMENT,
-			`board` INT NOT NULL,
-			`blid` INT NOT NULL,
-			`name` VARCHAR(30) NOT NULL,
-			`filename` TEXT NOT NULL,
-			`description` TEXT NOT NULL,
-			`deleted` TINYINT NOT NULL DEFAULT 0,
-			`approved` TINYINT NOT NULL DEFAULT 0,
-			`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-			`versionInfo` TEXT NOT NULL,
-			`authorInfo` TEXT NOT NULL,
-			`reviewInfo` TEXT NOT NULL,
-			`rating` FLOAT,
-			FOREIGN KEY (`blid`)
-				REFERENCES users(`blid`)
-				ON UPDATE CASCADE
-				ON DELETE CASCADE,
-			FOREIGN KEY (`board`)
-				REFERENCES addon_boards(`id`)
-				ON UPDATE CASCADE
-				ON DELETE CASCADE,
-			PRIMARY KEY (`id`))")) {
-			throw new Exception("Failed to create table addon_addons: " . $database->error());
+			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_addons` (
+				`id` INT NOT NULL AUTO_INCREMENT,
+				`board` INT NOT NULL,
+				`blid` INT NOT NULL,
+				`name` VARCHAR(30) NOT NULL,
+				`filename` TEXT NOT NULL,
+				`description` TEXT NOT NULL,
+				`versionInfo` TEXT NOT NULL,
+				`authorInfo` TEXT NOT NULL,
+				`reviewInfo` TEXT NOT NULL,
+				`deleted` TINYINT NOT NULL DEFAULT 0,
+				`approved` TINYINT NOT NULL DEFAULT 0,
+				`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				FOREIGN KEY (`blid`)
+					REFERENCES users(`blid`)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE,
+				FOREIGN KEY (`board`)
+					REFERENCES addon_boards(`id`)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE,
+				PRIMARY KEY (`id`))")) {
+				throw new Exception("Failed to create table addon_addons: " . $database->error());
+			}
 		}
 	}
 }

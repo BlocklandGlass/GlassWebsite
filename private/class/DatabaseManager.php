@@ -4,6 +4,7 @@ class DatabaseManager {
 	private $database;
 	private $username;
 	private $password;
+	private $debug;
 
 	private $mysqli;
 
@@ -23,6 +24,12 @@ class DatabaseManager {
 		$this->database = $keyData->database;
 		$this->username = $keyData->username;
 		$this->password = $keyData->password;
+
+		if(isset($keyData->debug) && $keydata->debug) {
+			$this->debug = true;
+		} else {
+			$this->debug = false;
+		}
 		$this->mysqli = new mysqli("localhost", $this->username, $this->password, $this->database);
 
 		if($this->mysqli->connect_error) {
@@ -60,6 +67,10 @@ class DatabaseManager {
 
 	public function error() {
 		return $this->mysqli->error;
+	}
+
+	public function debug() {
+		return $this->debug;
 	}
 }
 ?>

@@ -259,11 +259,15 @@ class StatManager {
 
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_stats` (
 			`aid` INT NOT NULL,
+			`rating` FLOAT,
 			`totalDownloads` INT NOT NULL DEFAULT 0,
 			`iterationDownloads` INT NOT NULL DEFAULT 0,
 			`webDownloads` INT NOT NULL DEFAULT 0,
 			`ingameDownloads` INT NOT NULL DEFAULT 0,
 			`updateDownloads` INT NOT NULL DEFAULT 0,
+			KEY (`uploadDate'),
+			KEY (`totalDownloads`),
+			KEY (`iterationDownloads`),
 			FOREIGN KEY (`aid`)
 				REFERENCES addon_addons(`id`)
 				ON UPDATE CASCADE
@@ -273,8 +277,13 @@ class StatManager {
 
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `build_stats` (
 			`bid` INT NOT NULL,
+			`rating` FLOAT,
+			`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			`totalDownloads` INT NOT NULL DEFAULT 0,
 			`iterationDownloads` INT NOT NULL DEFAULT 0,
+			KEY (`uploadDate'),
+			KEY (`totalDownloads`),
+			KEY (`iterationDownloads`),
 			FOREIGN KEY (`bid`)
 				REFERENCES build_builds(`id`)
 				ON UPDATE CASCADE
@@ -286,6 +295,8 @@ class StatManager {
 			`tid` INT NOT NULL,
 			`totalDownloads` INT NOT NULL DEFAULT 0,
 			`iterationDownloads` INT NOT NULL DEFAULT 0,
+			KEY (`totalDownloads`),
+			KEY (`iterationDownloads`),
 			FOREIGN KEY (`tid`)
 				REFERENCES addon_tags(`id`)
 				ON UPDATE CASCADE
@@ -340,6 +351,7 @@ class StatManager {
 			`buildDownloads0` INT NOT NULL,
 			`buildDownloads1` INT NOT NULL,
 			`buildDownloads2` INT NOT NULL,
+			KEY (`date`),
 			PRIMARY KEY (`id`))")) {
 			throw new Exception("Failed to create stat history table: " . $database->error());
 		}
