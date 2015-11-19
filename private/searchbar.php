@@ -9,4 +9,4 @@
 		<input class="searchbar" type="text" name="query" placeholder="Search..."/>
 	</form>
 </div>
-<div style="clear:both;">
+<div style="clear:both;"></div>

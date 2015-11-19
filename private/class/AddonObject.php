@@ -21,6 +21,7 @@ class AddonObject {
 	//public $file;
 	//public $dependencies;
 	//public $tags
+	public $uploadDate;
 
 	private $filename;
 	private $deleted;
@@ -49,6 +50,8 @@ class AddonObject {
 		$this->filename = $resource->filename;
 		$this->deleted = intval($resource->deleted);
 		$this->reviewInfo = json_decode($resource->reviewInfo);
+
+		$this->uploadDate = $resource->uploadDate;
 	}
 
 	public function getID() {
@@ -133,6 +136,10 @@ class AddonObject {
 
 	public function getTotalDownloads() {
 		return StatManager::getTotalAddonDownloads($this->id);
+	}
+
+	public function getUploadDate() {
+		return $this->uploadDate;
 	}
 }
 /*

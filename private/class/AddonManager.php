@@ -89,7 +89,8 @@ class AddonManager {
 			}
 
 			//to do: tag searching, probably requires quite a bit of this to be reworked
-			//if(isset($search['tag'])) {
+			//if(isset($search['tag']) && !empty($search['tag']) {
+			//	//
 			//	$query .= "`tags` LIKE '%" . $database->sanitize($search['tag']) . "%' AND ";
 			//}
 			$query .= "`deleted` = 0 ORDER BY ";
@@ -312,13 +313,14 @@ class AddonManager {
 
 	//returns an array of just the ids in order
 	//we should really be doing that more instead of caching entire objects in multiple places
-	public static function getNewestAddonIDs($count = 10) {
+	public static function getNewAddons($count = 10) {
+		$count += 0;
 		$newestAddonIDs = apc_fetch('newestAddonIDs_' . $count, $success);
 
 		if($success === false) {
 			$database = new DatabaseManager();
-			StatManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `addon_addons` ORDER BY `uploadDate` DESC LIMIT '" . $database->sanitize($count) . "'");
+			AddonManager::verifyTable($database);
+			$resource = $database->query("SELECT * FROM `addon_addons` ORDER BY `uploadDate` DESC LIMIT " . $database->sanitize($count));
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
@@ -326,10 +328,10 @@ class AddonManager {
 			$newestAddonIDs = [];
 
 			while($row = $resource->fetch_object()) {
-				$newestAddonIDs[] = AddonManager::getFromID($row->aid, $row)->getID();
+				$newestAddonIDs[] = AddonManager::getFromID($row->id, $row)->getID();
 			}
 			$resource->close();
-			apc_store('newestAddonIDs_' . $count, $newestAddonIDs, StatManager::$objectCacheTime);
+			apc_store('newestAddonIDs_' . $count, $newestAddonIDs, AddonManager::$searchCacheTime);
 		}
 		return $newestAddonIDs;
 	}

@@ -8,6 +8,9 @@
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>
 <div class="maincontainer">
+	<div style="float: left;">
+		<a href="/addons/boards.php">Click here to view Add-On Boards...</a>
+	</div>
 	<?php include(realpath(dirname(__DIR__) . "/private/searchbar.php")); ?>
 
 	<table style="width: 100%">
@@ -15,66 +18,14 @@
 			<tr>
 				<td style="width:50%">
 					<h3>Trending</h3>
-					<table style="width: 100%">
-						<tbody>
-							<tr>
-								<td style="padding: 15px; width: 20px;">1.</td>
-								<td><a href="#">Blockland Glass</a> by Jincux</td>
-								<td style="padding: 20px;">164</td>
-							</tr>
-							<tr>
-								<td style="padding: 15px; width: 20px;">2.</td>
-								<td><a href="#">Preferences</a> by Jincux</td>
-								<td style="padding: 20px;">133</td>
-							</tr>
-							<tr>
-								<td style="padding: 15px; width: 20px;">3.</td>
-								<td><a href="#">Admin Chat</a> by Jincux</td>
-								<td style="padding: 20px;">101</td>
-							</tr>
-							<tr>
-								<td style="padding: 15px; width: 20px;">4.</td>
-								<td><a href="#">Server Vote</a> by Jincux</td>
-								<td style="padding: 20px;">70</td>
-							</tr>
-							<tr>
-								<td style="padding: 15px; width: 20px;">5.</td>
-								<td><a href="#">Some other mod</a> by Nexus</td>
-								<td style="padding: 20px;">56</td>
-							</tr>
-						</tbody>
+					<table id="trending" style="width: 100%">
+						<?php include(realpath(dirname(__DIR__) . "/ajax/getTrendingAddons.php")); ?>
 					</table>
 				</td>
 				<td style="width:50%">
 					<h3>Recent Uploads</h3>
-					<table style="width: 100%">
-						<tbody>
-							<tr>
-								<td style="padding: 15px; width: 20px;">1.</td>
-								<td><a href="#">Blockland Glass</a> by Jincux</td>
-								<td style="padding: 20px;">164</td>
-							</tr>
-							<tr>
-								<td style="padding: 15px; width: 20px;">2.</td>
-								<td><a href="#">Preferences</a> by Jincux</td>
-								<td style="padding: 20px;">133</td>
-							</tr>
-							<tr>
-								<td style="padding: 15px; width: 20px;">3.</td>
-								<td><a href="#">Admin Chat</a> by Jincux</td>
-								<td style="padding: 20px;">101</td>
-							</tr>
-							<tr>
-								<td style="padding: 15px; width: 20px;">4.</td>
-								<td><a href="#">Server Vote</a> by Jincux</td>
-								<td style="padding: 20px;">70</td>
-							</tr>
-							<tr>
-								<td style="padding: 15px; width: 20px;">5.</td>
-								<td><a href="#">Some other mod</a> by Nexus</td>
-								<td style="padding: 20px;">56</td>
-							</tr>
-						</tbody>
+					<table id="recentUploads" style="width: 100%">
+						<?php include(realpath(dirname(__DIR__) . "/ajax/getNewAddons.php")); ?>
 					</table>
 				</td>
 			</tr>
@@ -135,8 +86,8 @@
 		?>
 		<tr class="addonheader">
 			<td colspan="3"></td>
-		</tr> */?>
+		</tr>
 	</tbody>
-	</table>
+	</table> */?>
 </div>
 <?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>

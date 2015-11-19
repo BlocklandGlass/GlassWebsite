@@ -4,9 +4,9 @@
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
 	$failed = false;
 
-	if(isset($_GET['id'])) {
+	if(isset($_GET['blid'])) {
 		try {
-			$userObject = UserManager::getFromId($_GET['id']);
+			$userObject = UserManager::getFromId($_GET['blid']);
 		} catch (Exception $e) {
 			$failed = true;
 		}
@@ -30,11 +30,12 @@
 		echo("<h3>" . htmlspecialchars($userObject->getName()) . "</h3>");
 		echo("<p><b>Last Seen:</b> ???");
 		echo("<br /><b>BL ID:</b> " . $userObject->getBLID());
-		echo("<br /><a href=\"javascript:{}\" onclick=\"document.getElementById('addonSearch').submit();\"><b>Find Add-Ons by this user</b></a></p>");
-		echo("<form id=\"addonSearch\" action=\"/addons/search.php\" method=\"post\">");
-		echo("<input type=\"hidden\" name=\"query\" value=\"\">");
-		echo("<input type=\"hidden\" name=\"blid\" value=\"" . $userObject->getBLID() . "\">");
-		echo("</form>");
+		echo("<br /><a href=\"/addons/search.php?blid=" . htmlspecialchars($userObject->getBLID()) . "\"><b>Find Add-Ons by this user</b></a></p>");
+		//echo("<br /><a href=\"javascript:{}\" onclick=\"document.getElementById('addonSearch').submit();\"><b>Find Add-Ons by this user</b></a></p>");
+		//echo("<form id=\"addonSearch\" action=\"/addons/search.php\" method=\"post\">");
+		//echo("<input type=\"hidden\" name=\"query\" value=\"\">");
+		//echo("<input type=\"hidden\" name=\"blid\" value=\"" . $userObject->getBLID() . "\">");
+		//echo("</form>");
 	}
 ?>
 </div>

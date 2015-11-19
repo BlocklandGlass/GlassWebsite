@@ -9,6 +9,7 @@ require_once(realpath(dirname(__FILE__) . '/GroupManager.php'));
 class StatManager {
 	private static $previousCacheTime = 86400; //24 hours
 	private static $objectCacheTime = 3600; //60 minutes
+	private static $trendingCacheTime = 600;
 
 	public static $addonCount = 10;
 	public static $tagCount = 5;
@@ -120,6 +121,31 @@ class StatManager {
 			}
 		}
 		return true;
+	}
+
+	public static function getTrendingAddons($count = 10) {
+		$count += 0; //force to be an integer
+		$addons = apc_fetch('trendingAddons_' . $count, $success);
+
+		if($success === false) {
+			$database = new DatabaseManager();
+			StatManager::verifyTable($database);
+			$resource = $database->query("SELECT `aid` FROM `addon_stats`
+				ORDER BY `iterationDownloads` DESC LIMIT " . $database->sanitize($count));
+
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
+			}
+			$addons = [];
+
+			while($row = $resource->fetch_object()) {
+				//to do: this should create an AddonStatObject for caching purposes
+				$addons[] = AddonManager::getFromID($row->aid)->getID();
+			}
+			$resource->close();
+			apc_store('trendingAddons_' . $count, $addons, StatManager::$trendingCacheTime);
+		}
+		return $addons;
 	}
 
 	public static function endInteration() {

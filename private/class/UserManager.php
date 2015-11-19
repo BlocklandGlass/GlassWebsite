@@ -8,7 +8,7 @@ class UserManager {
 	private static $credentialsCacheTime = 60;
 
 	public static function getFromID($id) {
-		return getFromBLID($id);
+		return UserManager::getFromBLID($id);
 	}
 
 	public static function getFromBLID($blid) {

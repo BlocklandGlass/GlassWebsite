@@ -29,6 +29,15 @@
 	if(isset($_POST['sort'])) {
 		$searchArray['sort'] = intval($_POST['sort']);
 	}
-	$response = AddonManager::searchAddons($searchArray);
-	return $response;
+	$addonIDs = AddonManager::searchAddons($searchArray);
+	$addons = [];
+
+	foreach($addonIDs as $aid) {
+		$addon = AddonManager::getFromID($aid);
+
+		if($addon !== false) {
+			$addons[] = $addon;
+		}
+	}
+	return $addons;
 ?>

@@ -18,6 +18,10 @@ class UserObject {
 		$this->email = $resource->email;
 	}
 
+	public function getName() {
+		return $this->getUserName();
+	}
+
 	public function getUserName() {
 		return $this->username;
 	}
