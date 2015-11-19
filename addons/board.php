@@ -59,7 +59,7 @@
 
 			for($i = $pages-4; $i < $pages; $i++) {
 				if($i+1 == $page) {
-					echo "[<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>] ";
+					echo "[<a href=\"board.php?id=" . $boardObject->getID() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>] ";
 				} else {
 					echo "<a href=\"board.php?id=" . $boardObject->getId() . "&page=" . ($i+1) . "\">" . ($i+1) . "</a> ";
 				}
@@ -97,12 +97,13 @@
 		</tr>
 <?php
 	//$addons = $boardObject->getAddons(($page-1)*10, 10);
-	$addons = AddonManager::getFromBoardId($boardObject->getID(), ($page-1)*10, 10);
+	$addonIDs = AddonManager::getFromBoardID($boardObject->getID(), ($page-1)*10, 10);
 	//$addons = BoardManager::getAddonsFromBoardID($boardObject->getID(), ($page-1)*10, 10);
 
-	foreach($addons as $addon) { ?>
+	foreach($addonIDs as $aid) {
+		$addon = AddonManager::getFromID($aid); ?>
 		<tr>
-		<td style="width: 33%"><a href="addon.php?id=<?php echo $addon->getId(); ?>"><?php echo $addon->getName() ?></a></td>
+		<td style="width: 33%"><a href="addon.php?id=<?php echo $addon->getID(); ?>"><?php echo $addon->getName() ?></a></td>
 		<td style="font-size: 11pt"><?php
 		$authors = $addon->getAuthorInfo();
 

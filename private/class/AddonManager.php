@@ -85,7 +85,7 @@ class AddonManager {
 			}
 
 			if(isset($search['board'])) {
-				$query .= "`board` = '" . $database->sanitize($search['blid']) . "' AND ";
+				$query .= "`board` = '" . $database->sanitize($search['board']) . "' AND ";
 			}
 
 			//to do: tag searching, probably requires quite a bit of this to be reworked
