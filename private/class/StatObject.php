@@ -1,5 +1,5 @@
 <?php
-//require_once(realpath(dirname(__FILE__) . "/StatManager.php"));
+require_once(realpath(dirname(__FILE__) . "/StatManager.php"));
 
 class StatObject {
 	public $id;
@@ -19,69 +19,43 @@ class StatObject {
 	public $topBuildDownloads;
 
 	public function __construct($resource) {
-		$this->id = $resource->id;
+		$this->id = intval($resource->id);
 		$this->date = $resource->date;
-		$this->users = $resource->users;
-		$this->addons = $resource->addons;
-		$this->downloads = $resource->downloads;
-		$this->groups = $resource->groups;
-		$this->comments = $resource->comments;
-		$this->builds = $resource->builds;
-		$this->tags = $resource->tags;
+		$this->users = intval($resource->users);
+		$this->addons = intval($resource->addons);
+		$this->downloads = intval($resource->downloads);
+		$this->groups = intval($resource->groups);
+		$this->comments = intval($resource->comments);
+		$this->builds = intval($resource->builds);
+		$this->tags = intval($resource->tags);
 
-		//I would like to be able to do this in a loop but it seems I would need to use fetch_assoc or fetch_row
-		$this->topAddonID = [
-			0 => $resource->addon0,
-			1 => $resource->addon1,
-			2 => $resource->addon2,
-			3 => $resource->addon3,
-			4 => $resource->addon4,
-			5 => $resource->addon5,
-			6 => $resource->addon6,
-			7 => $resource->addon7,
-			8 => $resource->addon8,
-			9 => $resource->addon9
-		];
-		$this->topAddonDownloads = [
-			0 => $resource->addonDownloads0,
-			1 => $resource->addonDownloads1,
-			2 => $resource->addonDownloads2,
-			3 => $resource->addonDownloads3,
-			4 => $resource->addonDownloads4,
-			5 => $resource->addonDownloads5,
-			6 => $resource->addonDownloads6,
-			7 => $resource->addonDownloads7,
-			8 => $resource->addonDownloads8,
-			9 => $resource->addonDownloads9
-		];
-		$this->topTagID = [
-			0 => $resource->tag0,
-			1 => $resource->tag1,
-			2 => $resource->tag2,
-			3 => $resource->tag3,
-			4 => $resource->tag4
-		];
-		$this->topTagDownloads = [
-			0 => $resource->tagDownloads0,
-			1 => $resource->tagDownloads1,
-			2 => $resource->tagDownloads2,
-			3 => $resource->tagDownloads3,
-			4 => $resource->tagDownloads4
-		];
-		$this->topBuildID = [
-			0 => $resource->build0,
-			1 => $resource->build1,
-			2 => $resource->build2,
-		];
-		$this->topBuildDownloads = [
-			0 => $resource->buildDownloads0,
-			1 => $resource->buildDownloads1,
-			2 => $resource->buildDownloads2,
-		];
+		$this->topAddonID = [];
+		$this->topAddonDownloads = [];
+		$this->topTagID = [];
+		$this->topTagDownloads = [];
+		$this->topBuildID = [];
+		$this->topBuildDownloads = [];
+
+		for($i=0; $i<StatManager::$addonCount; $i++) {
+			$this->topAddonID[$i] = intval($resource->{'addon' . $i});
+			$this->topAddonDownloads[$i] = intval($resource->{'addonDownloads' . $i});
+		}
+
+		for($i=0; $i<StatManager::$tagCount; $i++) {
+			$this->topTagID[$i] = intval($resource->{'tag' . $i});
+			$this->topTagDownloads[$i] = intval($resource->{'tagDownloads' . $i});
+		}
+
+		for($i=0; $i<StatManager::$buildCount; $i++) {
+			$this->topBuildID[$i] = intval($resource->{'build' . $i});
+			$this->topBuildDownloads[$i] = intval($resource->{'buildDownloads' . $i});
+		}
 	}
 
 	public function getID() {
 		return $this->id;
 	}
+
+	//honestly these fields should just be accessed directly
 }
 ?>

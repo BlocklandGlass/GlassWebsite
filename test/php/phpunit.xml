@@ -1,0 +1,6 @@
+<filter>
+	<blacklist>
+		<directory>./lib/vendor</directory>
+		<directory>./lib/helper</directory>
+	</blacklist>
+</filter>

@@ -4,6 +4,8 @@
 	}
 	require_once(realpath(dirname(__DIR__) . "/class/AddonManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
+	require_once(realpath(dirname(__DIR__) . "/class/TagManager.php"));
+	require_once(realpath(dirname(__DIR__) . "/class/DependencyManager.php"));
 
 	$addon = AddonManager::getFromID($_GET['id'] + 0);
 
@@ -11,14 +13,25 @@
 		return false;
 	}
 	$user = UserManager::getFromBLID($addon->blid);
-	//my plan was to have tags and dependencies be added direct to the object here
-	//but it seems that I cannot simply add keys to an object
+	$tagIDs = $addon->getTags();
+	$dependencyIDs = $addon->getDependencies();
+	$tags = [];
+	$dependencies = [];
+
+	foreach($tagIDS as $tid) {
+		$tags[] = TagManager::getFromID($tid);
+	}
+
+	foreach($dependencyIDs as $did) {
+		$dependencies[] = DependencyManager::getFromID($did);
+	}
+
 	//to do: replace "downloads" with "stats"
 	$response = [
 		"addon" => $addon,
 		"user" => $user,
-		"tags" => $addon->getTags(),
-		"dependencies" => $addon->getDependencies(),
+		"tags" => $tags,
+		"dependencies" => $dependencies,
 		"downloads" => $addon->getTotalDownloads()
 	];
 	return $response;

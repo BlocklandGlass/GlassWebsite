@@ -15,7 +15,7 @@ class AddonObject {
 	public $description;
 	//public $downloads;
 	public $approved;
-	public $rating;
+	//public $rating;
 	public $versionInfo;
 	public $authorInfo;
 	//public $file;
@@ -41,7 +41,7 @@ class AddonObject {
 		$this->name = $resource->name;
 		$this->description = $resource->description;
 		$this->approved = intval($resource->approved);
-		$this->rating = floatval($resource->rating);
+		//$this->rating = floatval($resource->rating);
 		$this->versionInfo = json_decode($resource->versionInfo);
 		$this->authorInfo = json_decode($resource->authorInfo);
 		//$this->file = intval($resource->file);
@@ -79,9 +79,9 @@ class AddonObject {
 		return $this->approved;
 	}
 
-	public function getRating() {
-		return $this->rating;
-	}
+	//public function getRating() {
+	//	return $this->rating;
+	//}
 
 	public function getVersionInfo() {
 		return $this->versionInfo;

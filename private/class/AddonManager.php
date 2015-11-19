@@ -33,7 +33,6 @@ class AddonManager {
 				if($resource->num_rows == 0) {
 					$addonObject = false;
 				}
-				var_dump($resource->fetch_object());
 				$addonObject = new AddonObject($resource->fetch_object());
 				$resource->close();
 			}
@@ -89,9 +88,10 @@ class AddonManager {
 				$query .= "`board` = '" . $database->sanitize($search['blid']) . "' AND ";
 			}
 
-			if(isset($search['tag'])) {
-				$query .= "`tags` LIKE '%" . $database->sanitize($search['tag']) . "%' AND ";
-			}
+			//to do: tag searching, probably requires quite a bit of this to be reworked
+			//if(isset($search['tag'])) {
+			//	$query .= "`tags` LIKE '%" . $database->sanitize($search['tag']) . "%' AND ";
+			//}
 			$query .= "`deleted` = 0 ORDER BY ";
 
 			switch($search['sort']) {
@@ -135,27 +135,27 @@ class AddonManager {
 
 	//Approval information should be in its own table probably
 	//the only thing that needs to be in the addons table is the true/false value
-	public static function getUnapproved() {
-		$unapprovedAddons = apc_fetch('unapprovedAddons');
-
-		if($unapprovedAddons === false) {
-			$database = new DatabaseManager();
-			AddonManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `addon_addons` WHERE `approved` = 0");
-
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$unapprovedAddons = [];
-
-			while($row = $resource->fetch_object()) {
-				$unapprovedAddons[] = AddonManager::getFromID($row->id, $row)->getID();
-			}
-			$resource->close();
-			apc_store('unapprovedAddons', $unapprovedAddons, AddonManager::$searchCacheTime);
-		}
-		return $unapprovedAddons;
-	}
+//	public static function getUnapproved() {
+//		$unapprovedAddons = apc_fetch('unapprovedAddons');
+//
+//		if($unapprovedAddons === false) {
+//			$database = new DatabaseManager();
+//			AddonManager::verifyTable($database);
+//			$resource = $database->query("SELECT * FROM `addon_addons` WHERE `approved` = 0");
+//
+//			if(!$resource) {
+//				throw new Exception("Database error: " . $database->error());
+//			}
+//			$unapprovedAddons = [];
+//
+//			while($row = $resource->fetch_object()) {
+//				$unapprovedAddons[] = AddonManager::getFromID($row->id, $row)->getID();
+//			}
+//			$resource->close();
+//			apc_store('unapprovedAddons', $unapprovedAddons, AddonManager::$searchCacheTime);
+//		}
+//		return $unapprovedAddons;
+//	}
 
 
 	//	$ret = array();
@@ -179,31 +179,38 @@ class AddonManager {
 	//bargain should be changed to a board
 	//this should probably just call searchAddons()
 	public static function getFromBoardID($id, $offset = 0, $limit = 10) {
-		$boardAddons = apc_fetch('boardAddons_' . $id . '_' . $offset . '_' . $limit);
-
-		if($boardAddons === false) {
-			$database = new DatabaseManager();
-			AddonManager::verifyTable($database);
-			$query = "SELECT * FROM `addon_addons` WHERE board='" . $database->sanitize($id) . "' AND deleted=0 ORDER BY `name` ASC";
-
-			if($limit > 0) {
-				$query .= " LIMIT " . $database->sanitize($offset) . ", " . $database->sanitize($limit);
-			}
-			$resource = $database->query($query);
-
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$boardAddons = [];
-
-			while($row = $resource->fetch_object()) {
-				$boardAddons[] = AddonManager::getFromID($row->id, $row)->getID();
-			}
-			$resource->close();
-			apc_store('boardAddons_' . $id . '_' . $offset . '_' . $limit, $boardAddons, AddonManager::$searchCacheTime);
-		}
-		return $boardAddons;
+		//the downside to this is that managing the cache is more difficult
+		return AddonManager::searchAddons([
+			"board" => $id,
+			"offset" => $offset,
+			"limit" => $limit
+		]);
 	}
+
+		//$boardAddons = apc_fetch('boardAddons_' . $id . '_' . $offset . '_' . $limit);
+        //
+		//if($boardAddons === false) {
+		//	$database = new DatabaseManager();
+		//	AddonManager::verifyTable($database);
+		//	$query = "SELECT * FROM `addon_addons` WHERE board='" . $database->sanitize($id) . "' AND deleted=0 ORDER BY `name` ASC";
+        //
+		//	if($limit > 0) {
+		//		$query .= " LIMIT " . $database->sanitize($offset) . ", " . $database->sanitize($limit);
+		//	}
+		//	$resource = $database->query($query);
+        //
+		//	if(!$resource) {
+		//		throw new Exception("Database error: " . $database->error());
+		//	}
+		//	$boardAddons = [];
+        //
+		//	while($row = $resource->fetch_object()) {
+		//		$boardAddons[] = AddonManager::getFromID($row->id, $row)->getID();
+		//	}
+		//	$resource->close();
+		//	apc_store('boardAddons_' . $id . '_' . $offset . '_' . $limit, $boardAddons, AddonManager::$searchCacheTime);
+		//}
+		//return $boardAddons;
 
 	//bargain bin should probably just be a board instead of a flag in the database
 //	public static function getBargain() {
@@ -233,29 +240,35 @@ class AddonManager {
 	//this function should probably take a blid or aid instead of an object
 	//should probably switch from Author to BLID for consistency
 	//this should also probably just use searchAddons(0
-	public static function getFromBLID($blid) {
-		$authorAddons = apc_fetch('authorAddons_' . $blid);
-
-		if($authorAddons === false) {
-			$authorAddons = array();
-			$database = new DatabaseManager();
-			AddonManager::verifyTable($database);
-
-			//include deleted addons here?
-			$resource = $database->query("SELECT * FROM `addon_addons` WHERE `blid` = '" . $database->sanitize($blid) . "'");
-
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-
-			while($row = $resource->fetch_object()) {
-				$authorAddons[$row->id] = AddonManager::getFromId($row->id, $row);
-			}
-			$resource->close();
-			apc_store('authorAddons_' . $blid, $authorAddons, AddonManager::$searchCacheTime);
-		}
-		return $authorAddons;
+	public static function getFromBLID($blid, $offset = 0, $limit = 10) {
+		AddonManager::searchAddons([
+			"blid" => $blid,
+			"offset" => $offset,
+			"limit" => $limit
+		]);
 	}
+	//	$authorAddons = apc_fetch('authorAddons_' . $blid);
+    //
+	//	if($authorAddons === false) {
+	//		$authorAddons = array();
+	//		$database = new DatabaseManager();
+	//		AddonManager::verifyTable($database);
+    //
+	//		//include deleted addons here?
+	//		$resource = $database->query("SELECT * FROM `addon_addons` WHERE `blid` = '" . $database->sanitize($blid) . "'");
+    //
+	//		if(!$resource) {
+	//			throw new Exception("Database error: " . $database->error());
+	//		}
+    //
+	//		while($row = $resource->fetch_object()) {
+	//			$authorAddons[$row->id] = AddonManager::getFromId($row->id, $row);
+	//		}
+	//		$resource->close();
+	//		apc_store('authorAddons_' . $blid, $authorAddons, AddonManager::$searchCacheTime);
+	//	}
+	//	return $authorAddons;
+	//}
 
 	//from a caching perspective, I already have each board cached, so I would like to avoid duplicate data
 	//oh well, this function isn't actually used anyway
@@ -290,6 +303,11 @@ class AddonManager {
 			apc_store('boardData_count_' . $boardID, $count, AddonManager::$indexCacheTime);
 		}
 		return $count;
+	}
+
+	public static function clearSearchCache() {
+		$cached = new APCIterator('searchAddons_');
+		apc_delete($cached);
 	}
 
 	//returns an array of just the ids in order

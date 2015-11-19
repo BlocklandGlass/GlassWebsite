@@ -8,8 +8,8 @@ class TagManager {
 	//we can cache this indefinitely since it is not likely to change
 	private static $objectCacheTime = 86400; //24 hours
 
-	private static $tagAddonsCacheTime = 180; //list of addons with tag
-	private static $addonTagsCacheTime = 3600; //list of tags on addon
+	private static $tagAddonsCacheTime = 3600; //list of addons with tag
+	private static $addonTagsCacheTime = 86400; //list of tags on addon
 
 	public static function getFromID($id, $resource = false) {
 		$tagObject = apc_fetch('tagObject_' . $id, $success);
@@ -20,7 +20,8 @@ class TagManager {
 			} else {
 				$database = new DatabaseManager();
 				TagManager::verifyTable($database);
-				$resource = $database->query("SELECT * FROM `addon_tags` WHERE `id` = '" . $database->sanitize($id) . "' LIMIT 1");
+				$resource = $database->query("SELECT * FROM `addon_tags` WHERE
+					`id` = '" . $database->sanitize($id) . "' LIMIT 1");
 
 				if(!$resource) {
 					throw new Exception("Database error: " . $database->error());
@@ -40,6 +41,7 @@ class TagManager {
 		return $tagObject;
 	}
 
+	//returns an array with the ids of the tags on this addon
 	public static function getTagsFromAddonID($id) {
 		$addonTags = apc_fetch('addonTags_' . $id, $success);
 
@@ -47,7 +49,8 @@ class TagManager {
 			//echo("GetTagsFromAddonID CACHE MISS");
 			$database = new DatabaseManager();
 			TagManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `addon_tagmap` WHERE `aid` = '" . $database->sanitize($id) . "'");
+			$resource = $database->query("SELECT * FROM `addon_tagmap` WHERE
+				`aid` = '" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
@@ -55,7 +58,8 @@ class TagManager {
 			$addonTags = [];
 
 			while($row = $resource->fetch_object()) {
-				$addonTags[] = TagManager::getFromID($row->id);
+				//don't get to pass in a resource this time
+				$addonTags[] = TagManager::getFromID($row->id)->getID();
 			}
 			//print_r($addonTags);
 			$resource->close();
@@ -64,13 +68,15 @@ class TagManager {
 		return $addonTags;
 	}
 
+	//just returns an array with the ids now
 	public static function getAddonsFromTagID($id) {
 		$tagAddons = apc_fetch('tagAddons_' . $id, $success);
 
 		if($success === false) {
 			$database = new DatabaseManager();
 			TagManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `addon_tagmap` WHERE `tid` = '" . $database->sanitize($id) . "'");
+			$resource = $database->query("SELECT * FROM `addon_tagmap` WHERE
+				`tid` = '" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
@@ -78,7 +84,7 @@ class TagManager {
 			$tagAddons = [];
 
 			while($row = $resource->fetch_object()) {
-				$tagAddons[] = AddonManager::getFromID($row->aid);
+				$tagAddons[] = AddonManager::getFromID($row->aid)->getID();
 			}
 			$resource->close();
 			apc_store('tagAddons_' . $id, $tagAddons, TagManager::$tagAddonsCacheTime); //this cache time is arbitrary
@@ -86,6 +92,7 @@ class TagManager {
 		return $tagAddons;
 	}
 
+	//honestly this should not be used
 	public static function getAllTags() {
 		$tags = apc_fetch('allTags', $success);
 
@@ -100,7 +107,7 @@ class TagManager {
 			$tags = [];
 
 			while($row = $resource->fetch_object()) {
-				$tags[] = TagManager::getFromID($row->id, $row);
+				$tags[] = TagManager::getFromID($row->id, $row)->getID();
 			}
 			$resource->close();
 			apc_store('allTags_' . $id, $tags, TagManager::$tagAddonsCacheTime);
@@ -123,7 +130,8 @@ class TagManager {
 	public static function createTagForAddon($name, $color, $icon, $addon) {
 		$database = new DatabaseManager();
 		TagManager::verifyTable($database);
-		$resource = $database->query("SELECT 1 FROM `addon_tags` where `name` = '" . $database->sanitize($name) . "' LIMIT 1");
+		$resource = $database->query("SELECT 1 FROM `addon_tags` WHERE
+			`name` = '" . $database->sanitize($name) . "' LIMIT 1");
 
 		if(!$resource) {
 			throw new Exception("Database error: " . $database->error());
@@ -135,35 +143,20 @@ class TagManager {
 		}
 		$resource->close();
 
-		//echo(" BEFORE: ");
-		//$res = $database->query("SELECT * FROM `addon_tagmap`");
-		//print_r($res);
-		//$res->close();
-
-		if(!$database->query("INSERT INTO `addon_tags` (name, base_color, icon) VALUES ('" . $database->sanitize($name) . "', '" . $database->sanitize($color) . "', '" . $database->sanitize($icon) . "')")) {
+		if(!$database->query("INSERT INTO `addon_tags` (name, base_color, icon) VALUES ('" .
+			$database->sanitize($name) . "', '" .
+			$database->sanitize($color) . "', '" .
+			$database->sanitize($icon) . "')")) {
 			throw new Exception("Failed to create new tag: " . $database->error());
 		}
 
 		$tag = TagManager::getFromID($database->fetchMysqli()->insert_id);
-
-		//echo(" After: ");
-		//$res = $database->query("SELECT * FROM `addon_tagmap`");
-		//print_r($res);
-		//$res->close();
-        //
-		//echo(" Tag: ");
-		//print_r($tag);
 
 		if($tag === false) {
 			throw new Exception("Newly generated tag not found!");
 		}
 
 		if(!TagManager::addTagToAddon($tag, $addon)) {
-
-			//echo(" Exception: ");
-			//$res = $database->query("SELECT * FROM `addon_tagmap`");
-			//print_r($res);
-			//$res->close();
 			throw new Exception("Failed to associate new tag with addon");
 		}
 		apc_delete('allTags');
@@ -192,7 +185,9 @@ class TagManager {
 		//check if link already exists
 		$database = new DatabaseManager();
 		TagManager::verifyTable($database);
-		$resource = $database->query("SELECT 1 FROM `addon_tagmap` WHERE `tid` = '" . $database->sanitize($tag->getID()) . "' AND `aid` = '" . $database->sanitize($addon->getID()) . "' LIMIT 1");
+		$resource = $database->query("SELECT 1 FROM `addon_tagmap` WHERE
+			`tid` = '" . $database->sanitize($tag->getID()) . "' AND
+			`aid` = '" . $database->sanitize($addon->getID()) . "' LIMIT 1");
 
 		if(!$resource) {
 			throw new Exception("Database error: " . $database->error());
@@ -205,7 +200,9 @@ class TagManager {
 		$resource->close();
 
 		//now add tag to addon
-		if(!$database->query("INSERT INTO `addon_tagmap` (tid, aid) VALUES ('" . $database->sanitize($tag->getID()) . "', '" . $database->sanitize($addon->getID()) . "')")) {
+		if(!$database->query("INSERT INTO `addon_tagmap` (tid, aid) VALUES ('" .
+			$database->sanitize($tag->getID()) . "', '" .
+			$database->sanitize($addon->getID()) . "')")) {
 			throw new Exception("Error adding new tagmap entry: " . $database->error());
 		}
 
@@ -234,7 +231,9 @@ class TagManager {
 	public static function removeTagFromAddon($tag, $addon) {
 		$database = new DatabaseManager();
 		TagManager::verifyTable($database);
-		$resource = $database->query("SELECT 1 FROM `addon_tagmap` WHERE `tid` = '" . $database->sanitize($tag->getID()) . "' AND `aid` = '" . $database->sanitize($addon->getID()) . "' LIMIT 1");
+		$resource = $database->query("SELECT 1 FROM `addon_tagmap` WHERE
+			`tid` = '" . $database->sanitize($tag->getID()) . "' AND
+			`aid` = '" . $database->sanitize($addon->getID()) . "' LIMIT 1");
 
 		if(!$resource) {
 			throw new Exception("Database error: " . $database->error());
@@ -246,54 +245,64 @@ class TagManager {
 		}
 		$resource->close();
 
-		if(!$database->query("DELETE FROM `addon_tagmap` WHERE `tid` = '" . $database->sanitize($tag->getID()) . "' AND `aid` = '" . $database->sanitize($addon->getID()) . "'")) {
+		if(!$database->query("DELETE FROM `addon_tagmap` WHERE
+			`tid` = '" . $database->sanitize($tag->getID()) . "' AND
+			`aid` = '" . $database->sanitize($addon->getID()) . "'")) {
 			throw new Exception("Error removing tagmap entry: " . $database->error());
 		}
 
-		//now check to see if there are any other instances of tag
-		$resource = $database->query("SELECT 1 FROM `addon_tagmap` WHERE `tid` = '" . $database->sanitize($tag->getID()) . "' LIMIT 1");
+		if(!$tag->getImportant()) {
+			//now check to see if there are any other instances of tag
+			$resource = $database->query("SELECT 1 FROM `addon_tagmap` WHERE
+				`tid` = '" . $database->sanitize($tag->getID()) . "' LIMIT 1");
 
-		if($resource->num_rows == 0) {
-			if(!$database->query("DELETE FROM `addon_tags` WHERE `id` = '" . $database->sanitize($tag->getID()) . "'")) {
-				throw new Exception("Error deleting tag: " . $database->error());
+			if($resource->num_rows == 0) {
+				if(!$database->query("DELETE FROM `addon_tags` WHERE
+					`id` = '" . $database->sanitize($tag->getID()) . "'")) {
+					throw new Exception("Error deleting tag: " . $database->error());
+				}
+				apc_delete('tagObject_' . $tag->getID());
+				apc_delete('allTags');
 			}
-			apc_delete('tagObject_' . $tag->getID());
-			apc_delete('allTags');
+			$resource->close();
 		}
-		$resource->close();
 		apc_delete('addonTags_' . $addon->getID());
 		apc_delete('tagAddons_' . $tag->getID());
 		return true;
 	}
 
 	public static function verifyTable($database) {
-		AddonManager::verifyTable($database);
+		if($database->debug()) {
+			AddonManager::verifyTable($database);
 
-		//to do: change addon_tags to something more general so build and stuff can be tagged
-		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_tags` (
-			`id` INT NOT NULL AUTO_INCREMENT,
-			`name` varchar(16) NOT NULL,
-			`base_color` varchar(6) NOT NULL,
-			`icon` text NOT NULL,
-			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error creating tag table: " . $database->error());
-		}
+			//to do: change addon_tags to something more general so build and stuff can be tagged
+			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_tags` (
+				`id` INT NOT NULL AUTO_INCREMENT,
+				`name` varchar(16) NOT NULL,
+				`base_color` varchar(6) NOT NULL,
+				`icon` text NOT NULL,
+				`important` TINYINT NOT NULL DEFAULT 0,
+				KEY (`name`),
+				PRIMARY KEY (`id`))")) {
+				throw new Exception("Error creating tag table: " . $database->error());
+			}
 
-		//this table might not need a primary key
-		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_tagmap` (
-			`id` INT NOT NULL AUTO_INCREMENT,
-			`aid` INT NOT NULL,
-			`tid` INT NOT NULL,
-			FOREIGN KEY (`aid`)
-				REFERENCES addon_addons(id)
-				ON UPDATE CASCADE
-				ON DELETE CASCADE,
-			FOREIGN KEY (`tid`)
-				REFERENCES addon_tags(id)
-				ON UPDATE CASCADE
-				ON DELETE CASCADE,
-			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error creating tagmap table: " . $database->error());
+			//this table might not need a primary key
+			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_tagmap` (
+				`id` INT NOT NULL AUTO_INCREMENT,
+				`aid` INT NOT NULL,
+				`tid` INT NOT NULL,
+				FOREIGN KEY (`aid`)
+					REFERENCES addon_addons(id)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE,
+				FOREIGN KEY (`tid`)
+					REFERENCES addon_tags(id)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE,
+				PRIMARY KEY (`id`))")) {
+				throw new Exception("Error creating tagmap table: " . $database->error());
+			}
 		}
 	}
 }

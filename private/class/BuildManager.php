@@ -2,7 +2,7 @@
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 
 class BuildManager {
-	private static $objectCacheTime = 180; //3 minutes, enough time for someone to preview the build and then download it
+	private static $objectCacheTime = 300; //5 minutes, enough time for someone to preview the build and then download it
 	private static $userBuildsCacheTime = 60;
 
 	public static function getFromID($id, $resource = false) {
@@ -46,7 +46,7 @@ class BuildManager {
 			$userBuilds = [];
 
 			while($row = $resource->fetch_object()) {
-				$userBuilds[] = BuildManager::getFromID($row->id, $row);
+				$userBuilds[] = BuildManager::getFromID($row->id, $row)->getID();
 			}
 			$resource->close();
 			apc_store('userBuilds_' . $id, $userBuilds, BuildManager::$userBuildsCacheTime);
@@ -54,7 +54,7 @@ class BuildManager {
 		return $userBuilds;
 	}
 
-	public static function verifyTable($database) {		*/
+	public static function verifyTable($database) {
 		if($database->debug()) {
 			require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
 			require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
@@ -78,7 +78,7 @@ class BuildManager {
 
 			//to do: probably should move this to another class, maybe make dependencyManager more general
 			if(!$database->query("CREATE TABLE IF NOT EXISTS `build_dependency` (
-				`od` INT NOT NULL AUTO_INCREMENT,
+				`id` INT NOT NULL AUTO_INCREMENT,
 				`bid` INT NOT NULL,
 				`aid` INT NOT NULL,
 				FOREIGN KEY (`bid`)
@@ -90,7 +90,7 @@ class BuildManager {
 					ON UPDATE CASCADE
 					ON DELETE CASCADE,
 				PRIMARY KEY (`id`))")) {
-				throw new Exception("unable to create build dependency table");
+				throw new Exception("unable to create build dependency table: " . $database->error());
 			}
 		}
 	}

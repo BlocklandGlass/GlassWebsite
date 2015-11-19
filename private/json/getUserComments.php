@@ -4,9 +4,18 @@
 	}
 	require_once(realpath(dirname(__DIR__) . "/class/CommentManager.php"));
 	$blid = $_GET['blid'] + 0; //force it to be a number
-	$response = CommentManager::getCommentsFromBLID($blid);
+	$commentIDs = CommentManager::getCommentsFromBLID($blid);
+	$comments = [];
 
-	return $response;
+	foreach($commentIDs as $cid) {
+		$comment = CommentManager::getFromID($cid);
+
+		if($comment !== false) {
+			$comments[] = $comment;
+		}
+	}
+
+	return $comments;
 
 //	require_once(realpath(dirname(__DIR__) . "/private/class/DatabaseManager.php"));
 //	$database = new DatabaseManager();

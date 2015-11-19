@@ -4,9 +4,14 @@
 	}
 	require_once(realpath(dirname(__DIR__) . "/class/CommentManager.php"));
 	$aid = $_GET['aid'] + 0; //force it to be a number
-	$response = CommentManager::getCommentsFromAddon($aid);
+	$commentIDs = CommentManager::getCommentsFromAddon($aid);
+	$comments = [];
 
-	return $response;
+	foreach($commentIDs as $cid) {
+		$comments[] = CommentManager::getFromID($cid);
+	}
+
+	return $comments;
 
 //	require_once(realpath(dirname(__DIR__) . "/private/class/DatabaseManager.php"));
 //	$database = new DatabaseManager();

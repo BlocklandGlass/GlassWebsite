@@ -33,6 +33,7 @@ class RatingManager {
 		return $ratingObject;
 	}
 
+	//honestly this probably shouldn't be needed
 	public static function getRatingsFromBLID($blid) {
 		$userRatings = apc_fetch('userRatings_' . $blid);
 
@@ -47,7 +48,7 @@ class RatingManager {
 			$userRatings = [];
 
 			while($row = $resource->fetch_object()) {
-				$userRatings[] = RatingManager::getFromID($row->id, $row);
+				$userRatings[] = RatingManager::getFromID($row->id, $row)->getID();
 			}
 			$resource->close();
 			apc_store('userRatings_' . $blid, $userRatings, RatingManager::$userCacheTime);
@@ -69,7 +70,7 @@ class RatingManager {
 			$addonRatings = [];
 
 			while($row = $resource->fetch_object()) {
-				$addonRatings[] = RatingManager::getFromID($row->id, $row);
+				$addonRatings[] = RatingManager::getFromID($row->id, $row)->getID();
 			}
 			$resource->close();
 			apc_store('addonRatings_' . $aid, $addonRatings, RatingManager::$addonCacheTime);
@@ -78,26 +79,28 @@ class RatingManager {
 	}
 
 	public static function verifyTable($database) {
-		require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
-		require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
-		UserManager::verifyTable($database);
-		AddonManager::verifyTable($database);
+		if($database->debug()) {
+			require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
+			require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
+			UserManager::verifyTable($database);
+			AddonManager::verifyTable($database);
 
-		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_ratings` (
-			`id` INT AUTO_INCREMENT,
-			`blid` INT NOT NULL,
-			`aid` INT NOT NULL,
-			`rating` TINYINT NOT NULL,
-			FOREIGN KEY (`blid`)
-				REFERENCES users(`blid`)
-				ON UPDATE CASCADE
-				ON DELETE CASCADE,
-			FOREIGN KEY (`aid`)
-				REFERENCES addon_addons(`id`)
-				ON UPDATE CASCADE
-				ON DELETE CASCADE,
-			PRIMARY KEY (`id`))")) {
-			throw new Exception("Unable to create table addon_ratings: " . $database->error());
+			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_ratings` (
+				`id` INT AUTO_INCREMENT,
+				`blid` INT NOT NULL,
+				`aid` INT NOT NULL,
+				`rating` TINYINT NOT NULL,
+				FOREIGN KEY (`blid`)
+					REFERENCES users(`blid`)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE,
+				FOREIGN KEY (`aid`)
+					REFERENCES addon_addons(`id`)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE,
+				PRIMARY KEY (`id`))")) {
+				throw new Exception("Unable to create table addon_ratings: " . $database->error());
+			}
 		}
 	}
 }

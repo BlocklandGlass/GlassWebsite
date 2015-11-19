@@ -2,6 +2,7 @@
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
 
+//maybe should be integrated with AddonManager
 class DependencyManager {
 	//we can cache this indefinitely since it is not likely to change
 	private static $objectCacheTime = 86400; //24 hours
@@ -49,7 +50,7 @@ class DependencyManager {
 			$addonDeps = [];
 
 			while($row = $resource->fetch_object()) {
-				$addonDeps[] = DependencyManager::getFromID($row->id, $row);
+				$addonDeps[] = DependencyManager::getFromID($row->id, $row)->getID();
 			}
 			$resource->close();
 			apc_store('addonDependencies_' . $id, $addonDeps, DependencyManager::$addonCacheTime);
@@ -133,23 +134,25 @@ class DependencyManager {
 	}
 
 	public static function verifyTable($database) {
-		AddonManager::verifyTable($database);
+		if($database->debug()) {
+			AddonManager::verifyTable($database);
 
-		//this table might not need a primary key
-		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_dependency` (
-			`id` INT NOT NULL AUTO_INCREMENT,
-			`target` INT NOT NULL,
-			`requirement` INT NOT NULL,
-			FOREIGN KEY (`target`)
-				REFERENCES addon_addons(id)
-				ON UPDATE CASCADE
-				ON DELETE CASCADE,
-			FOREIGN KEY (`requirement`)
-				REFERENCES addon_addons(id)
-				ON UPDATE CASCADE
-				ON DELETE CASCADE,
-			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error creating dependency table: " . $database->error());
+			//this table might not need a primary key
+			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_dependency` (
+				`id` INT NOT NULL AUTO_INCREMENT,
+				`target` INT NOT NULL,
+				`requirement` INT NOT NULL,
+				FOREIGN KEY (`target`)
+					REFERENCES addon_addons(id)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE,
+				FOREIGN KEY (`requirement`)
+					REFERENCES addon_addons(id)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE,
+				PRIMARY KEY (`id`))")) {
+				throw new Exception("Error creating dependency table: " . $database->error());
+			}
 		}
 	}
 }

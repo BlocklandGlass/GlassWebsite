@@ -25,14 +25,15 @@ class DatabaseManager {
 		$this->username = $keyData->username;
 		$this->password = $keyData->password;
 
-		if(isset($keyData->debug) && $keydata->debug) {
+		if(isset($keyData->debug) && $keyData->debug) {
 			$this->debug = true;
 		} else {
 			$this->debug = false;
 		}
-		$this->mysqli = new mysqli("localhost", $this->username, $this->password, $this->database);
 
-		if($this->mysqli->connect_error) {
+		try {
+			$this->mysqli = new mysqli("localhost", $this->username, $this->password, $this->database);
+		} catch(Exception $e) {
 			$this->mysqli = new mysqli("localhost", $this->username, $this->password);
 
 			if($this->mysqli->connect_error) {

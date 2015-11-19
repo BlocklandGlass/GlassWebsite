@@ -49,7 +49,7 @@ class GroupManager {
 			$userGroups = [];
 
 			while($row = $resource->fetch_object()) {
-				$userGroups[] = GroupManager::getFromID($row->id);
+				$userGroups[] = GroupManager::getFromID($row->id)->getID();
 			}
 			$resource->close();
 			apc_store('userGroups_' . $id, $userGroups, GroupManager::$userGroupsCacheTime);
@@ -71,7 +71,7 @@ class GroupManager {
 			$groupUsers = [];
 
 			while($row = $resource->fetch_object()) {
-				$groupUsers[] = UserManager::getFromID($row->blid);
+				$groupUsers[] = UserManager::getFromID($row->blid)->getID();
 			}
 			$resource->close();
 			apc_store('groupUsers_' . $id, $groupUsers, GroupManager::$groupUsersCacheTime); //this cache time is arbitrary
@@ -228,39 +228,41 @@ class GroupManager {
 	}
 
 	public static function verifyTable($database) {
-		UserManager::verifyTable($database);
+		if($database->debug()) {
+			UserManager::verifyTable($database);
 
-		if(!$database->query("CREATE TABLE IF NOT EXISTS `group_groups` (
-			`id` INT NOT NULL AUTO_INCREMENT,
-			`leader` INT NOT NULL,
-			`name` varchar(16) NOT NULL,
-			`description` TEXT,
-			`color` varchar(6) NOT NULL,
-			`icon` text NOT NULL,
-			FOREIGN KEY (`leader`)
-				REFERENCES users(`blid`)
-				ON UPDATE CASCADE
-				ON DELETE CASCADE,
-			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error creating group table: " . $database->error());
-		}
+			if(!$database->query("CREATE TABLE IF NOT EXISTS `group_groups` (
+				`id` INT NOT NULL AUTO_INCREMENT,
+				`leader` INT NOT NULL,
+				`name` varchar(16) NOT NULL,
+				`description` TEXT,
+				`color` varchar(6) NOT NULL,
+				`icon` text NOT NULL,
+				FOREIGN KEY (`leader`)
+					REFERENCES users(`blid`)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE,
+				PRIMARY KEY (`id`))")) {
+				throw new Exception("Error creating group table: " . $database->error());
+			}
 
-		//this table might not need a primary key
-		if(!$database->query("CREATE TABLE IF NOT EXISTS `group_usermap` (
-			`id` INT NOT NULL AUTO_INCREMENT,
-			`gid` INT NOT NULL,
-			`blid` INT NOT NULL,
-			`administrator` TINYINT NOT NULL DEFAULT 0,
-			FOREIGN KEY (`gid`)
-				REFERENCES group_groups(`id`)
-				ON UPDATE CASCADE
-				ON DELETE CASCADE,
-			FOREIGN KEY (`blid`)
-				REFERENCES users(`blid`)
-				ON UPDATE CASCADE
-				ON DELETE CASCADE,
-			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error creating group usermap table: " . $database->error());
+			//this table might not need a primary key
+			if(!$database->query("CREATE TABLE IF NOT EXISTS `group_usermap` (
+				`id` INT NOT NULL AUTO_INCREMENT,
+				`gid` INT NOT NULL,
+				`blid` INT NOT NULL,
+				`administrator` TINYINT NOT NULL DEFAULT 0,
+				FOREIGN KEY (`gid`)
+					REFERENCES group_groups(`id`)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE,
+				FOREIGN KEY (`blid`)
+					REFERENCES users(`blid`)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE,
+				PRIMARY KEY (`id`))")) {
+				throw new Exception("Error creating group usermap table: " . $database->error());
+			}
 		}
 	}
 }
