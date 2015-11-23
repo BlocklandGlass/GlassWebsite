@@ -1,10 +1,17 @@
 <?php
-//require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
+	session_start();
+	require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
+	$user = UserManager::getCurrent();
+
+	if(!$user) {
+		header("Location: " . "/index.php");
+		die();
+	}
 
 $_PAGETITLE = "Glass | Add-Ons";
 
-require_once(realpath(dirname(dirname(__DIR__)) . "/private/header.php"));
-require_once(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php"));
+include(realpath(dirname(dirname(__DIR__)) . "/private/header.php"));
+include(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php"));
 ?>
 <div class="maincontainer">
   <form action="upload.php" method="post">
@@ -22,4 +29,4 @@ require_once(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php"))
   Any ordinary add-on, including either a client.cs or server.cs file.</p>
 </div>
 
-<?php require_once(realpath(dirname(dirname(__DIR__)) . "/private/footer.php")); ?>
+<?php include(realpath(dirname(dirname(__DIR__)) . "/private/footer.php")); ?>

@@ -13,6 +13,7 @@ class UserManager {
 
 	public static function getFromBLID($blid) {
 		$userObject = apc_fetch('userObject_' . $blid, $success);
+
 		if($success === false) {
 			$database = new DatabaseManager();
 			UserManager::verifyTable($database);
@@ -58,7 +59,6 @@ class UserManager {
 
 	public static function getCurrent() {
 		if(!isset($_SESSION)) {
-			//throw new Exception("No Session!");
 			return false;
 		}
 
@@ -106,7 +106,12 @@ class UserManager {
 
 		if($hash === hash("sha256", $password . $salt)) {
 			$_SESSION['loggedin'] = 1;
-			$_SESSION['blid'] = $loginDetails['blid'];
+
+			if($loginDetails['verified']) {
+				$_SESSION['blid'] = $loginDetails['blid'];
+			} else {
+				$_SESSION['email'] = $loginDetails['email'];
+			}
 			$_SESSION['username'] = $loginDetails['username'];
 
 			return [
@@ -182,7 +187,7 @@ class UserManager {
 
 		if($loginDetails === false) {
 			$database = new DatabaseManager();
-			$query = "SELECT password, salt, blid, username FROM users WHERE `email` = '" . $database->sanitize($email) . "'";
+			$query = "SELECT password, salt, blid, username, email, verified FROM users WHERE `email` = '" . $database->sanitize($email) . "'";
 			$loginDetails = UserManager::buildLoginDetailsFromQuery($database, $query);
 			apc_store('loginDetailsFromEmail_' . $email, $loginDetails, UserManager::$credentialsCacheTime);
 		}
@@ -194,7 +199,7 @@ class UserManager {
 
 		if($loginDetails === false) {
 			$database = new DatabaseManager();
-			$query = "SELECT password, salt, blid, username FROM users WHERE `blid` = '" . $database->sanitize($blid) . "' AND  `verified` = 1";
+			$query = "SELECT password, salt, blid, username, email, verified FROM users WHERE `blid` = '" . $database->sanitize($blid) . "' AND  `verified` = 1";
 			$loginDetails = UserManager::buildLoginDetailsFromQuery($database, $query);
 			apc_store('loginDetailsFromBLID_' . $blid, $loginDetails, UserManager::$credentialsCacheTime);
 		}
@@ -217,7 +222,9 @@ class UserManager {
 				"hash" => $resultObj->password,
 				"salt" => $resultObj->salt,
 				"blid" => $resultObj->blid, //no need to come up with two numerical identifiers
-				"username" => $resultObj->username //we might need to change this to pull from the user-log (from in-game auth); alternatively, have the user-log update the username var
+				"username" => $resultObj->username, //we might need to change this to pull from the user-log (from in-game auth); alternatively, have the user-log update the username var
+				"email" => $resultObj->email,
+				"verified" => $resultObj->verified
 			];
 		}
 		$resource->close();
@@ -241,6 +248,7 @@ class UserManager {
 			`verified` TINYINT NOT NULL DEFAULT 0,
 			`banned` TINYINT NOT NULL DEFAULT 0,
 			`admin` TINYINT NOT NULL DEFAULT 0,
+			`profile` TEXT,
 			KEY (`blid`),
 			UNIQUE KEY (`email`))")) {
 			throw new Exception("Error creating users table: " . $database->error());

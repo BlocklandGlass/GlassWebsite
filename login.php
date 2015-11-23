@@ -3,6 +3,7 @@
 	$loginStatus = include(realpath(dirname(__FILE__) . "/private/json/login.php"));
 
 	if(isset($loginStatus['redirect'])) {
+		//I tried to add $_SERVER['SERVER_NAME'] but that doesn't work with localhost
 		header("Location: " . $loginStatus['redirect']);
 		die();
 	}
@@ -46,20 +47,6 @@
 	<img src="/img/loading.gif" />
 </div>
 <script type="text/javascript">
-//http://jsperf.com/escape-html-special-chars/11
-function escapeHtml(text) {
-	var map = {
-		'&': '&amp;',
-		'<': '&lt;',
-		'>': '&gt;',
-		'"': '&quot;',
-		"'": '&#039;'
-	};
-	return text.replace(/[&<>"']/g, function(m) {
-		return map[m];
-	});
-}
-
 $(document).ready(function () {
 	if($("#loginStatus").children().html() === "Form incomplete.") {
 		$("#loginStatus").hide();
