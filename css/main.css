@@ -96,7 +96,7 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], textarea {
   float: right;
   display: block;
 

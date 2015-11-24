@@ -91,6 +91,12 @@ class BuildManager {
 		}
 		$check = BuildManager::validateBLSContents($contents);
 
+		//to do:
+		//actual file saving
+		//create database entries
+		//start stat tracking
+		//redirect user to manage page
+		//event logging
 		if($check['ok']) {
 			$response = [
 				"message" => $check['message']

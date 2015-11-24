@@ -1,14 +1,14 @@
 <?php
-require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
+	require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
 
-$_PAGETITLE = "Glass | Builds";
-$_OPENHEAD = true;
-require_once(realpath(dirname(__DIR__) . "/private/header.php"));
+	$_PAGETITLE = "Glass | Builds";
+	$_OPENHEAD = true;
+	require_once(realpath(dirname(__DIR__) . "/private/header.php"));
 ?>
-  <script src="./res/babylon.js"></script>
+  <script src="/js/vendor/babylon.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="./res/NBL.js"></script>
-  <link rel="stylesheet" href="./res/NBL.css">
+  <script src="/js/NBL.js"></script>
+  <link rel="stylesheet" href="/css/NBL.css">
 
   <?php
   $testfile = "./res/House.bls";

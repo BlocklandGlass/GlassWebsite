@@ -22,8 +22,8 @@
 	<?php include(realpath(dirname(__DIR__) . "/private/navigationbar.php")); ?>
 </div>
 
-<script src="./res/babylon.js"></script>
-<link rel="stylesheet" href="./res/NBL.css">
+<script src="/js/vendor/babylon.js"></script>
+<link rel="stylesheet" href="/css/NBL.css">
 <script type="text/javascript">
 <?php
 	//TO DO: add a toolbar at the bottom with things like "upload", "save", "clear", etc
@@ -35,7 +35,6 @@
 	//even though the jquery is redundant, it seems I need to include it before NBL.js
 ?>
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="./res/NBL.js"></script>
+<script src="/js/NBL.js"></script>
 
 <?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>
