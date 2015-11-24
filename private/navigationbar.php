@@ -12,6 +12,8 @@
 				}
 
 				if(isset($_SESSION['loggedin'])) {
+					//really the login/logout buttons should be submit buttons for a form
+					//unfortunately there is too much css styling on submit buttons that I can't figure out how to remove
 					?>
 					<li><a href="/user" class="navbtn"><?php echo(htmlspecialchars($_SESSION['username'])) ?></a></li>
 					<li><a href="/logout.php" class="navbtn" onclick="document.getElementById('logoutForm').submit(); return false;">Log Out</a></li>

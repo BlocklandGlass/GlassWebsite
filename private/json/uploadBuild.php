@@ -16,7 +16,7 @@
 		return $response;
 	}
 
-	if(!isset($_POST["submit"])) {
+	if(!isset($_POST['submit'])) {
 		$response = [
 			"message" => "Upload a Build"
 		];
@@ -30,25 +30,42 @@
 		return $response;
 	}
 
-	if(!isset($_FILES["uploadfile"]["name"]) || !$_FILES["uploadfile"]["size"]) {
+	if(!isset($_FILES['uploadfile']['name']) || !$_FILES['uploadfile']['size']) {
 		$response = [
 			"message" => "No file was selected to be uploaded"
 		];
 		return $response;
 	}
+	$uploadExt = pathinfo($_FILES['uploadfile']['name'], PATHINFO_EXTENSION);
+
+	if($uploadExt != "bls") {
+		$response = [
+			"message" => "Only .bls files are allowed"
+		];
+		return $response;
+	}
 	require_once(realpath(dirname(__DIR__) . "/class/BuildManager.php"));
 
-	if($_FILES["uploadfile"]["size"] > BuildManager::$maxFileSize) {
+	if($_FILES['uploadfile']['size'] > BuildManager::$maxFileSize) {
 		$response = [
 			"message" => "File too large - The maximum build file size is 10 MB"
 		];
 		return $response;
 	}
-	$name = basename($_FILES["uploadfile"]["name"]); //to do
+	$uploadContents = file($_FILES['uploadfile']['tmp_name']);
+	$tempPath = $_FILES['uploadfile']['tmp_name'];
+	$uploadFileName = basename($_FILES['uploadfile']['name'], ".bls");
 
-	//basic parse of .bls file
-	//$contents = explode("\n", file_get_contents($_FILES["uploadfile"]["tmp_name"]));
-	$contents = file($_FILES["uploadfile"]["tmp_name"]);
-	$response = BuildManager::uploadBuild($user->getBLID(), $name, $contents);
+	if(isset($_POST['buildname']) && $_POST['buildname'] != "") {
+		//trim .bls from end of file name if it exists
+		$uploadFileName = preg_replace("/\\.bls$/", "", $_POST['buildname']);
+	}
+
+	if(!isset($_POST['description']) && $_POST['description'] != "") {
+		$uploadDescription = $_POST['description'];
+		$response = BuildManager::uploadBuild($user->getBLID(), $uploadFileName, $uploadContents, $tempPath, $uploadDescription);
+	} else {
+		$response = BuildManager::uploadBuild($user->getBLID(), $uploadFileName, $uploadContents, $tempPath);
+	}
 	return $response;
 ?>

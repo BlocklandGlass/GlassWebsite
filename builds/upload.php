@@ -24,7 +24,7 @@
 						<p>Choose a Name for your Build</p>
 					</td>
 					<td>
-						<input type="text" name="fileName" id="buildname" style="margin: 0; float: none;">
+						<input type="text" name="buildname" id="buildname" style="margin: 0; float: none;">
 					</td>
 				</tr>
 				<tr>
@@ -119,10 +119,13 @@ $(document).ready(function () {
         
 				if(response.hasOwnProperty('redirect')) {
 					//using location.replace() will make it so hitting back will skip over /login.php
-					//window.location.replace(response.redirect);
+					window.location.replace(response.redirect);
 				} else {
 					$("#uploadStatus").html("<p>" + escapeHtml(response.message) + "</p>");
 				}
+			},
+			error: function (idk, response) {
+				$("#uploadStatus").html("<p>Error: " + escapeHtml(response.message) + "</p>");
 			}
 		});
 	});

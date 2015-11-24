@@ -58,34 +58,23 @@ class BuildManager {
 
 	/**
 	 *  Upload a build with contents as an array of strings
-	 *  
-	 *  $parameters - an array with the following optional settings
-	 *  	"tags" => array of tag ids
-	 *  	"screenshots" => idk yet
-	 *  	"credits" => sure
 	 */
-	public static function uploadBuild($blid, $fileName, $contents, $parameters = []) { //to do
+	public static function uploadBuild($blid, $buildName, $contents, $tempPath, $description = false) { //to do
+		//to do, generate a random name for storage, and allow the build name to contain any characters and be not unique
 		//a filter for file names
-		//allows letters, numbers, '.', '-', '_', '\'', '!', and ' '
-		if(preg_replace("/[^a-zA-Z0-9\.\-\_\ \'\!]/", "", $fileName) !== $fileName) {
+		//allows letters, numbers, '-', '_', '\'', '!', and ' '
+		if(preg_match("/^[a-zA-Z0-9\-\_\ \'\!]{1, 60}$/", $buildName)) {
 			$response = [
-				"message" => "Invalid file name - You may use letters, numbers, spaces, and the following symbols: -, ', _, ., and !"
+				"message" => "Invalid file name - You may use up to 60 characters and include letters, numbers, spaces, and the following symbols: -, ', _, and !"
 			];
 			return $response;
 		}
-		$fileExt = pathinfo($fileName, PATHINFO_EXTENSION);
-
-		if($fileExt != "bls") {
-			$response = [
-				"message" => "Only .bls files are allowed"
-			];
-			return $response;
-		}
-		$targetPath = realPath(dirname(__FILE__) . "uploads/" . $fileName);
+		//temporary file storage for now
+		$targetPath = dirname(__DIR__) . "/../builds/uploads/" . $buildName . ".bls";
 
 		if(file_exists($targetPath)) {
 			$response = [
-				"message" => "A file with that name already exists."
+				"message" => "A build with that name already exists."
 			];
 			return $response;
 		}
@@ -97,26 +86,50 @@ class BuildManager {
 		//start stat tracking
 		//redirect user to manage page
 		//event logging
-		if($check['ok']) {
-			$response = [
-				"message" => $check['message']
-			];
-			return $response;
-		} else {
+		if(!$check['ok']) {
 			$response = [
 				"message" => $check['message']
 			];
 			return $response;
 		}
+
+		if($description === false) {
+			$description = $check['description'];
+		}
+
+		if(!move_uploaded_file($tempPath, $targetPath)) {
+			$response = [
+				"message" => "An error occurred while saving your build, please contact an administrator if this persists"
+			];
+			return $response;
+		}
+
+		//it's go time
+		$database = new DatabaseManager();
+		BuildManager::verifyTable($database);
+		if(!$database->query("INSERT INTO `build_builds` (`blid`, `name`, `filename`, `bricks`, `description`) VALUES ('" .
+			$database->sanitize($blid) . "', '" .
+			$database->sanitize($buildName) . "', '" .
+			$database->sanitize($targetPath) . "', '" .
+			$database->sanitize($check['brickcount']) . "', '" .
+			$database->sanitize($description) . "')")) {
+			throw new Exception("Database error: " . $database->error());
+		}
+
+		//to do: stats
+		$response = [
+			"redirect" => "/builds/manage.php?init=true&id=" . $database->fetchMysqli()->insert_id
+		];
+		return $response;
 	}
 
 	/**
 	 *  Takes in an array of strings representing the contents of the file.
 	 *  Returns an array with parameter "ok" set to 1 on success, and a message describing the status.
-	 *  When "ok" is set to 1, the following is also set:
+	 *  When "ok" is set to 1, the following are also set:
 	 *  	brickcount - integer
 	 *  	description - string
-	 *  	colortable - array of strings representing garbage
+	 *  	colortable - a array of RGBA colors each as an array of floats accessed by $array['r'], etc
 	 *  	bricks - array of strings representing uinames of bricks
 	 */
 	public static function validateBLSContents($contents) {
@@ -153,7 +166,15 @@ class BuildManager {
 				];
 				return $response;
 			} else {
-				$colorTable[$i] = $contents[2 + $desclen + $i];
+				$line = $contents[2 + $desclen + $i];
+
+				list($r, $g, $b, $a) = sscanf($line, "%f %f %f %f");
+				$colorTable[$i] = [
+					"r" => $r,
+					"g" => $g,
+					"b" => $b,
+					"a" => $a
+				];
 			}
 		}
 
@@ -242,10 +263,10 @@ class BuildManager {
 			if(!$database->query("CREATE TABLE IF NOT EXISTS `build_builds` (
 				`id` INT NOT NULL AUTO_INCREMENT,
 				`blid` INT NOT NULL,
-				`name` VARCHAR(16) NOT NULL,
+				`name` VARCHAR(60) NOT NULL,
 				`filename` TEXT NOT NULL,
 				`bricks` INT NOT NULL DEFAULT 0,
-				`description` TEXT,
+				`description` TEXT NOT NULL,
 				FOREIGN KEY (`blid`)
 					REFERENCES users(`blid`)
 					ON UPDATE CASCADE

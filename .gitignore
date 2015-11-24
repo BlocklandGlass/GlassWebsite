@@ -1,4 +1,5 @@
 # Include your project-specific ignores in this file
 # Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
-./private/class/mysql.json
-./private/class/key.json
+private/class/mysql.json
+private/class/key.json
+builds/uploads/*

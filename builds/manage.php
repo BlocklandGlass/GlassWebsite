@@ -68,5 +68,5 @@
 //to do
 </script>
 <?php
-	include(realpath(dirname(__FILE__) . "/private/footer.php"));
+	include(realpath(dirname(__DIR__) . "/private/footer.php"));
 ?>
