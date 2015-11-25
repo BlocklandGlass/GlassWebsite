@@ -13,7 +13,7 @@ class BuildObject {
 		$this->blid = intval($resource->blid);
 		$this->name = $resource->name;
 		$this->bricks = intval($resource->bricks);
-		$this->description = $resource->description
+		$this->description = $resource->description;
 
 		//use realpath?
 		//depends on filesystem api I suppose
