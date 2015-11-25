@@ -242,7 +242,7 @@ class AddonManager {
 	//should probably switch from Author to BLID for consistency
 	//this should also probably just use searchAddons(0
 	public static function getFromBLID($blid, $offset = 0, $limit = 10) {
-		AddonManager::searchAddons([
+		return AddonManager::searchAddons([
 			"blid" => $blid,
 			"offset" => $offset,
 			"limit" => $limit
