@@ -4,6 +4,20 @@ require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 class BuildManager {
 	private static $objectCacheTime = 300; //5 minutes, enough time for someone to preview the build and then download it
 	private static $userBuildsCacheTime = 60;
+	public static $escapedCharacters = [
+		"/\\n/",
+		"/\\t/",
+		"/\\\\/",
+		"/\\\"/",
+		"/\\\'/"
+	];
+	public static $unescapedCharacters = [
+		"\n",
+		"\t",
+		"\\",
+		"\"",
+		"\'"
+	];
 
 	public static $maxFileSize = 10000000;
 
@@ -97,12 +111,12 @@ class BuildManager {
 			$description = $check['description'];
 		}
 
-		if(!move_uploaded_file($tempPath, $targetPath)) {
-			$response = [
-				"message" => "An error occurred while saving your build, please contact an administrator if this persists"
-			];
-			return $response;
-		}
+		//if(!move_uploaded_file($tempPath, $targetPath)) {
+		//	$response = [
+		//		"message" => "An error occurred while saving your build, please contact an administrator if this persists"
+		//	];
+		//	return $response;
+		//}
 
 		//it's go time
 		$database = new DatabaseManager();
@@ -115,10 +129,15 @@ class BuildManager {
 			$database->sanitize($description) . "')")) {
 			throw new Exception("Database error: " . $database->error());
 		}
+		$id = $database->fetchMysqli()->insert_id;
+		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
+		AWSFileManager::uploadNewBuild($id, $tempPath);
+		require_once(realpath(dirname(__FILE__) . '/StatManager.php'));
+		StatManager::addStatusToBuild($id);
 
 		//to do: stats
 		$response = [
-			"redirect" => "/builds/manage.php?init=true&id=" . $database->fetchMysqli()->insert_id
+			"redirect" => "/builds/manage.php?init=true&id=" . $id
 		];
 		return $response;
 	}
@@ -153,6 +172,7 @@ class BuildManager {
 		for($i=1; $i<$desclen; $i++) {
 			$description .= "\n" . $contents[2 + $i];
 		}
+		$description = preg_replace(BuildManager::$escapedCharacters, BuildManager::$unescapedCharacters, $description);
 		$colorTable = [];
 
 		//verify color table
