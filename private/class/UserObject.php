@@ -51,5 +51,20 @@ class UserObject {
 	public function getEmail() {
 		return $this->email;
 	}
+
+
+	public function setVerified($bool) {
+		$database = new DatabaseManager();
+		$database->query("UPDATE `users` SET `verified`='" . $database->sanitize($bool) . "' WHERE `email`='" . $database->sanitize($this->getEmail()) . "'");
+		apc_store('userObject_' . $this->blid, $this, 600);
+	}
+
+	public function setUsername($name) {
+		if($this->verified) {
+			$database = new DatabaseManager();
+			$database->query("UPDATE `users` SET `username`='" . $database->sanitize($name) . "' WHERE `email`='" . $database->sanitize($this->getEmail()) . "'");
+			apc_store('userObject_' . $this->blid, $this, 600);
+		}
+	}
 }
 ?>

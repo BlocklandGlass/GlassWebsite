@@ -33,10 +33,17 @@ class UserLog {
     UserLog::verifyTable($db);
     $resource = $db->query("SELECT * FROM `user_log` WHERE `blid`='" . $db->sanitize($blid) . "' AND `username`='" . $db->sanitize($username) . "'");
     if($resource->num_rows == 0) {
-      $rsc = $db->query("INSERT INTO `user_log` (`blid`, `firstseen`, `lastseen`, `username`) VALUES ('" . $db->sanitize($blid) . "', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '" . $db->sanitize($username) . "');");
-    } else {
+      $db->query("INSERT INTO `user_log` (`blid`, `firstseen`, `lastseen`, `username`) VALUES ('" . $db->sanitize($blid) . "', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '" . $db->sanitize($username) . "');");
+		} else {
       $db->query("UPDATE `user_log` SET `lastseen` = CURRENT_TIMESTAMP WHERE `blid`='" . $db->sanitize($blid) . "' AND `username`='" . $db->sanitize($username) . "'");
     }
+
+		//update username
+		if($user = UserManager::getFromBLID($blid)) {
+			if($username != $user->getUsername()) {
+				$user->setUsername($username);
+			}
+		}
   }
 
   public function isRemoteVerified($blid, $name, $ip) {

@@ -52,7 +52,7 @@ class UserManager {
 				$userObject[] = new UserObject($row);
 			}
 			$resource->close();
-			apc_store('userObject_' . $blid, $userObject, UserManager::$cacheTime);
+			apc_store('allUserObjects_' . $blid, $userObject, UserManager::$cacheTime);
 		}
 		return $userObject;
 	}
@@ -243,7 +243,7 @@ class UserManager {
 			`password` VARCHAR(64) NOT NULL,
 			`email` VARCHAR(64) NOT NULL,
 			`salt` VARCHAR(10) NOT NULL,
-			`registration_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+			`registration_date` TIMESTAMP DEFAULT '0000-00-00',
 			`session_last_active` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 			`verified` TINYINT NOT NULL DEFAULT 0,
 			`banned` TINYINT NOT NULL DEFAULT 0,

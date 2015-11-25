@@ -1,15 +1,15 @@
 <?php
-require_once("../../private/class/DatabaseManager.php");
-require_once("../../private/class/UserManager.php");
-require_once("../../private/class/AddonManager.php");
-require_once("../../private/class/BoardManager.php");
-require_once("../../private/class/TagManager.php");
-require_once("../../private/class/GroupManager.php");
-require_once("../../private/class/StatManager.php");
-require_once("../../private/class/DependencyManager.php");
-require_once("../../private/class/CommentManager.php");
-require_once("../../private/class/BuildManager.php");
-require_once("../../private/class/RatingManager.php");
+require_once("../../../private/class/DatabaseManager.php");
+require_once("../../../private/class/UserManager.php");
+require_once("../../../private/class/AddonManager.php");
+require_once("../../../private/class/BoardManager.php");
+require_once("../../../private/class/TagManager.php");
+require_once("../../../private/class/GroupManager.php");
+require_once("../../../private/class/StatManager.php");
+require_once("../../../private/class/DependencyManager.php");
+require_once("../../../private/class/CommentManager.php");
+require_once("../../../private/class/BuildManager.php");
+require_once("../../../private/class/RatingManager.php");
 
 class TestManager {
 	public static function clearDatabase() {
