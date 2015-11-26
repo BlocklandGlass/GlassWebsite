@@ -13,8 +13,8 @@ class AWSFileManager {
 			)
 		));
 		$result = $client->putObject(array(
-			"Bucket" => "blocklandglass-test-bucket",
-			"Key" => "builds/" . $bid,
+			"Bucket" => $keyData->aws_bucket,
+			"Key" => "builds/" . $bid . ".bls",
 			"SourceFile" => $tempFile
 		));
 	}
