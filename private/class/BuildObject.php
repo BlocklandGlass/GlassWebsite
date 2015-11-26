@@ -47,5 +47,9 @@ class BuildObject {
 	public function getDescription() {
 		return $this->description;
 	}
+
+	public function getFilename() {
+		return $this->filename;
+	}
 }
 ?>

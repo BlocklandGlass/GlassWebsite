@@ -23,4 +23,9 @@ $call = $_REQUEST['call']; //board, tag, home, search, addon, comments, build
 
 if(is_file(dirname(__FILE__) . "/private/mm/" . $call . ".php")) {
   require_once dirname(__FILE__) . "/private/mm/" . $call . ".php";
+} else {
+  $ret = new stdClass();
+  $ret->status = "error";
+  $ret->error = "API Call doesn't exist";
+  die(json_encode($ret, JSON_PRETTY_PRINT));
 }
