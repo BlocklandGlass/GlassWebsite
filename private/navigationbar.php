@@ -8,7 +8,7 @@
 			<li><a href="/stat" class="navbtn">Statistics</a></li>
 			<?php
 				if(!isset($_SESSION['csrftoken'])) {
-					$_SESSION['csrftoken'] = rand();
+					$_SESSION['csrftoken'] = mt_rand();
 				}
 
 				if(isset($_SESSION['loggedin'])) {

@@ -148,6 +148,16 @@ class StatManager {
 		return $addons;
 	}
 
+	public static function addStatsToBuild($bid) {
+		$database = new DatabaseManager();
+		StatManager::verifyTable($database);
+
+		if(!$database->query("INSERT INTO `build_stats` (`bid`) VALUES ('" .
+			$database->sanitize($bid) . "')")) {
+			throw new Exception("Database Error: " . $database->error());
+		}
+	}
+
 	public static function endInteration() {
 		$database = new DatabaseManager();
 		StatManager::verifyTable($database);

@@ -1,19 +1,17 @@
 <?php
-class BuildObject {
+class ScreenshotObject {
 	public $id;
 	public $blid;
 	public $name;
-	public $bricks;
-	public $description;
 	public $filename;
+	public $description;
 
 	public function __construct($resource) {
 		$this->id = intval($resource->id);
 		$this->blid = intval($resource->blid);
 		$this->name = $resource->name;
-		$this->bricks = intval($resource->bricks);
-		$this->description = $resource->description;
 		$this->filename = $resource->filename;
+		$this->description = $resource->description;
 	}
 
 	public function getID() {
@@ -34,14 +32,6 @@ class BuildObject {
 
 	public function getName() {
 		return $this->name;
-	}
-
-	public function getBrickCount() {
-		return $this->getBricks();
-	}
-
-	public function getBricks() {
-		return $this->bricks;
 	}
 
 	public function getDescription() {

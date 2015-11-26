@@ -650,70 +650,12 @@ input[type="submit"]:active {
 	transition: all ease 1s ;
 }
 
-/*
-.boardbutton {
-  padding: 10px;
+.description {
+	line-height: 1em;
+	position: relative;
+	font-size: small;
+	margin-top: -14px;
 }
-
-.boardbutton > div {
-  background-repeat: no-repeat;
-  border-radius: 10px;
-  height: 180px;
-  width: 320px;
-
-  vertical-align: top;
-  color: #ffffff;
-  text-align: center;
-
-  text-shadow:
-		#333 0px 0px 4px,
-		#333 0px 0px 4px,
-		#333 0px 0px 4px;
-
-  -webkit-box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.3);
-  -moz-box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.3);
-  box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.3);
-
-  -webkit-transition: all ease 0.5s;
-  -moz-transition: all ease 0.5s;
-  -o-transition: all ease 0.5s;
-  -ms-transition: all ease 0.5s ;
-  transition: all ease 0.5s ;
-}
-
-
-.boardbutton a:hover {
-  color: #fff;
-  text-decoration: none;
-}
-
-.boardbuttoncontent {
-  -webkit-transition: background 0.5s ease-in;
-        -moz-transition: background 0.5s ease-in;
-        -ms-transition: background 0.5s ease-in;
-        -o-transition: background 0.5s ease-in;
-        transition: background 0.5s ease-in;
-
-  background: rgba(0,0,0,0.05);
-
-  height: 100%;
-  width: 100%;
-
-  display: inline-block;
-
-  border-radius: 10px;
-}
-
-.boardbuttoncontent:hover {
--webkit-transition: background 0.1s linear;
-      -moz-transition: background 0.1s linear;
-      -ms-transition: background 0.1s linear;
-      -o-transition: background 0.1s linear;
-      transition: background 0.1s linear;
-
-  background: rgba(0,0,0,.3);
-}
-*/
 
 
 

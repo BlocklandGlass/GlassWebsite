@@ -10,6 +10,7 @@ require_once("../../private/class/DependencyManager.php");
 require_once("../../private/class/CommentManager.php");
 require_once("../../private/class/BuildManager.php");
 require_once("../../private/class/RatingManager.php");
+require_once("../../private/class/ScreenshotManager.php");
 
 class TestManager {
 	public static function clearDatabase() {
@@ -32,7 +33,8 @@ class TestManager {
 
 		if(!$database->query("DROP TABLE IF EXISTS addon_tagmap, addon_tags, addon_dependency,
 			addon_addons, addon_boards, addon_comments, addon_ratings, addon_stats,
-			users, build_builds, build_dependency, build_stats, tag_stats, group_groups, group_usermap, statistics")) {
+			users, build_builds, build_dependency, build_stats, tag_stats, group_groups, group_usermap,
+			statistics, screenshots, build_screenshots, addon_screenshots")) {
 			throw new Exception("Database error: " . $database->error());
 		}
 
@@ -55,6 +57,7 @@ class TestManager {
 		RatingManager::verifyTable($database);
 		BuildManager::verifyTable($database);
 		StatManager::verifyTable($database);
+		ScreenshotManager::verifyTable($database);
 
 		if(!$database->query("INSERT INTO `addon_boards` (name, video, description) VALUES ('General Content', 'general_content_bg', 'Bricks, Events, Sounds, Prints, Environments, and much more!')")) {
 			throw new Exception("Database error: " . $database->error());

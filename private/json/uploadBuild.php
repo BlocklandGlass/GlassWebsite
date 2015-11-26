@@ -54,18 +54,30 @@
 	}
 	$uploadContents = file($_FILES['uploadfile']['tmp_name']);
 	$tempPath = $_FILES['uploadfile']['tmp_name'];
+	$uploadBuildName = basename($_FILES['uploadfile']['name'], ".bls");
 	$uploadFileName = basename($_FILES['uploadfile']['name'], ".bls");
 
 	if(isset($_POST['buildname']) && $_POST['buildname'] != "") {
 		//trim .bls from end of file name if it exists
-		$uploadFileName = preg_replace("/\\.bls$/", "", $_POST['buildname']);
+		//$uploadBuildName = preg_replace("/\\.bls$/", "", $_POST['buildname']);
+		$uploadBuildName = $_POST['buildname'];
+	}
+
+	if(isset($_POST['filename']) && $_POST['filename'] != "") {
+		//trim .bls from end of file name if it exists
+		$uploadFileName = $_POST['filename'];
+
+	}
+
+	if(!preg_match("/\.bls$/", $uploadFileName)) {
+		$uploadFileName .= ".bls";
 	}
 
 	if(!isset($_POST['description']) && $_POST['description'] != "") {
 		$uploadDescription = $_POST['description'];
-		$response = BuildManager::uploadBuild($user->getBLID(), $uploadFileName, $uploadContents, $tempPath, $uploadDescription);
+		$response = BuildManager::uploadBuild($user->getBLID(), $uploadBuildName, $uploadFileName, $uploadContents, $tempPath, $uploadDescription);
 	} else {
-		$response = BuildManager::uploadBuild($user->getBLID(), $uploadFileName, $uploadContents, $tempPath);
+		$response = BuildManager::uploadBuild($user->getBLID(), $uploadBuildName, $uploadFileName, $uploadContents, $tempPath);
 	}
 	return $response;
 ?>

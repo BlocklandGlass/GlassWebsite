@@ -49,7 +49,7 @@ class TagManager {
 			//echo("GetTagsFromAddonID CACHE MISS");
 			$database = new DatabaseManager();
 			TagManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `addon_tagmap` WHERE
+			$resource = $database->query("SELECT `tid` FROM `addon_tagmap` WHERE
 				`aid` = '" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
@@ -59,7 +59,7 @@ class TagManager {
 
 			while($row = $resource->fetch_object()) {
 				//don't get to pass in a resource this time
-				$addonTags[] = TagManager::getFromID($row->id)->getID();
+				$addonTags[] = $row->tid;
 			}
 			//print_r($addonTags);
 			$resource->close();
@@ -75,7 +75,7 @@ class TagManager {
 		if($success === false) {
 			$database = new DatabaseManager();
 			TagManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `addon_tagmap` WHERE
+			$resource = $database->query("SELECT `aid` FROM `addon_tagmap` WHERE
 				`tid` = '" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
@@ -84,7 +84,7 @@ class TagManager {
 			$tagAddons = [];
 
 			while($row = $resource->fetch_object()) {
-				$tagAddons[] = AddonManager::getFromID($row->aid)->getID();
+				$tagAddons[] = $row->aid;
 			}
 			$resource->close();
 			apc_store('tagAddons_' . $id, $tagAddons, TagManager::$tagAddonsCacheTime); //this cache time is arbitrary
