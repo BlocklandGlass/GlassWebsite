@@ -12,32 +12,35 @@
 ?>
 <div id="dropArea" class="maincontainer">
 	<form action="upload.php" method="post" id="uploadForm" enctype="multipart/form-data">
-		<table class="formtable">
+		<table class="longformtable">
 			<tbody>
 				<tr>
 					<td class="center" colspan="2" id="uploadStatus">
-						<?php echo("<p>" . htmlspecialchars($status['message']) . "</p>"); ?>
+						<?php echo("<h2>" . htmlspecialchars($status['message']) . "</h2>"); ?>
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<p>Choose a Name for your Build</p>
+						<b>Build Name</b><br />
+						<span style="font-size: 0.7em;">What do you want your build to be called?</span>
 					</td>
 					<td>
-						<input type="text" name="buildname" id="buildname" style="margin: 0; float: none;">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p>Write a Description for the Build</p>
-					</td>
-					<td>
-						<textarea name="description" id="description" form="uploadForm" rows="5" style="margin: 0; float: none;"></textarea>
+						<input type="text" name="buildname" id="buildname" style="margin: 0; float: none; width: 100%">
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<p>Select a Blockland Save File</p>
+						<b>Description</b><br />
+						<span style="font-size: 0.7em;">How would you describe your masterpiece?</span>
+					</td>
+					<td>
+						<textarea name="description" id="description" form="uploadForm" rows="5" style="margin: 0; float: none; width: 100%"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<b>Save File</b><br />
+						<span style="font-size: 0.7em;">You can find your saves in your Blockland folder!</span>
 					</td>
 					<td>
 						<input type="file" name="uploadfile" id="uploadfile">
