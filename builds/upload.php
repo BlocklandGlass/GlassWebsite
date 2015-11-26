@@ -46,7 +46,7 @@
 						<p class="description">How would you describe your masterpiece?<br />Text formatting with <a href="https://daringfireball.net/projects/markdown/basics" target="_blank">Markdown</a> is supported</p>
 					</td>
 					<td>
-						<textarea name="description" id="description" form="uploadForm" rows="5" style="margin: 0; float: none; width: 80%;"></textarea>
+						<textarea name="description" id="description" form="uploadForm" rows="5" style="margin: 0; float: none; width: 80%;font-size: 0.8em"></textarea>
 					</td>
 				</tr>
 				<tr>

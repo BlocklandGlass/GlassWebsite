@@ -87,7 +87,35 @@ class AddonObject {
 	//}
 
 	public function getVersionInfo() {
-		return $this->versionInfo;
+		return json_decode($this->versionInfo);
+	}
+
+	public function getBranchInfo($bid) {
+		$ver = $this->getVersionInfo();
+		/*
+		[
+			"stable":{
+				"version":1.0.0,
+				"restart":0.9
+			},
+			"unstable":{
+				"version":1.0.1,
+				"restart":1.0.1
+			},
+			"development":{
+				"version":2.0.0,
+				"restart":1.0.5
+			}
+		]
+		*/
+		$channelId["stable"] = 1;
+		$channelId["unstable"] = 2;
+		$channelId["development"] = 3;
+		foreach($ver as $name=>$branch) {
+			if($channelId[$branch] == $bid) {
+				return $branch;
+			}
+		}
 	}
 
 	public function getAuthorInfo() {
@@ -712,21 +740,21 @@ class AddonObject {
 
 function make_thumb($src, $dest, $desired_width) {
 
-	// read the source image 
+	// read the source image
 	$source_image = imagecreatefrompng($src);
 	$width = imagesx($source_image);
 	$height = imagesy($source_image);
 
-	// find the "desired height" of this thumbnail, relative to the desired width  
+	// find the "desired height" of this thumbnail, relative to the desired width
 	$desired_height = floor($height * ($desired_width / $width));
 
-	// create a new, "virtual" image 
+	// create a new, "virtual" image
 	$virtual_image = imagecreatetruecolor($desired_width, $desired_height);
 
-	// copy source image at a resized size 
+	// copy source image at a resized size
 	imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);
 
-	// create the physical thumbnail image to its destination 
+	// create the physical thumbnail image to its destination
 	imagepng($virtual_image, $dest);
 }
 
