@@ -9,6 +9,8 @@
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonManager.php"));
+	require_once(realpath(dirname(__DIR__) . "/private/class/BuildManager.php"));
+	require_once(realpath(dirname(__DIR__) . "/private/class/BuildObject.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/BoardObject.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/NotificationObject.php"));
 	$userObject = UserManager::getCurrent();
@@ -43,7 +45,7 @@
 				</td>
 				<td>
 					<p>
-						<h3>My Add-Ons</h3>
+						<h3>My Content</h3>
 						<?php
 						$addons = AddonManager::getFromBLID($userObject->getBLID());
 
@@ -58,21 +60,24 @@
 								</span>
 							</div>
 							<?php
-						} ?>
-						<div class="useraddon">
-							<a href="#"><img style="width: 1.2em;" src="http://blocklandglass.com/icon/icons32/wrench.png" /> <span style="font-size: 1.2em; font-weight:bold;">Blockland Glass</span></a>
-							<br />
-							<span style="font-size: 0.8em;">
-								<a href="#">Update</a> | <a href="#">Edit</a> | <a href="#">Repository</a> | <a href="#">Delete</a>
-							</span>
-						</div>
-						<div class="useraddon">
-							<a href="#"><img style="width: 1.2em;" src="http://blocklandglass.com/icon/icons32/gun.png" /> <span style="font-size: 1.2em; font-weight:bold;">Weapon Pack</span></a>
-							<br />
-							<span style="font-size: 0.8em;">
-								<a href="#">Update</a> | <a href="#">Edit</a> | <a href="#">Repository</a> | <a href="#">Delete</a>
-							</span>
-						</div>
+						}
+
+						echo "<hr>";
+
+						$builds = BuildManager::getBuildsFromBLID($userObject->getBLID());
+						foreach($builds as $bid) {
+							$bo = BuildManager::getFromId($bid);
+							?>
+							<div class="useraddon">
+								<a href="/builds/"><img style="width: 1.2em;" src="http://blocklandglass.com/icon/icons32/bricks.png" /> <span style="font-size: 1.2em; font-weight:bold;"><?php echo $bo->getName(); ?></span></a>
+								<br />
+								<span style="font-size: 0.8em;">
+									<a href="/builds/manage.php?id=<?php echo $bo->getId(); ?>">Manage</a> | <a href="#">Delete</a>
+								</span>
+							</div>
+							<?php
+						}
+						?>
 					</p>
 				</td>
 			</tr>

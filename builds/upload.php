@@ -13,17 +13,18 @@
 ?>
 <div id="dropArea" class="maincontainer">
 	<form action="upload.php" method="post" id="uploadForm" enctype="multipart/form-data">
-		<table class="formtable">
+		<table class="longformtable">
 			<tbody>
 				<tr>
 					<td class="center" colspan="2" id="uploadStatus">
-						<?php echo("<p>" . htmlspecialchars($status['message']) . "</p>"); ?>
+						<?php echo("<h2>" . htmlspecialchars($status['message']) . "</h2>"); ?>
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<p>Choose a <b>Title</b> for your Build Page</p>
-						<p class="description">This can be whatever you want</p>
+						<span style="font-size: 0.7em;">What do you want your build to be called?</span>
+						<!--<p class="description">This can be whatever you want</p>-->
 					</td>
 					<td>
 						<input type="text" name="buildname" id="buildname" style="margin: 0; float: none; width: 80%;">
@@ -41,7 +42,8 @@
 				<tr>
 					<td>
 						<p>Write a <b>Description</b> for the Build</p>
-						<p class="description">Text formatting with <a href="https://daringfireball.net/projects/markdown/basics" target="_blank">Markdown</a> is supported</p>
+						<span style="font-size: 0.7em;">How would you describe your masterpiece?</span>
+						<!--<p class="description">Text formatting with <a href="https://daringfireball.net/projects/markdown/basics" target="_blank">Markdown</a> is supported</p>-->
 					</td>
 					<td>
 						<textarea name="description" id="description" form="uploadForm" rows="5" style="margin: 0; float: none; width: 80%;"></textarea>
@@ -49,7 +51,8 @@
 				</tr>
 				<tr>
 					<td>
-						<p>Select a Blockland Save File</p>
+						<b>Save File</b><br />
+						<span style="font-size: 0.7em;">You can find your saves in your Blockland folder!</span>
 					</td>
 					<td>
 						<input type="file" name="uploadfile" id="uploadfile">

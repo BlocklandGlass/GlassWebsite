@@ -1,16 +1,17 @@
 <?php
-require_once("../../private/class/DatabaseManager.php");
-require_once("../../private/class/UserManager.php");
-require_once("../../private/class/AddonManager.php");
-require_once("../../private/class/BoardManager.php");
-require_once("../../private/class/TagManager.php");
-require_once("../../private/class/GroupManager.php");
-require_once("../../private/class/StatManager.php");
-require_once("../../private/class/DependencyManager.php");
-require_once("../../private/class/CommentManager.php");
-require_once("../../private/class/BuildManager.php");
-require_once("../../private/class/RatingManager.php");
-require_once("../../private/class/ScreenshotManager.php");
+require_once(__DIR__ . "/../../../private/class/DatabaseManager.php");
+require_once(__DIR__ . "/../../../private/class/DatabaseManager.php");
+require_once(__DIR__ . "/../../../private/class/UserManager.php");
+require_once(__DIR__ . "/../../../private/class/AddonManager.php");
+require_once(__DIR__ . "/../../../private/class/BoardManager.php");
+require_once(__DIR__ . "/../../../private/class/TagManager.php");
+require_once(__DIR__ . "/../../../private/class/GroupManager.php");
+require_once(__DIR__ . "/../../../private/class/StatManager.php");
+require_once(__DIR__ . "/../../../private/class/DependencyManager.php");
+require_once(__DIR__ . "/../../../private/class/CommentManager.php");
+require_once(__DIR__ . "/../../../private/class/BuildManager.php");
+require_once(__DIR__ . "/../../../private/class/RatingManager.php");
+require_once(__DIR__ . "/../../../private/class/ScreenshotManager.php");
 
 class TestManager {
 	public static function clearDatabase() {

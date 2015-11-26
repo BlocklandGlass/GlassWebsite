@@ -32,12 +32,15 @@ class AddonManager {
 
 				if($resource->num_rows == 0) {
 					$addonObject = false;
+				} else {
+					$addonObject = new AddonObject($resource->fetch_object());
 				}
-				$addonObject = new AddonObject($resource->fetch_object());
 				$resource->close();
 			}
 			//cache result for one hour
-			apc_store('addonObject_' . $id, $addonObject, AddonManager::$objectCacheTime);
+			if(is_object($addonObject)) {
+				apc_store('addonObject_' . $id, $addonObject, AddonManager::$objectCacheTime);
+			}
 		}
 		return $addonObject;
 	}
@@ -242,7 +245,7 @@ class AddonManager {
 	//should probably switch from Author to BLID for consistency
 	//this should also probably just use searchAddons(0
 	public static function getFromBLID($blid, $offset = 0, $limit = 10) {
-		AddonManager::searchAddons([
+		return AddonManager::searchAddons([
 			"blid" => $blid,
 			"offset" => $offset,
 			"limit" => $limit

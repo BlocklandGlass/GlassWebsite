@@ -11,9 +11,10 @@ class AWSFileManager {
 				"secret" => $keyData->aws_secret_access_key
 			)
 		));
+
 		$result = $client->putObject(array(
-			"Bucket" => "blocklandglass-test-bucket",
-			"Key" => "builds/" . $bid,
+			"Bucket" => $keyData->aws_bucket,
+			"Key" => "builds/" . $bid . ".bls",
 			"SourceFile" => $tempFile
 		));
 	}
@@ -26,11 +27,13 @@ class AWSFileManager {
 				"secret" => $keyData->aws_secret_access_key
 			)
 		));
+
 		$result = $client->putObject(array(
 			"Bucket" => "blocklandglass-test-bucket",
 			"Key" => "screenshots/" . $sid,
 			"SourceFile" => $tempFile
 		));
+
 		$result = $client->putObject(array(
 			"Bucket" => "blocklandglass-test-bucket",
 			"Key" => "screenshots/thumb/" . $sid,

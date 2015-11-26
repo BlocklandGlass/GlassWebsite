@@ -42,7 +42,11 @@ class NotificationObject {
 
         case "addon":
           $addon = AddonManager::getFromID($var->id);
-          $html = "<a href=\"/addons/addon.php?id=" . $var->id . "\">" . $addon->getName() . "</a>";
+					if($addon) {
+          	$html = "<a href=\"/addons/addon.php?id=" . $var->id . "\">" . $addon->getName() . "</a>";
+					} else {
+          	$html = "<a href=\"/addons/addon.php?id=" . $var->id . "\">{error}</a>";
+					}
           break;
       }
       $returnHtml = str_replace('$' . ($i+1), $html, $returnHtml);
