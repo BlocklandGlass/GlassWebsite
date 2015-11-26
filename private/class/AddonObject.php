@@ -87,7 +87,12 @@ class AddonObject {
 	//}
 
 	public function getVersionInfo() {
-		return json_decode($this->versionInfo);
+		/*$st = new stdClass();
+		$st->version = "1.0.0";
+		$st->restart = "0.9.8";
+		$array["stable"] = $st;
+		return $array;*/
+		return $this->versionInfo;
 	}
 
 	public function getBranchInfo($bid) {
@@ -112,10 +117,12 @@ class AddonObject {
 		$channelId["unstable"] = 2;
 		$channelId["development"] = 3;
 		foreach($ver as $name=>$branch) {
-			if($channelId[$branch] == $bid) {
+			if($channelId[$name] == $bid) {
 				return $branch;
 			}
 		}
+
+		return false;
 	}
 
 	public function getAuthorInfo() {
