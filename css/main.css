@@ -97,10 +97,9 @@ textarea {
    ========================================================================== */
 
 input[type="text"], input[type="password"], textarea {
-  float: right;
   display: block;
 
-  margin: 10px auto;
+  margin: 10px;
   padding: 5px;
 
   font-size: 16pt;
@@ -176,7 +175,22 @@ input[type="submit"]:active {
 .formtable td {
   /*width: 50%;*/
   padding: 10px;
-  vertical-align: middle;
+  vertical-align: top;
+}
+
+.formtable tr > td:first-of-type {
+  text-align: right;
+  width: 30%;
+  padding: 15px;
+}
+
+.formtable input[type="text"], .formtable input[type="password"], .formtable textarea {
+  width: 400px;
+  margin: 0;
+}
+
+.formtable td[colspan="2"] {
+  text-align: center !important;
 }
 
 .longformtable {
