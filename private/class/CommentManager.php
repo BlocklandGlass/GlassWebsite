@@ -81,12 +81,14 @@ class CommentManager {
 			"limit" => $limit,
 			"sort" => $sort
 		]);
-		$addonComments = apc_fetch('addonComments_' . $cacheString);
+
+		//$addonComments = apc_fetch('addonComments_' . $cacheString);
+		$addonComments = false;
 
 		if($addonComments === false) {
 			$database = new DatabaseManager();
 			CommentManager::verifyTable($database);
-			$query = "SELECT * FROM `addon_comments` WHERE `aid` = '" . $database->sanitize($aid) . "' LIMIT '" . $database->sanitize($offset) . "', '" . $database->sanitize($limit) . "' ORDER BY ";
+			$query = "SELECT * FROM `addon_comments` WHERE `aid` = '" . $database->sanitize($aid) . "' ORDER BY ";
 
 			switch($sort) {
 				case CommentManager::$SORTDATEASC:
@@ -98,6 +100,7 @@ class CommentManager {
 				default:
 					$query .= "`timestamp` ASC";
 			}
+			$query .=  " LIMIT " . $database->sanitize($offset) . ", " . $database->sanitize($limit);
 			$resource = $database->query($query);
 
 			if(!$resource) {

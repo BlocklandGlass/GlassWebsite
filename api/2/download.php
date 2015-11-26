@@ -29,7 +29,7 @@ if($type == "addon_update" || $type == "addon_download") {
 
   $ao = AddonManager::getFromID($id);
   /*
-  //ideal code? need to review stats
+  //ideal code? need to review how stats work and are kept
   //(object, type[0=web, 1=ingame, 2=update], increment)
   AddonManager::incrementDailyDownloads($ao, 1 ,1);
   AddonManager::incrementWeeklyDownloads($ao, 1, 1);

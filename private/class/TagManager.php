@@ -94,6 +94,7 @@ class TagManager {
 
 	//honestly this should not be used
 	public static function getAllTags() {
+		apc_delete('allTags');
 		$tags = apc_fetch('allTags', $success);
 
 		if($success === false) {
@@ -107,10 +108,10 @@ class TagManager {
 			$tags = [];
 
 			while($row = $resource->fetch_object()) {
-				$tags[] = TagManager::getFromID($row->id, $row)->getID();
+				$tags[] = TagManager::getFromID($row->id, $row);
 			}
 			$resource->close();
-			apc_store('allTags_' . $id, $tags, TagManager::$tagAddonsCacheTime);
+			apc_store('allTags', $tags, TagManager::$tagAddonsCacheTime);
 		}
 		return $tags;
 	}
