@@ -170,11 +170,11 @@ input[type="submit"]:active {
 
 .formtable {
   margin: 0 auto;
-  width: 960px;
+  /*width: 960px;*/
 }
 
 .formtable td {
-  width: 50%;
+  /*width: 50%;*/
   padding: 10px;
   vertical-align: middle;
 }
