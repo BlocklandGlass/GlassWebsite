@@ -7,6 +7,16 @@ class UserLog {
 	//in this case the only cache hits will be for people who mistype their password
 	private static $cacheTime = 60;
 
+	public static function getHistory($blid) {
+		$db = new DatabaseManager();
+	  $res = $db->query("SELECT * FROM `user_log` WHERE `blid`='" . $db->sanitize($blid) . "' ORDER BY `lastseen` DESC");
+		$ret = array();
+		while($obj = $res->fetch_object()) {
+			$ret[] = $obj;
+		}
+		return $ret;
+	}
+
   public static function getCurrentUsername($blid) {
     $db = new DatabaseManager();
     UserLog::verifyTable($db);
