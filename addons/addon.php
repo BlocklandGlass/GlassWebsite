@@ -3,6 +3,7 @@
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonObject.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
+	require_once(realpath(dirname(__DIR__) . "/private/class/UserLog.php"));
 //	require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/lib/Parsedown.php"));
 
@@ -31,56 +32,79 @@
 		echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . htmlspecialchars($boardObject->getName()) . "</a> >> ";
 		echo "<a href=\"#\">" . htmlspecialchars($addonObject->getName()) . "</a></span>";
 		echo "<h2>" . htmlspecialchars($addonObject->getName()) . "</h2>";
-		//<span style="font-size: 9pt;"><a href="/addons/">Add-Ons</a> >> <a href="board.php?id=<?php echo $boardObject->getId() ? >"><?php echo htmlspecialchars($boardObject->getName()); ? ></a> >> <a href="#"><?php echo htmlspecialchars($addonObject->getName()); ? ></a></span>
-		//	<h2><?php echo $addonObject->getName(); ? ></h2>
 	?>
-	<p>
-		<image src="http://blocklandglass.com/icon/icons32/user.png" /> By <?php
-		$authors = $addonObject->getAuthorInfo();
+	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
+		<div class="addoninfoleft">
+			<image style="height:1.5em" src="http://blocklandglass.com/icon/icons32/user.png" /> By <?php
+			$authors = $addonObject->getAuthorInfo();
 
-		if(sizeof($authors) == 1) {
-			//$uo = new UserHandler();
-			//$uo->initFromId($authors[0]->id);
-			$uo = UserManager::getFromBLID($authors[0]->blid);
-			echo "<a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>";
-		} else if(sizeof($authors) == 2) {
-			//$uo = new UserHandler();
-			//$uo->initFromId($authors[0]->id);
-			$uo = UserManager::getFromBLID($authors[0]->blid);
-			//$uo2 = new UserHandler();
-			//$uo2->initFromId($authors[1]->id);
-			$uo2 = UserManager::getFromBLID($authors[1]->blid);
-			echo "<a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>";
-			echo " and ";
-			echo "<a href=\"#\">" . htmlspecialchars($uo2->getName()) . "</a>";
-		} else {
-			$count = sizeof($authors);
-			foreach($authors as $num=>$author) {
+			if(sizeof($authors) == 1) {
 				//$uo = new UserHandler();
-				//$uo->initFromId($auth->id);
-				$uo = UserManager::getFromBLID($author->blid);
+				//$uo->initFromId($authors[0]->id);
+				$uo = UserManager::getFromBLID($authors[0]->blid);
+				echo "<a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>";
+			} else if(sizeof($authors) == 2) {
+				//we cant use UserHandler here because we may not have accounts for all
 
-				if($count-$num == 1) {
-					echo "and <a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>";
-				} else {
-					echo "<a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>, ";
+				$name1 = UserLog::getCurrentUsername($authors[0]->blid);
+				if($name1 === false) {
+					$name1 = "Blockhead" . $authors[0]->blid;
+				}
+				$name2 = UserLog::getCurrentUsername($authors[1]->blid);
+				if($name2 === false) {
+					$name2 = "Blockhead" . $authors[1]->blid;
+				}
+				echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . htmlspecialchars($name1) . "</a>";
+				echo " and ";
+				echo "<a href=\"/user/view.php?blid=" . $authors[1]->blid . "\">" . htmlspecialchars($name2) . "</a>";
+			} else {
+				var_dump($authors);
+				$count = sizeof($authors);
+				foreach($authors as $num=>$author) {
+					//$uo = new UserHandler();
+					//$uo->initFromId($auth->id);
+					$uo = UserManager::getFromBLID($author->blid);
+
+					if($count-$num == 1) {
+						echo "and <a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>";
+					} else {
+						echo "<a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>, ";
+					}
 				}
 			}
-		}
-		?>
-		<br />
-		<?php
-		$tagIDs = TagManager::getTagsFromAddonID($addonObject->getId());
-		$tags = array();
-		foreach($tagIDs as $tid) {
-			$tags[] = TagManager::getFromId($tid);
-		}
+			?>
+			<br />
+			<image style="height:1.5em" src="http://blocklandglass.com/icon/icons32/folder_vertical_zipper.png" />
+			<?php
+			echo $addonObject->getFilename();
+			?>
+			<br />
+			<image style="height:1.5em" src="http://blocklandglass.com/icon/icons32/accept_button.png" />
+			Approved
+			<br />
+			<image style="height:1.5em" src="http://blocklandglass.com/icon/icons32/inbox_upload.png" />
+			<?php echo date("F j, g:i a", strtotime($addonObject->getUploadDate())); ?>
+		</div>
+		<div class="addoninforight">
+			<?php
+			echo $addonObject->getDownloads(0);
+			?>
+			 <image style="height:1.5em" src="http://blocklandglass.com/icon/icons32/inbox_download.png" /><br />
+			<br />
+			<?php
+			$tagIDs = TagManager::getTagsFromAddonID($addonObject->getId());
+			$tags = array();
+			foreach($tagIDs as $tid) {
+				$tags[] = TagManager::getFromId($tid);
+			}
 
-		foreach($tags as $tag) {
-			echo $tag->getHTML();
-		}
-		?>
-	</p>
+			foreach($tags as $tag) {
+				echo $tag->getHTML();
+			}
+			?>
+		</div>
+	</div>
+	<hr />
 	<p>
 		<?php
 			$Parsedown = new Parsedown();
@@ -91,6 +115,7 @@
 			echo $Parsedown->text($addonObject->getDescription());
 		?>
 	</p>
+	<hr />
 	<div style="text-align: center">
 		<?php
 		$version = $addonObject->getVersionInfo();
@@ -102,7 +127,7 @@
 			} else {
 				$class = "red";
 			}
-			echo '<a href="http://blocklandglass.com/addon.php?id=<?php echo $addonObject->getId(); ?>" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />v' . $ver->version . '</span></a>';
+			echo '<a href="/addons/download.php?id=' . $addonObject->getId() . '&branch=' . $id . '" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />v' . $ver->version . '</span></a>';
 		}
 		?>
 	</div>

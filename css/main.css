@@ -162,6 +162,17 @@ input[type="submit"]:active {
   text-decoration: none !important;
 }
 
+.addoninforight {
+  float:right;
+  width:50%;
+  text-align: right;
+}
+
+.addoninfoleft {
+  float: left;
+  width: 50%;
+}
+
 .maincontainer a {
   font-weight: bold;
   text-decoration: none;
