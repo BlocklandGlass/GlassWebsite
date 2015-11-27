@@ -4,7 +4,7 @@
 	}
 	require_once(realpath(dirname(__DIR__) . "/class/CommentManager.php"));
 	$aid = $_GET['aid'] + 0; //force it to be a number
-	$commentIDs = CommentManager::getCommentsFromAddon($aid);
+	$commentIDs = CommentManager::getCommentIDsFromAddon($aid);
 	$comments = [];
 
 	foreach($commentIDs as $cid) {

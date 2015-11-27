@@ -1,5 +1,9 @@
 <?php
-require_once dirname(__DIR__) . "/../../../private/class/AddonManager.php";
+$_GET['aid'] = $_REQUEST['id'];
+$comments = include(dirname(__DIR__) . "/../../../private/json/getPageCommentsWithUsers.php");
+echo json_encode($comments, JSON_PRETTY_PRINT);
+
+/*require_once dirname(__DIR__) . "/../../../private/class/AddonManager.php";
 require_once dirname(__DIR__) . "/../../../private/class/CommentManager.php";
 $aid = $_REQUEST['id'];
 if(!isset($_REQUEST['page'])) {
@@ -30,5 +34,5 @@ foreach($comments as $comid) {
   $ret[] = $commento;
 }
 
-echo json_encode($ret, JSON_PRETTY_PRINT);
+echo json_encode($ret, JSON_PRETTY_PRINT);*/
 ?>
