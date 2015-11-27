@@ -22,6 +22,17 @@ class BuildManager {
 
 	public static $maxFileSize = 10000000;
 
+	public static function getAll() {
+		$ret = array();
+
+		$db = new DatabaseManager();
+		$res = $db->query("SELECT `id` FROM `build_builds`");
+		while($obj = $res->fetch_object()) {
+			$ret[$obj->id] =BuildManager::getFromId($obj->id);
+		}
+		return $ret;
+	}
+
 	public static function getFromID($id, $resource = false) {
 		$buildObject = apc_fetch('buildObject_' . $id, $success);
 
