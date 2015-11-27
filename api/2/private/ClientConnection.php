@@ -37,7 +37,7 @@ class ClientConnection {
       //don't set account data until run through BlocklandAuth
       $unique = false;
       while(!$unique) { //avoiding the extremely rare case of a random id being non-unique
-        $ident = rand();
+        $ident = base64_encode(rand());
         if(apc_fetch("clientConnection_" . $ident) === false) {
           $unique = true;
         }

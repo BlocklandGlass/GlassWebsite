@@ -148,6 +148,20 @@ input[type="submit"]:active {
   box-shadow: 0px 1px 0px 0px;
 }
 
+.tag {
+  border-radius: 3px;
+  margin: 3px;
+  padding: 4px;
+  font-size: 0.8em;
+}
+
+.tag:hover {
+  color: #fff !important;
+  /*background-color: #ddf !important;*/
+  border: 2px solid #eef !important;
+  text-decoration: none !important;
+}
+
 .maincontainer a {
   font-weight: bold;
   text-decoration: none;

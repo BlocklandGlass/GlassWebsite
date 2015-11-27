@@ -69,7 +69,17 @@
 		}
 		?>
 		<br />
-		<image src="http://blocklandglass.com/icon/icons32/<?php echo $boardObject->getIcon() //this has to change ?>.png" /> <?php echo htmlspecialchars($boardObject->getName()) ?>
+		<?php
+		$tagIDs = TagManager::getTagsFromAddonID($addonObject->getId());
+		$tags = array();
+		foreach($tagIDs as $tid) {
+			$tags[] = TagManager::getFromId($tid);
+		}
+
+		foreach($tags as $tag) {
+			echo $tag->getHTML();
+		}
+		?>
 	</p>
 	<p>
 		<?php
@@ -82,9 +92,19 @@
 		?>
 	</p>
 	<div style="text-align: center">
-		<a href="http://blocklandglass.com/addon.php?id=<?php echo $addonObject->getId(); ?>" class="btn dlbtn green"><b>Stable</b><span style="font-size:9pt"><br />v1.1.0</span></a>
-		<a href="http://blocklandglass.com/addon.php?id=<?php echo $addonObject->getId(); ?>" class="btn dlbtn yellow"><b>Unstable</b><span style="font-size:9pt"><br />v1.1.0-alpha.1</span></a>
-		<a href="http://blocklandglass.com/addon.php?id=<?php echo $addonObject->getId(); ?>" class="btn dlbtn red"><b>Development</b><span style="font-size:9pt"><br />v1.1.0-alpha.6</span></a><br />
+		<?php
+		$version = $addonObject->getVersionInfo();
+		foreach($version as $id=>$ver) {
+			if($id == "stable") {
+				$class = "green";
+			} else if($id == "unstable") {
+				$class = "yellow";
+			} else {
+				$class = "red";
+			}
+			echo '<a href="http://blocklandglass.com/addon.php?id=<?php echo $addonObject->getId(); ?>" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />v' . $ver->version . '</span></a>';
+		}
+		?>
 	</div>
 	<hr />
 	<a href="displayTest.php">Script Breakdown</a><br />

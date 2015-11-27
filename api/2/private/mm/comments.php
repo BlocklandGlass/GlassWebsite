@@ -17,7 +17,6 @@ $addonObject = AddonManager::getFromID($aid);
 $ret = array();
 
 $start = $page*10;
-$end = $start+10;
 
 $comments = CommentManager::getCommentIDsFromAddon($addonObject->getId(), $start, 10);
 foreach($comments as $comid) {
