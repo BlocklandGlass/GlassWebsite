@@ -100,11 +100,11 @@ class StatManager {
 
 	public static function downloadAddon($addon) {
 		$database = new DatabaseManager();
-		StatManager::verifyTable();
+		StatManager::verifyTable($database);
 
-		if(!$database->query("UPDATE `addon_stats`, SET
-			`totalDownloads` = `totalDownloads` + 1,
-			`iterationDownloads` = `iterationDownloads` + 1
+		if(!$database->query("UPDATE `addon_stats` SET
+			`totalDownloads` = (`totalDownloads` + 1),
+			`iterationDownloads` = (`iterationDownloads` + 1)
 			WHERE `aid` = '" . $addon->getID() . "'")) {
 			throw new Exception("failed to register new download: " . $database->error());
 		}
@@ -113,7 +113,7 @@ class StatManager {
 		if(!empty($tags)) {
 			$tagstr = implode(",", $tags);
 
-			if(!$database->query("UPDATE `tag_stats`, SET
+			if(!$database->query("UPDATE `tag_stats` SET
 				`totalDownloads` = `totalDownloads` + 1,
 				`iterationDownloads` = `iterationDownloads` + 1
 				WHERE `tid` IN (" . $tagstr . ")")) {
