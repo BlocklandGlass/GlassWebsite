@@ -74,7 +74,7 @@ class CronStatManager {
 
   function collectHourStat($store = false) {
     $stats = new stdClass();
-    $stats->time = date("Y-m-d H:00:00", time());
+    $stats->time = gmdate("Y-m-d H:00:00", time());
     $stats->duration = "hour";
 
     //Addons!

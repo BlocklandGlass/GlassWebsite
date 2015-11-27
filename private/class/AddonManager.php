@@ -16,8 +16,11 @@ class AddonManager {
 	public static $SORTRATINGDESC = 5;
 
 	public static function getFromID($id, $resource = false) {
-		apc_delete('addonObject_' . $id);
 		$addonObject = apc_fetch('addonObject_' . $id, $success);
+
+		if(!is_object($addonObject)) {
+			$success = false;
+		}
 
 		if($success === false) {
 			if($resource !== false) {
