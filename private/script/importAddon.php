@@ -4,6 +4,7 @@
 
 require_once dirname(__DIR__) . '/class/DatabaseManager.php';
 require_once dirname(__DIR__) . '/class/AWSFileManager.php';
+require_once dirname(__DIR__) . '/class/StatManager.php';
 
 $oldDat = json_decode(file_get_contents(dirname(__FILE__) . '/key.json'));
 $dir = $oldDat->dir;
@@ -41,7 +42,7 @@ foreach($file as $branch=>$fid) {
     $oldfile = $dir . $hash . ".zip";
     $bid = $branchId[$branch];
     echo "Uploading $oldfile to AWS as {$res->id}_{$bid}.zip<br />";
-    AWSFileManager::upload("addons/{$res->id}_{$bid}.zip", $oldfile);
+    //AWSFileManager::upload("addons/{$res->id}_{$bid}.zip", $oldfile);
 
     $updateRes = $mysql->query("SELECT *
 FROM  `addon_updates`
@@ -60,7 +61,7 @@ LIMIT 0 , 1");
   }
 }
 
-$res = $db->query($sql = "INSERT INTO `addon_addons` (`id`, `board`, `blid`, `name`, `filename`, `description`, `versionInfo`, `authorInfo`, `reviewInfo`, `deleted`, `approved`, `uploadDate`) VALUES " .
+$db->query($sql = "INSERT INTO `addon_addons` (`id`, `board`, `blid`, `name`, `filename`, `description`, `versionInfo`, `authorInfo`, `reviewInfo`, `deleted`, `approved`, `uploadDate`) VALUES " .
    "('" . $db->sanitize($res->id) . "',"
   . "'" . $db->sanitize($boardId) . "',"
   . "'" . $db->sanitize($res->author) . "'," //now that I think of it, we need account migration too
@@ -73,6 +74,8 @@ $res = $db->query($sql = "INSERT INTO `addon_addons` (`id`, `board`, `blid`, `na
   . "'0',"
   . "'0',"
   . "CURRENT_TIMESTAMP);");
+
+StatManager::addStatsToAddon($res->id);
 
 echo "Imported";
 

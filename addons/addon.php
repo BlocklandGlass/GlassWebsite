@@ -119,6 +119,7 @@
 	<div style="text-align: center">
 		<?php
 		$version = $addonObject->getVersionInfo();
+		var_dump($version);
 		foreach($version as $id=>$ver) {
 			if($id == "stable") {
 				$class = "green";

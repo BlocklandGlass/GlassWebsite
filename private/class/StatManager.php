@@ -108,6 +108,9 @@ class StatManager {
 			WHERE `aid` = '" . $addon->getID() . "'")) {
 			throw new Exception("failed to register new download: " . $database->error());
 		}
+
+		apc_delete('addonTotalDownloads_' . $addon->getId());
+		
 		$tags = TagManager::getTagsFromAddonID($addon->getID());
 
 		if(!empty($tags)) {
@@ -154,6 +157,16 @@ class StatManager {
 
 		if(!$database->query("INSERT INTO `build_stats` (`bid`) VALUES ('" .
 			$database->sanitize($bid) . "')")) {
+			throw new Exception("Database Error: " . $database->error());
+		}
+	}
+
+	public static function addStatsToAddon($aid) {
+		$database = new DatabaseManager();
+		StatManager::verifyTable($database);
+
+		if(!$database->query("INSERT INTO `addon_stats` (`aid`) VALUES ('" .
+			$database->sanitize($aid) . "')")) {
 			throw new Exception("Database Error: " . $database->error());
 		}
 	}
