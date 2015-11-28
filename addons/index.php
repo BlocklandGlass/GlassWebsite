@@ -17,14 +17,20 @@
 	<table style="width: 100%">
 		<tbody>
 			<tr>
-				<td style="width:50%; vertical-align:top; text-align:center; border-right: 1px solid #cec">
+				<td style="text-align:center;">
 					<h3>Trending</h3>
+				</td>
+				<td style="text-align:center;">
+					<h3>Recent Uploads</h3>
+				</td>
+			</tr>
+			<tr>
+				<td style="width:50%; vertical-align:top; border-right: 1px solid #cec">
 					<table id="trending" style="width: 100%; text-align:left;">
 						<?php include(realpath(dirname(__DIR__) . "/ajax/getTrendingAddons.php")); ?>
 					</table>
 				</td>
-				<td style="width:50%; vertical-align:top; text-align:center;">
-					<h3>Recent Uploads</h3>
+				<td style="width:50%; vertical-align:top">
 					<table id="recentUploads" style="width: 100%; text-align:left;">
 						<?php include(realpath(dirname(__DIR__) . "/ajax/getNewAddons.php")); ?>
 					</table>
