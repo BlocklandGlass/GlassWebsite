@@ -14,7 +14,7 @@ include(realpath(dirname(dirname(__DIR__)) . "/private/header.php"));
 include(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php"));
 ?>
 <div class="maincontainer">
-  <form action="upload.php" method="post">
+  <form action="upload.php" method="post" enctype="multipart/form-data">
 		<table class="formtable">
 			<tbody>
 				<tr>
@@ -29,10 +29,10 @@ include(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php"));
 				    <b>Add-On Type</b><br />
 					</td>
 					<td>
-						<select>
-				      <option>Add-On</option>
-				      <option>Print</option>
-				      <option>Sound</option>
+						<select name="type">
+				      <option value="1">Add-On</option>
+				      <option value="2">Print</option>
+				      <option value="3">Colorset</option>
 				    </select>
 					</td>
 				</tr>
@@ -41,7 +41,7 @@ include(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php"));
 						<span style="font-size: 0.8em">
 							<b>Add-On</b> - Anything with a .cs file!<br />
 							<b>Print</b> - Prints, faces, any of the likes<br />
-							<b>Sound</b> - Audio!
+							<b>Colorset</b> - Pretty rainbow!
 						</span>
 					</td>
 				</tr>
