@@ -6,9 +6,9 @@ require_once(realpath(dirname(__FILE__) . "/private/navigationbar.php"));
 <div class="bigheadcontainer">
 	<h1>Blockland Glass</h1>
 	<h2>A service for the community, by the community</h2>
-	<a href="dl.php" class="btn blue"><b>Download</b> v1.1.0-alpha.1</a><br />
-	<a href="http://blocklandglass.com" class="btn green">Classic Site</a><br />
-	<a href="addons" class="btn yellow">Add-Ons</a><br /><br />
+	<a href="dl.php" class="btn blue"><b>Download</b></a><br />
+	<a href="builds" class="btn green" style="width: 150px">Builds</a>
+	<a href="addons" class="btn yellow" style="width: 150px">Add-Ons</a><br /><br />
 </div>
 <div class="maincontainer">
 	<p>
@@ -19,6 +19,11 @@ require_once(realpath(dirname(__FILE__) . "/private/navigationbar.php"));
 	<p>
 		<h3>By the community?</h3>
 		Glass is intended to be a group project. Although the bulk of the work has been fronted individually, we're striving to move to an open-source site, allowing for Glass to be a truely community made project.
+	</p>
+	<br />
+	<p>
+		<h3>Live Stats</h3>
+		Right now, theres <b>34</b> Blockland Server onlines with <b>407</b> users. Of those, <a href="stats/users.php">36</a> users are running Glass! Glass has <a href="stats/usage.php">253</a> active users, accumulating a total of <a href="stats/usage.php">15000</a> downloads.
 	</p>
 	<br />
 	<p>
