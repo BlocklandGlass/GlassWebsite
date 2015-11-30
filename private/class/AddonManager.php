@@ -75,6 +75,12 @@ class AddonManager {
 		}
 
 		$id = $database->fetchMysqli()->insert_id;
+
+		$bid = 1;
+
+		AddonFileHandler::injectGlassFile($id, $file);
+		AddonFileHandler::injectVersionInfo($id, $bid, $file); // TODO need to specify branch in upload
+
 		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
 		//AWSFileManager::uploadNewBuild($id, $tempPath);
 		require_once(realpath(dirname(__FILE__) . '/StatManager.php'));

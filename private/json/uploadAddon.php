@@ -79,16 +79,17 @@
 
 	if(isset($_POST['type']) && $_POST['type'] != "") {
 		$filename = $user->getBlid() . "_" . $uploadFileName;
-    move_uploaded_file($tempPath, dirname(__DIR__) . "/../addons/upload/files/" . $filename);
-    chmod(dirname(__DIR__) . "/../addons/upload/files/" . $filename, 777);
+		$tempLocation = dirname(dirname(__DIR__)) . "/addons/upload/files/" . $filename;
+    move_uploaded_file($tempPath, $tempLocation);
+    chmod($tempLocation, 0777);
 
 		$type = $_POST['type'];
 		if($type == 1) {
-			$valid = AddonFileHandler::validateAddon($filename);
+			$valid = AddonFileHandler::validateAddon($tempLocation);
 		} else if($type == 2) {
-			$valid = AddonFileHandler::validatePrint($filename);
+			$valid = AddonFileHandler::validatePrint($tempLocation);
 		} else if($type == 3) {
-			$valid = AddonFileHandler::validateColorset($filename);
+			$valid = AddonFileHandler::validateColorset($tempLocation);
 		}
 
 		if(!$valid) {
