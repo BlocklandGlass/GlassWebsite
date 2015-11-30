@@ -89,6 +89,7 @@ class AddonManager {
 		$response = [
 			"redirect" => "/addons/upload/success.php?id=" . $id
 		];
+		return $response;
 	}
 
 	public static function getFromID($id, $resource = false) {
