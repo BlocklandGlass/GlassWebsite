@@ -119,7 +119,6 @@
 	<div style="text-align: center">
 		<?php
 		$version = $addonObject->getVersionInfo();
-		var_dump($version);
 		foreach($version as $id=>$ver) {
 			if($id == "stable") {
 				$class = "green";
@@ -132,9 +131,6 @@
 		}
 		?>
 	</div>
-	<hr />
-	<a href="displayTest.php">Script Breakdown</a><br />
-	<a href="scriptDisplay.php">Script Analysis</a>
 	<hr />
 	<div class="comments" id="commentSection">
 	<?php include(realpath(dirname(__DIR__) . "/ajax/getComments.php")); ?>

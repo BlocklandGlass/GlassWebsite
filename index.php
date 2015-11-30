@@ -25,11 +25,6 @@ require_once(realpath(dirname(__FILE__) . "/private/navigationbar.php"));
 		<h3>Want to get involved?</h3>
 		As you can probably tell, this site points straight to the old one. The old one was developed independently and is very distasteful. In an attempt to modernize the site, this new one is entirely open source. Please, contribute on <a href="http://github.com/BlocklandGlass/GlassWebsite/">GitHub</a> and check out the <a href="http://forum.blockland.us/index.php?topic=282486.0">Glass Development Topic</a> over on the Blockland forums!
 	</p>
-	<br />
-	<p>
-		<h3>Lorem Ipsum</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-	</p>
 </div>
 
 <?php require_once(realpath(dirname(__FILE__) . "/private/footer.php")); ?>

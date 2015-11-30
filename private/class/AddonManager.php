@@ -8,12 +8,82 @@ class AddonManager {
 	private static $objectCacheTime = 3600;
 	private static $searchCacheTime = 600;
 
+	public static $maxFileSize = 50000000; //50 mb
+
 	public static $SORTNAMEASC = 0;
 	public static $SORTNAMEDESC = 1;
 	public static $SORTDOWNLOADASC = 2;
 	public static $SORTDOWNLOADDESC = 3;
 	public static $SORTRATINGASC = 4; //aka bad ratings first I think
 	public static $SORTRATINGDESC = 5;
+
+	public static function uploadNewAddon($user, $name, $type, $file, $filename, $description) {
+		$database = new DatabaseManager();
+		AddonManager::verifyTable($database);
+
+		$rsc = $database->query("SELECT * FROM `addon_addons` WHERE `name` = '" . $database->sanitize($name) . "'");
+		if($rsc->num_rows > 0) {
+			$response = [
+				"message" => "An add-on by this name already exists!"
+			];
+			return $response;
+		}
+
+		$rsc = $database->query("SELECT * FROM `addon_addons` WHERE `filename` = '" . $database->sanitize($filename) . "'");
+		if($rsc->num_rows > 0) {
+			$response = [
+				"message" => "An add-on with this filename already exists!"
+			];
+			return $response;
+		}
+
+		//generate blank version data
+		$versionInfo = AddonFileHandler::getVersionInfo($file);
+		if($versionInfo) {
+			// TODO when I'm not on a plane...
+		} else {
+			$version = new stdClass();
+			$version->stable = new stdClass();
+			$version->stable->version = "0.0.0";
+			$version->stable->restart = "0.0.0";
+
+			$repo = new stdClass();
+		}
+
+		$authorInfo = new stdClass();
+		$authorInfo->blid = $user->getBlid();
+		$authorInfo->main = true;
+		$authorInfo->role = "Manager";
+		$authorArray = [$authorInfo];
+
+		// NOTE boards will be decided by reviewers now, they just seem to confuse and anger people
+		$res = $database->query("INSERT INTO `addon_addons` (`id`, `board`, `blid`, `name`, `filename`, `description`, `versionInfo`, `authorInfo`, `reviewInfo`, `deleted`, `approved`, `uploadDate`) VALUES " .
+		"(NULL," .
+		"NULL," .
+		"'" . $database->sanitize($user->getBlid()) . "'," .
+		"'" . $database->sanitize($name) . "'," .
+		"'" . $database->sanitize($filename) . "'," .
+		"'" . $database->sanitize($description) . "'," .
+		"'" . $database->sanitize(json_encode($version)) . "'," .
+		"'" . $database->sanitize(json_encode($authorArray)) . "'," .
+		"'{}'," .
+		"'0'," .
+		"'0'," .
+		"CURRENT_TIMESTAMP);");
+		if(!$res) {
+			throw new Exception("Database error: " . $database->error());
+		}
+
+		$id = $database->fetchMysqli()->insert_id;
+		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
+		//AWSFileManager::uploadNewBuild($id, $tempPath);
+		require_once(realpath(dirname(__FILE__) . '/StatManager.php'));
+		StatManager::addStatsToAddon($id);
+
+		$response = [
+			"redirect" => "/addons/upload/success.php?id=" . $id
+		];
+	}
 
 	public static function getFromID($id, $resource = false) {
 		$addonObject = apc_fetch('addonObject_' . $id, $success);
@@ -291,6 +361,17 @@ class AddonManager {
 		return $ret;
 	}
 
+	public static function getUnapproved() {
+		$ret = array();
+
+		$db = new DatabaseManager();
+		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE `approved`='0'");
+		while($obj = $res->fetch_object()) {
+			$ret[$obj->id] = AddonManager::getFromId($obj->id);
+		}
+		return $ret;
+	}
+
 	public static function getCountFromBoard($boardID) {
 		$count = apc_fetch('boardData_count_' . $boardID);
 
@@ -368,7 +449,7 @@ class AddonManager {
 
 			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_addons` (
 				`id` INT NOT NULL AUTO_INCREMENT,
-				`board` INT NOT NULL,
+				`board` INT,
 				`blid` INT NOT NULL,
 				`name` VARCHAR(30) NOT NULL,
 				`filename` TEXT NOT NULL,
@@ -376,6 +457,7 @@ class AddonManager {
 				`versionInfo` TEXT NOT NULL,
 				`authorInfo` TEXT NOT NULL,
 				`reviewInfo` TEXT NOT NULL,
+				`repositoryInfo` TEXT NOT NULL,
 				`deleted` TINYINT NOT NULL DEFAULT 0,
 				`approved` TINYINT NOT NULL DEFAULT 0,
 				`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

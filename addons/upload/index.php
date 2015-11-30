@@ -1,20 +1,21 @@
 <?php
 	session_start();
-	require_once(realpath(dirname(__DIR__) . "/../private/class/UserManager.php"));
-	$user = UserManager::getCurrent();
+	$status = include(realpath(dirname(__DIR__) . "/../private/json/uploadAddon.php"));
 
-	if(!$user) {
-		header("Location: " . "/index.php");
+	if(isset($status['redirect'])) {
+		//echo("REDIRECT: " . $status['redirect']);
+		header("Location: " . $status['redirect']);
 		die();
 	}
-
-$_PAGETITLE = "Glass | Add-Ons";
-
-include(realpath(dirname(dirname(__DIR__)) . "/private/header.php"));
-include(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php"));
+	$_PAGETITLE = "Addon Upload";
+	include(realpath(dirname(__DIR__) . "/../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 ?>
 <div class="maincontainer">
-  <form action="upload.php" method="post" enctype="multipart/form-data">
+	<?php if(isset($status["message"])) {
+		echo $status["message"];
+	}?>
+  <form action="index.php" method="post" enctype="multipart/form-data">
 		<table class="formtable">
 			<tbody>
 				<tr>
@@ -47,7 +48,11 @@ include(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php"));
 				</tr>
 				<tr>
 					<td><b>Description</b></td>
-					<td><textarea style="font-size:0.8em;" rows="5" name="name" /></textarea></td>
+					<td><textarea style="font-size:0.8em;" rows="5" name="description" /></textarea></td>
+				</tr>
+				<tr>
+					<td><b>Filename</b></td>
+					<td><input type="text" name="filename" /></td>
 				</tr>
 				<tr>
 					<td>
@@ -64,6 +69,7 @@ include(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php"));
 				</tr>
 			</tbody>
 		</table>
+		<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
   </form>
 </div>
 

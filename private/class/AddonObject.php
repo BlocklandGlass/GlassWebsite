@@ -129,6 +129,15 @@ class AddonObject {
 		return $this->authorInfo;
 	}
 
+	public function getManagerBLID() {
+		$authorInfo = $this->getAuthorInfo();
+		foreach($authorInfo as $author) {
+			if($author->main) {
+				return $author->blid;
+			}
+		}
+	}
+
 	public function getFileName() {
 		return $this->filename;
 	}

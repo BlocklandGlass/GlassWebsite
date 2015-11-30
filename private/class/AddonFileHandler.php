@@ -94,4 +94,23 @@ class AddonFileHandler {
   private static function injectVersionInfo() {
 
   }
+
+  public static function getVersionInfo($file) {
+    $workingDir = dirname(__DIR__) . "/../addons/upload/files/";
+
+    $executable = false;
+    $desc = false;
+
+    $fullFile = $workingDir . $file;
+
+    $zip = new ZipArchive();
+    $res = $zip->open($fullFile);
+    if($res === TRUE) {
+      // TODO open version.json
+    } else {
+      return false;
+    }
+
+    return ($executable && $desc);
+  }
 }
