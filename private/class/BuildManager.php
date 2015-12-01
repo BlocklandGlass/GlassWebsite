@@ -22,6 +22,7 @@ class BuildManager {
 
 	public static $maxFileSize = 10000000;
 
+	//using this should be avoided
 	public static function getAll() {
 		$ret = array();
 
@@ -30,6 +31,7 @@ class BuildManager {
 		while($obj = $res->fetch_object()) {
 			$ret[$obj->id] =BuildManager::getFromId($obj->id);
 		}
+		$res->close();
 		return $ret;
 	}
 

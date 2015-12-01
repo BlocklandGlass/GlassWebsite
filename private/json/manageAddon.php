@@ -9,16 +9,16 @@
 
 	if(!isset($_GET['id'])) {
 		$response = [
-			"redirect" => "/builds/index.php"
+			"redirect" => "/addons/index.php"
 		];
 		return $response;
 	}
-	require_once(realpath(dirname(__DIR__) . "/class/BuildManager.php"));
-	$build = BuildManager::getFromID($_GET['id'] + 0);
+	require_once(realpath(dirname(__DIR__) . "/class/AddonManager.php"));
+	$addon = AddonManager::getFromID($_GET['id'] + 0);
 
-	if($build === false) {
+	if($addon === false) {
 		$response = [
-			"redirect" => "/builds/index.php"
+			"redirect" => "/addons/index.php"
 		];
 		return $response;
 	}
@@ -27,17 +27,18 @@
 	require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
 	$user = UserManager::getCurrent();
 
-	if($user === false || $build->getBLID() !== $user->getBLID()) {
+	if($user === false || $addon->getBLID() !== $user->getBLID()) {
 		$response = [
-			"redirect" => "/builds/index.php"
+			"redirect" => "/addons/index.php"
 		];
 		return $response;
 	}
 
+	//this tells us whether or not the user has just completed an upload and been automatically redirected
 	if(isset($_POST['init']) && $_POST['init']) {
 		$response = [
 			"message" => "Upload Successful!",
-			"build" => $build,
+			"addon" => $addon,
 			"user" => $user
 		];
 		return $response;
@@ -45,8 +46,8 @@
 
 	if(!isset($_POST['submit'])) {
 		$response = [
-			"message" => "Manage your Build",
-			"build" => $build,
+			"message" => "Manage your Addon",
+			"addon" => $addon,
 			"user" => $user
 		];
 		return $response;
@@ -55,7 +56,7 @@
 	if(!isset($_POST['csrftoken']) || $_POST['csrftoken'] != $_SESSION['csrftoken']) {
 		$response = [
 			"message" => "Cross site request forgery attempt blocked",
-			"build" => $build,
+			"addon" => $addon,
 			"user" => $user
 		];
 		return $response;
@@ -69,7 +70,7 @@
 		if($check === false) {
 			$response = [
 				"message" => "Invalid image uploaded",
-				"build" => $build,
+				"addon" => $addon,
 				"user" => $user
 			];
 			return $response;
@@ -79,7 +80,7 @@
 		if($uploadExt != "png" && $uploadExt != "jpg") {
 			$response = [
 				"message" => "Only .png and .jpg screenshots are allowed",
-				"build" => $build,
+				"addon" => $addon,
 				"user" => $user
 			];
 			return $response;
@@ -89,30 +90,30 @@
 		if($_FILES['screenshots']['size'] > ScreenshotManager::$maxFileSize) {
 			$response = [
 				"message" => "File too large - The maximum Screenshot file size is 3 MB",
-				"build" => $build,
+				"addon" => $addon,
 				"user" => $user
 			];
 			return $response;
 		}
 		require_once(realpath(dirname(__DIR__) . "/class/ScreenshotManager.php"));
-		ScreenshotManager::uploadScreenshotForBuild($build, $tempPath);
+		ScreenshotManager::uploadScreenshotForAddon($addon, $tempPath);
 		$changed = true;
 	}
 
-	if(!isset($_POST['buildname']) || !isset($_POST['filename']) || !isset($_POST['description'])) {
+	if(!isset($_POST['addonname']) || !isset($_POST['filename']) || !isset($_POST['description'])) {
 		$response = [
 			"message" => "Some form elements missing",
-			"build" => $build,
+			"addon" => $addon,
 			"user" => $user
 		];
 		return $response;
 	}
-	$subResponse = BuildManager::updateBuild($build, $_POST['buildname'], $_POST['filename'], $_POST['description']);
+	$subResponse = AddonManager::updateAddon($addon, $_POST['addonname'], $_POST['filename'], $_POST['description']);
 
 	if($subResponse['message'] !== "") {
 		$response = [
 			"message" => $subResponse['message'],
-			"build" => $build,
+			"addon" => $addon,
 			"user" => $user
 		];
 		return $response;
@@ -120,14 +121,14 @@
 		if($changed) {
 			$response = [
 				"message" => "Screenshots Updated",
-				"build" => $build,
+				"addon" => $addon,
 				"user" => $user
 			];
 			return $response;
 		} else {
 			$response = [
 				"message" => "No changes were made",
-				"build" => $build,
+				"addon" => $addon,
 				"user" => $user
 			];
 			return $response;

@@ -41,6 +41,7 @@
 					<h3>Tags</h3>
 					<p>
 						<?php
+						//considering users can create tags on the fly, this should be temporary
 						$tags = TagManager::getAllTags();
 						foreach($tags as $tag) {
 							echo $tag->getHtml();

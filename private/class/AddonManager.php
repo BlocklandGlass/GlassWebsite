@@ -21,21 +21,27 @@ class AddonManager {
 		$database = new DatabaseManager();
 		AddonManager::verifyTable($database);
 
-		$rsc = $database->query("SELECT * FROM `addon_addons` WHERE `name` = '" . $database->sanitize($name) . "'");
+		$rsc = $database->query("SELECT * FROM `addon_addons` WHERE `name` = '" . $database->sanitize($name) . "' LIMIT 1");
+
+		//I think we should enforce a unique file name, but not a unique addon name
 		if($rsc->num_rows > 0) {
 			$response = [
 				"message" => "An add-on by this name already exists!"
 			];
+			$rsc->close();
 			return $response;
 		}
+		$rsc->close();
 
 		$rsc = $database->query("SELECT * FROM `addon_addons` WHERE `filename` = '" . $database->sanitize($filename) . "'");
 		if($rsc->num_rows > 0) {
 			$response = [
 				"message" => "An add-on with this filename already exists!"
 			];
+			$rsc->close();
 			return $response;
 		}
+		$rsc->close();
 
 		//generate blank version data
 		$versionInfo = AddonFileHandler::getVersionInfo($file);

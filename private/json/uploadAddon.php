@@ -4,7 +4,7 @@
 	}
 	//we give the session a unique csrf token so malicious links on other sites cannot take advantage of users
 	if(!isset($_SESSION['csrftoken'])) {
-		$_SESSION['csrftoken'] = rand();
+		$_SESSION['csrftoken'] = mt_rand();
 	}
 	require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/class/AddonFileHandler.php"));
@@ -31,7 +31,7 @@
 		return $response;
 	}
 
-	if(!isset($_FILES['uploadfile']['name']) || !$_FILES['uploadfile']['size']) {
+	if(!isset($_FILES['uploadfile']['name']) || !isset($_FILES['uploadfile']['size']) || !$_FILES['uploadfile']['size']) {
 		$response = [
 			"message" => "No file was selected to be uploaded"
 		];
@@ -49,7 +49,7 @@
 
 	if($_FILES['uploadfile']['size'] > AddonManager::$maxFileSize) {
 		$response = [
-			"message" => "File too large - The maximum build file size is 10 MB"
+			"message" => "File too large - The maximum upload file size is 50 MB.  Contact an administrator if you need to upload a larger file."
 		];
 		return $response;
 	}
@@ -57,16 +57,15 @@
 	$tempPath = $_FILES['uploadfile']['tmp_name'];
 	$uploadFileName = basename($_FILES['uploadfile']['name'], ".zip");
 
-	if(isset($_POST['name']) && $_POST['name'] != "") {
+	if(isset($_POST['addonname']) && $_POST['addonname'] != "") {
 		//trim .bls from end of file name if it exists
 		//$uploadBuildName = preg_replace("/\\.bls$/", "", $_POST['buildname']);
-		$uploadAddonName = $_POST['name'];
+		$uploadAddonName = $_POST['addonname'];
 	}
 
 	if(isset($_POST['filename']) && $_POST['filename'] != "") {
 		//trim .bls from end of file name if it exists
 		$uploadFileName = $_POST['filename'];
-
 	}
 
 	if(!preg_match("/\.zip$/", $uploadFileName)) {
@@ -80,16 +79,24 @@
 	if(isset($_POST['type']) && $_POST['type'] != "") {
 		$filename = $user->getBlid() . "_" . $uploadFileName;
 		$tempLocation = dirname(dirname(__DIR__)) . "/addons/upload/files/" . $filename;
-    move_uploaded_file($tempPath, $tempLocation);
-    chmod($tempLocation, 0777);
+
+		//to do: aws stuff instead of this
+		move_uploaded_file($tempPath, $tempLocation);
+		chmod($tempLocation, 0777);
 
 		$type = $_POST['type'];
+
+		//these should probably return an array with something like
+		//	'ok' => true/false
+		//	'message' => descriptive message
 		if($type == 1) {
 			$valid = AddonFileHandler::validateAddon($tempLocation);
 		} else if($type == 2) {
 			$valid = AddonFileHandler::validatePrint($tempLocation);
 		} else if($type == 3) {
 			$valid = AddonFileHandler::validateColorset($tempLocation);
+		} else {
+			$valid = false;
 		}
 
 		if(!$valid) {
@@ -98,6 +105,7 @@
 			];
 			return $response;
 		} else {
+			//repeated but slightly different path from above?
 			$tempLocation = realpath(dirname(__DIR__) . "/../addons/upload/files/" . $filename);
 			$response = AddonManager::uploadNewAddon($user, $uploadAddonName, $type, $tempLocation, $uploadFileName, $uploadDescription);
 			return $response;

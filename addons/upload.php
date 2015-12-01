@@ -1,75 +1,85 @@
 <?php
 	session_start();
-	$status = include(realpath(dirname(__DIR__) . "/private/json/uploadBuild.php"));
+	$status = include(realpath(dirname(__DIR__) . "/../private/json/uploadAddon.php"));
 
 	if(isset($status['redirect'])) {
 		//echo("REDIRECT: " . $status['redirect']);
 		header("Location: " . $status['redirect']);
 		die();
 	}
-	$_PAGETITLE = "Build Upload";
-	include(realpath(dirname(__DIR__) . "/private/header.php"));
-	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+	$_PAGETITLE = "Addon Upload";
+	include(realpath(dirname(__DIR__) . "/../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 ?>
-<div id="dropArea" class="maincontainer">
-	<form action="upload.php" method="post" id="uploadForm" enctype="multipart/form-data">
+<div class="maincontainer">
+	<?php
+		//if(isset($status["message"])) {
+		//	echo $status["message"];
+		//}
+	?>
+	<form action="index.php" method="post" enctype="multipart/form-data">
 		<table class="formtable">
 			<tbody>
+<!--				<tr>
+					<td colspan="2"><h2>Upload (step 1 of 2)</h2></td>
+				</tr> -->
 				<tr>
 					<td class="center" colspan="2" id="uploadStatus">
-						<?php echo("<h2>" . htmlspecialchars($status['message']) . "</h2>"); ?>
+						<?php echo(htmlspecialchars(echo $status["message"])); ?>
 					</td>
 				</tr>
 				<tr>
-					<td>
-						<p>Choose a <b>Title</b> for your Build Page</p>
-						<!--<span style="font-size: 0.7em;">What do you want your build to be called?</span>-->
-						<p class="description">What do you want your build to be called?</p>
-					</td>
-					<td>
-						<input type="text" name="buildname" id="buildname" style="margin: 0; float: none; width: 80%;">
-					</td>
+					<td><b>Name</b></td>
+					<td><input type="text" name="addonname" id="addonname"/></td>
 				</tr>
 				<tr>
 					<td>
-						<p>Choose a <b>File Name</b> for your Build</p>
-						<p class="description">This must be a unique and valid file name</p>
+				    <b>Add-On Type</b><br />
 					</td>
 					<td>
-						<input type="text" name="filename" id="filename" style="margin: 0; float: none; width: 80%;">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p>Write a <b>Description</b> for the Build</p>
-						<!--<span style="font-size: 0.7em;">How would you describe your masterpiece?</span>-->
-						<p class="description">How would you describe your masterpiece?<br />Text formatting with <a href="https://daringfireball.net/projects/markdown/basics" target="_blank">Markdown</a> is supported</p>
-					</td>
-					<td>
-						<textarea name="description" id="description" form="uploadForm" rows="5" style="margin: 0; float: none; width: 80%;font-size: 0.8em"></textarea>
+						<select name="type">
+				      <option value="1">Add-On</option>
+				      <option value="2">Print</option>
+				      <option value="3">Colorset</option>
+				    </select>
 					</td>
 				</tr>
 				<tr>
+					<td colspan="2">
+						<span style="font-size: 0.8em">
+							<b>Add-On</b> - Anything with a .cs file!<br />
+							<b>Print</b> - Prints, faces, any of the likes<br />
+							<b>Colorset</b> - Pretty rainbow!
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<td><b>Description</b></td>
+					<td><textarea style="font-size:0.8em;" rows="5" name="description" /></textarea></td>
+				</tr>
+				<tr>
+					<td><b>Filename</b></td>
+					<td><input type="text" name="filename" /></td>
+				</tr>
+				<tr>
 					<td>
-						<p><b>Save File</b></p>
+						<p><b>File</b></p>
 						<!--<span style="font-size: 0.7em;">You can find your saves in your Blockland folder!</span>-->
 						<!--<p class="description">You can find your saves in your Blockland folder!</p>-->
 					</td>
-					<td>
+					<td style="vertical-align: middle">
 						<input type="file" name="uploadfile" id="uploadfile">
 					</td>
 				</tr>
 				<tr>
-					<td class="center" colspan="2">
-						<input type="submit" value="Upload File" name="submit">
-					</td>
+					<td colspan="2"><input type="submit" value="Upload File" name="submit"></td>
 				</tr>
 			</tbody>
 		</table>
 		<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
-	</form>
+  </form>
 </div>
-<form class="hidden" action="/builds/manage.php" method="post" id="redirectToManageForm">
+<form class="hidden" action="/addons/manage.php" method="post" id="redirectToManageForm">
 	<input type="hidden" name="init" value="1">
 	<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
 </form>
@@ -81,22 +91,6 @@ $(document).on('dragenter', function (e) { e.stopPropagation(); e.preventDefault
 $(document).on('dragover', function (e) { e.stopPropagation(); e.preventDefault(); });
 $(document).on('drop', function (e) { e.stopPropagation(); e.preventDefault(); });
 
-var escapedCharacters = [
-	/\\n/g,
-	/\\t/g,
-	/\\\\/g,
-	/\\\"/g,
-	/\\\'/g
-];
-
-var unescapedCharacters = [
-	"\n",
-	"\t",
-	"\\",
-	"\"",
-	"\'"
-];
-
 $(document).ready(function () {
 	$(document).on("drop", function(event) {
 		event.preventDefault();
@@ -105,40 +99,22 @@ $(document).ready(function () {
 		console.log(files[0]);
 	});
 	$("#filename").focusout(function () {
-		if($(this).val() !== "" && !$(this).val().endsWith(".bls")) {
-			$(this).val($(this).val() + ".bls");
+		if($(this).val() !== "" && !$(this).val().endsWith(".zip")) {
+			$(this).val($(this).val() + ".zip");
 		}
 	});
 	$("#uploadfile").on("change", function (event) {
 		var file = event.target.files[0];
 
-		if($("#buildname").val() == "") {
-			$("#buildname").val(file.name.replace(/\.[^/.]+$/, ""));
+		if($("#addonname").val() == "") {
+			$("#addonname").val(file.name.replace(/\.[^/.]+$/, ""));
 		}
 
 		if($("#filename").val() == "") {
 			$("#filename").val(file.name);
 		}
 
-		if($("#description").val() == "") {
-			var r = new FileReader();
-			r.onload = function (e) {
-				var contents = e.target.result.split("\n");
-				var desclen = parseInt(contents[1]);
-				var desc = "";
-
-				for(var i=0; i<desclen; i++) {
-					desc += contents[i+2];
-				}
-
-				for(var i=0; i<escapedCharacters.length; i++) {
-					console.log(escapedCharacters[i]);
-					desc = desc.replace(escapedCharacters[i], unescapedCharacters[i]);
-				}
-				$("#description").val(desc.trim());
-			};
-			r.readAsText(file);
-		}
+		//using a javascript .zip library to pull the description.txt contents might be overkill
 	});
 	$("#uploadForm").submit(function (event) {
 		event.stopPropagation();
@@ -153,7 +129,7 @@ $(document).ready(function () {
 		console.log(data);
 		//$.post("/ajax/uploadBuild.php", data, function (response) {
 		$.ajax({
-			url: "/ajax/uploadBuild.php",
+			url: "/ajax/uploadAddon.php",
 			type: "POST",
 			data: data,
 			dataType: "json",
@@ -180,4 +156,4 @@ $(document).ready(function () {
 	});
 });
 </script>
-<?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>
+<?php include(realpath(dirname(dirname(__DIR__)) . "/private/footer.php")); ?>

@@ -7,6 +7,8 @@
 //	require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/lib/Parsedown.php"));
 
+	//to do: use ajax/json to build data for page
+	//this php file should just format the data nicely
 	if(isset($_GET['id'])) {
 		try {
 			$addonObject = AddonManager::getFromId($_GET['id'] + 0);

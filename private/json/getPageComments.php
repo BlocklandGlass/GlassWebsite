@@ -1,9 +1,9 @@
 <?php
-	if(!isset($_GET['aid'])) {
+	if(!isset($_GET['id'])) {
 		return [];
 	}
 	require_once(realpath(dirname(__DIR__) . "/class/CommentManager.php"));
-	$aid = $_GET['aid'] + 0; //force it to be a number
+	$aid = $_GET['id'] + 0; //force it to be a number
 	$commentIDs = CommentManager::getCommentIDsFromAddon($aid);
 	$comments = [];
 
