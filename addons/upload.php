@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	$status = include(realpath(dirname(__DIR__) . "/../private/json/uploadAddon.php"));
+	$status = include(__DIR__ . "/../private/json/uploadAddon.php");
 
 	if(isset($status['redirect'])) {
 		//echo("REDIRECT: " . $status['redirect']);
@@ -8,8 +8,8 @@
 		die();
 	}
 	$_PAGETITLE = "Addon Upload";
-	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
+	include(__DIR__ . "/../private/header.php");
+	include(__DIR__ . "/../private/navigationbar.php");
 ?>
 <div class="maincontainer">
 	<?php
@@ -25,7 +25,7 @@
 				</tr> -->
 				<tr>
 					<td class="center" colspan="2" id="uploadStatus">
-						<?php echo(htmlspecialchars(echo $status["message"])); ?>
+						<?php echo(htmlspecialchars($status["message"])); ?>
 					</td>
 				</tr>
 				<tr>
@@ -156,4 +156,4 @@ $(document).ready(function () {
 	});
 });
 </script>
-<?php include(realpath(dirname(dirname(__DIR__)) . "/private/footer.php")); ?>
+<?php include(__DIR__ . "/../private/footer.php"); ?>

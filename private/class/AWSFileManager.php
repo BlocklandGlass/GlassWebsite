@@ -2,9 +2,11 @@
 require_once(realpath(dirname(__DIR__) . '/vendor/autoload.php'));
 use Aws\S3\S3Client;
 
+//maybe this should end up working like databasemanager
 class AWSFileManager {
 	public static function upload($target, $local) {
-		$keyData = json_decode(file_get_contents(dirname(__FILE__) . "/key.json"));
+		$keyData = AWSFileManager::getCredentials();
+
 		$client = S3Client::factory(array(
 			"credentials" => array(
 				"key" => $keyData->aws_access_key_id,
@@ -18,8 +20,10 @@ class AWSFileManager {
 			"SourceFile" => $local
 		));
 	}
-	public static function uploadNewBuild($bid, $tempFile) {
-		$keyData = json_decode(file_get_contents(dirname(__FILE__) . "/key.json"));
+
+	public static function uploadNewBuild($bid, $name, $buildFile) {
+		$keyData = AWSFileManager::getCredentials();
+
 		$client = S3Client::factory(array(
 			"credentials" => array(
 				"key" => $keyData->aws_access_key_id,
@@ -29,13 +33,15 @@ class AWSFileManager {
 
 		$result = $client->putObject(array(
 			"Bucket" => $keyData->aws_bucket,
-			"Key" => "builds/" . $bid . ".bls",
-			"SourceFile" => $tempFile
+			"Key" => "builds/" . $bid . "/" . $name,
+			"SourceFile" => $buildFile
 		));
 	}
 
+	//to do: screenshots should now be bundled together with the builds/addons folders probably
 	public static function uploadNewScreenshot($sid, $tempFile, $tempThumb) {
-		$keyData = json_decode(file_get_contents(dirname(__FILE__) . "/key.json"));
+		$keyData = AWSFileManager::getCredentials();
+
 		$client = S3Client::factory(array(
 			"credentials" => array(
 				"key" => $keyData->aws_access_key_id,
@@ -54,6 +60,15 @@ class AWSFileManager {
 			"Key" => "screenshots/thumb/" . $sid,
 			"SourceFile" => $tempThumb
 		));
+	}
+
+	private static function getCredentials() {
+		return json_decode(file_get_contents(dirname(__FILE__) . "/key.json"));
+	}
+
+	public static function getBucket() {
+		$keyData = AWSFileManager::getCredentials();
+		return $keyData->aws_bucket;
 	}
 }
 ?>

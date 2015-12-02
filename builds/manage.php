@@ -4,7 +4,6 @@
 	//info is an array that either has the property "redirect" set, or has the following
 	//	message - string
 	//	build - BuildObject
-	//	user - UserObject
 	$info = include(realpath(dirname(__DIR__) . "/private/json/manageBuild.php"));
 
 	if(isset($info['redirect'])) {

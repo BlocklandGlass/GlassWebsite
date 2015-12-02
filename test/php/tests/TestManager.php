@@ -17,13 +17,14 @@ class TestManager {
 	public static function clearDatabase() {
 		apc_clear_cache();
 		$database = new DatabaseManager();
-		$resource = $database->query("SELECT DATABASE()");
-		$name = $resource->fetch_row()[0];
-		$resource->close();
+		//$resource = $database->query("SELECT DATABASE()");
+		//$name = $resource->fetch_row()[0];
+		//$resource->close();
 
 		//make sure we don't accidentally load dummy data on live database
 		//to do: make sure this actually works
-		if(strpos($name, "test" === false)) {
+		//if(strpos($name, "test" === false)) {
+		if(!$database->debug()) {
 			throw new Exception("Database may not be safe to run tests on");
 		}
 

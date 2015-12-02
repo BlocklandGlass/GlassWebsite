@@ -1,4 +1,5 @@
 <?php
+	//collects together all the information needed by /addons/addon.php
 	if(!isset($_GET['id'])) {
 		return false;
 	}

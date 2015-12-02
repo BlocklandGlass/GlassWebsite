@@ -34,6 +34,8 @@
 		return $response;
 	}
 
+	//we don't need the user as it turns out
+	//to do: remove
 	if(isset($_POST['init']) && $_POST['init']) {
 		$response = [
 			"message" => "Upload Successful!",

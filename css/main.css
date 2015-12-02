@@ -200,17 +200,17 @@ input[type="submit"]:active {
 .formtable td {
   /*width: 50%;*/
   padding: 10px;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 .formtable tr > td:first-of-type {
   text-align: right;
-  width: 30%;
+  /*width: 30%;*/
   padding: 15px;
 }
 
 .formtable input[type="text"], .formtable input[type="password"], .formtable textarea {
-  width: 400px;
+  width: 80%;
   margin: 0;
 }
 

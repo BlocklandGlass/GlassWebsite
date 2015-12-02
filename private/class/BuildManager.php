@@ -182,7 +182,7 @@ class BuildManager {
 		}
 		$id = $database->fetchMysqli()->insert_id;
 		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
-		AWSFileManager::uploadNewBuild($id, $tempPath);
+		AWSFileManager::uploadNewBuild($id, $fileName, $tempPath);
 		require_once(realpath(dirname(__FILE__) . '/StatManager.php'));
 		StatManager::addStatsToBuild($id);
 

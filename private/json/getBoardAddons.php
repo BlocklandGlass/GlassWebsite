@@ -1,4 +1,5 @@
 <?php
+	//collects together some of the information needed by /addons/board.php
 	if(!isset($_GET['id'])) {
 		return [];
 	}

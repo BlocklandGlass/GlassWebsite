@@ -22,6 +22,7 @@ class AddonObject {
 	//public $dependencies;
 	//public $tags
 	public $uploadDate;
+	public $url;
 
 	private $filename;
 	private $deleted;
@@ -52,6 +53,7 @@ class AddonObject {
 		$this->reviewInfo = json_decode($resource->reviewInfo);
 
 		$this->uploadDate = $resource->uploadDate;
+		$this->url = "https://s3.amazonaws.com/" . AWSFileManager::getBucket() . "/addons/" . $this->id . "/" . urlencode($this->filename);
 	}
 
 	public function getID() {
@@ -184,6 +186,10 @@ class AddonObject {
 
 	public function getUploadDate() {
 		return $this->uploadDate;
+	}
+
+	public function getURL() {
+		return $this->url;
 	}
 }
 /*

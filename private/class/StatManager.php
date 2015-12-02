@@ -89,6 +89,29 @@ class StatManager {
 		return $count;
 	}
 
+	public static function getTotalBuildDownloads($id) {
+		$count = apc_fetch('buildTotalDownloads_' . $id, $success);
+
+		if($success === false) {
+			$database = new DatabaseManager();
+			StatManager::verifyTable($database);
+			$resource = $database->query("SELECT `totalDownloads` FROM `build_stats` WHERE `bid` = '" . $database->sanitize($id) . "'");
+
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
+			}
+
+			if($resource->num_rows == 0) {
+				$count = 0;
+			} else {
+				$count = $resource->fetch_object()->totalDownloads;
+			}
+			$resource->close();
+			apc_store('buildTotalDownloads_' . $id, $count, StatManager::$objectCacheTime);
+		}
+		return $count;
+	}
+
 	public static function downloadAddonID($aid) {
 		$addon = AddonManager::getFromID($aid);
 

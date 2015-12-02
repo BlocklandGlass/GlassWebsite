@@ -132,7 +132,7 @@ $(document).ready(function () {
 				}
 
 				for(var i=0; i<escapedCharacters.length; i++) {
-					console.log(escapedCharacters[i]);
+					//console.log(escapedCharacters[i]);
 					desc = desc.replace(escapedCharacters[i], unescapedCharacters[i]);
 				}
 				$("#description").val(desc.trim());
@@ -156,13 +156,13 @@ $(document).ready(function () {
 			url: "/ajax/uploadBuild.php",
 			type: "POST",
 			data: data,
-			dataType: "json",
+			dataType: "text",
 			cache: false,
 			processData: false,
 			contentType: false,
 			success: function (response) {
-				//console.log(response);
-				//response = JSON.parse(response);
+				console.log(response);
+				response = JSON.parse(response);
 				globalvar = response;
 
 				if(response.hasOwnProperty('redirect')) {
