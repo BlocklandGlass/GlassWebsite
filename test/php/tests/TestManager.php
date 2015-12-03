@@ -36,7 +36,7 @@ class TestManager {
 		if(!$database->query("DROP TABLE IF EXISTS addon_tagmap, addon_tags, addon_dependency,
 			addon_addons, addon_boards, addon_comments, addon_ratings, addon_stats,
 			users, build_builds, build_dependency, build_stats, tag_stats, group_groups, group_usermap,
-			statistics, screenshots, build_screenshots, addon_screenshots")) {
+			statistics, screenshots, build_screenshotmap, addon_screenshotmap")) {
 			throw new Exception("Database error: " . $database->error());
 		}
 
@@ -85,6 +85,7 @@ class TestManager {
 		if(!$database->query("INSERT INTO `addon_addons` (board, blid, name, filename, description, approved, versionInfo, authorInfo, reviewInfo) VALUES ('1', '4833', 'crapy adon', 'sciprt_hax.zip', 'bad addone pls delete', '1', '{}', '[]', '[]')")) {
 			throw new Exception("Database error: " . $database->error());
 		}
+		StatManager::addStatsToAddon(1);
 
 		if(!$database->query("INSERT INTO `addon_tags` (name, base_color, icon) VALUES ('dum tag', 'ff6600', 'brokenimage')")) {
 			throw new Exception("Database error: " . $database->error());

@@ -18,7 +18,7 @@ class BuildObject {
 		$this->bricks = intval($resource->bricks);
 		$this->description = $resource->description;
 		$this->filename = $resource->filename;
-		$this->url = "https://s3.amazonaws.com/" . AWSFileManager::getBucket() . "/builds/" . $this->id . "/" . urlencode($this->filename);
+		$this->url = "https://s3.amazonaws.com/" . urlencode(AWSFileManager::getBucket()) . "/builds/" . $this->id;
 	}
 
 	public function getID() {

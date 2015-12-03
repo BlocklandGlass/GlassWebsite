@@ -20,7 +20,7 @@ class BuildManager {
 		"\'"
 	];
 
-	public static $maxFileSize = 10000000;
+	public static $maxFileSize = 10000000; //10 MB
 
 	//using this should be avoided
 	public static function getAll() {
@@ -85,47 +85,69 @@ class BuildManager {
 	}
 
 	//do we actually want to enforce unique file names?
-	public static function getIDFromFileName($name) {
-		$buildID = apc_fetch('buildByFileName_' . $name, $success);
+	//nah
+//	public static function getIDFromFileName($name) {
+//		$buildID = apc_fetch('buildByFileName_' . $name, $success);
+//
+//		if($success === false) {
+//			$database = new DatabaseManager();
+//			BuildManager::verifyTable($database);
+//			$resource = $database->query("SELECT * FROM `build_builds` WHERE `filename` = '" . $database->sanitize($name) . "'");
+//
+//			if(!$resource) {
+//				throw new Exception("Database error: " . $database->error());
+//			}
+//
+//			if($resource->num_rows == 0) {
+//				$buildID = false;
+//			} else {
+//				$row = $resource->fetch_object();
+//				$buildID = BuildManager::getFromID($row->id, $row)->getID();
+//			}
+//			$resource->close();
+//			apc_store('buildByFileName_' . $name, $buildID, BuildManager::$objectCacheTime);
+//		}
+//		return $buildID;
+//	}
 
-		if($success === false) {
-			$database = new DatabaseManager();
-			BuildManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `build_builds` WHERE `filename` = '" . $database->sanitize($name) . "'");
+	public static function validateFileName($name) {
+		//if(file_exists($targetPath)) {
+		//$other = BuildManager::getIDFromFileName($fileName);
 
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
+		//if($other !== false) {
+		//	$response = [
+		//		"message" => "A Build with that File Name already exists - ID " . $other
+		//	];
+		//	return $response;
+		//}
 
-			if($resource->num_rows == 0) {
-				$buildID = false;
-			} else {
-				$row = $resource->fetch_object();
-				$buildID = BuildManager::getFromID($row->id, $row)->getID();
-			}
-			$resource->close();
-			apc_store('buildByFileName_' . $name, $buildID, BuildManager::$objectCacheTime);
-		}
-		return $buildID;
+		//a filter for file names
+		//allows letters, numbers, '-', '_', '\'', '!', and ' '
+		 return preg_match("/^[a-zA-Z0-9\-\_\ \'\!]{1,56}\.bls$/", $name);
+	}
+
+	public static function validateTitle($name) {
+		//validate build name
+		//match 1-60 of any character except newlines
+		return preg_match("/^.{1,60}$/", $name);
 	}
 
 	/**
 	 *  Upload a build with contents as an array of strings
 	 */
 	public static function uploadBuild($blid, $buildName, $fileName, $contents, $tempPath, $description = false) {
-		//to do, generate a random name for storage?, and allow the build name to contain any characters and be not unique - done
-		//a filter for file names
-		//allows letters, numbers, '-', '_', '\'', '!', and ' '
-		if(!preg_match("/^[a-zA-Z0-9\-\_\ \'\!]{1,56}\.bls$/", $fileName)) {
+		//to do, generate a random name for storage?, and allow the build name to contain any characters and be not unique - done - check
+
+		//if(!preg_match("/^[a-zA-Z0-9\-\_\ \'\!]{1,56}\.bls$/", $fileName)) {
+		if(!BuildManager::validateFileName($fileName)) {
 			$response = [
 				"message" => "Invalid File Name - You may use up to 56 characters followed by '.bls' and include letters, numbers, spaces, and the following symbols: -, ', _, and !"
 			];
 			return $response;
 		}
 
-		//validate build name
-		//match 1-60 of any character except newlines
-		if(!preg_match("/^.{1,60}$/", $buildName)) {
+		//if(!preg_match("/^.{1,60}$/", $buildName)) {
+		if(!BuildManager::validateTitle($buildName)) {
 			$response = [
 				"message" => "Your Build Title can only contain up to 60 characters and cannot contain line breaks"
 			];
@@ -134,15 +156,6 @@ class BuildManager {
 		//temporary file storage for now
 		//$targetPath = dirname(__DIR__) . "/../builds/uploads/" . $buildName . ".bls";
 
-		//if(file_exists($targetPath)) {
-		$other = BuildManager::getIDFromFileName($fileName);
-
-		if($other !== false) {
-			$response = [
-				"message" => "A Build with that File Name already exists - ID " . $other
-			];
-			return $response;
-		}
 		$check = BuildManager::validateBLSContents($contents);
 
 		//to do:
@@ -162,13 +175,6 @@ class BuildManager {
 			$description = $check['description'];
 		}
 
-		//if(!move_uploaded_file($tempPath, $targetPath)) {
-		//	$response = [
-		//		"message" => "An error occurred while saving your build, please contact an administrator if this persists"
-		//	];
-		//	return $response;
-		//}
-
 		//it's go time
 		$database = new DatabaseManager();
 		BuildManager::verifyTable($database);
@@ -181,12 +187,13 @@ class BuildManager {
 			throw new Exception("Database error: " . $database->error());
 		}
 		$id = $database->fetchMysqli()->insert_id;
+
 		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
 		AWSFileManager::uploadNewBuild($id, $fileName, $tempPath);
+
 		require_once(realpath(dirname(__FILE__) . '/StatManager.php'));
 		StatManager::addStatsToBuild($id);
 
-		//to do: stats
 		$response = [
 			"redirect" => "/builds/manage.php?id=" . $id
 		];
@@ -264,6 +271,7 @@ class BuildManager {
 		$bricks = [];
 
 		//verify actual brick data
+		//for some reason this fails condition on line 292 when +- data appears after last brick - must fix
 		for($currline = 67 + $desclen; $currline < $count; $currline++) {
 			if(isset($emptyline)) {
 				//we saw an empty line that was not the last one
@@ -324,7 +332,7 @@ class BuildManager {
 		return $response;
 	}
 
-	public static function updateBuildID($bid, $buildname, $filename, $description) {
+	public static function updateBuildID($bid, $buildname, $description) {
 		$build = BuildManager::getFromID($bid);
 
 		if($build === false) {
@@ -334,11 +342,11 @@ class BuildManager {
 			];
 			return $false;
 		} else {
-			return BuildManager::updateBuild($build, $buildname, $filename, $description);
+			return BuildManager::updateBuild($build, $buildname, $description);
 		}
 	}
 
-	public static function updateBuild($build, $buildname, $filename, $description) {
+	public static function updateBuild($build, $buildname, $description) {
 		//to do: apc_delete and update existing object
 		$changed = false;
 
@@ -365,42 +373,42 @@ class BuildManager {
 			$changed = true;
 		}
 
-		if($filename !== $build->filename) {
-			//allows letters, numbers, '-', '_', '\'', '!', and ' '
-			if(!preg_match("/^[a-zA-Z0-9\-\_\ \'\!]{1,56}\.bls$/", $filename)) {
-				$response = [
-					"ok" => $changed,
-					"message" => "Invalid File Name - You may use up to 56 characters followed by '.bls' and include letters, numbers, spaces, and the following symbols: -, ', _, and !"
-				];
-				return $response;
-			}
-			$other = BuildManager::getIDFromFileName($filename);
-
-			if($other !== false) {
-				$response = [
-					"changed" => $changed,
-					"message" => "A Build with that File Name already exists - ID " . $other
-				];
-				return $response;
-			}
-			$database = new DatabaseManager();
-			BuildManager::verifyTable($database);
-
-			if(!$database->query("UPDATE `build_builds` SET `filename` = '" .
-				$database->sanitize($filename) . "'")) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$build->filename = $filename;
-			apc_store('buildObject_' . $build->id, $build, BuildManager::$objectCacheTime);
-			$changed = true;
-		}
+		//if($filename !== $build->filename) {
+		//	//allows letters, numbers, '-', '_', '\'', '!', and ' '
+		//	if(!preg_match("/^[a-zA-Z0-9\-\_\ \'\!]{1,56}\.bls$/", $filename)) {
+		//		$response = [
+		//			"ok" => $changed,
+		//			"message" => "Invalid File Name - You may use up to 56 characters followed by '.bls' and include letters, numbers, spaces, and the following symbols: -, ', _, and !"
+		//		];
+		//		return $response;
+		//	}
+		//	$other = BuildManager::getIDFromFileName($filename);
+        //
+		//	if($other !== false) {
+		//		$response = [
+		//			"changed" => $changed,
+		//			"message" => "A Build with that File Name already exists - ID " . $other
+		//		];
+		//		return $response;
+		//	}
+		//	$database = new DatabaseManager();
+		//	BuildManager::verifyTable($database);
+        //
+		//	if(!$database->query("UPDATE `build_builds` SET `filename` = '" .
+		//		$database->sanitize($filename) . "'")) {
+		//		throw new Exception("Database error: " . $database->error());
+		//	}
+		//	$build->filename = $filename;
+		//	apc_store('buildObject_' . $build->id, $build, BuildManager::$objectCacheTime);
+		//	$changed = true;
+		//}
 
 		if($description !== $build->description) {
 			$database = new DatabaseManager();
 			BuildManager::verifyTable($database);
 
-			if(!$database->query("UPDATE `build_builds` SET `filename` = '" .
-				$database->sanitize($filename) . "'")) {
+			if(!$database->query("UPDATE `build_builds` SET `description` = '" .
+				$database->sanitize($description) . "'")) {
 				throw new Exception("Database error: " . $database->error());
 			}
 			$build->description = $description;
@@ -441,7 +449,7 @@ class BuildManager {
 					REFERENCES users(`blid`)
 					ON UPDATE CASCADE
 					ON DELETE CASCADE,
-				UNIQUE KEY (`filename`),
+				KEY (`name`),
 				PRIMARY KEY (`id`))")) {
 				throw new Exception("Error creating builds table: " . $database->error());
 			}

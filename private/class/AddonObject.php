@@ -53,7 +53,7 @@ class AddonObject {
 		$this->reviewInfo = json_decode($resource->reviewInfo);
 
 		$this->uploadDate = $resource->uploadDate;
-		$this->url = "https://s3.amazonaws.com/" . AWSFileManager::getBucket() . "/addons/" . $this->id . "/" . urlencode($this->filename);
+		$this->url = "https://s3.amazonaws.com/" . urlencode(AWSFileManager::getBucket()) . "/addons/" . $this->id;
 	}
 
 	public function getID() {

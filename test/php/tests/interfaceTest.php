@@ -89,5 +89,29 @@ class InterfaceTest extends PHPUnit_Framework_TestCase {
 		$this->driver->wait(5, 250)->until(WebDriverExpectedCondition::not(WebDriverExpectedCondition::titleIs($title)));
 		$this->assertContains("boards.php", $this->driver->getCurrentURL());
 	}
+
+	public function testBuildUpload() {
+		$this->driver->get('http://localhost:80/builds/upload.php');
+		$status = $this->driver->findElement(WebDriverBy::id("uploadStatus"));
+		$this->assertContains("Upload a Build", $status->getText());
+		$buildname = $this->driver->findElement(WebDriverBy::id("buildname"));
+		$buildname->sendKeys("asdf");
+
+		$filename = $this->driver->findElement(WebDriverBy::id("filename"));
+		$filename->sendKeys("gioeunfa");
+
+		$description = $this->driver->findElement(WebDriverBy::id("description"));
+		$description->sendKeys("ghaseguiahgkareguhlgiuwf");
+
+		$this->assertEquals("gioeunfa.bls", $filename->getAttribute("value"));
+		$filename->sendKeys(KEYS::ENTER);
+		$this->driver->wait(5, 250)->until(WebDriverExpectedCondition::textToBePresentInElement(WebDriverBy::id("uploadStatus"), "No file was selected to be uploaded"));
+		$this->assertContains("No file was selected to be uploaded", $status->getText());
+
+		$file = $this->driver->findElement(WebDriverBy::id("uploadfile"));
+		$file->sendKeys(dirname(__DIR__) . "/res/some ramps.bls");
+		$filename->sendKeys(KEYS::ENTER);
+		$this->driver->wait(5, 250)->until(WebDriverExpectedCondition::not(WebDriverExpectedCondition::titleIs("Build Upload")));
+	}
 }
 ?>

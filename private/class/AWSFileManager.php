@@ -33,13 +33,14 @@ class AWSFileManager {
 
 		$result = $client->putObject(array(
 			"Bucket" => $keyData->aws_bucket,
-			"Key" => "builds/" . $bid . "/" . $name,
-			"SourceFile" => $buildFile
+			"Key" => "builds/" . $bid,
+			"SourceFile" => $buildFile,
+			"ContentDisposition" => "attachment; filename=\"" . $name . "\""
 		));
 	}
 
 	//to do: screenshots should now be bundled together with the builds/addons folders probably
-	public static function uploadNewScreenshot($sid, $tempFile, $tempThumb) {
+	public static function uploadNewScreenshot($sid, $name, $tempFile, $tempThumb) {
 		$keyData = AWSFileManager::getCredentials();
 
 		$client = S3Client::factory(array(
@@ -52,18 +53,26 @@ class AWSFileManager {
 		$result = $client->putObject(array(
 			"Bucket" => "blocklandglass-test-bucket",
 			"Key" => "screenshots/" . $sid,
-			"SourceFile" => $tempFile
+			"SourceFile" => $tempFile,
+			"ContentDisposition" => "attachment; filename=\"" . $name . "\""
 		));
 
 		$result = $client->putObject(array(
 			"Bucket" => "blocklandglass-test-bucket",
 			"Key" => "screenshots/thumb/" . $sid,
-			"SourceFile" => $tempThumb
+			"SourceFile" => $tempThumb,
+			"ContentDisposition" => "attachment; filename=\"" . $name . "\""
 		));
 	}
 
 	private static function getCredentials() {
-		return json_decode(file_get_contents(dirname(__FILE__) . "/key.json"));
+		$key = apc_fetch('aws_credentials', $success);
+
+		if(!$success) {
+			$key = json_decode(file_get_contents(dirname(__FILE__) . "/key.json"));
+			apc_store('aws_credentials', $key);
+		}
+		return $key;
 	}
 
 	public static function getBucket() {

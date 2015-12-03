@@ -36,7 +36,7 @@
 						<p>File Name</p>
 					</td>
 					<td>
-						<input type="text" name="filename" id="filename" value="<?php echo(htmlspecialchars($info['build']->filename)); ?>" style="margin: 0; float: none; width: 80%;">
+						<p><?php echo(htmlspecialchars($info['build']->filename)); ?></p>
 					</td>
 				</tr>
 				<tr>

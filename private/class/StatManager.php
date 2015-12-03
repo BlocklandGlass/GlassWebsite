@@ -166,7 +166,9 @@ class StatManager {
 
 			while($row = $resource->fetch_object()) {
 				//to do: this should create an AddonStatObject for caching purposes
-				$addons[] = AddonManager::getFromID($row->aid)->getID();
+				//$addons[] = AddonManager::getFromID($row->aid)->getID();
+				//or not, meh
+				$addons[] = $row->aid;
 			}
 			$resource->close();
 			apc_store('trendingAddons_' . $count, $addons, StatManager::$trendingCacheTime);

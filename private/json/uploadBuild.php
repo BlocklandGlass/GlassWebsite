@@ -4,7 +4,7 @@
 	}
 	//we give the session a unique csrf token so malicious links on other sites cannot take advantage of users
 	if(!isset($_SESSION['csrftoken'])) {
-		$_SESSION['csrftoken'] = rand();
+		$_SESSION['csrftoken'] = mt_rand();
 	}
 	require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
 	$user = UserManager::getCurrent();

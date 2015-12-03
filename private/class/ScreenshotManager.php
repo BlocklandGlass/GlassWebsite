@@ -68,7 +68,7 @@ class ScreenshotManager {
 		if($success === false) {
 			$database = new DatabaseManager();
 			ScreenshotManager::verifyTable($database);
-			$resource = $database->query("SELECT `sid` FROM `build_screenshots` WHERE `bid` = '" . $database->sanitize($id) . "'");
+			$resource = $database->query("SELECT `sid` FROM `build_screenshotmap` WHERE `bid` = '" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
@@ -139,7 +139,7 @@ class ScreenshotManager {
 		return ScreenshotManager::uploadScreenshotForBuild($build, $tempPath);
 	}
 
-	public static function uploadScreenshotForBuild($build, $tempPath) {
+	public static function uploadScreenshotForBuild($build, $ext, $tempPath) {
 		$blid = $build->getBLID();
 		$tempThumb = ScreenshotManager::createTempThumbnail($tempPath);
 		$database = new DatabaseManager();
@@ -150,9 +150,59 @@ class ScreenshotManager {
 		}
 		$sid = $database->fetchMysqli()->insert_id;
 		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
-		AWSFileManager::uploadNewScreenshot($sid, $tempPath, $tempThumb);
+		AWSFileManager::uploadNewScreenshot($sid, "screenshot." . $ext, $tempPath, $tempThumb);
 		apc_delete('userScreenshots_' . $blid);
-		return ScreenshotManager::setBuildPrimaryScreenshot($sid, $build->getID());
+
+		if(ScreenshotManager::buildHasPrimaryScreenshot($build->getID())) {
+			return ScreenshotManager::addScreenshotToBuild($sid, $build->getID());
+		} else {
+			return ScreenshotManager::setBuildPrimaryScreenshot($sid, $build->getID());
+		}
+	}
+
+	public static function buildHasPrimaryScreenshot($bid) {
+		$database = new DatabaseManager();
+		ScreenshotManager::verifyTable($database);
+		$resource = $database->query("SELECT 1 FROM `build_screenshotmap` WHERE
+			`bid` = '" . $database->sanitize($bid) . "' AND
+			`primary` = 1 LIMIT 1");
+
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
+		}
+
+		if($resource->num_rows > 0 ) {
+			$resource->close();
+			return true;
+		}
+		$resource->close();
+		return false;
+	}
+
+	public static function getBuildPrimaryScreenshot($bid) {
+		$sid = apc_fetch('buildPrimaryScreenshot_' . $bid, $success);
+
+		if(!$success) {
+			$database = new DatabaseManager();
+			ScreenshotManager::verifyTable($database);
+			$resource = $database->query("SELECT `sid` FROM `build_screenshotmap` WHERE
+				`bid` = '" . $database->sanitize($bid) . "' AND
+				`primary` = 1 LIMIT 1");
+
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
+			}
+
+			if($resource->num_rows == 0 ) {
+				$resource->close();
+				return false;
+			}
+			$row = $resource->fetch_object();
+			$sid = ScreenshotManager::getFromID($row->sid);
+			$resource->close();
+			apc_store('buildPrimaryScreenshot_' . $bid, $sid, ScreenshotManager::$buildScreenshotsCacheTime);
+		}
+		return $sid;
 	}
 
 	public static function addScreenshotToBuild($sid, $bid) {
@@ -190,12 +240,22 @@ class ScreenshotManager {
 			`bid` = '" . $database->sanitize($bid) . "'")) {
 			throw new Exception("Database error: " . $database->error());
 		}
+		//$oldPrimaryID = getBuildPrimaryScreenshot($bid);
+        //
+		//if($oldPrimaryID !== false) {
+		//	if(!$database->query("UPDATE `build_screenshotmap` SET `primary` = '0' WHERE
+		//		`sid` = '" . $database->sanitize($oldPrimaryID) . "'")) {
+		//		throw new Exception("Database error: " . $database->error());
+		//	}
+		//	apc_delete('ScreenshotObject_' . $oldPrimaryID);
+		//}
 
 		if(!$database->query("UPDATE `build_screenshotmap` SET `primary` = '1' WHERE
 			`bid` = '" . $database->sanitize($bid) . "' AND
 			`sid` = '" . $database->sanitize($sid) . "'")) {
 			throw new Exception("Database error: " . $database->error());
 		}
+		apc_delete('buildPrimaryScreenshot_' . $bid);
 		return true;
 	}
 
@@ -252,6 +312,7 @@ class ScreenshotManager {
 					REFERENCES users(`blid`)
 					ON UPDATE CASCADE
 					ON DELETE CASCADE,
+				KEY (`name`),
 				PRIMARY KEY (`id`))")) {
 				throw new Exception("Error creating screenshots table: " . $database->error());
 			}

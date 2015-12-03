@@ -62,6 +62,15 @@
 		];
 		return $response;
 	}
+
+	if(!isset($_POST['buildname']) || !isset($_POST['description'])) {
+		$response = [
+			"message" => "Some form elements missing",
+			"build" => $build,
+			"user" => $user
+		];
+		return $response;
+	}
 	$changed = false;
 
 	if(isset($_FILES['screenshots']['name'])  && $_FILES['screenshots']['size']) {
@@ -97,19 +106,10 @@
 			return $response;
 		}
 		require_once(realpath(dirname(__DIR__) . "/class/ScreenshotManager.php"));
-		ScreenshotManager::uploadScreenshotForBuild($build, $tempPath);
+		ScreenshotManager::uploadScreenshotForBuild($build, $uploadExt, $tempPath);
 		$changed = true;
 	}
-
-	if(!isset($_POST['buildname']) || !isset($_POST['filename']) || !isset($_POST['description'])) {
-		$response = [
-			"message" => "Some form elements missing",
-			"build" => $build,
-			"user" => $user
-		];
-		return $response;
-	}
-	$subResponse = BuildManager::updateBuild($build, $_POST['buildname'], $_POST['filename'], $_POST['description']);
+	$subResponse = BuildManager::updateBuild($build, $_POST['buildname'], $_POST['description']);
 
 	if($subResponse['message'] !== "") {
 		$response = [

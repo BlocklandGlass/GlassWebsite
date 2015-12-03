@@ -2,7 +2,7 @@
 	session_start();
 
 	if(!isset($_SESSION['csrftoken'])) {
-		$_SESSION['csrftoken'] = rand();
+		$_SESSION['csrftoken'] = mt_rand();
 	}
 
 	if(isset($_POST['csrftoken']) && $_POST['csrftoken'] == $_SESSION['csrftoken']) {
