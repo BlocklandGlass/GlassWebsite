@@ -12,6 +12,7 @@ class DatabaseManager {
 		//memory cached for performance
 		//infinite persistence is not guaranteed, however
 		$keyData = apc_fetch('mysqlKey');
+		$keyData = false;
 
 		if($keyData === false) {
 			if(!is_file(dirname(__FILE__) . "/key.json")) {
@@ -32,7 +33,10 @@ class DatabaseManager {
 		}
 
 		try {
-			$this->mysqli = new mysqli("localhost", $this->username, $this->password, $this->database);
+			$this->mysqli = @new mysqli("localhost", $this->username, $this->password, $this->database);
+			if($this->mysqli->connect_errno !== 0) {
+				throw new Exception("error");
+			}
 		} catch(Exception $e) {
 			$this->mysqli = new mysqli("localhost", $this->username, $this->password);
 

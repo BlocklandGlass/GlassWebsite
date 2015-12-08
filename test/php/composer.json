@@ -3,7 +3,4 @@
 		"phpunit/phpunit": "*",
 		"facebook/webdriver": "dev-master"
 	}
-    "require": {
-        "aws/aws-sdk-php": "2.*"
-    }
 }

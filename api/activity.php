@@ -2,9 +2,9 @@
 $returnArray = array();
 
 $retObj = new stdClass();
-$retObj->image = "refresh";
+$retObj->image = "Update";
 $retObj->text = "An update is available!";
-$retObj->datestring = time();
+$retObj->datestring = date("g:ia",time());
 $retObj->timestamp = time();
 
 $returnArray[] = $retObj;

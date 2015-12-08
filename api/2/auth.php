@@ -13,7 +13,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
   // glass checks in every 5 (?) minutes
   // on the old site, this was used to keep the "currently active" list
   // this will get added back later
-  
+
 	$con = ClientConnection::loadFromIdentifier($_REQUEST['ident']);
   $ret = new stdClass();
   $ret->ident = $con->getIdentifier();
@@ -38,6 +38,8 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
           }
         }
       }
+    } else if($_REQUEST['action'] == "checkin") {
+      $ret->status = "success";
     }
   }
   echo json_encode($ret, JSON_PRETTY_PRINT);
