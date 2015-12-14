@@ -14,6 +14,7 @@
     <tbody>
     <?php
       $list = AddonManager::getUnapproved();
+			var_dump($list);
       foreach($list as $addon) {
         echo "<tr>";
         echo "<td><a href=\"inspect.php?id=" . $addon->getId() . "\">" . $addon->getName() . "</a></td>";
