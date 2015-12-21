@@ -88,7 +88,7 @@ class AddonManager {
 		AddonFileHandler::injectVersionInfo($id, $bid, $file); // TODO need to specify branch in upload
 
 		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
-		//AWSFileManager::uploadNewBuild($id, $tempPath);
+		AWSFileManager::uploadNewAddon($id, $bid, $filename, $file);
 		require_once(realpath(dirname(__FILE__) . '/StatManager.php'));
 		StatManager::addStatsToAddon($id);
 

@@ -6,6 +6,7 @@ $latest = include(dirname(__DIR__) . "/../../../private/json/getNewAddonsWithUse
 
 //var_dump($latest);
 $ret = new stdClass();
+$ret->status = "success";
 $ret->latest = [];
 foreach($latest['addons'] as $addon) {
   $addonDat = new stdClass();

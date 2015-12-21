@@ -35,7 +35,27 @@ class AWSFileManager {
 			"Bucket" => $keyData->aws_bucket,
 			"Key" => "builds/" . $bid,
 			"SourceFile" => $buildFile,
+			"ACL" => 'public-read',
 			"ContentDisposition" => "attachment; filename=\"" . $name . "\""
+		));
+	}
+
+	public static function uploadNewAddon($aid, $branchid, $name, $tempFile) {
+		$keyData = AWSFileManager::getCredentials();
+
+		$client = S3Client::factory(array(
+			"credentials" => array(
+				"key" => $keyData->aws_access_key_id,
+				"secret" => $keyData->aws_secret_access_key
+			)
+		));
+
+		$result = $client->putObject(array(
+			"Bucket" => $keyData->aws_bucket,
+			"Key" => "addons/" . $aid . "_" . $branchid,
+			"SourceFile" => $tempFile,
+			"ACL" => 'public-read',
+			"ContentDisposition" => "attachment; filename=\"" . urlencode($name) . "\""
 		));
 	}
 

@@ -1,16 +1,27 @@
 <?php
 require_once dirname(__DIR__) . "/../../../private/class/AddonManager.php";
+require_once dirname(__DIR__) . "/../../../private/class/BoardManager.php";
 require_once dirname(__DIR__) . "/../../../private/class/ScreenshotManager.php";
-$aid = $_REQUEST['id'];
+
+$ret = new stdClass();
+
+if(isset($_REQUEST['id']) & $_REQUEST['id'] != "") {
+  $aid = $_REQUEST['id'];
+  $ret->status = "success";
+} else {
+  $ret->status = "error";
+  $ret->error = "Add-On not found!";
+  die(json_encode($ret, JSON_PRETTY_PRINT));
+}
 
 $addonObject = AddonManager::getFromID($aid);
 //$screens = ScreenshotManager::getScreenshotsFromAddon($aid); //I dont think this is done
 
-$ret = new stdClass();
 
 $ret->aid = $aid;
 $ret->filename = $addonObject->getFilename();
-$ret->board = $addonObject->getBoard();
+$ret->boardId = $addonObject->getBoard();
+$ret->board = BoardManager::getFromID($addonObject->getBoard())->getName();
 $ret->name = $addonObject->getName();
 $ret->description = htmlspecialchars_decode($addonObject->getDescription());
 

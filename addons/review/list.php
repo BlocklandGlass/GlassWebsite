@@ -14,11 +14,10 @@
     <tbody>
     <?php
       $list = AddonManager::getUnapproved();
-			var_dump($list);
       foreach($list as $addon) {
         echo "<tr>";
         echo "<td><a href=\"inspect.php?id=" . $addon->getId() . "\">" . $addon->getName() . "</a></td>";
-        echo "<td>" . UserManager::getFromBLID($addon->getManagerBLID())->getName() . "</td>";
+        echo "<td>" . @UserManager::getFromBLID($addon->getManagerBLID())->getName() . "</td>";
         echo "<td>" . date("D, g:i a", strtotime($addon->getUploadDate())) . "</td>";
         echo "</tr>";
       }

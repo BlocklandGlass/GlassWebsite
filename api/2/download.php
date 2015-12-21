@@ -20,7 +20,7 @@ if($type == "addon_update" || $type == "addon_download") {
   }
 
 
-  $head = 'Location: http://cdn.blocklandglass.com/addons/' . $id . '_' . $branch . '.zip';
+  $head = 'Location: http://cdn.blocklandglass.com/addons/' . $id . '_' . $branch;
   if($debug) {
     echo $head;
   } else {
@@ -37,7 +37,7 @@ if($type == "addon_update" || $type == "addon_download") {
   */
 } else if($type == "build") {
   $id = $_REQUEST['id'];
-  $head = 'Location: http://cdn.blocklandglass.com/build/' . $id . '.bls';
+  $head = 'Location: http://cdn.blocklandglass.com/build/' . $id;
   if($debug) {
     echo $head;
   } else {

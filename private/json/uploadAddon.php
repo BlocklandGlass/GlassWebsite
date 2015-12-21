@@ -79,6 +79,9 @@
 	if(isset($_POST['type']) && $_POST['type'] != "") {
 		$filename = $user->getBlid() . "_" . $uploadFileName;
 		$tempLocation = dirname(dirname(__DIR__)) . "/addons/upload/files/" . $filename;
+		if(!is_dir(dirname(dirname(__DIR__)) . "/addons/upload/files/")) {
+			mkdir(dirname(dirname(__DIR__)) . "/addons/upload/files/");
+		}
 
 		//to do: aws stuff instead of this
 		move_uploaded_file($tempPath, $tempLocation);

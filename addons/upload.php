@@ -17,7 +17,7 @@
 		//	echo $status["message"];
 		//}
 	?>
-	<form action="index.php" method="post" enctype="multipart/form-data">
+	<form action="upload.php" method="post" enctype="multipart/form-data">
 		<table class="formtable">
 			<tbody>
 <!--				<tr>
@@ -117,6 +117,7 @@ $(document).ready(function () {
 		//using a javascript .zip library to pull the description.txt contents might be overkill
 	});
 	$("#uploadForm").submit(function (event) {
+		console.log("upload form?");
 		event.stopPropagation();
 		event.preventDefault();
 		$("#uploadStatus").html("<p><img src=\"/img/loading.gif\" /></p>");
@@ -126,7 +127,7 @@ $(document).ready(function () {
 		}
 		//var data = $(this).serialize();
 		var data = new FormData(this);
-		console.log(data);
+		//console.log(data);
 		//$.post("/ajax/uploadBuild.php", data, function (response) {
 		$.ajax({
 			url: "/ajax/uploadAddon.php",
