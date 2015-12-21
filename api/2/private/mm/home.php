@@ -12,7 +12,7 @@ foreach($latest['addons'] as $addon) {
   $addonDat = new stdClass();
   $addonDat->id = $addon->id;
   $addonDat->name = $addon->name;
-  $addonDat->uploadDate = $addon->uploadDate;
+  $addonDat->uploadDate = date("D, g:i a", strtotime($addon->uploadDate));
 
   $addonDat->author = $latest['users'][$addon->blid]->getUsername();
 
@@ -20,6 +20,22 @@ foreach($latest['addons'] as $addon) {
 
   $ret->latest[] = $addonDat;
 }
+
+$ret->trending = [];
+foreach($trending['addons'] as $addon) {
+  $addonDat = new stdClass();
+  $addonDat->id = $addon->id;
+  $addonDat->name = $addon->name;
+  $addonDat->downloads = $addon->getTotalDownloads();
+
+  $addonDat->author = $trending['users'][$addon->blid]->getUsername();
+
+  // TODO something with author info
+
+  $ret->trending[] = $addonDat;
+}
+
+//var_dump($trending);
 
 echo json_encode($ret, JSON_PRETTY_PRINT);
 ?>
