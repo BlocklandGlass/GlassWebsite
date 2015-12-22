@@ -9,13 +9,13 @@ require_once(realpath(dirname(__FILE__) . "/private/class/AddonManager.php"));
 		In addition to offering add-on and build hosting services online, Glass offers a variety of in-game features. You'll be able to automatically install your downloaded add-ons and builds, as well as keep them up to date.
 	</p>
   <?php
-  $glassAddonId = 13; //this needs to be changed before going live, or we need a "find addon by name"
+  $glassAddonId = 11; //this needs to be changed before going live, or we need a "find addon by name"
   $ao = AddonManager::getFromId($glassAddonId);
   $vi = $ao->getVersionInfo();
   $version = $vi->stable->version;
   ?>
   <div style="text-align: center">
-	   <a href="http://cdn.blocklandglass.com/System_BlocklandGlass.zip" class="btn blue"><b>Download</b> v<?php echo $version ?></a><br />
+	   <a href="/addons/download.php?id=11&branch=stable" class="btn blue" style="font-weight: normal; color: #fff;"><b>Download</b> v<?php echo $version ?></a><br />
   </div>
 </div>
 
