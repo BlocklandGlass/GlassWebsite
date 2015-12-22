@@ -15,9 +15,14 @@
     <?php
       $list = AddonManager::getUnapproved();
       foreach($list as $addon) {
+				try {
+					$name = UserManager::getFromBLID($addon->getManagerBLID())->getName();
+				} catch (Exception $e) {
+					$name = $addon->getManagerBLID();
+				}
         echo "<tr>";
         echo "<td><a href=\"inspect.php?id=" . $addon->getId() . "\">" . $addon->getName() . "</a></td>";
-        echo "<td>" . @UserManager::getFromBLID($addon->getManagerBLID())->getName() . "</td>";
+        echo "<td>" . $name . "</td>";
         echo "<td>" . date("D, g:i a", strtotime($addon->getUploadDate())) . "</td>";
         echo "</tr>";
       }
