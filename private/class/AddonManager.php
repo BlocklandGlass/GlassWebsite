@@ -474,10 +474,6 @@ class AddonManager {
 				`deleted` TINYINT NOT NULL DEFAULT 0,
 				`approved` TINYINT NOT NULL DEFAULT 0,
 				`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				FOREIGN KEY (`blid`)
-					REFERENCES users(`blid`)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE,
 				FOREIGN KEY (`board`)
 					REFERENCES addon_boards(`id`)
 					ON UPDATE CASCADE
