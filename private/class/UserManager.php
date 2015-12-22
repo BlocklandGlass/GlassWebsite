@@ -243,7 +243,7 @@ class UserManager {
 			`username` VARCHAR(20) NOT NULL,
 			`blid` INT NOT NULL DEFAULT '-1',
 			`password` VARCHAR(64) NOT NULL,
-			`email` VARCHAR(64) NOT NULL,
+			`email` VARCHAR(64),
 			`salt` VARCHAR(10) NOT NULL,
 			`registration_date` TIMESTAMP DEFAULT '0000-00-00',
 			`session_last_active` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
