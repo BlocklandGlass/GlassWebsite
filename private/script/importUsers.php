@@ -10,7 +10,8 @@ $database = new DatabaseManager();
 
 $database->query("delete from `users`");
 
-while($user = $resource->fetch_object()) {
+while(($user = $resource->fetch_object()) != null) {
+  echo "importing blid " . $user->blid . "\n";
   $database->query("INSERT INTO `blocklandglass2`.`users` (`username`, `blid`, `password`, `email`, `salt`, `registration_date`, `session_last_active`, `verified`, `banned`, `admin`, `profile`) " .
   "VALUES ('" . $user->username . "', '" . $user->blid . "', '" . $user->password . "', '', '" . $user->salt . "', CURRENT_TIMESTAMP, '" . $user->session_last_active . "', '1', '0', '0', NULL);");
 }
