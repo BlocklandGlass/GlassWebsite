@@ -8,7 +8,7 @@ $resource = $mysql->query("SELECT * FROM `users` WHERE `verified`=1");
 
 $database = new DatabaseManager();
 
-$database->query("TRUNCATE TABLE `users`");
+$database->query("delete from `users`");
 
 while($user = $resource->fetch_object()) {
   $database->query("INSERT INTO `blocklandglass2`.`users` (`username`, `blid`, `password`, `email`, `salt`, `registration_date`, `session_last_active`, `verified`, `banned`, `admin`, `profile`) " .
