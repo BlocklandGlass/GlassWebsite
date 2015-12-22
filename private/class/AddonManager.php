@@ -98,6 +98,13 @@ class AddonManager {
 		return $response;
 	}
 
+	public static function approveAddon($id, $board) {
+		$database = new DatabaseManager();
+		$database->query("UPDATE `addon_addons` SET `approved`='1', `board`='" . $database->sanitize($board) . "' WHERE `id`='" . $database->sanitize($id) . "'");
+
+		apc_delete('addonObject_' . $id);
+	}
+
 	public static function getFromID($id, $resource = false) {
 		$addonObject = apc_fetch('addonObject_' . $id, $success);
 

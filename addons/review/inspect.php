@@ -4,6 +4,7 @@
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/class/AddonManager.php"));
+	require_once(realpath(dirname(__DIR__) . "/../private/class/BoardManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/class/UserManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/class/UserLog.php"));
 
@@ -45,16 +46,25 @@
       <tr>
         <td style="padding: 10px;"><b>Tags</b></td>
         <td>
-        <?php
-        // TODO my plane is landing
-        ?>
+
         </td>
       </tr>
     </tbody>
   </table>
   <hr />
-  <form>
+  <form action="approve.php" method="post">
+		<input type="hidden" name="aid" value="<?php echo $addon->getId() ?>" />
     Move to board:
+		<select name="board">
+			<?php
+				$boards = BoardManager::getAllBoards();
+				foreach($boards as $board) {
+					echo '<option value="' . $board->getId() . '">' . $board->getName() . '</option>';
+				}
+			?>
+		</select>
+		<input type="submit" name="action" value="Approve" />
+		<input type="submit" name="action" value="Reject" />
   </form>
 </div>
 
