@@ -12,8 +12,7 @@ class DatabaseManager {
 		//memory cached for performance
 		//infinite persistence is not guaranteed, however
 		$keyData = apc_fetch('mysqlKey');
-		$keyData = false;
-
+		
 		if($keyData === false) {
 			if(!is_file(dirname(__FILE__) . "/key.json")) {
 				throw new Exception("Key file not found");
