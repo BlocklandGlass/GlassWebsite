@@ -15,9 +15,10 @@
     <?php
       $list = AddonManager::getUnapproved();
       foreach($list as $addon) {
-				try {
-					$name = UserManager::getFromBLID($addon->getManagerBLID())->getName();
-				} catch (Exception $e) {
+				$manager = UserManager::getFromBLID($addon->getManagerBLID());
+				if(is_object($manager)) {
+					$name = $manager->getName();
+				}	else {
 					$name = $addon->getManagerBLID();
 				}
         echo "<tr>";
