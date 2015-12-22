@@ -23,6 +23,11 @@
 		die();
 	}
 
+	if(!$addonObject->getApproved()) {
+		include 'unapproved.php';
+		die();
+	}
+
 	$_PAGETITLE = "Glass | " . htmlspecialchars($addonObject->getName());
 
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
