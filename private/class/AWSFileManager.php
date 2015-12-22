@@ -17,6 +17,7 @@ class AWSFileManager {
 		$result = $client->putObject(array(
 			"Bucket" => $keyData->aws_bucket,
 			"Key" => $target,
+			"ACL" => 'public-read',
 			"SourceFile" => $local
 		));
 	}
@@ -71,16 +72,18 @@ class AWSFileManager {
 		));
 
 		$result = $client->putObject(array(
-			"Bucket" => "blocklandglass-test-bucket",
+			"Bucket" => $keyData->aws_bucket,
 			"Key" => "screenshots/" . $sid,
 			"SourceFile" => $tempFile,
+			"ACL" => 'public-read',
 			"ContentDisposition" => "attachment; filename=\"" . $name . "\""
 		));
 
 		$result = $client->putObject(array(
-			"Bucket" => "blocklandglass-test-bucket",
+			"Bucket" => $keyData->aws_bucket,
 			"Key" => "screenshots/thumb/" . $sid,
 			"SourceFile" => $tempThumb,
+			"ACL" => 'public-read',
 			"ContentDisposition" => "attachment; filename=\"" . $name . "\""
 		));
 	}
