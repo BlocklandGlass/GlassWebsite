@@ -42,7 +42,8 @@ foreach($file as $branch=>$fid) {
     $oldfile = $dir . $hash . ".zip";
     $bid = $branchId[$branch];
     echo "Uploading $oldfile to AWS as {$res->id}_{$bid}.zip<br />";
-    AWSFileManager::upload("addons/{$res->id}_{$bid}", $oldfile);
+    //AWSFileManager::upload("addons/{$res->id}_{$bid}", $oldfile);
+    AWSFileManager::uploadNewAddon($res->id, $bid, $res->filename, $oldfile);
 
     $updateRes = $mysql->query("SELECT *
 FROM  `addon_updates`
