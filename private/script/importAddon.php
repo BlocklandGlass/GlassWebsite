@@ -63,7 +63,7 @@ LIMIT 0 , 1");
 
 $db->query($sql = "INSERT INTO `addon_addons` (`id`, `board`, `blid`, `name`, `filename`, `description`, `versionInfo`, `authorInfo`, `reviewInfo`, `deleted`, `approved`, `uploadDate`) VALUES " .
    "('" . $db->sanitize($res->id) . "',"
-  . "'" . $db->sanitize($boardId) . "',"
+  . "NULL,"
   . "'" . $db->sanitize($res->author) . "'," //now that I think of it, we need account migration too
   . "'" . $db->sanitize($res->name) . "',"
   . "'" . $db->sanitize($res->filename) . "',"
