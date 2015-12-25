@@ -6,6 +6,24 @@ class NotificationManager {
 	private static $objectCacheTime = 3600; //1 hour
 	private static $userCacheTime = 3600;
 
+	public static function createNotification($user, $text, $params) {
+		if(isset($param) && !is_object($param)) {
+			throw new Exception("Object expected form \$param");
+		}
+
+		if(is_object($user)) {
+			$blid = $user->getBLID();
+		} else {
+			$blid = $user;
+		}
+
+		$database = new DatabaseManager();
+		NotificationManager::verifyTable($database);
+		$resource = $database->query("INSERT INTO `blocklandglass2`.`user_notifications` (`id`, `blid`, `date`, `text`, `params`, `seen`) VALUES " .
+			"(NULL, '" . $database->sanitize($blid) . "', NOW(), '" . $database->sanitize($text) . "', '" . $database->sanitize(json_encode($params)) . "', '0');");
+		apc_delete('userNotifications_' . $blid);
+	}
+
 	public static function getFromID($id, $resource = false) {
 		$notificationObject = apc_fetch('notificationObject_' . $id, $success);
 
@@ -15,8 +33,8 @@ class NotificationManager {
 			} else {
 				$database = new DatabaseManager();
 				NotificationManager::verifyTable($database);
-				$resource = $database->query("SELECT * FROM `user_notifications` WHERE id='" . $db->sanitize($id) . "'");
-		
+				$resource = $database->query("SELECT * FROM `user_notifications` WHERE id='" . $database->sanitize($id) . "'");
+
 				if(!$resource) {
 					throw new Exception("Database error: " . $database->error());
 				}
@@ -41,7 +59,7 @@ class NotificationManager {
 			$resource = $database->query("SELECT * FROM `user_notifications` WHERE
 				`blid` = '" . $database->sanitize($blid) . "'
 				ORDER BY `date` DESC
-				LIMIT '" . $database->sanitize($offset) . "', '" . $database->sanitize($limit) . "'");
+				LIMIT " . $database->sanitize($offset) . ", " . $database->sanitize($limit));
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
@@ -49,7 +67,7 @@ class NotificationManager {
 			$userNotes = [];
 
 			while($row = $resource->fetch_object()) {
-				$userNotes[] = NotificationManager::getFromID($row->id, $row)->getID();
+				$userNotes[] = $row->id;
 			}
 			$resource->close();
 			apc_store('userNotifications_' . $blid, $userNotes, NotificationManager::$userCacheTime);

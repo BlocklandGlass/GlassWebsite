@@ -12,6 +12,7 @@
 	require_once(realpath(dirname(__DIR__) . "/private/class/BuildManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/BuildObject.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/BoardObject.php"));
+	require_once(realpath(dirname(__DIR__) . "/private/class/NotificationManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/NotificationObject.php"));
 	$userObject = UserManager::getCurrent();
 
@@ -30,15 +31,16 @@
 					<p>
 						<h3>Recent Activity</h3>
 						<?php
-						$note = new NotificationObject(new stdClass());
-						$note->testVars();
-
-						$notifications = array($note); // TODO NotifcationManager::getFromUser(9789, 10);
-						foreach($notifications as $noteObject) {
-							echo '<div style="background-color: #eee; border-radius: 15px; padding: 15px; margin: 5px;">';
-							echo $noteObject->toHTML();
-							echo '<br /><span style="font-size: 0.8em;">' . $noteObject->getDate() . '</span>';
-							echo '</div>';
+						$notifications = NotificationManager::getFromBLID($userObject->getBLID(), 0, 10); // TODO NotifcationManager::getFromUser(9789, 10);
+						
+						if($notifications !== false) {
+							foreach($notifications as $noteId) {
+								$noteObject = NotificationManager::getFromId($noteId);
+								echo '<div style="background-color: #eee; border-radius: 15px; padding: 15px; margin: 5px;">';
+								echo $noteObject->toHTML();
+								echo '<br /><span style="font-size: 0.8em;">' . $noteObject->getDate() . '</span>';
+								echo '</div>';
+							}
 						}
 						?>
 						</p>

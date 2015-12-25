@@ -1,6 +1,7 @@
 <?php
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 require_once(realpath(dirname(__FILE__) . '/AddonObject.php'));
+require_once(realpath(dirname(__FILE__) . '/NotificationManager.php'));
 
 //this should be the only class to interact with table `addon_addons`
 class AddonManager {
@@ -98,9 +99,26 @@ class AddonManager {
 		return $response;
 	}
 
-	public static function approveAddon($id, $board) {
+	public static function approveAddon($id, $board, $approver) {
 		$database = new DatabaseManager();
 		$database->query("UPDATE `addon_addons` SET `approved`='1', `board`='" . $database->sanitize($board) . "' WHERE `id`='" . $database->sanitize($id) . "'");
+
+		$manager = AddonManager::getFromId($id)->getManagerBLID();
+
+		$params = new stdClass();
+		$params->vars = array();
+
+		$user = new stdClass();
+		$user->type = "user";
+		$user->blid = $approver;
+
+		$addon = new stdClass();
+		$addon->type = "addon";
+		$addon->id = $id;
+
+		$params->vars[] = $user;
+		$params->vars[] = $addon;
+		NotificationManager::createNotification($manager, '$2 was approved by $1', $params);
 
 		apc_delete('addonObject_' . $id);
 	}
