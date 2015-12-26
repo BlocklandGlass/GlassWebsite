@@ -119,6 +119,9 @@ class AddonObject {
 		$channelId["unstable"] = 2;
 		$channelId["development"] = 3;
 		foreach($ver as $name=>$branch) {
+			if($name == "upstream") {
+				continue;
+			}
 			if($channelId[$name] == $bid) {
 				return $branch;
 			}

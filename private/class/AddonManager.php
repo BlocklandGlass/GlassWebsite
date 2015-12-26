@@ -18,6 +18,165 @@ class AddonManager {
 	public static $SORTRATINGASC = 4; //aka bad ratings first I think
 	public static $SORTRATINGDESC = 5;
 
+	public static function checkUpstreamRepos() {
+		$channelId[1] = "stable";
+		$channelId[2] = "unstable";
+		$channelId[3] = "development";
+
+		$addons = AddonManager::getAll();
+		foreach($addons as $addon) {
+			$versionInfo = $addon->getVersionInfo();
+			if(isset($versionInfo->upstream)) {
+				$upstream = $versionInfo->upstream;
+				echo $addon->getId() . "\n";
+				$url = $upstream->url;
+				if(isset($upstream->mod)) {
+					$url .= "?mods=" . $upstream->mod;
+				}
+
+				if(strpos($url, "http") !== 0) {
+					$url = "http://" . $url;
+				}
+
+				$opts = array(
+				  'http'=>array(
+				    'method'=>"GET",
+				    'header'=>"Accept-language: en\r\n" .
+				              "User-Agent: Torque/1.3\r\n"
+				  )
+				);
+
+				$context = stream_context_create($opts);
+				$response = file_get_contents($url, false, $context);
+
+				if($response !== false) {
+					if(($res = json_decode($response)) !== null) {
+						$a = "add-ons";
+						foreach($res->$a as $ad) {
+							if($ad->name == $addon->getFilename()) {
+								foreach($ad->channels as $channel=>$info) {
+									if(in_array($channel, $upstream->branch)) {
+										$localBranchId = array_search($channel, $upstream->branch);
+										echo "remote [$channel]:" . $info->version . "\n";
+										echo "local [$localBranchId]:" . $addon->getBranchInfo($localBranchId)->version . "\n";
+										if($info->version !== $addon->getBranchInfo($localBranchId)->version) {
+											AddonManager::doUpstreamUpdate($addon->getId(), $localBranchId, $info->file, $info->version);
+										}
+									}
+								}
+							}
+						}
+					} else {
+						echo($response);
+						$lines = explode("\n", $response);
+						//basically we're going to construct a fake json response
+						foreach($lines as $line) {
+							$line = trim($line);
+							if(!isset($res)) {
+								if(strpos($line, "<addon:") === 0) {
+									$ad = substr($line, 7, strlen($line)-8);
+									$res = new stdClass();
+									$res->name = "$ad.zip";
+								}
+							} else {
+								if(strpos($line, "</addon>") === 0) {
+									break;
+								}
+
+								if(!isset($currentChannel)) {
+									if(strpos($line, "<channel:") === 0) {
+										$ch = substr($line, 9, strlen($line)-10);
+										$currentChannel = new stdClass();
+										$currentChannel->name = $ch;
+									}
+								} else {
+									if(strpos($line, "</channel>") === 0) {
+										$res->channels[$currentChannel->name] = $currentChannel;
+										unset($currentChannel);
+									}
+
+									if(strpos($line, "<version:") === 0) {
+										$ch = substr($line, 9, strlen($line)-10);
+										$currentChannel->version = $ch;
+									}
+
+									if(strpos($line, "<file:") === 0) {
+										$file = substr($line, 6, strlen($line)-7);
+										$currentChannel->file = $file;
+									}
+								}
+							}
+						}
+
+						if(isset($res)) {
+							foreach($res->channels as $channel=>$info) {
+								$arr = (array) $upstream->branch;
+								if(in_array($channel, $arr)) {
+									$localBranchId = array_search($channel, $arr);
+									echo "remote [$channel]:" . $info->version . "\n";
+									echo "local [$localBranchId]:" . $addon->getBranchInfo($localBranchId)->version . "\n";
+									//if($info->version !== $addon->getBranchInfo($localBranchId)->version) {
+										AddonManager::doUpstreamUpdate($addon->getId(), $localBranchId, $info->file, $info->version);
+									//}
+								}
+							}
+						}
+					}
+				} else {
+
+				}
+			}
+		}
+	}
+
+	public static function doUpstreamUpdate($aid, $branchId, $file, $version) {
+		$dir = dirname(__DIR__) . "/../addons/upload/files/";
+		$addonObject = AddonManager::getFromID($aid);
+
+		if(strpos($file, "http") !== 0) {
+			$file = "http://" . $file;
+		}
+
+		$filename = "upstream_{$branchId}_" . $addonObject->getFilename();
+		$filepath = $dir . $filename;
+		file_put_contents($filepath, fopen($file, 'r'));
+		echo "\n\nDownloaded $file to $filepath\n\n";
+
+		AddonManager::submitUpdate($addonObject, $version, $branchId, realpath($filepath), "Imported from upstream.");
+	}
+
+	public static function submitUpdate($addon, $version, $branch, $file, $changelog) {
+		if(!is_object($addon)) {
+			$addon = AddonManager::getFromID($addon);
+		}
+
+		// TODO Pending updates
+		// keep the file and update on record, but wait for approval before processing entirely
+		$versionInfo = $addon->getVersionInfo();
+
+		$channelId[1] = "stable";
+		$channelId[2] = "unstable";
+		$channelId[3] = "development";
+
+		$chan = $versionInfo->$channelId[$branch];
+		$pending = new stdClass();
+		$pending->version = $version;
+		$pending->file = $file; //locally kept file
+		$pending->changelog = $changelog;
+		$pending->submitted = time();
+		$chan->pending = $pending;
+
+		$db = new DatabaseManager();
+		$db->query("UPDATE `addon_addons` SET `versionInfo` = '" . $db->sanitize(json_encode($versionInfo)) . "' WHERE `id` = '" . $db->sanitize($addon->getId()) . "';");
+
+		apc_delete('addonObject_' . $addon->getId());
+	}
+
+	public static function doUpdate($addon, $version, $branch, $file, $changelog) {
+		// TODO Processing update
+		// this is the part that actually makes the update go live
+	}
+
 	public static function uploadNewAddon($user, $name, $type, $file, $filename, $description) {
 		$database = new DatabaseManager();
 		AddonManager::verifyTable($database);
@@ -44,10 +203,36 @@ class AddonManager {
 		}
 		$rsc->close();
 
+
+		$bid = 1; // TODO Specify branch in upload
+
 		//generate blank version data
 		$versionInfo = AddonFileHandler::getVersionInfo($file);
-		if($versionInfo) {
-			// TODO when I'm not on a plane...
+		var_dump($versionInfo);
+		if($versionInfo !== false) {
+			// information to use for upstream repos
+			$version = new stdClass();
+			$version->stable = new stdClass();
+			$version->stable->version = $versionInfo->version;
+			$version->stable->restart = "0.0.0";
+
+			$url = parse_url($versionInfo->repo->url);
+
+			if(!isset($url['host'])) {
+				$url['host'] = $versionInfo->repo->url;
+			}
+
+			if($url['host'] == "blocklandglass.com" || $url['host'] == "api.blocklandglass.com") {
+				// nothing?
+			} else {
+				$upstream = new stdClass();
+				$upstream->url = $versionInfo->repo->url;
+				if(isset($versionInfo->repo->mod))
+					$upstream->mod = $versionInfo->repo->mod;
+				$upstream->branch = array();
+				$upstream->branch[$bid] = $versionInfo->channel;
+				$version->upstream = $upstream;
+			}
 		} else {
 			$version = new stdClass();
 			$version->stable = new stdClass();
@@ -83,13 +268,11 @@ class AddonManager {
 
 		$id = $database->fetchMysqli()->insert_id;
 
-		$bid = 1;
-
 		AddonFileHandler::injectGlassFile($id, $file);
-		AddonFileHandler::injectVersionInfo($id, $bid, $file); // TODO need to specify branch in upload
+		//AddonFileHandler::injectVersionInfo($id, $bid, $file); // TODO need to specify branch in upload
 
 		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
-		AWSFileManager::uploadNewAddon($id, $bid, $filename, $file);
+		//AWSFileManager::uploadNewAddon($id, $bid, $filename, $file);
 		require_once(realpath(dirname(__FILE__) . '/StatManager.php'));
 		StatManager::addStatsToAddon($id);
 

@@ -3,8 +3,8 @@
 	$status = include(__DIR__ . "/../private/json/uploadAddon.php");
 
 	if(isset($status['redirect'])) {
-		//echo("REDIRECT: " . $status['redirect']);
-		header("Location: " . $status['redirect']);
+		echo("REDIRECT: " . $status['redirect']);
+		//header("Location: " . $status['redirect']);
 		die();
 	}
 	$_PAGETITLE = "Addon Upload";

@@ -32,7 +32,7 @@
 						<h3>Recent Activity</h3>
 						<?php
 						$notifications = NotificationManager::getFromBLID($userObject->getBLID(), 0, 10); // TODO NotifcationManager::getFromUser(9789, 10);
-						
+
 						if($notifications !== false) {
 							foreach($notifications as $noteId) {
 								$noteObject = NotificationManager::getFromId($noteId);
@@ -51,11 +51,16 @@
 						<?php
 						$addons = AddonManager::getFromBLID($userObject->getBLID());
 
-						foreach($addons as $ao) {
+						foreach($addons as $aid) {
+							$ao = AddonManager::getFromId($aid);
 							$board = $ao->getBoard();
+							$html = "";
+							if(!$ao->getApproved()) {
+								$html = '<img style="width: 1.2em;" src="http://blocklandglass.com/icon/icons32/hourglass.png" alt="Under Review"/> ';
+							}
 							?>
 							<div class="useraddon">
-								<a href="/addons/addon.php?id=<?php echo $ao->getId(); ?>"><img style="width: 1.2em;" src="http://blocklandglass.com/icon/icons32/<?php echo $board["icon"] ?>.png" /> <span style="font-size: 1.2em; font-weight:bold;"><?php echo $ao->getName(); ?></span></a>
+								<?php echo $html ?><a href="/addons/addon.php?id=<?php echo $ao->getId(); ?>"><span style="font-size: 1.2em; font-weight:bold;"><?php echo $ao->getName(); ?></span></a>
 								<br />
 								<span style="font-size: 0.8em;">
 									<a href="#">Update</a> | <a href="#">Edit</a> | <a href="#">Repository</a> | <a href="#">Delete</a>

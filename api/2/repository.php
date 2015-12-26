@@ -13,7 +13,7 @@ if(!isset($_GET['mods'])) {
   die(json_encode($ret, JSON_PRETTY_PRINT));
 }
 
-$addonIds = split("-", $db->sanitize($_GET['mods']));
+$addonIds = explode("-", $db->sanitize($_GET['mods']));
 
 $repo = new stdClass();
 

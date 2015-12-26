@@ -5,5 +5,7 @@ private/class/key.json
 builds/uploads/*
 private/vendor/
 
+local/*
+
 composer.phar
 composer.lock

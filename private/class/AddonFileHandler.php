@@ -175,18 +175,44 @@ class AddonFileHandler {
   }
 
   public static function getVersionInfo($file) {
-    $workingDir = dirname(__DIR__) . "/../addons/upload/files/";
-
-    $executable = false;
-    $desc = false;
-
-    $fullFile = $workingDir . $file;
-
     $zip = new ZipArchive();
-    $res = $zip->open($fullFile);
+    $res = $zip->open($file);
     if($res === TRUE) {
-      // TODO open version.json
+      if(($json = $zip->getFromName("version.json")) !== false) {
+        $obj = json_decode($json);
+
+        $ret = new stdClass();
+
+        $ret->repo = $obj->repositories[0];
+        $ret->channel = $obj->channel;
+        $ret->version = $obj->version;
+        return $ret;
+      } else if(($tml = $zip->getFromName("version.txt")) !== false) {
+        $ret = new stdClass();
+        $ret->repo = new stdClass();
+        $lines = explode("\n", $tml);
+        foreach($lines as $line) {
+          $field = explode("\t", trim($line));
+          switch($field[0]) {
+            case "channel":
+              $ret->channel = $field[1];
+              break;
+
+            case "repository":
+              $ret->repo->url = $field[1];
+              break;
+
+            case "version":
+              $ret->version = $field[1];
+              break;
+          }
+        }
+        return $ret;
+      } else {
+        return false;
+      }
     } else {
+      echo("failed to open");
       return false;
     }
 
