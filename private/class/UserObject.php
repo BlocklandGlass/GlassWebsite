@@ -56,6 +56,7 @@ class UserObject {
 	//the *Object classes are just for data storage
 	//make sure this also checks for whether that blid is already verified with a different email
 	public function setVerified($bool) {
+		NotificationManager::createNotification($this, "Your account was verified.", array());
 		$database = new DatabaseManager();
 		$database->query("UPDATE `users` SET `verified`='" . $database->sanitize($bool) . "' WHERE `email`='" . $database->sanitize($this->getEmail()) . "'");
 		apc_store('userObject_' . $this->blid, $this, 600);

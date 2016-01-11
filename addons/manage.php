@@ -14,7 +14,48 @@
 	$_PAGETITLE = "Manage Addon";
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+
+	if(!isset($_GET['tab']) || $_GET['tab'] == "") {
+		$_GET['tab'] = "desc";
+	}
 ?>
+
+<div class="maincontainer">
+	<div style="width: 200px; float: left; background-color: #ddd; border-radius: 15px">
+		<ul class="sidenav">
+			<li><a href="?id=<?php echo $_GET['id'] ?>&tab=desc">Description</a></li>
+			<li><a href="?id=<?php echo $_GET['id'] ?>&tab=ss">Screenshots</a></li>
+			<li><a href="?id=<?php echo $_GET['id'] ?>&tab=dep">Dependencies</a></li>
+		</ul>
+		<ul class="sidenav">
+			<li><a href="?id=<?php echo $_GET['id'] ?>&tab=author">Authors</a></li>
+		</ul>
+		<ul class="sidenav">
+			<li><a href="?id=<?php echo $_GET['id'] ?>&tab=upd">Update</a></li>
+			<li><a href="?id=<?php echo $_GET['id'] ?>&tab=beta">Betas</a></li>
+		</ul>
+		<ul class="sidenav">
+			<li><a href="">Statistics</a></li>
+		</ul>
+	</div>
+	<div style="width: 700px; padding: 15px; float: right;">
+		<?php
+			include(realpath(dirname(__FILE__) . "/manage/" . $_GET['tab'] . ".php"));
+		?>
+	</div>
+</div>
+<?php
+return; //alternate design
+?>
+<style>
+td:first-child {
+	vertical-align: top;
+}
+
+td:first-child {
+	font-weight: bold;
+}
+</style>
 <div id="dropArea" class="maincontainer">
 	<form action="manage.php?id=<?php echo($info['addon']->id) ?>" method="post" id="manageForm" enctype="multipart/form-data">
 		<table class="formtable">
@@ -26,7 +67,7 @@
 				</tr>
 				<tr>
 					<td>
-						<p>Title</p>
+						<p><b>Title</b></p>
 					</td>
 					<td>
 						<input type="text" name="addonname" id="addonname" value="<?php echo(htmlspecialchars($info['addon']->name)); ?>" style="margin: 0; float: none; width: 80%;">
@@ -37,7 +78,7 @@
 						<p>File Name</p>
 					</td>
 					<td>
-						<input type="text" name="filename" id="filename" value="<?php echo(htmlspecialchars($info['addon']->filename)); ?>" style="margin: 0; float: none; width: 80%;">
+						<input type="text" name="filename" id="filename" value="<?php echo(htmlspecialchars($info['addon']->getFilename())); ?>" disabled="1" style="margin: 0; float: none; width: 80%;">
 					</td>
 				</tr>
 				<tr>
@@ -79,7 +120,49 @@
 						<p>Add Co-Authors</p>
 					</td>
 					<td>
-						<p>Coming Soonish</p>
+						<p>
+						<table>
+							<tbody>
+								<tr>
+									<td><b>Jincux</b> <i>(you)</i></td>
+									<td>
+										<select>
+											<option>Manager</option>
+											<option>Maintainer</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td><b>Someguy1337</b> 48762</td>
+									<td>
+										<select>
+											<option>Contributor</option>
+											<option>Scripter</option>
+											<option>Modeler</option>
+											<option>Artist</option>
+											<option>Other</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td><b>OtherGuy</b> 15243</td>
+									<td>
+										<select>
+											<option>Contributor</option>
+											<option>Scripter</option>
+											<option>Modeler</option>
+											<option>Artist</option>
+											<option>Other</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										Add (BL_ID): <input type="text" />
+									</td>
+								</tr>
+							</tbody>
+						</table></p>
 					</td>
 				</tr>
 				<tr>
@@ -87,7 +170,11 @@
 						<p>Update Addon</p>
 					</td>
 					<td>
-						<p>Coming Soonest</p>
+						<p>
+							<a href="/addons/update.php" class="btn green" style="font-weight: normal; color: #fff;">Update</a>
+							<a href="/addons/update.php?beta" class="btn red" style="font-weight: normal; color: #fff;">Add Beta</a>
+							<?php // TODO have "add beta" change if there's a beta ?>
+						</p>
 					</td>
 				</tr>
 				<tr>

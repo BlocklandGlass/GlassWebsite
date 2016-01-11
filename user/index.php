@@ -16,9 +16,9 @@
 	require_once(realpath(dirname(__DIR__) . "/private/class/NotificationObject.php"));
 	$userObject = UserManager::getCurrent();
 
-	if(!$userObject) {
-		var_dump($_SESSION);
-		throw new Exception("Invalid user id: " . $_SESSION['uid']);
+	if($userObject === false) {
+		header('Location: verifyAccount.php');
+		die();
 	}
 
 ?>
@@ -69,6 +69,11 @@
 							<?php
 						}
 
+						?>
+						<div class="useraddon" style="text-align:center; background-color: #ccffcc">
+							<img style="width: 1.2em;" src="http://blocklandglass.com/icon/icons32/add.png" alt="New"/> <a href="/addons/upload.php">Upload a new Add-on...</a>
+						</div>
+						<?php
 						echo "<hr>";
 
 						$builds = BuildManager::getBuildsFromBLID($userObject->getBLID());
@@ -85,6 +90,9 @@
 							<?php
 						}
 						?>
+						<div class="useraddon" style="text-align:center; background-color: #ccffcc">
+							<img style="width: 1.2em;" src="http://blocklandglass.com/icon/icons32/add.png" alt="New"/> <a href="/builds/upload.php">Upload a new Build...</a>
+						</div>
 					</p>
 				</td>
 			</tr>
