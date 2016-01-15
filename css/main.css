@@ -517,9 +517,10 @@ input[type="submit"]:active {
   font-size: 22px;
   text-decoration: none;
   margin: 20px;
-  color: #fff;
+  color: #fff !important;
   position: relative;
   display: inline-block;
+  font-weight: normal !important;
 }
 
 .btn:active {

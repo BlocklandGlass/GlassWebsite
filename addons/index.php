@@ -1,16 +1,24 @@
 <?php
-//	require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
-//	require_once dirname(__DIR__) . "/private/class/BoardManager.php";
+	require_once dirname(__DIR__) . "/private/class/GroupManager.php";
+	require_once dirname(__DIR__) . "/private/class/UserManager.php";
 	require_once dirname(__DIR__) . "/private/class/TagManager.php";
 
 	$_PAGETITLE = "Glass | Add-Ons";
 
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+
+	$user = UserManager::getCurrent();
 ?>
 <div class="maincontainer">
 	<div style="float: left;">
-		<a href="/addons/boards.php">Click here to view Add-On Boards...</a>
+		<a class="btn blue" href="/addons/boards.php">Boards</a>
+		<?php
+		if($user && $user->inGroup("Reviewer")) {
+		?>
+		<a class="btn red" href="review/list.php">Approvals</a>
+		<a class="btn red" href="review/updates.php">Updates</a>
+		<?php } ?>
 	</div>
 	<?php include(realpath(dirname(__DIR__) . "/private/searchbar.php")); ?>
 

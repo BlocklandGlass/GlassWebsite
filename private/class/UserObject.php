@@ -52,6 +52,17 @@ class UserObject {
 		return $this->email;
 	}
 
+	public function inGroup($name) {
+		$groups = GroupManager::getGroupsFromBLID($this->blid);
+		foreach($groups as $gid) {
+			$group = GroupManager::getFromId($gid);
+			if($group->getName() == $name) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	//this should be done in the UserManager class
 	//the *Object classes are just for data storage
 	//make sure this also checks for whether that blid is already verified with a different email

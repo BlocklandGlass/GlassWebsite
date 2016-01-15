@@ -41,7 +41,7 @@ class GroupManager {
 		if($success === false) {
 			$database = new DatabaseManager();
 			GroupManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `group_groupmap` WHERE `blid` = '" . $database->sanitize($id) . "'");
+			$resource = $database->query("SELECT * FROM `group_usermap` WHERE `blid` = '" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
@@ -85,7 +85,7 @@ class GroupManager {
 		if($success === false) {
 			$database = new DatabaseManager();
 			GroupManager::verifyTable($database);
-			$resource = $database->query("SELECT COUNT(*) FROM `group_groupmap` WHERE `gid` = '" . $database->sanitize($id) . "'");
+			$resource = $database->query("SELECT COUNT(*) FROM `group_usermap` WHERE `gid` = '" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
@@ -122,7 +122,7 @@ class GroupManager {
 		}
 		$resource->close();
 
-		if(!$database->query("INSERT INTO `group_groups` (name, leader, description, color, icon) VALUES ('" . 
+		if(!$database->query("INSERT INTO `group_groups` (name, leader, description, color, icon) VALUES ('" .
 			$database->sanitize($name) . "', '" .
 			$database->sanitize($user->getBLID()) . "', '" .
 			$database->sanitize($description) . "', '" .
