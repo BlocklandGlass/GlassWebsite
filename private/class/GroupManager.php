@@ -35,6 +35,33 @@ class GroupManager {
 		return $groupObject;
 	}
 
+	public static function getFromName($name, $resource = false) {
+		$groupObject = apc_fetch('groupObject_' . $name, $success);
+
+		if($success === false) {
+			if($resource !== false) {
+				$groupObject = new GroupObject($resource);
+			} else {
+				$database = new DatabaseManager();
+				GroupManager::verifyTable($database);
+				$resource = $database->query("SELECT * FROM `group_groups` WHERE `name` = '" . $database->sanitize($name) . "' LIMIT 1");
+
+				if(!$resource) {
+					throw new Exception("Database error: " . $database->error());
+				}
+
+				if($resource->num_rows == 0) {
+					$groupObject = false;
+				} else {
+					$groupObject = new GroupObject($resource->fetch_object());
+				}
+				$resource->close();
+			}
+			apc_store('groupObject_' . $name, $groupObject, GroupManager::$objectCacheTime);
+		}
+		return $groupObject;
+	}
+
 	public static function getGroupsFromBLID($id) {
 		$userGroups = apc_fetch('userGroups_' . $id, $success);
 
@@ -107,9 +134,9 @@ class GroupManager {
 		return GroupManager::createGroupWithLeader($name, $description, $color, $icon, $user);
 	}
 
-	public static function createGroupWithLeader($name, $color, $icon, $addon) {
+	public static function createGroupWithLeader($name, $description, $color, $icon, $user) {
 		$database = new DatabaseManager();
-		GroupManager::verifyDatabase($database);
+		GroupManager::verifyTable($database);
 		$resource = $database->query("SELECT 1 FROM `group_groups` where `name` = '" . $database->sanitize($name) . "' LIMIT 1");
 
 		if(!$resource) {
@@ -136,7 +163,7 @@ class GroupManager {
 			throw new Exception("Newly generated group not found!");
 		}
 
-		if($database->query("INSERT INTO `group_groupmap` (`gid`, `blid`, `administrator`), ('" . $database->sanitize($group) . "', '" . $database->sanitize($user->getBLID()) . "', '1')")) {
+		if($database->query("INSERT INTO `group_groupmap` (`gid`, `blid`, `administrator`), ('" . $database->sanitize($group->getId()) . "', '" . $database->sanitize($user->getBLID()) . "', '1')")) {
 			throw new Exception("Failed to add leader to new group");
 		}
 		return true;
@@ -164,7 +191,7 @@ class GroupManager {
 	public static function addUserToGroup($user, $group) {
 		//check if link already exists
 		$database = new DatabaseManager();
-		GroupManager::verifyDatabase($database);
+		GroupManager::verifyTable($database);
 		$resource = $database->query("SELECT 1 FROM `group_groupmap` WHERE `blid` = '" . $database->sanitize($user->getBLID()) . "' AND `gid` = '" . $database->sanitize($group->getID()) . "' LIMIT 1");
 
 		if(!$resource) {
@@ -205,7 +232,7 @@ class GroupManager {
 			return false;
 		}
 		$database = new DatabaseManager();
-		GroupManager::verifyDatabase($database);
+		GroupManager::verifyTable($database);
 		$resource = $database->query("SELECT 1 FROM `group_groupmap` WHERE `blid` = '" . $database->sanitize($user->getBLID()) . "' AND `gid` = '" . $database->sanitize($group->getID()) . "' LIMIT 1");
 
 		if(!$resource) {
@@ -225,6 +252,12 @@ class GroupManager {
 		apc_delete('addonTags_' . $group->getID());
 		apc_delete('tagAddons_' . $tag->getID());
 		return true;
+	}
+
+	public static function createDefaultGroups() {
+		GroupManager::createGroupWithLeaderBLID("Administrator", "", "EB2B36", "crown_gold", 9789);
+		GroupManager::createGroupWithLeaderBLID("Moderator", "", "336699", "crown_silver", 9789);
+		GroupManager::createGroupWithLeaderBLID("Reviewer", "", "00ff00", "star", 9789);
 	}
 
 	public static function verifyTable($database) {
