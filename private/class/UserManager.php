@@ -59,7 +59,7 @@ class UserManager {
 
 	public static function getCurrent() {
 		if(!isset($_SESSION)) {
-			return false;
+			session_start();
 		}
 
 		if(isset($_SESSION['blid'])) {

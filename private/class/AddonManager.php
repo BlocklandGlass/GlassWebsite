@@ -274,7 +274,6 @@ class AddonManager {
 		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
 		//AWSFileManager::uploadNewAddon($id, $bid, $filename, $file);
 		require_once(realpath(dirname(__FILE__) . '/StatManager.php'));
-		StatManager::addStatsToAddon($id);
 
 		$response = [
 			"redirect" => "/addons/upload/success.php?id=" . $id
@@ -302,8 +301,9 @@ class AddonManager {
 		$params->vars[] = $user;
 		$params->vars[] = $addon;
 		NotificationManager::createNotification($manager, '$2 was approved by $1', $params);
-
 		apc_delete('addonObject_' . $id);
+
+		StatManager::addStatsToAddon($id);
 	}
 
 	public static function getFromID($id, $resource = false) {

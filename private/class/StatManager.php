@@ -133,7 +133,7 @@ class StatManager {
 		}
 
 		apc_delete('addonTotalDownloads_' . $addon->getId());
-		
+
 		$tags = TagManager::getTagsFromAddonID($addon->getID());
 
 		if(!empty($tags)) {
@@ -189,6 +189,12 @@ class StatManager {
 	public static function addStatsToAddon($aid) {
 		$database = new DatabaseManager();
 		StatManager::verifyTable($database);
+
+		$addon = AddonManager::getFromID($aid);
+
+		if(!$addon->getApproved()) {
+			return; //only create for approved add-ons
+		}
 
 		if(!$database->query("INSERT INTO `addon_stats` (`aid`) VALUES ('" .
 			$database->sanitize($aid) . "')")) {

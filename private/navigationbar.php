@@ -7,6 +7,12 @@
 			<li><a href="/builds" class="navbtn">Builds</a></li>
 			<li><a href="/stat" class="navbtn">Statistics</a></li>
 			<?php
+				require_once dirname(__FILE__) . '/class/UserManager.php';
+				if($user = UserManager::getCurrent()) {
+					if($user->inGroup("Administrator")) {
+						echo '<li><a href="/admin" class="navbtn">Admin</a></li>';
+					}
+				}
 				if(!isset($_SESSION['csrftoken'])) {
 					$_SESSION['csrftoken'] = mt_rand();
 				}

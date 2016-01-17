@@ -30,7 +30,7 @@ class GroupManager {
 				}
 				$resource->close();
 			}
-			apc_store('tagObject_' . $id, $groupObject, GroupManager::$objectCacheTime);
+			//apc_store('tagObject_' . $id, $groupObject, GroupManager::$objectCacheTime);
 		}
 		return $groupObject;
 	}
@@ -155,7 +155,7 @@ class GroupManager {
 			$database->sanitize($description) . "', '" .
 			$database->sanitize($color) . "', '" .
 			$database->sanitize($icon) . "')")) {
-			throw new Exception("Failed to create new tag: " . $database->error());
+			throw new Exception("Failed to create new group: " . $database->error());
 		}
 		$group = GroupManager::getFromID($database->fetchMysqli()->insert_id);
 
@@ -177,7 +177,6 @@ class GroupManager {
 			return false;
 		}
 
-		//make sure tag exists
 		$group = GroupManager::getFromID($gid);
 
 		if($group === false) {
@@ -249,8 +248,8 @@ class GroupManager {
 			throw new Exception("Error removing groupmap entry: " . $database->error());
 		}
 		$resource->close();
-		apc_delete('addonTags_' . $group->getID());
-		apc_delete('tagAddons_' . $tag->getID());
+		//apc_delete('addonTags_' . $group->getID());
+		//apc_delete('tagAddons_' . $tag->getID());
 		return true;
 	}
 

@@ -53,6 +53,7 @@ class UserObject {
 	}
 
 	public function inGroup($name) {
+		require_once(realpath(dirname(__FILE__) . '/GroupObject.php'));
 		$groups = GroupManager::getGroupsFromBLID($this->blid);
 		foreach($groups as $gid) {
 			$group = GroupManager::getFromId($gid);
