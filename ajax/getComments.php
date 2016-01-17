@@ -6,7 +6,10 @@
 
 	//header("Content-Type: application/json");
 	//echo(json_encode(include(realpath(dirname(__DIR__) . "/private/json/getComments.php"))));
+	include_once (realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
 	$response = include(realpath(dirname(__DIR__) . "/private/json/getPageCommentsWithUsers.php"));
+
+	$user = UserManager::getCurrent();
 
 	if(empty($response)) {
 		echo("<tr style=\"vertical-align:top\">");
@@ -16,6 +19,13 @@
 	} else {
 		$users = $response['users'];
 		$comments = $response['comments'];
+
+		if($user) {
+			echo("<tr style=\"vertical-align:top\">");
+			echo("<td>Leave a comment:</td>");
+			echo("<td style=\"text-align:center\"><textarea name=\"comment\" style=\"font-size:0.6em;\"></textarea><input type=\"submit\" value=\"Post\">");
+			echo("</td></tr>");
+		}
 
 		if(empty($comments)) {
 			echo("<tr style=\"vertical-align:top\">");
