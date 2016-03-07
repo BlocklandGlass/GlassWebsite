@@ -620,6 +620,40 @@ class AddonManager {
 		apc_delete($cached);
 	}
 
+	public static function updateName($addon, $name) {
+		if($addon->getName() !== $name) {
+			$database = new DatabaseManager();
+			AddonManager::verifyTable($database);
+			$resource = $database->query("UPDATE `addon_addons` SET `name`='" . $database->sanitize($name) . "' WHERE `id`='" . $database->sanitize($addon->getId()) . "';");
+			apc_delete('addonObject_' . $addon->getId());
+
+			$res = [
+				"message" => "Updated add-on name",
+				"addon" => $addon,
+				"name" => $name
+			];
+
+			return $res;
+		}
+	}
+
+	public static function updateDescription($addon, $desc) {
+		if($addon->getDescription() !== $desc) {
+			$database = new DatabaseManager();
+			AddonManager::verifyTable($database);
+			$resource = $database->query("UPDATE `addon_addons` SET `description`='" . $database->sanitize($desc) . "' WHERE `id`='" . $database->sanitize($addon->getId()) . "';");
+			apc_delete('addonObject_' . $addon->getId());
+
+			$res = [
+				"message" => "Updated description",
+				"addon" => $addon,
+				"desc" => $desc
+			];
+
+			return $res;
+		}
+	}
+
 	//returns an array of just the ids in order
 	//we should really be doing that more instead of caching entire objects in multiple places
 	public static function getNewAddons($count = 10) {

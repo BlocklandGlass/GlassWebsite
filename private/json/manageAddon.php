@@ -100,7 +100,7 @@
 		$changed = true;
 	}
 
-	if(!isset($_POST['addonname']) || !isset($_POST['filename']) || !isset($_POST['description'])) {
+	if(!isset($_POST['addonname']) && !isset($_POST['description'])) {
 		$response = [
 			"message" => "Some form elements missing",
 			"addon" => $addon,
@@ -108,14 +108,28 @@
 		];
 		return $response;
 	}
-	$subResponse = AddonManager::updateAddon($addon, $_POST['addonname'], $_POST['filename'], $_POST['description']);
 
-	if($subResponse['message'] !== "") {
+	$subResponse = [];
+	if(isset($_POST['addonname'])) {
+		$subResponse[] = AddonManager::updateName($addon, $_POST['addonname']);
+	}
+
+	if(isset($_POST['description'])) {
+		$subResponse[] = AddonManager::updateDescription($addon, $_POST['description']);
+	}
+
+	if(sizeof($subResponse) > 0) {
 		$response = [
-			"message" => $subResponse['message'],
 			"addon" => $addon,
 			"user" => $user
 		];
+		$msg = "";
+		foreach($subResponse as $subres) {
+			if($subres !== null) {
+				$msg .=  $subres["message"];
+			}
+		}
+		$response["message"] = $msg;
 		return $response;
 	} else {
 		if($changed) {
