@@ -14,5 +14,7 @@ foreach($boards as $board) {
   $ret->boards[] = $retboard;
 }
 
+$ret->status = "success";
+
 echo json_encode($ret, JSON_PRETTY_PRINT);
 ?>
