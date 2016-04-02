@@ -105,10 +105,18 @@ class SemVer {
     $str = str_replace("-", ".", $str);
     $parts = explode(".", $str);
 
-    $greek = array_shift($parts);
+    $greek = $parts[0];
+    //$greek = array_shift($parts);
 
-    if(!in_array(strtolower($greek), SemVer::$greek)) {
-      throw new Exception("Invalid prerelease. Expected Alpha, Beta, or RC");
+    if(!is_numeric($greek)) {
+      if(!in_array(strtolower($greek), SemVer::$greek)) {
+        throw new Exception("Invalid prerelease. Expected Alpha, Beta, or RC");
+      } else {
+        array_shift($parts);
+        $this->prereleaseGreek = $greek;
+      }
+    } else {
+      $this->prereleaseGreek = false;
     }
 
     if(sizeof($parts) > 3) {
@@ -130,7 +138,6 @@ class SemVer {
     $min += @$parts[1];
     $pat += @$parts[2];
 
-    $this->prereleaseGreek = $greek;
     $this->prerelease = array($maj, $min, $pat);
   }
 
@@ -144,6 +151,12 @@ class SemVer {
       } else if($that->version[$i] < $this->version[$i]) {
         return 1;
       }
+    }
+
+    if($that->prereleaseGreek !== false && $this->prereleaseGreek === false) {
+      return 1;
+    } else if($that->prereleaseGreek === false && $this->prereleaseGreek !== false) {
+      return -1;
     }
 
     if(array_search($that->prereleaseGreek, SemVer::$greek) > array_search($this->prereleaseGreek, SemVer::$greek)) {

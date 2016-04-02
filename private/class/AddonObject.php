@@ -88,6 +88,11 @@ class AddonObject {
 	//	return $this->rating;
 	//}
 
+	public function getVersion() {
+		// TODO rewrite this
+		return $this->getVersionInfo()->stable->version;
+	}
+
 	public function getVersionInfo() {
 		/*$st = new stdClass();
 		$st->version = "1.0.0";

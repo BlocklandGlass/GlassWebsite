@@ -63,7 +63,7 @@
 								<?php echo $html ?><a href="/addons/addon.php?id=<?php echo $ao->getId(); ?>"><span style="font-size: 1.2em; font-weight:bold;"><?php echo $ao->getName(); ?></span></a>
 								<br />
 								<span style="font-size: 0.8em;">
-									<a href="#">Update</a> | <a href="#">Edit</a> | <a href="#">Repository</a> | <a href="#">Delete</a>
+									<a href="/addons/update.php?id=<?php echo $ao->getId(); ?>">Update</a> | <a href="/addons/manage.php?id=<?php echo $ao->getId(); ?>">Modify</a> | <a href="#">Delete</a>
 								</span>
 							</div>
 							<?php

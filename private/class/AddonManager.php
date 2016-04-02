@@ -142,34 +142,24 @@ class AddonManager {
 		file_put_contents($filepath, fopen($file, 'r'));
 		echo "\n\nDownloaded $file to $filepath\n\n";
 
-		AddonManager::submitUpdate($addonObject, $version, $branchId, realpath($filepath), "Imported from upstream.");
+		AddonManager::submitUpdate($addonObject, $version, realpath($filepath), "Imported from upstream.", true);
 	}
 
-	public static function submitUpdate($addon, $version, $branch, $file, $changelog) {
+	public static function submitUpdate($addon, $version, $file, $changelog, $up = false) {
 		if(!is_object($addon)) {
 			$addon = AddonManager::getFromID($addon);
 		}
 
-		// TODO Pending updates
-		// keep the file and update on record, but wait for approval before processing entirely
-		$versionInfo = $addon->getVersionInfo();
-
-		$channelId[1] = "stable";
-		$channelId[2] = "unstable";
-		$channelId[3] = "development";
-
-		$chan = $versionInfo->$channelId[$branch];
-		$pending = new stdClass();
-		$pending->version = $version;
-		$pending->file = $file; //locally kept file
-		$pending->changelog = $changelog;
-		$pending->submitted = time();
-		$chan->pending = $pending;
-
 		$db = new DatabaseManager();
-		$db->query("UPDATE `addon_addons` SET `versionInfo` = '" . $db->sanitize(json_encode($versionInfo)) . "' WHERE `id` = '" . $db->sanitize($addon->getId()) . "';");
+		$db->query("INSERT INTO `blocklandglass2`.`addon_updates` (`id`, `aid`, `version`, `tempfile`, `changelog`, `submitted`, `upstream`, `approved`) VALUES (NULL, " .
+			"'" . $addon->getId() . "'," .
+			"'" . $db->sanitize($version) . "'," .
+			"'" . $db->sanitize($file) . "'," .
+			"'" . $db->sanitize($changelog) . "'," .
+			"CURRENT_TIMESTAMP," .
+			"b'" . ($up ? 1 : 0) . "'," .
+			"NULL);");
 
-		apc_delete('addonObject_' . $addon->getId());
 	}
 
 	public static function doUpdate($addon, $version, $branch, $file, $changelog) {
@@ -679,6 +669,10 @@ class AddonManager {
 		return $newestAddonIDs;
 	}
 
+	public static function getUpdates($addon) {
+
+	}
+
 	public static function verifyTable($database) {
 		/*TO DO:
 			- screenshots
@@ -722,6 +716,24 @@ class AddonManager {
 					ON DELETE CASCADE,
 				PRIMARY KEY (`id`))")) {
 				throw new Exception("Failed to create table addon_addons: " . $database->error());
+			}
+
+			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_updates` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+			  `aid` int(11) NOT NULL,
+			  `blid` int(11) DEFAULT NULL,
+			  `tempfile` text NOT NULL,
+			  `changelog` text NOT NULL,
+			  `submitted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			  `upstream` bit(1) NOT NULL DEFAULT b'0',
+			  `approved` bit(1) DEFAULT NULL,
+				FOREIGN KEY (`aid`)
+					REFERENCES addon_addons(`id`)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE,
+			  PRIMARY KEY (`id`),
+			  UNIQUE KEY `id` (`id`))")) {
+				throw new Exception("Failed to create table addon_updates: " . $database->error());
 			}
 		}
 	}

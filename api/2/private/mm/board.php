@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__DIR__) . "/../../../private/class/BoardManager.php";
 require_once dirname(__DIR__) . "/../../../private/class/AddonManager.php";
+require_once dirname(__DIR__) . "/../../../private/class/UserManager.php";
 
 $boardObject = BoardManager::getFromID($_REQUEST['id']);
 if(isset($_REQUEST['page'])) {
@@ -19,7 +20,7 @@ foreach($addonIds as $aid) {
   $retboard = new stdClass();
   $retboard->id = $addon->getId();
   $retboard->name = $addon->getName();
-  $retboard->author = "to-do";
+  $retboard->author = UserManager::getFromBLID($addon->getManagerBLID())->getName();
   $retboard->rating = rand(0, 100)/20;
   $retboard->downloads = $addon->getDownloads();
   $ret->addons[] = $retboard;
