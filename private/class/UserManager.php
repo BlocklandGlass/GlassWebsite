@@ -236,6 +236,18 @@ class UserManager {
 		return preg_match("/.{1,20}/", $username);
 	}
 
+	public static function email($user, $subject, $message) {
+		if($user->getEmail() != null) {
+			/*$headers = 'From: webmaster@example.com' . "\r\n" .
+    	'Reply-To: webmaster@example.com' . "\r\n" .
+    	'X-Mailer: PHP/' . phpversion();*/
+
+			mail($user->getEmail(), $subject, $message);
+		} else {
+			throw new Exception("No E-Mail Address");
+		}
+	}
+
 	//session last active should be moved to a new user_stats table
 	//I want to move 'volatile' data out of the *Manager classes and into the StatManager class
 	public static function verifyTable($database) {
