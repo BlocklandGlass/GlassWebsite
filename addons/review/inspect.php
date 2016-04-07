@@ -26,8 +26,8 @@
         <td><?php echo $addon->getDescription() ?></td>
       </tr>
       <tr>
-        <td style="padding: 10px;"><b>Version Info</b></td>
-        <td><pre style="font-size: .5em"><?php echo json_encode($addon->getVersionInfo(), JSON_PRETTY_PRINT) ?></pre></td>
+        <td style="padding: 10px;"><b>Version</b></td>
+        <td><pre style="font-size: .5em"><?php echo $addon->getVersion(); ?></pre></td>
       </tr>
       <tr>
         <td style="padding: 10px;"><b>Authors</b></td>
