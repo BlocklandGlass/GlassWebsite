@@ -22,6 +22,7 @@ body {
   background-color: #aaa;
 }
 </style>
+</head>
 <body>
 <div class="content">
 <h1>Blockland Glass</h1>
