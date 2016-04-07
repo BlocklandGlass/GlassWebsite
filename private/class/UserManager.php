@@ -240,7 +240,9 @@ class UserManager {
 		if($user->getEmail() != null) {
 			$headers = 'From: Blockland Glass <' . $reply . '@blocklandglass.com>' . "\r\n" .
     	'Reply-To: ' . $reply . '@blocklandglass.com' . "\r\n" .
-    	'X-Mailer: PHP/' . phpversion();
+    	'X-Mailer: PHP/' . phpversion() . "\r\n" .
+			"MIME-Version: 1.0\r\n" .
+			"Content-Type: text/html; charset=ISO-8859-1\r\n";
 
 			mail($user->getEmail(), $subject, $message, $headers, '-fnoreply@blocklandglass.com');
 		} else {
