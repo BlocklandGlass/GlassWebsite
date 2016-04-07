@@ -242,7 +242,7 @@ class UserManager {
     	'Reply-To: ' . $reply . '@blocklandglass.com' . "\r\n" .
     	'X-Mailer: PHP/' . phpversion();
 
-			mail($user->getEmail(), $subject, $message);
+			mail($user->getEmail(), $subject, $message, $headers);
 		} else {
 			throw new Exception("No E-Mail Address");
 		}
