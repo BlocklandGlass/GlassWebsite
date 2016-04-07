@@ -125,17 +125,13 @@
 	<hr />
 	<div style="text-align: center">
 		<?php
-		$version = $addonObject->getVersionInfo();
-		foreach($version as $id=>$ver) {
-			if($id == "stable") {
-				$class = "green";
-			} else if($id == "unstable") {
-				$class = "yellow";
-			} else {
-				$class = "red";
-			}
-			echo '<a href="/addons/download.php?id=' . $addonObject->getId() . '&branch=' . $id . '" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />v' . $ver->version . '</span></a>';
-		}
+		$version = $addonObject->getVersion();
+		$id = "stable";
+		$class = "green";
+		echo '<a href="/addons/download.php?id=' . $addonObject->getId() . '&beta=0" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />v' . $version . '</span></a>';
+		$id = "beta";
+		$class = "red";
+		echo '<a href="/addons/download.php?id=' . $addonObject->getId() . '&beta=1" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />v' . $version . '</span></a>';
 		?>
 	</div>
 	<hr />

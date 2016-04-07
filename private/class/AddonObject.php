@@ -16,7 +16,7 @@ class AddonObject {
 	//public $downloads;
 	public $approved;
 	//public $rating;
-	public $versionInfo;
+	public $version;
 	public $authorInfo;
 	//public $file;
 	//public $dependencies;
@@ -44,7 +44,7 @@ class AddonObject {
 		$this->description = $resource->description;
 		$this->approved = intval($resource->approved);
 		//$this->rating = floatval($resource->rating);
-		$this->versionInfo = json_decode($resource->versionInfo);
+		$this->version = $resource->version;
 		$this->authorInfo = json_decode($resource->authorInfo);
 		//$this->file = intval($resource->file);
 
@@ -89,50 +89,9 @@ class AddonObject {
 	//}
 
 	public function getVersion() {
-		// TODO rewrite this
-		return $this->getVersionInfo()->stable->version;
-	}
-
-	public function getVersionInfo() {
-		/*$st = new stdClass();
-		$st->version = "1.0.0";
-		$st->restart = "0.9.8";
-		$array["stable"] = $st;
-		return $array;*/
-		return $this->versionInfo;
-	}
-
-	public function getBranchInfo($bid) {
-		$ver = $this->getVersionInfo();
-		/*
-		[
-			"stable":{
-				"version":1.0.0,
-				"restart":0.9
-			},
-			"unstable":{
-				"version":1.0.1,
-				"restart":1.0.1
-			},
-			"development":{
-				"version":2.0.0,
-				"restart":1.0.5
-			}
-		]
-		*/
-		$channelId["stable"] = 1;
-		$channelId["unstable"] = 2;
-		$channelId["development"] = 3;
-		foreach($ver as $name=>$branch) {
-			if($name == "upstream") {
-				continue;
-			}
-			if($channelId[$name] == $bid) {
-				return $branch;
-			}
-		}
-
-		return false;
+		if($this->version == "")
+			$this->version = "0.0.0";
+		return $this->version;
 	}
 
 	public function getAuthorInfo() {

@@ -12,7 +12,6 @@ $db = new DatabaseManager();
 $mysql = new mysqli("localhost", $oldDat->username, $oldDat->password, "blocklandGlass");
 
 //We'll have a temporary board for "legacy" add-ons
-$boardId = 2;
 
 $aid = $_REQUEST['id'];
 
@@ -62,21 +61,19 @@ LIMIT 0 , 1");
   }
 }
 
-$db->query($sql = "INSERT INTO `addon_addons` (`id`, `board`, `blid`, `name`, `filename`, `description`, `versionInfo`, `authorInfo`, `reviewInfo`, `deleted`, `approved`, `uploadDate`) VALUES " .
+$db->query($sql = "INSERT INTO `addon_addons` (`id`, `board`, `blid`, `name`, `filename`, `description`, `version`, `authorInfo`, `reviewInfo`, `deleted`, `approved`, `uploadDate`) VALUES " .
    "('" . $db->sanitize($res->id) . "',"
   . "NULL,"
   . "'" . $db->sanitize($res->author) . "'," //now that I think of it, we need account migration too
   . "'" . $db->sanitize($res->name) . "',"
   . "'" . $db->sanitize($res->filename) . "',"
   . "'" . $db->sanitize($res->description) . "',"
-  . "'" . $db->sanitize(json_encode($versionData)) . "',"
+  . "'" . $db->sanitize($versionData['stable']->version) . "',"
   . "'" . $db->sanitize(json_encode($authorDat)) . "',"
   . "'',"
   . "'0',"
   . "'0',"
   . "CURRENT_TIMESTAMP);");
-
-StatManager::addStatsToAddon($res->id);
 
 echo "Imported";
 

@@ -1,6 +1,5 @@
 <?php
 	$_PAGETITLE = "Glass | Update List";
-
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/class/AddonManager.php"));
@@ -9,40 +8,27 @@
 <div class="maincontainer">
   <table style="width: 100%">
     <thead>
-      <tr><th>Add-On</th><th>Branch</th><th>Version</th></tr>
+      <tr><th>Add-On</th><th>Submitted</th><th>Version</th></tr>
     </thead>
     <tbody>
     <?php
-      // this is going to be INCREDIBLY inefficent, i'll take another pass later
-      $list = AddonManager::getAll();
-      foreach($list as $addon) {
-        $manager = UserManager::getFromBLID($addon->getManagerBLID());
-				if(is_object($manager)) {
-					$name = $manager->getName();
-				}	else {
-					$name = $addon->getManagerBLID();
-				}
+			$updates = AddonManager::getPendingUpdates();
+      foreach($updates as $update) {
+				$addon = $update->getAddon();
+        echo "<tr>";
+        echo "<td>";
+				echo '<a href="update.php?id=' . $addon->getId() . '">';
+        echo $addon->getName();
+        echo "</a></td>";
 
+        echo "<td>";
+        echo date("M d, H:i", strtotime($update->submitted));
+        echo "</td>";
 
-        $versionInfo = $addon->getVersionInfo();
-        foreach($versionInfo as $branch=>$dat) {
-          if(isset($dat->pending)) {
-            echo "<tr>";
-            echo "<td>";
-            echo $name;
-            echo "</td>";
-
-            echo "<td>";
-            echo $branch;
-            echo "</td>";
-
-            echo "<td>";
-            echo $dat->pending->version;
-            echo "</td>";
-            echo "</tr>";
-            //echo json_encode($dat->pending);
-          }
-        }
+        echo "<td>";
+        echo $update->version;
+        echo "</td>";
+        echo "</tr>";
       }
     ?>
     </tbody>

@@ -10,7 +10,7 @@ echo "Importing " . $allresource->num_rows . " addons...<hr />";
 while(($obj = $allresource->fetch_object()) !== null) {
   $_REQUEST['id'] = $obj->id;
   include 'importAddon.php';
-  echo "<hr />";
+  echo "\n";
 }
 
 ?>

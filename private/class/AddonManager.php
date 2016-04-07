@@ -1,6 +1,7 @@
 <?php
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 require_once(realpath(dirname(__FILE__) . '/AddonObject.php'));
+require_once(realpath(dirname(__FILE__) . '/AddonUpdateObject.php'));
 require_once(realpath(dirname(__FILE__) . '/NotificationManager.php'));
 
 //this should be the only class to interact with table `addon_addons`
@@ -22,6 +23,8 @@ class AddonManager {
 		$channelId[1] = "stable";
 		$channelId[2] = "unstable";
 		$channelId[3] = "development";
+
+		// TODO rewrite, yet again, to work w/ beta system
 
 		$addons = AddonManager::getAll();
 		foreach($addons as $addon) {
@@ -160,11 +163,6 @@ class AddonManager {
 			"b'" . ($up ? 1 : 0) . "'," .
 			"NULL);");
 
-	}
-
-	public static function doUpdate($addon, $version, $branch, $file, $changelog) {
-		// TODO Processing update
-		// this is the part that actually makes the update go live
 	}
 
 	public static function uploadNewAddon($user, $name, $type, $file, $filename, $description) {
@@ -670,7 +668,62 @@ class AddonManager {
 	}
 
 	public static function getUpdates($addon) {
+		$updates = apc_fetch('updates_' . $addon->getId(), $success);
 
+		if($success === false) {
+			$database = new DatabaseManager();
+			AddonManager::verifyTable($database);
+			$resource = $database->query("SELECT * FROM `addon_updates` WHERE `aid`='" . $database->sanitize($addon->getId()) . "' ORDER BY `submitted` DESC");
+
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
+			}
+			$updates = [];
+
+			while($row = $resource->fetch_object()) {
+				$updates[] = new AddonUpdateObject($row);
+			}
+			$resource->close();
+		}
+
+		return $updates;
+	}
+
+	public static function getPendingUpdates() {
+		$database = new DatabaseManager();
+		AddonManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `addon_updates` WHERE `approved` IS NULL ORDER BY `submitted` DESC");
+
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
+		}
+		$updates = [];
+
+		while($row = $resource->fetch_object()) {
+			$updates[] = new AddonUpdateObject($row);
+		}
+		$resource->close();
+
+		return $updates;
+	}
+
+	public static function approveUpdate($update) {
+		$database = new DatabaseManager();
+		AddonManager::verifyTable($database);
+
+		$id = $update->getId();
+		if($update->status !== null) {
+			throw new Exception("Attempted to approve already approved update");
+		}
+
+		$update->status = true;
+
+		$database->query("UPDATE `addon_updates` SET `approved` = b'1' WHERE `id` = '" . $database->sanitize($id) . "'");
+		$database->query("UPDATE `addon_addons` SET `version` = '" . $database->sanitize($update->version) . "' WHERE `id` = '" . $database->sanitize($update->aid) . "'");
+
+		apc_delete('addonObject_' . $update->aid);
+
+		// TODO Notification
 	}
 
 	public static function verifyTable($database) {
@@ -703,7 +756,7 @@ class AddonManager {
 				`name` VARCHAR(30) NOT NULL,
 				`filename` TEXT NOT NULL,
 				`description` TEXT NOT NULL,
-				`versionInfo` TEXT NOT NULL,
+				`version` TEXT NOT NULL,
 				`authorInfo` TEXT NOT NULL,
 				`reviewInfo` TEXT NOT NULL,
 				`repositoryInfo` TEXT NOT NULL,
@@ -721,7 +774,7 @@ class AddonManager {
 			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_updates` (
 				`id` int(11) NOT NULL AUTO_INCREMENT,
 			  `aid` int(11) NOT NULL,
-			  `blid` int(11) DEFAULT NULL,
+			  `version` text NOT NULL,
 			  `tempfile` text NOT NULL,
 			  `changelog` text NOT NULL,
 			  `submitted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
