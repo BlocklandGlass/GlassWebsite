@@ -30,5 +30,5 @@ You forgot your password! Please click <a href="http://blocklandglass.com/user/r
 </body>
 </html>
 ';
-UserManager::email($user, "Password Reset", "We see you've forgotten your password. Click <a href=\"http://blocklandglass.com\">here</a> to reset.");
+UserManager::email($user, "Password Reset", $body);
 ?>
