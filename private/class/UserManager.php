@@ -236,11 +236,11 @@ class UserManager {
 		return preg_match("/.{1,20}/", $username);
 	}
 
-	public static function email($user, $subject, $message) {
+	public static function email($user, $subject, $message, $reply = "noreply") {
 		if($user->getEmail() != null) {
-			/*$headers = 'From: webmaster@example.com' . "\r\n" .
-    	'Reply-To: webmaster@example.com' . "\r\n" .
-    	'X-Mailer: PHP/' . phpversion();*/
+			$headers = 'From: Blockland Glass <' . $reply . '@blocklandglass.com>' . "\r\n" .
+    	'Reply-To: ' . $reply . '@blocklandglass.com' . "\r\n" .
+    	'X-Mailer: PHP/' . phpversion();
 
 			mail($user->getEmail(), $subject, $message);
 		} else {
