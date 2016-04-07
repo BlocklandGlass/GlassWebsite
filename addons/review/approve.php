@@ -7,7 +7,7 @@ if(isset($_POST['action']) && is_object($userObject)) {
   if($_POST['action'] == "Approve") {
     // approve
     AddonManager::approveAddon($_POST['aid'], $_POST['board'], $userObject->getBLID());
-    header('Location: /addons/list.php');
+    header('Location: list.php');
   } else if($_POST['action'] == "Reject") {
     // reject
   }
