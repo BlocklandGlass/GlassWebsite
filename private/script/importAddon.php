@@ -38,7 +38,7 @@ foreach($file as $branch=>$fid) {
     $hash = $fileRes->fetch_object()->hash;
     $oldfile = $dir . $hash . ".zip";
     $bid = $branchId[$branch];
-    echo "Uploading $oldfile to AWS as {$res->id}_{$bid}.zip<br />";
+    echo "Uploading $oldfile to AWS as {$res->id}_{$bid}.zip";
     //AWSFileManager::upload("addons/{$res->id}_{$bid}", $oldfile);
     AWSFileManager::uploadNewAddon($res->id, $bid, $res->filename, $oldfile);
 
@@ -62,7 +62,7 @@ LIMIT 0 , 1");
 $db->query($sql = "INSERT INTO `addon_addons` (`id`, `board`, `blid`, `name`, `filename`, `description`, `version`, `authorInfo`, `reviewInfo`, `deleted`, `approved`, `uploadDate`) VALUES " .
    "('" . $db->sanitize($res->id) . "',"
   . "NULL,"
-  . "'" . $db->sanitize($res->author) . "'," //now that I think of it, we need account migration too
+  . "'" . $db->sanitize($res->author) . "',"
   . "'" . $db->sanitize($res->name) . "',"
   . "'" . $db->sanitize($res->filename) . "',"
   . "'" . $db->sanitize($res->description) . "',"
@@ -72,8 +72,6 @@ $db->query($sql = "INSERT INTO `addon_addons` (`id`, `board`, `blid`, `name`, `f
   . "'0',"
   . "'0',"
   . "CURRENT_TIMESTAMP);");
-
-echo "Imported";
 
 echo($db->error());
 ?>
