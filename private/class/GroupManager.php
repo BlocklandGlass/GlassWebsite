@@ -76,7 +76,7 @@ class GroupManager {
 			$userGroups = [];
 
 			while($row = $resource->fetch_object()) {
-				$userGroups[] = GroupManager::getFromID($row->id)->getID();
+				$userGroups[] = GroupManager::getFromID($row->gid)->getID();
 			}
 			$resource->close();
 			apc_store('userGroups_' . $id, $userGroups, GroupManager::$userGroupsCacheTime);
