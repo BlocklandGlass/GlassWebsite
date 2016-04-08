@@ -244,7 +244,7 @@ class UserManager {
 			"MIME-Version: 1.0\r\n" .
 			"Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-			mail($user->getEmail(), $subject, $message, $headers, '-fnoreply@blocklandglass.com');
+			mail($user->getEmail(), $subject, htmlspecialchars($message), $headers, '-fnoreply@blocklandglass.com');
 		} else {
 			throw new Exception("No E-Mail Address");
 		}
