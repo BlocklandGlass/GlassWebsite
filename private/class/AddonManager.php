@@ -241,14 +241,14 @@ class AddonManager {
 		$authorArray = [$authorInfo];
 
 		// NOTE boards will be decided by reviewers now, they just seem to confuse and anger people
-		$res = $database->query("INSERT INTO `addon_addons` (`id`, `board`, `blid`, `name`, `filename`, `description`, `versionInfo`, `authorInfo`, `reviewInfo`, `deleted`, `approved`, `uploadDate`) VALUES " .
+		$res = $database->query("INSERT INTO `addon_addons` (`id`, `board`, `blid`, `name`, `filename`, `description`, `version`, `authorInfo`, `reviewInfo`, `deleted`, `approved`, `uploadDate`) VALUES " .
 		"(NULL," .
 		"NULL," .
 		"'" . $database->sanitize($user->getBlid()) . "'," .
 		"'" . $database->sanitize($name) . "'," .
 		"'" . $database->sanitize($filename) . "'," .
 		"'" . $database->sanitize($description) . "'," .
-		"'" . $database->sanitize(json_encode($version)) . "'," .
+		"'0.0.0'," .
 		"'" . $database->sanitize(json_encode($authorArray)) . "'," .
 		"'{}'," .
 		"'0'," .
