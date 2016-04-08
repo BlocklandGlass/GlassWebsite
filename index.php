@@ -1,6 +1,8 @@
 <?php
 require_once(realpath(dirname(__FILE__) . "/private/header.php"));
 require_once(realpath(dirname(__FILE__) . "/private/navigationbar.php"));
+require_once(realpath(dirname(__FILE__) . "/private/class/UserLog.php"));
+require_once(realpath(dirname(__FILE__) . "/private/class/StatManager.php"));
 ?>
 
 <div class="bigheadcontainer">
@@ -23,7 +25,7 @@ require_once(realpath(dirname(__FILE__) . "/private/navigationbar.php"));
 	<br />
 	<p>
 		<h3>Live Stats</h3>
-		Right now, theres <b>34</b> Blockland Server onlines with <b>407</b> users. Of those, <a href="stats/users.php">36</a> users are running Glass! Glass has <a href="stats/usage.php">253</a> active users, accumulating a total of <a href="stats/usage.php">15000</a> downloads.
+		Right now, there's <b><?php echo StatManager::getMasterServerStats()['servers']; ?></b> Blockland Server online with <b><?php echo StatManager::getMasterServerStats()['users']; ?></b> users. Of those, <a href="stats/users.php"><?php echo sizeof(UserLog::getRecentlyActive()); ?></a> users are running Glass! Glass has <a href="stats/usage.php"><?php echo UserLog::getUniqueCount(); ?></a> active users, with a total of <a href="stats/usage.php">15000</a> downloads.
 	</p>
 	<br />
 	<p>

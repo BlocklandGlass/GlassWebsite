@@ -7,6 +7,22 @@ class UserLog {
 	//in this case the only cache hits will be for people who mistype their password
 	private static $cacheTime = 60;
 
+	public static function getRecentlyActive($min = 10) {
+		$db = new DatabaseManager();
+		$res = $db->query("SELECT * FROM `user_log` WHERE `lastseen` > now() - INTERVAL 5 MINUTE");
+		$ret = array();
+		while($obj = $res->fetch_object()) {
+			$ret[] = $obj;
+		}
+		return $ret;
+	}
+
+	public static function getUniqueCount() {
+		$db = new DatabaseManager();
+		$res = $db->query("select count(distinct blid) as total from `user_log`");
+		return $res->fetch_object()->total;
+	}
+
 	public static function getHistory($blid) {
 		$db = new DatabaseManager();
 	  $res = $db->query("SELECT * FROM `user_log` WHERE `blid`='" . $db->sanitize($blid) . "' ORDER BY `lastseen` DESC");

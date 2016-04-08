@@ -42,6 +42,36 @@ class StatManager {
 		return $statObject;
 	}
 
+	public static function getMasterServerStats($force = false) {
+		$stats = apc_fetch('masterServer', $success);
+
+		if($force || $success === false || time()-$stats["time"] > 6000) {
+			$url = 'http://master2.blockland.us/';
+			$result = file_get_contents($url, false);
+		  if($result === false) {
+		    return [0, 0];
+		  }
+		  $entries = split("\n", $result);
+		  $users = 0;
+		  $servers = 0;
+		  foreach($entries as $entry) {
+		    $field = split("\t", $entry);
+		    if($field[0] == "FIELDS") {
+		      continue;
+		    }
+		    if(isset($field[5])) {
+		      $users += $field[5];
+		      $servers += 1;
+		    }
+		  }
+
+			$stats = ["users" => $users, "servers" => $servers, "time" => time()];
+			apc_store('masterServer', $stats);
+		}
+
+    return $stats;
+	}
+
 	public static function getPreviousStatID() {
 		$stats = apc_fetch('lastStats', $success);
 
