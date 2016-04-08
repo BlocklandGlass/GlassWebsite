@@ -2,6 +2,7 @@
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 require_once(realpath(dirname(__FILE__) . '/AddonObject.php'));
 require_once(realpath(dirname(__FILE__) . '/AddonUpdateObject.php'));
+require_once(realpath(dirname(__FILE__) . '/AddonFileHandler.php'));
 require_once(realpath(dirname(__FILE__) . '/NotificationManager.php'));
 
 //this should be the only class to interact with table `addon_addons`
@@ -727,6 +728,9 @@ class AddonManager {
 
 		apc_delete('addonObject_' . $update->aid);
 
+		AddonFileHandler::injectGlassFile($update->aid, $update->getFile());
+		AddonFileHandler::injectVersionInfo($update->aid, 1, $update->getFile());
+		AWSFileManager::uploadNewAddon($update->aid, 1, $update->getAddon()->getFilename(), $update->getFile());
 		// TODO Notification
 	}
 

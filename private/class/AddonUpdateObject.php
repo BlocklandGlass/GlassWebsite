@@ -16,6 +16,7 @@ class AddonUpdateObject {
 		$this->status = $row->approved;
 		$this->changelog = $row->changelog;
 		$this->version = $row->version;
+		$this->file = $row->tempfile;
   }
 
 	public function getAddon() {
@@ -24,6 +25,10 @@ class AddonUpdateObject {
 
 	public function getId() {
 		return $this->id;
+	}
+
+	public function getFile() {
+		return $this->file;
 	}
 }
 ?>
