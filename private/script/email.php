@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__DIR__) . '/class/UserManager.php';
 $user = UserManager::getFromBLID(9789);
-$body = '
+$body = '<!DOCTYPE html>
 <html>
 <head>
 <style>
