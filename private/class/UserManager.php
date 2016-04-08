@@ -236,6 +236,61 @@ class UserManager {
 		return preg_match("/.{1,20}/", $username);
 	}
 
+	public static function sendPasswordResetEmail($user) {
+		$body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+			<html>
+			  <head>
+			    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+			    <title>Blockland Glass Password Reset</title>
+			    <meta name="description" content="" />
+			    <meta name="keywords" content="" />
+			    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1" />
+			    <style type="text/css">
+			    h1 {
+			      margin-top: 0;
+			    }
+
+			    td {
+			      width: 600px;
+			      padding: 20px;
+			      font-family: Verdana;
+			      border-radius: 15px;
+			      border: 1px solid #aaa;
+			      background-color: #ccc;
+			    }
+
+			    td[class=footer] {
+			      background-color: #333;
+			      color: #fff;
+			      font-weight: bold;
+			      padding:10px;
+			    }
+
+			    table {
+			      width: 600px;
+			      margin: 15px auto;
+			    }
+			    </style>
+			  </head>
+			  <body>
+			    <table class="content">
+			      <tr>
+			        <td>
+			          <h1>Blockland Glass</h1>
+			          You seem to have forgotten your password! Please click <a href="http://blocklandglass.com/user/resetPassword.php?id=' . $user->getBLID() . '">here to reset your password</a>.<br /><br />
+								If you were not the one who requested a password reset, you may disregard this message.
+			        </td>
+			      </tr>
+			      <tr>
+			        <td class="footer" style="background-color:#333;color:#fff;font-weight: bold;padding:10px;font-size:0.6em; text-align:center;border: 1px solid black;">Email sent ' . date('H:i:s M-d-y') . '</td>
+			      </tr>
+			    </table>
+			  </body>
+			</html>';
+		UserManager::email($user, "Password Reset", $body);
+	}
+
 	public static function email($user, $subject, $message, $reply = "noreply") {
 		if($user->getEmail() != null) {
 			$headers = 'From: Blockland Glass <' . $reply . '@blocklandglass.com>' . "\r\n" .
