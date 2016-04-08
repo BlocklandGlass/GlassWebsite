@@ -23,7 +23,8 @@ $repo->$ao = array();
 
 foreach($addonIds as $id) {
   $obj = AddonManager::getFromId($id);
-  $webUrl = "api.blocklandglass.com";
+  //$webUrl = "api.blocklandglass.com";
+  $webUrl = "test.blocklandglass.com";
   $cdnUrl = "cdn.blocklandglass.com";
 
   $addon = new stdClass();
