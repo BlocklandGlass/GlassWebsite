@@ -17,7 +17,7 @@ class UserManager {
 		if($success === false) {
 			$database = new DatabaseManager();
 			UserManager::verifyTable($database);
-			$resource = $database->query("SELECT username, blid, banned, admin, verified, email FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "' AND `verified` = 1");
+			$resource = $database->query("SELECT username, blid, banned, admin, verified, email, reset FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "' AND `verified` = 1");
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
@@ -121,6 +121,15 @@ class UserManager {
 		return [
 			"message" => "Incorrect login credentials"
 		];
+	}
+
+	public static function updatePassword($blid, $password) {
+		$database = new DatabaseManager();
+		$intermediateSalt = md5(uniqid(rand(), true));
+		$salt = substr($intermediateSalt, 0, 6);
+		$hash = hash("sha256", $password . $salt);
+
+		$database->query("UPDATE `users` SET `reset`='', `password`='" . $database->sanitize($hash) . "', `salt`='" . $database->sanitize($salt) . "' WHERE `blid`='" . $database->sanitize($blid) . "'");
 	}
 
 	public static function register($email, $password1, $password2, $blid) {
