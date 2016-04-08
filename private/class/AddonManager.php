@@ -165,6 +165,10 @@ class AddonManager {
 
 	}
 
+	public static function uploadBetaAddon($addon, $file) {
+
+	}
+
 	public static function uploadNewAddon($user, $name, $type, $file, $filename, $description) {
 		$database = new DatabaseManager();
 		AddonManager::verifyTable($database);
@@ -257,10 +261,10 @@ class AddonManager {
 		$id = $database->fetchMysqli()->insert_id;
 
 		AddonFileHandler::injectGlassFile($id, $file);
-		//AddonFileHandler::injectVersionInfo($id, $bid, $file); // TODO need to specify branch in upload
+		AddonFileHandler::injectVersionInfo($id, 1, $file);
 
 		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
-		//AWSFileManager::uploadNewAddon($id, $bid, $filename, $file);
+		AWSFileManager::uploadNewAddon($id, 1, $filename, $file);
 		require_once(realpath(dirname(__FILE__) . '/StatManager.php'));
 
 		$response = [
