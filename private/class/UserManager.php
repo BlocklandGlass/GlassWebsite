@@ -241,10 +241,10 @@ class UserManager {
 			$headers = 'From: Blockland Glass <' . $reply . '@blocklandglass.com>' . "\r\n" .
     	'Reply-To: ' . $reply . '@blocklandglass.com' . "\r\n" .
     	'X-Mailer: PHP/' . phpversion() . "\r\n" .
-			"MIME-Version: 1.0\r\n" .
-			"Content-Type: text/html; charset=ISO-8859-1\r\n";
+			"MIME-Version: 1.0" . "\r\n" .
+			"Content-Type: text/html; charset=UTF-8" . "\r\n";
 
-			mail($user->getEmail(), $subject, htmlspecialchars($message), $headers, '-fnoreply@blocklandglass.com');
+			mail($user->getEmail(), $subject, $message, $headers, '-fnoreply@blocklandglass.com');
 		} else {
 			throw new Exception("No E-Mail Address");
 		}
