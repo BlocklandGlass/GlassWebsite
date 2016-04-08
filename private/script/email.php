@@ -9,7 +9,7 @@ $body = '<!DOCTYPE html>
       margin-top: 0;
     }
 
-    div {
+    .content {
       color: #000;
       width: 600px;
       margin: 15px auto;
