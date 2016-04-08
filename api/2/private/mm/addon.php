@@ -42,22 +42,17 @@ $author = new stdClass();
 $ret->authors = $author;
 
 $channelId[1] = "stable";
-$channelId[2] = "unstable";
-$channelId[3] = "development";
-foreach($channelId as $cid=>$name) {
-  $channel = new stdClass();
-  $chanDat = $addonObject->getBranchInfo($cid);
+$channelId[2] = "beta";
+$channel = new stdClass();
 
-  if($chanDat !== false) {
-    $channel->id = $cid;
-    $channel->name = $channelId[$cid];
-    $channel->version = $chanDat->version;
-    // TODO
-    //$channel->malicious = $chanDat->malicious;
+$channel->id = 1;
+$channel->name = "stable";
+$channel->version = $addonObject->getVersion();
+// TODO
+//$channel->malicious = $chanDat->malicious;
 
-    $ret->branches[] = $channel;
-  }
-}
+$ret->branches[] = $channel;
+
 
 echo json_encode($ret, JSON_PRETTY_PRINT);
 ?>
