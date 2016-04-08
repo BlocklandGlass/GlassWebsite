@@ -237,6 +237,9 @@ class UserManager {
 	}
 
 	public static function sendPasswordResetEmail($user) {
+		$resetToken = substr(base64_encode(sha1(mt_rand())), 0, 16);
+		$db = new DatabaseManager();
+		$db->query("UPDATE `users` SET `reset`='" . $db->sanitize($resetToken . " " . time()) . "' WHERE `blid`='" . $db->sanitize($user->getBlid()) . "'")
 		$body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 			<html>
@@ -319,6 +322,7 @@ class UserManager {
 			`verified` TINYINT NOT NULL DEFAULT 0,
 			`banned` TINYINT NOT NULL DEFAULT 0,
 			`admin` TINYINT NOT NULL DEFAULT 0,
+			`reset` TEXT,
 			`profile` TEXT,
 			KEY (`blid`),
 			UNIQUE KEY (`email`))")) {
