@@ -30,25 +30,13 @@ foreach($addonIds as $id) {
 	$addon->name = $obj->getFilename();
 	$addon->description = str_replace("\r\n", "<br>", $obj->getDescription());
 
-	$channelId[1] = "stable";
-	$channelId[2] = "unstable";
-	$channelId[3] = "development";
-  foreach($channelId as $cid=>$name) {
-    $channel = new stdClass();
-    $chanDat = $obj->getBranchInfo($cid);
+  $chanObj = new stdClass();
+  $chanObj->name = "stable";
+  $chanObj->version = $obj->getVersion();
+  $chanObj->file = "http://" . $webUrl . "/api/2/download.php?type=addon_update&id=" . $obj->getId() . "&branch=1";
+  $chanObj->changelog = "http://" . $webUrl . "/api/2/changelog.php?id=" . $obj->getId() . "&branch=1";
 
-    if($chanDat !== false) {
-      $channel->name = $channelId[$cid];
-      $channel->version = $chanDat->version;
-      if($chanDat->restart !== null && $chanDat->restart !== false) {
-        $channel->restartRequired = $chanDat->restart;
-      }
-      $channel->file = "http://" . $webUrl . "/api/2/download.php?type=addon_update&id=" . $obj->getId() . "&branch=" . $cid;
-      $channel->changelog = "http://" . $webUrl . "/api/2/changelog.php?id=" . $obj->getId() . "&branch=" . $cid;
-
-      $addon->channels[] = $channel;
-    }
-  }
+  $addon->channels[] = $chanObj;
 
   array_push($repo->$ao, $addon);
 }
