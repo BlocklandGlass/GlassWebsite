@@ -268,6 +268,12 @@ class AddonManager {
 		AWSFileManager::uploadNewAddon($id, 1, $filename, $file);
 		require_once(realpath(dirname(__FILE__) . '/StatManager.php'));
 
+		if(!is_dir(dirname(__DIR__) . '/../addons/files/local')) {
+			mkdir(dirname(__DIR__) . '/../addons/files/local');
+		}
+
+		copy($file, dirname(__DIR__) . '/../addons/files/local/' . $id . '.zip');
+
 		$response = [
 			"redirect" => "/addons/upload/success.php?id=" . $id
 		];
