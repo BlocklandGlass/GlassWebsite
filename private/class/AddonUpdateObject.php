@@ -32,38 +32,58 @@ class AddonUpdateObject {
 		return $this->file;
 	}
 
+	public function getVersion() {
+		return $this->version;
+	}
+
+	public function getChangeLog() {
+		return $this->changelog;
+	}
+
 
 	public function getDiff() {
-    $fileNew = realpath($this->getFile());
-    $fileOld = realpath(dirname(__DIR__) . '/../addons/files/local/' . $this->aid . '.zip');
+		$diff = apc_fetch('updateDiff' . $this->id, $success);
 
-    $zipNew = new ZipArchive();
-		$zipOld = new ZipArchive();
-    $resNew = $zipNew->open($fileNew);
-    $resOld = $zipOld->open($fileOld);
-    if($resNew === TRUE && $resOld === TRUE) {
-			$newFiles = [];
-      for ($i = 0; $i < $zipNew->numFiles; $i++) {
-        $newFiles[] = $zipNew->getNameIndex($i);
-      }
+		if($success === false) {
+	    $fileNew = realpath($this->getFile());
+	    $fileOld = realpath(dirname(__DIR__) . '/../addons/files/local/' . $this->aid . '.zip');
 
-			$oldFiles = [];
-      for ($i = 0; $i < $zipOld->numFiles; $i++) {
-        $oldFiles[] = $zipOld->getNameIndex($i);
-      }
+	    $zipNew = new ZipArchive();
+			$zipOld = new ZipArchive();
+	    $resNew = $zipNew->open($fileNew);
+	    $resOld = $zipOld->open($fileOld);
+	    if($resNew === TRUE && $resOld === TRUE) {
+				$newFiles = [];
+	      for ($i = 0; $i < $zipNew->numFiles; $i++) {
+	        $newFiles[] = $zipNew->getNameIndex($i);
+	      }
 
-			$added = array_diff($newFiles, $oldFiles);
-			$removed = array_diff($oldFiles, $newFiles, ["glass.json", "version.json"]);
-			$commonFiles = array_intersect($newFiles, $oldFiles);
-			$diff = [];
-			foreach($commonFiles as $fi) {
-				$diff[$fi] = Diff::toTable(Diff::compare($zipOld->getFromName($fi), $zipNew->getFromName($fi)));
-			}
-			return ["added" => $added, "removed" => $removed, "changes" => $diff];
-    } else {
-      return false;
-    }
+				$oldFiles = [];
+	      for ($i = 0; $i < $zipOld->numFiles; $i++) {
+	        $oldFiles[] = $zipOld->getNameIndex($i);
+	      }
 
+				$added = array_diff($newFiles, $oldFiles);
+				$removed = array_diff($oldFiles, $newFiles, ["glass.json", "version.json"]);
+				$commonFiles = array_intersect($newFiles, $oldFiles);
+				$commonFiles = array_diff($commonFiles, ["glass.json", "version.json"]);
+				$diff = [];
+				foreach($commonFiles as $fi) {
+					$newStr = $zipNew->getFromName($fi);
+					$oldStr = $zipOld->getFromName($fi);
+					if($newStr !== $oldStr) {
+						$diff[$fi] = Diff::toTable(Diff::compare($oldStr, $newStr));
+					}
+				}
+				$ret = ["added" => $added, "removed" => $removed, "changes" => $diff];
+				apc_store('updateDiff' . $this->id, $ret);
+				return $ret;
+	    } else {
+	      return false;
+	    }
+		} else {
+			return $diff;
+		}
 	}
 }
 ?>

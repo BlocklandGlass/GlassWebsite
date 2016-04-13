@@ -1,8 +1,10 @@
 <style>
-.diff {
-  width: 100%;
+.diff table {
+  width: 870px;
+  font-size: 0.8em;
 }
 .diff td {
+  font-size: 0.8em;
   width: 50%;
   vertical-align : top;
   white-space    : pre;

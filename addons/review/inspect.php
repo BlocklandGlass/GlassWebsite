@@ -1,5 +1,5 @@
 <?php
-	$_PAGETITLE = "Glass | Review List";
+	$_PAGETITLE = "Glass | Inspect Update";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));

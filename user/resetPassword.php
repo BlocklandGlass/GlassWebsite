@@ -59,7 +59,7 @@
 
   if($response["form"]) {
   ?>
-  <form method="post" target="resetPassword.php?token=<?php echo urlencode($_REQUEST['token']); ?>&id=<?php echo $_REQUEST['id']?>">
+  <form method="post" target="resetPassword.php?token=<?php echo urlencode($_REQUEST['token']); ?>&id=<?php echo ($_REQUEST['id']+0) ?>">
     <table class="formtable">
       <tr>
         <td>Password</td>
