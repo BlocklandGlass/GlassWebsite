@@ -11,8 +11,7 @@ require_once(realpath(dirname(__FILE__) . "/private/class/AddonManager.php"));
   <?php
   $glassAddonId = 11; //this needs to be changed before going live, or we need a "find addon by name"
   $ao = AddonManager::getFromId($glassAddonId);
-  $vi = $ao->getVersionInfo();
-  $version = $vi->stable->version;
+  $version = $ao->getVersion();
   ?>
   <div style="text-align: center">
 	   <a href="/addons/download.php?id=11&branch=stable" class="btn blue" style="font-weight: normal; color: #fff;"><b>Download</b> v<?php echo $version ?></a><br />
