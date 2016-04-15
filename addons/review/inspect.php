@@ -8,10 +8,27 @@
 	require_once(realpath(dirname(__DIR__) . "/../private/class/UserManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/class/UserLog.php"));
 
+	$user = UserManager::getCurrent();
+	if(!$user || !$user->inGroup("Reviewer")) {
+    header('Location: /addons');
+    return;
+  }
+
   $addon = AddonManager::getFromID($_REQUEST['id']);
   $manager = UserManager::getFromBLID($addon->getManagerBLID());
 ?>
 <div class="maincontainer">
+	<style>
+	.code {
+		font-size: 0.8em;
+		background-color: #eee;
+	  padding: 5px;
+	  width: 50%;
+	  vertical-align : top;
+	  white-space    : pre;
+	  font-family    : monospace;
+	}
+	</style>
   <h2><?php echo $addon->getName(); ?></h2>
   <p>Uploaded <?php echo date("D \a\\t g:i a", strtotime($addon->getUploadDate())); ?> by <?php echo '<a href="/user/view.php?blid=' . $manager->getBlid() . '"?>' . $manager->getName() . '</a>'; ?></p>
   <hr />
@@ -47,6 +64,24 @@
         <td style="padding: 10px;"><b>Tags</b></td>
         <td>
 
+        </td>
+      </tr>
+			<tr>
+        <td colspan="2" style="font-size:0.8em">
+					<?php
+			    $file = realpath(dirname(__DIR__) . '/../addons/files/local/' . $addon->getId() . '.zip');
+					$zip = new ZipArchive();
+			    $res = $zip->open($file);
+					if($res === TRUE) {
+			      for ($i = 0; $i < $zip->numFiles; $i++) {
+							$fileName = $zip->getNameIndex($i);
+							if(strpos($fileName, ".gui") !== false || strpos($fileName, ".cs") !== false) {
+								$str = $zip->getFromIndex($i);
+								echo "$fileName<br /><div class=\"code\">" . $str . "</div><hr />";
+							}
+						}
+					}
+					?>
         </td>
       </tr>
     </tbody>

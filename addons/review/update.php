@@ -8,6 +8,12 @@
 	require_once(realpath(dirname(__DIR__) . "/../private/class/UserManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/class/UserLog.php"));
 
+	$user = UserManager::getCurrent();
+	if(!$user || !$user->inGroup("Reviewer")) {
+    header('Location: /addons');
+    return;
+  }
+
   $addon = AddonManager::getFromID($_REQUEST['id']);
   $update = AddonManager::getUpdates($addon)[0];
   $manager = UserManager::getFromBLID($addon->getManagerBLID());

@@ -3,6 +3,10 @@ session_start();
 require_once(realpath(dirname(__DIR__) . "/../private/class/AddonManager.php"));
 var_dump($_POST);
 $userObject = UserManager::getCurrent();
+if(!$userObject || !$userObject->inGroup("Reviewer")) {
+  header('Location: /addons');
+  return;
+}
 if(isset($_POST['action']) && is_object($userObject)) {
   if($_POST['action'] == "Approve") {
     // approve

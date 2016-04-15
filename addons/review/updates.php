@@ -4,6 +4,12 @@
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/class/AddonManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/class/UserManager.php"));
+
+	$user = UserManager::getCurrent();
+	if(!$user || !$user->inGroup("Reviewer")) {
+    header('Location: /addons');
+    return;
+  }
 ?>
 <div class="maincontainer">
   <table style="width: 100%">
