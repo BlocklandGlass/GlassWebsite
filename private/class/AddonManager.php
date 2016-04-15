@@ -426,7 +426,8 @@ class AddonManager {
 				$searchAddons[] = AddonManager::getFromID($row->id, $row)->getID();
 			}
 			$resource->close();
-			apc_store('searchAddons_' . $cacheString, $searchAddons, AddonManager::$searchCacheTime);
+			//apc_store('searchAddons_' . $cacheString, $searchAddons, AddonManager::$searchCacheTime);
+			//we can't effectively clear/update the cache, so we shouldn't store it.
 		}
 		return $searchAddons;
 	}
@@ -737,7 +738,13 @@ class AddonManager {
 		AddonFileHandler::injectGlassFile($update->aid, $update->getFile());
 		AddonFileHandler::injectVersionInfo($update->aid, 1, $update->getFile());
 		AWSFileManager::uploadNewAddon($update->aid, 1, $update->getAddon()->getFilename(), $update->getFile());
-		// TODO Notification
+
+		$params = new stdClass();
+		$addon = new stdClass();
+		$addon->type = "addon";
+		$addon->id = $update->getAddon()->getId();
+		$params->vars[] = $addon;
+		NotificationManager::createNotification($manager, 'Your update to $1 was approved', $params);
 	}
 
 	public static function verifyTable($database) {
