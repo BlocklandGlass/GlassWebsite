@@ -127,8 +127,14 @@ class AddonFileHandler {
     $branchName[1] = "stable";
     $branchName[2] = "beta";
 
+    if($branchId == 1) {
+      $v = $addonObject->getVersion();
+    } else {
+      $v = $addonObject->getBetaVersion();
+    }
+
     $versionData = new stdClass();
-    $versionData->version = $addonObject->getVersion();
+    $versionData->version = $v;
     $versionData->channel = $branchName[$branchId];
 
     $mainRepo = new stdClass();

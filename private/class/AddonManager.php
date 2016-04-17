@@ -176,6 +176,8 @@ class AddonManager {
 		$db = new DatabaseManager();
 		$db->query("UPDATE `addon_addons` SET `betaVersion`='" . $db->sanitize($version) . "' WHERE `id`='" . $db->sanitize($addon->getId()) . "'");
 
+		apc_delete('addonObject_' . $addon->getId());
+		$addon = AddonManager::getFromID($addon->getId());
 
 		AddonFileHandler::injectGlassFile($addon->getId(), $file);
 		AddonFileHandler::injectVersionInfo($addon->getId(), 2, $file);
