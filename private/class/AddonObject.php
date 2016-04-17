@@ -30,6 +30,7 @@ class AddonObject {
 	//private $ingameDownloads;
 	//private $updateDownloads;
 	private $reviewInfo;
+	private $betaVersion;
 
 	public function __construct($resource) {
 		//$this->webDownloads = intval($resource->webDownloads);
@@ -51,6 +52,8 @@ class AddonObject {
 		$this->filename = $resource->filename;
 		$this->deleted = intval($resource->deleted);
 		$this->reviewInfo = json_decode($resource->reviewInfo);
+
+		$this->betaVersion = $resource->betaVersion;
 
 		$this->uploadDate = $resource->uploadDate;
 		$this->url = "https://s3.amazonaws.com/" . urlencode(AWSFileManager::getBucket()) . "/addons/" . $this->id;
@@ -82,6 +85,14 @@ class AddonObject {
 
 	public function getApproved() {
 		return $this->approved;
+	}
+
+	public function hasBeta() {
+		return $this->betaVersion !== null;
+	}
+
+	public function getBetaVersion() {
+		return $this->betaVersion;
 	}
 
 	//public function getRating() {

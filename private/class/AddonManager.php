@@ -166,8 +166,17 @@ class AddonManager {
 
 	}
 
-	public static function uploadBetaAddon($addon, $file) {
+	public static function uploadBetaAddon($addon, $version, $file) {
+		if(!is_object($addon)) {
+			$addon = AddonManager::getFromID($addon);
+		}
 
+		// TODO check sequential version
+
+		$db = new DatabaseManager();
+		$db->query("UPDATE `addon_addons` SET `beta`='" . $db->sanitize($version) . "' WHERE `id`='" . $db->sanitize($addon->getId()) . "'");
+
+		AWSFileManager::uploadNewAddon($addon->getId(), 2, $addon->getFilename(), $file);
 	}
 
 	public static function uploadNewAddon($user, $name, $type, $file, $filename, $description) {
@@ -783,6 +792,7 @@ class AddonManager {
 				`repositoryInfo` TEXT NOT NULL,
 				`deleted` TINYINT NOT NULL DEFAULT 0,
 				`approved` TINYINT NOT NULL DEFAULT 0,
+				`betaVersion` TEXT DEFAULT NULL,
 				`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				FOREIGN KEY (`board`)
 					REFERENCES addon_boards(`id`)

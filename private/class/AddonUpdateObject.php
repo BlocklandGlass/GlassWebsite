@@ -71,7 +71,7 @@ class AddonUpdateObject {
 				foreach($commonFiles as $fi) {
 					$newStr = $zipNew->getFromName($fi);
 					$oldStr = $zipOld->getFromName($fi);
-					if($newStr != $oldStr) {
+					if(trim($newStr) != trim($oldStr)) {
 						$diff[$fi] = Diff::toTable(Diff::compare($oldStr, $newStr));
 					}
 				}
