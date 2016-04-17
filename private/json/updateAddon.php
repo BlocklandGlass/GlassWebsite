@@ -67,6 +67,16 @@
 	$tempPath = $_FILES['uploadfile']['tmp_name'];
 	$uploadFileName = basename($_FILES['uploadfile']['name'], ".zip");
 
+	if(isset($_POST['beta'])) {
+		if($_POST['beta']) {
+			$betaUpload = true;
+		} else {
+			$betaUpload = false;
+		}
+	} else {
+		$betaUpload = false;
+	}
+
 	if(isset($_POST['addonversion']) && $_POST['addonversion'] != "") {
 		//trim .bls from end of file name if it exists
 		//$uploadBuildName = preg_replace("/\\.bls$/", "", $_POST['buildname']);
@@ -101,7 +111,11 @@
 	if(isset($uploadVersion)) {
 		//repeated but slightly different path from above?
 		$tempLocation = realpath(dirname(__DIR__) . "/../addons/upload/files/" . $filename);
-		$res = AddonManager::submitUpdate($addonObject, $uploadVersion, $tempLocation, $uploadChangelog);
+		if(!$betaUpload) {
+			$res = AddonManager::submitUpdate($addonObject, $uploadVersion, $tempLocation, $uploadChangelog);
+		} else {
+			$res = AddonManager::uploadBetaAddon($addonObject, $uploadVersion, $tempLocation);
+		}
 		$response = [
 			"redirect" => "/user/",
 		];

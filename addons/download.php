@@ -6,11 +6,8 @@ $id = $_REQUEST['id'];
 $addonObject = AddonManager::getFromId($id);
 if($addonObject) {
   StatManager::downloadAddon($addonObject);
-  $branchId["stable"] = 1;
-  $branchId["unstable"] = 2;
-  $branchId["development"] = 3;
-  if(isset($_REQUEST['branch'])) {
-    $bid = $branchId[$_REQUEST['branch']];
+  if(isset($_REQUEST['beta'])) {
+    $bid = ($_REQUEST['beta'] == 1 ? 2 : 1);
   } else {
     $bid = 1;
   }

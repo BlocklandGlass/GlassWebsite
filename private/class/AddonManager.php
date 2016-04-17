@@ -174,9 +174,14 @@ class AddonManager {
 		// TODO check sequential version
 
 		$db = new DatabaseManager();
-		$db->query("UPDATE `addon_addons` SET `beta`='" . $db->sanitize($version) . "' WHERE `id`='" . $db->sanitize($addon->getId()) . "'");
+		$db->query("UPDATE `addon_addons` SET `betaVersion`='" . $db->sanitize($version) . "' WHERE `id`='" . $db->sanitize($addon->getId()) . "'");
 
+
+		AddonFileHandler::injectGlassFile($addon->getId(), $file);
+		AddonFileHandler::injectVersionInfo($addon->getId(), 2, $file);
 		AWSFileManager::uploadNewAddon($addon->getId(), 2, $addon->getFilename(), $file);
+
+		copy($file, dirname(__DIR__) . '/../addons/files/local/' . $addon->getId() . '_beta.zip');
 	}
 
 	public static function uploadNewAddon($user, $name, $type, $file, $filename, $description) {

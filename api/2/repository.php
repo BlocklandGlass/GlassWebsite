@@ -37,6 +37,8 @@ foreach($addonIds as $id) {
   $chanObj->file = "http://" . $webUrl . "/api/2/download.php?type=addon_update&id=" . $obj->getId() . "&branch=1";
   $chanObj->changelog = "http://" . $webUrl . "/api/2/changelog.php?id=" . $obj->getId() . "&branch=1";
 
+  $addon->channels[] = $chanObj;
+
   if(isset($_REQUEST['legacy']) && $_REQUEST['legacy'] == 1) {
     $testChan = clone $chanObj;
     $testChan->name = "unstable";
@@ -46,7 +48,15 @@ foreach($addonIds as $id) {
     $addon->channels[] = $devChan;
   }
 
-  $addon->channels[] = $chanObj;
+  if($obj->hasBeta()) {
+    $chanObj = new stdClass();
+    $chanObj->name = "beta";
+    $chanObj->version = $obj->getBetaVersion();
+    $chanObj->file = "http://" . $webUrl . "/api/2/download.php?type=addon_update&id=" . $obj->getId() . "&branch=2";
+    $chanObj->changelog = "http://" . $webUrl . "/api/2/changelog.php?id=" . $obj->getId() . "&branch=2";
+
+    $addon->channels[] = $chanObj;
+  }
 
   array_push($repo->$ao, $addon);
 }
