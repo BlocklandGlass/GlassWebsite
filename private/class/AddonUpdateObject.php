@@ -69,7 +69,7 @@ class AddonUpdateObject {
 				$commonFiles = array_diff($commonFiles, ["glass.json", "version.json"]);
 				$diff = [];
 				foreach($commonFiles as $fi) {
-					if(strpos($fi, ".cs") == strlen($fi, ".cs")-3) {
+					if(strpos($fi, ".cs") == strlen($fi)-3) {
 						$newStr = $zipNew->getFromName($fi);
 						$oldStr = $zipOld->getFromName($fi);
 						if(trim($newStr) != trim($oldStr)) {
