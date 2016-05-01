@@ -69,10 +69,12 @@ class AddonUpdateObject {
 				$commonFiles = array_diff($commonFiles, ["glass.json", "version.json"]);
 				$diff = [];
 				foreach($commonFiles as $fi) {
-					$newStr = $zipNew->getFromName($fi);
-					$oldStr = $zipOld->getFromName($fi);
-					if(trim($newStr) != trim($oldStr)) {
-						$diff[$fi] = Diff::toTable(Diff::compare($oldStr, $newStr));
+					if(strpos($fi, ".cs") == strlen($fi, ".cs")-3) {
+						$newStr = $zipNew->getFromName($fi);
+						$oldStr = $zipOld->getFromName($fi);
+						if(trim($newStr) != trim($oldStr)) {
+							$diff[$fi] = Diff::toTable(Diff::compare($oldStr, $newStr));
+						}
 					}
 				}
 				$ret = ["added" => $added, "removed" => $removed, "changes" => $diff];
