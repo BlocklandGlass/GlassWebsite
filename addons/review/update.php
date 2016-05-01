@@ -1,8 +1,6 @@
 <?php
 	$_PAGETITLE = "Glass | Inspect Update";
 
-	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/class/AddonManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/class/BoardManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/class/UserManager.php"));
@@ -13,6 +11,10 @@
     header('Location: /addons');
     return;
   }
+
+
+	include(realpath(dirname(__DIR__) . "/../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 
   $addon = AddonManager::getFromID($_REQUEST['id']);
   $update = AddonManager::getUpdates($addon)[0];
