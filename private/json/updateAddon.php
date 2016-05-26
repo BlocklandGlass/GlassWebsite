@@ -113,11 +113,14 @@
 		$tempLocation = realpath(dirname(__DIR__) . "/../addons/upload/files/" . $filename);
 		if(!$betaUpload) {
 			$res = AddonManager::submitUpdate($addonObject, $uploadVersion, $tempLocation, $uploadChangelog);
+			if(is_array($res)) {
+				return $res;
+			}
 		} else {
 			$res = AddonManager::uploadBetaAddon($addonObject, $uploadVersion, $tempLocation);
 		}
 		$response = [
-			"redirect" => "/user/",
+			"redirect" => "/addons/review/update.php?id=" . $addonObject->getId(),
 		];
 		return $response;
 	}

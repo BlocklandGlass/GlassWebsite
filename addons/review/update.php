@@ -6,11 +6,7 @@
 	require_once(realpath(dirname(__DIR__) . "/../private/class/UserManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/class/UserLog.php"));
 
-	$user = UserManager::getCurrent();
-	if(!$user || !$user->inGroup("Reviewer")) {
-    header('Location: /addons');
-    return;
-  }
+
 
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
@@ -19,6 +15,16 @@
   $addon = AddonManager::getFromID($_REQUEST['id']);
   $update = AddonManager::getUpdates($addon)[0];
   $manager = UserManager::getFromBLID($addon->getManagerBLID());
+
+	$user = UserManager::getCurrent();
+	$owner = false;
+	if($user->getBlid() == $addon->getManagerBLID()) {
+		$owner = true;
+	} else if(!$user || !$user->inGroup("Reviewer")) {
+		header('Location: /addons');
+		return;
+	}
+
   $diffData = $update->getDiff();
 ?>
 <style>
@@ -104,8 +110,13 @@
   </table>
   <form action="approveUpdate.php" method="post">
 		<input type="hidden" name="aid" value="<?php echo $addon->getId() ?>" />
+		<?php if($owner) { ?>
+		<input type="submit" name="action" value="Cancel Update" />
+		<?php }
+		if($user->inGroup("Reviewer")) { ?>
 		<input type="submit" name="action" value="Approve" />
 		<input type="submit" name="action" value="Reject" />
+		<?php } ?>
   </form>
 </div>
 

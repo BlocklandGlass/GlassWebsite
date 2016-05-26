@@ -154,7 +154,18 @@ class AddonManager {
 			$addon = AddonManager::getFromID($addon);
 		}
 
+		//remove pre-existing updates, merge changelogs
+
 		$db = new DatabaseManager();
+		$ups = AddonManager::getUpdates($addon);
+		foreach($ups as $up) {
+			if($up->isPending()) {
+				return array(
+					"message" => "Update already pending. Wait for approval or cancel previous update."
+				);
+			}
+		}
+
 		$db->query("INSERT INTO `blocklandglass2`.`addon_updates` (`id`, `aid`, `version`, `tempfile`, `changelog`, `submitted`, `upstream`, `approved`) VALUES (NULL, " .
 			"'" . $addon->getId() . "'," .
 			"'" . $db->sanitize($version) . "'," .

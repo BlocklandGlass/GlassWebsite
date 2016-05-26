@@ -40,6 +40,9 @@ class AddonUpdateObject {
 		return $this->changelog;
 	}
 
+	public function isPending() {
+		return $this->status == null;
+	}
 
 	public function getDiff() {
 		$diff = apc_fetch('updateDiff' . $this->id, $success);
