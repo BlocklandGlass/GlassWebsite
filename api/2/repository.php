@@ -23,6 +23,13 @@ $repo->$ao = array();
 
 foreach($addonIds as $id) {
   $obj = AddonManager::getFromId($id);
+
+  if(!is_object($obj)) {
+    $addon = new stdClass();
+    $addon->id = $id;
+    $addon->error = "Unable to create object";
+    continue;
+  }
   //$webUrl = "api.blocklandglass.com";
   $webUrl = "test.blocklandglass.com";
   $cdnUrl = "cdn.blocklandglass.com";
