@@ -28,6 +28,7 @@ foreach($addonIds as $id) {
     $addon = new stdClass();
     $addon->id = $id;
     $addon->error = "Unable to create object";
+    array_push($repo->$ao, $addon);
     continue;
   }
   //$webUrl = "api.blocklandglass.com";
@@ -68,4 +69,4 @@ foreach($addonIds as $id) {
   array_push($repo->$ao, $addon);
 }
 
-echo json_encode($repo, JSON_PRETTY_PRINT);
+echo str_replace("\n", "\r\n", json_encode($repo, JSON_PRETTY_PRINT));
