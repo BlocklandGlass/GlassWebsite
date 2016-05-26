@@ -33,6 +33,10 @@
         echo "<td>" . date("D, g:i a", strtotime($addon->getUploadDate())) . "</td>";
         echo "</tr>";
       }
+
+			if(sizeof($list) == 0) {
+				echo "<tr><td colspan=\"3\" style=\"text-align:center\">Nothing to approve!</td></tr>";
+			}
     ?>
     </tbody>
   </table>
