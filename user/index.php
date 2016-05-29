@@ -49,7 +49,7 @@
 					<p>
 						<h3>My Content</h3>
 						<?php
-						$addons = AddonManager::getFromBLID($userObject->getBLID());
+						$addons = AddonManager::getFromBLID($userObject->getBLID(),0,9999);
 
 						foreach($addons as $aid) {
 							$ao = AddonManager::getFromId($aid);

@@ -114,9 +114,16 @@ class UserManager {
 			}
 			$_SESSION['username'] = $loginDetails['username'];
 
-			return [
-				"redirect" => $redirect
-			];
+			$userObject = UserManager::getFromBLID($_SESSION['blid']);
+			if($userObject->isMigrated()) {
+				return [
+					"redirect" => $redirect
+				];
+			} else {
+				return [
+					"redirect" => "/user/migrate.php"
+				];
+			}
 		}
 		return [
 			"message" => "Incorrect login credentials"

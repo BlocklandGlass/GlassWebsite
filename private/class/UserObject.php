@@ -69,6 +69,10 @@ class UserObject {
 		return $this->email;
 	}
 
+	public function isMigrated() {
+		return $this->getEmail() != null;
+	}
+
 	public function inGroup($name) {
 		require_once(realpath(dirname(__FILE__) . '/GroupObject.php'));
 		$groups = GroupManager::getGroupsFromBLID($this->blid);
@@ -97,6 +101,13 @@ class UserObject {
 			$database->query("UPDATE `users` SET `username`='" . $database->sanitize($name) . "' WHERE `email`='" . $database->sanitize($this->getEmail()) . "'");
 			apc_store('userObject_' . $this->blid, $this, 600);
 		}
+	}
+
+	public function updateEmail($email) {
+		$database = new DatabaseManager();
+		$database->query("UPDATE `users` SET `email`='" . $database->sanitize($email) . "' WHERE `blid`='" . $database->sanitize($this->getBlid()) . "'");
+		$this->email = $email;
+		apc_store('userObject_' . $this->blid, $this, 600);
 	}
 }
 ?>

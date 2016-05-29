@@ -96,7 +96,7 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-input[type="text"], input[type="password"], textarea {
+input[type="text"], input[type="password"], input[type="email"], textarea {
   display: block;
 
   margin: 10px;
@@ -107,11 +107,11 @@ input[type="text"], input[type="password"], textarea {
   border: 1px solid #ccc;
 }
 
-input[type="text"]:hover, input[type="password"]:hover {
+input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover {
   background-color: #eee;
 }
 
-input[type="text"]:active, input[type="password"]:active {
+input[type="text"]:active, input[type="password"]:active, input[type="email"]:active {
   background-color: #eee;
   border: 1px solid #ccf;
 }
