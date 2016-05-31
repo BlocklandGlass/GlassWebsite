@@ -21,9 +21,9 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
     $dat = explode("^", $_REQUEST['data']);
     foreach($dat as $ad) {
       $adat = explode(",", $ad);
-      $aid = $ad[0];
-      $branch = $ad[1];
-      $version = $ad[2];
+      $aid = $adat[0];
+      $branch = $adat[1];
+      $version = $adat[2];
 			StatUsageManager::addEntry($con->getBlid(), $aid, $_REQUEST['sha'], $version, ($branch == "beta"));
     }
   }
