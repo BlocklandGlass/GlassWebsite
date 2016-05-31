@@ -10,6 +10,7 @@ require_once dirname(__FILE__) . "/private/StatUsageManager.php";
 // version  - version of glass
 
 header('Content-Type: text/json');
+error_reporting(E_ALL);
 if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 	$con = ClientConnection::loadFromIdentifier($_REQUEST['ident']);
   $ret = new stdClass();
@@ -17,7 +18,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 
   if($con->isAuthed()) {
 		StatUsageManager::checkExpired();
-    $dat = split("^", $_REQUEST['data']);
+    $dat = explode("^", $_REQUEST['data']);
     foreach($dat as $ad) {
       $adat = split(",", $ad);
       $aid = $ad[0];
@@ -28,6 +29,6 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
   }
   echo json_encode($ret, JSON_PRETTY_PRINT);
 } else {
-
+	echo "bad ident (" . $_REQUEST['ident'] . ")";
 }
 ?>
