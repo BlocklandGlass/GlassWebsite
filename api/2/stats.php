@@ -21,8 +21,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
       $aid = $ad[0];
       $branch = $ad[1];
       $version = $ad[2];
-
-      // TODO
+			StatUsageManager::addEntry($con->getBlid(), $aid, $_REQUEST['sha'], $version, ($branch == "beta"));
     }
   }
   echo json_encode($ret, JSON_PRETTY_PRINT);
