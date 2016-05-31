@@ -22,7 +22,7 @@
 	</div>
 	<?php include(realpath(dirname(__DIR__) . "/private/searchbar.php")); ?>
 
-	<table style="width: 100%">
+	<table style="width: 100%;">
 		<tbody>
 			<tr>
 				<td style="text-align:center;">
@@ -33,7 +33,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="width:50%; vertical-align:top; border-right: 1px solid #cec">
+				<td style="width:50%; vertical-align:top; border-right: 1px solid #ccc">
 					<table id="trending" style="width: 100%; text-align:left;">
 						<?php include(realpath(dirname(__DIR__) . "/ajax/getTrendingAddons.php")); ?>
 					</table>
