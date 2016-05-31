@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . "/private/ClientConnection.php";
 require_once dirname(__FILE__) . "/private/BlocklandAuth.php";
-require_once dirname(__FILE__) . "/private/StatUsageManager.php";
+require_once dirname(__DIR__) . "/../private/class/StatUsageManager.php";
 
 //fields -
 // ident    - unique numerical session identifier
@@ -20,7 +20,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 		StatUsageManager::checkExpired();
     $dat = explode("^", $_REQUEST['data']);
     foreach($dat as $ad) {
-      $adat = split(",", $ad);
+      $adat = explode(",", $ad);
       $aid = $ad[0];
       $branch = $ad[1];
       $version = $ad[2];
