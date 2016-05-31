@@ -18,7 +18,7 @@
 			$col = "d7985a";
 			$med = true;
 		} else if(floor($index/2) == $index/2) {
-			$col = "dcdcdc";
+			$col = "e0e0e0";
 		} else {
 			$col = "ededed";
 		}

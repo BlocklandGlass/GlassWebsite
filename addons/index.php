@@ -11,22 +11,23 @@
 	$user = UserManager::getCurrent();
 ?>
 <div class="maincontainer">
-	<div style="float: left;">
-		<a class="btn blue" href="/addons/boards.php">Boards</a>
+	<?php include(realpath(dirname(__DIR__) . "/private/searchbar.php")); ?>
+	<ul class="addonnav">
+		<li><a href="/addons/boards.php">Boards</a></li>
+		<li><a href="/addons/boards.php">Tags</a></li>
 		<?php
 		if($user && $user->inGroup("Reviewer")) {
 		?>
-		<a class="btn red" href="review/list.php">Approvals</a>
-		<a class="btn red" href="review/updates.php">Updates</a>
+		<li><a class="addonnavmod" href="review/list.php">Approvals</a></li>
+		<li><a class="addonnavmod" href="review/updates.php">Updates</a></li>
 		<?php } ?>
-	</div>
-	<?php include(realpath(dirname(__DIR__) . "/private/searchbar.php")); ?>
+	</ul>
 
 	<table style="width: 100%;">
 		<tbody>
 			<tr>
 				<td style="text-align:center;">
-					<h3>Trending</h3>
+					<h3>Popular Add-Ons</h3>
 				</td>
 				<td style="text-align:center;">
 					<h3>Recent Uploads</h3>

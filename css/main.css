@@ -747,7 +747,47 @@ input[type="submit"]:active {
 	margin-top: -14px;
 }
 
+.addonnav {
+  display: block;
+  background-color: #eee;
+  padding: 5px;
+  border-radius: 5px;
+  float: left;
+  width: 100%
+}
 
+.addonnavmod {
+  background-color: #ff8888 !important;
+}
+
+.addonnavmod:hover {
+  background-color: #dd6666 !important;
+}
+
+.addonnav > li {
+  border-radius: 5px;
+  display: inline-block;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 150px;
+}
+
+.addonnav > li > a {
+  display: block;
+  border-radius: 5px;
+  background-color: #ddd;
+  list-style-type: none;
+  margin: 5px;
+  padding: 10px;
+  text-align: center;
+}
+
+.addonnav > li > a:hover {
+  color: #fff;
+  text-decoration: none;
+  background-color: #ccc;
+}
 
 
 /* ==========================================================================
