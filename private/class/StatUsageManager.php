@@ -7,7 +7,7 @@ class StatUsageManager {
     }
 
     $db = new DatabaseManager();
-    $res = $db->query("SELECT COUNT(*) FROM `stats_usage` WHERE `blid`='" . $db->sanitize($blid) . "' AND `aid`='" . $db->sanitize($aid) . "' AND `hash`='" . $db->sanitize($version) . "' ")
+    $res = $db->query("SELECT COUNT(*) FROM `stats_usage` WHERE `blid`='" . $db->sanitize($blid) . "' AND `aid`='" . $db->sanitize($aid) . "' AND `hash`='" . $db->sanitize($version) . "' ");
 
     if($res->fetch_object()->total == 0) {
       $db->query("INSERT INTO `stats_usage` (blid, aid, hash, version, beta, reported) VALUES (
