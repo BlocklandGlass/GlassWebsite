@@ -770,7 +770,7 @@ input[type="submit"]:active {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  width: 150px;
+  width: 160px;
 }
 
 .addonnav > li > a {
@@ -787,6 +787,16 @@ input[type="submit"]:active {
   color: #fff;
   text-decoration: none;
   background-color: #ccc;
+}
+
+.notice {
+  font-size: 0.8em;
+  display:inline-block;
+  background-color: rgba(255,255,255,0.2);
+  font-weight: bold;
+  padding: 2px 10px;
+  border-radius:3px;
+  margin: 0 1px;
 }
 
 

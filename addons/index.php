@@ -18,8 +18,8 @@
 		<?php
 		if($user && $user->inGroup("Reviewer")) {
 		?>
-		<li><a class="addonnavmod" href="review/list.php">Approvals</a></li>
-		<li><a class="addonnavmod" href="review/updates.php">Updates</a></li>
+		<li><a class="addonnavmod" href="review/list.php">Approvals<?php if(sizeof(AddonManager::getUnapproved()) > 0) { echo " <span class=\"notice\">!</span>"; } ?></a></li>
+		<li><a class="addonnavmod" href="review/updates.php">Updates<?php if(sizeof(AddonManager::getPendingUpdates()) > 0) { echo " <span class=\"notice\">!</span>"; } ?></a></li>
 		<?php } ?>
 	</ul>
 
