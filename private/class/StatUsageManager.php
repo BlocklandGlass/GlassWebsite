@@ -1,4 +1,5 @@
 <?php
+require_once(realpath(dirname(__FILE__) . "/DatabaseManager.php"));
 class StatUsageManager {
   public static function addEntry($blid, $aid, $hash, $version, $beta = false, $date = null) {
     if($date == null) {
@@ -20,6 +21,8 @@ class StatUsageManager {
   }
 
   public static function checkExpired() {
+    $db = new DatabaseManager();
+    StatUsageManager::verifyTable($db);
     $db->query("SELECT * FROM `stats_usage` WHERE `reported` < now() - INTERVAL 30 DAY");
   }
 
