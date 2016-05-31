@@ -45,16 +45,11 @@ foreach($addonIds as $id) {
   $chanObj->file = "http://" . $webUrl . "/api/2/download.php?type=addon_update&id=" . $obj->getId() . "&branch=1";
   $chanObj->changelog = "http://" . $webUrl . "/api/2/changelog.php?id=" . $obj->getId() . "&branch=1";
 
-  $addon->channels[] = $chanObj;
-
   if(isset($_REQUEST['legacy']) && $_REQUEST['legacy'] == 1) {
-    $testChan = clone $chanObj;
-    $testChan->name = "unstable";
-    $devChan = clone $chanObj;
-    $devChan->name = "development";
-    $addon->channels[] = $testChan;
-    $addon->channels[] = $devChan;
+    $chanObj->name = "*";
   }
+
+  $addon->channels[] = $chanObj;
 
   if($obj->hasBeta()) {
     $chanObj = new stdClass();
