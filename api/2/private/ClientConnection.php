@@ -92,6 +92,10 @@ class ClientConnection {
       UserLog::addEntry($this->blid, $this->name);
     }
   }
+
+  function getBlid() {
+    return $this->blid;
+  }
 }
 
 ?>
