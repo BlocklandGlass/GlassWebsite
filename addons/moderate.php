@@ -38,14 +38,7 @@
 		echo "<span style=\"font-size: 9pt;\"><a href=\"/addons/\">Add-Ons</a> >> ";
 		echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . htmlspecialchars($boardObject->getName()) . "</a> >> ";
 		echo "<a href=\"#\">" . htmlspecialchars($addonObject->getName()) . "</a></span>";
-
-		if($current = UserManager::getCurrent()) {
-			if($current->inGroup("Moderator")) {
-				echo "<div style=\"background-color: #aabbcc; padding: 10px; border-radius:10px; margin-top:10px; text-align:center\"><a href=\"moderate.php?id=" . $addonObject->getId() . "\">Moderator Settings</a></div>";
-			}
-		}
-
-		echo "<h2>" . htmlspecialchars($addonObject->getName()) . "</h2>";
+		echo "<h2>Moderating: <i>" . htmlspecialchars($addonObject->getName()) . "</i></h2>";
 	?>
 	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 		<div class="addoninfoleft">
@@ -130,34 +123,19 @@
 		?>
 	</p>
 	<hr />
-	<div style="text-align: center">
-		<?php
-		$version = $addonObject->getVersion();
-		$id = "stable";
-		$class = "green";
-		echo '<a href="/addons/download.php?id=' . $addonObject->getId() . '&beta=0" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />v' . $version . '</span></a>';
-		if($addonObject->hasBeta()) {
-			$id = "beta";
-			$class = "red";
-			echo '<a href="/addons/download.php?id=' . $addonObject->getId() . '&beta=1" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />v' . $addonObject->getBetaVersion() . '</span></a>';
-		}
-		?>
-	</div>
+  <table class="formtable">
+    <tbody>
+      <tr>
+        <td><b>Title</b></td>
+        <td><input type="text" name="title" value="<?php echo htmlspecialchars($addonObject->getName()) ?>"/></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input type="submit" value="Update" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
 	<hr />
-	<div class="comments" id="commentSection">
-	<?php include(realpath(dirname(__DIR__) . "/ajax/getComments.php")); ?>
-	</div>
 </div>
-<script type="text/javascript">
-//function buildCommentSection(data) {
-//
-// }
-
-$(document).ready(function () {
-	$("#commentSection").load("/ajax/getComments.php");
-	//$.getJSON("/ajax/getComments.php", function (data) {
-	//	$("#commentSection").html(data);
-	//});
-});
-</script>
 <?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>
