@@ -89,17 +89,37 @@
   <hr />
   <form action="approve.php" method="post">
 		<input type="hidden" name="aid" value="<?php echo $addon->getId() ?>" />
-    Move to board:
-		<select name="board">
-			<?php
-				$boards = BoardManager::getAllBoards();
-				foreach($boards as $board) {
-					echo '<option value="' . $board->getId() . '">' . $board->getName() . '</option>';
-				}
-			?>
-		</select>
-		<input type="submit" name="action" value="Approve" />
-		<input type="submit" name="action" value="Reject" />
+		<table style="width:100%">
+			<tbody>
+				<tr>
+					<td style="vertical-align:top; width: 50%; background-color: #CCFFCC; padding: 10px; border-top-left-radius: 10px;">
+				    <b>Approve to board:</b><br/>
+						<select name="board" value="none">
+				    	<option value="" disabled selected>Choose One</option>
+				    	<option value="" disabled></option>
+							<?php
+								$boards = BoardManager::getAllBoards();
+								foreach($boards as $board) {
+									echo '<option value="' . $board->getId() . '">' . $board->getName() . '</option>';
+								}
+							?>
+						</select>
+					</td>
+					<td style="padding: 10px; background-color: #FFCCCC; border-top-right-radius: 10px; width: 50%">
+						<b>Rejection Reason</b><br />
+						<textarea style="width: 400px; height: 150px; font-size: 0.8em; margin: 0 auto;" name="reason"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td style="background-color: #CCFFCC; text-align: center; border-bottom-left-radius: 10px;">
+						<input type="submit" name="action" value="Approve" />
+					</td>
+					<td style="background-color: #FFCCCC; text-align: center; border-bottom-right-radius: 10px;">
+						<input type="submit" name="action" value="Reject" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
   </form>
 </div>
 

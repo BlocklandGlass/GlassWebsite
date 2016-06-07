@@ -332,6 +332,35 @@ class AddonManager {
 		StatManager::addStatsToAddon($id);
 	}
 
+	public static function rejectAddon($id, $reason, $rejecter) {
+		$revInf = new stdClass();
+		$revInf->rejected = true;
+		$revInf->rejectReason = $reason;
+
+		var_dump($revInf);
+
+		$database = new DatabaseManager();
+		$database->query("UPDATE `addon_addons` SET `approved`='-1', `reviewInfo`='" . $database->sanitize(json_encode($revInf)) . "' WHERE `id`='" . $database->sanitize($id) . "'");
+
+		$manager = AddonManager::getFromId($id)->getManagerBLID();
+
+		$params = new stdClass();
+		$params->vars = array();
+
+		$user = new stdClass();
+		$user->type = "user";
+		$user->blid = $rejecter;
+
+		$addon = new stdClass();
+		$addon->type = "addon";
+		$addon->id = $id;
+
+		$params->vars[] = $user;
+		$params->vars[] = $addon;
+		NotificationManager::createNotification($manager, '$2 was rejected by $1', $params);
+		apc_delete('addonObject_' . $id);
+	}
+
 	public static function getFromID($id, $resource = false) {
 		$addonObject = apc_fetch('addonObject_' . $id, $success);
 

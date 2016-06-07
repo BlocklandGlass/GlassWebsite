@@ -13,7 +13,8 @@ if(isset($_POST['action']) && is_object($userObject)) {
     AddonManager::approveAddon($_POST['aid'], $_POST['board'], $userObject->getBLID());
     header('Location: list.php');
   } else if($_POST['action'] == "Reject") {
-    // reject
+    AddonManager::rejectAddon($_POST['aid'], $_POST['reason'], $userObject->getBLID());
+    header('Location: list.php');
   }
 }
 ?>

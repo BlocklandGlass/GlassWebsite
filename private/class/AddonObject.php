@@ -84,7 +84,19 @@ class AddonObject {
 	}
 
 	public function getApproved() {
-		return $this->approved;
+		return $this->approved == 1;
+	}
+
+	public function isRejected() {
+		return $this->approved == -1;
+	}
+
+	public function getRejectReason() {
+		if(isset($this->reviewInfo->rejectReason)) {
+			return $this->reviewInfo->rejectReason;
+		} else {
+			return "";
+		}
 	}
 
 	public function hasBeta() {

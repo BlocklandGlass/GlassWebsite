@@ -23,7 +23,10 @@
 		die();
 	}
 
-	if(!$addonObject->getApproved()) {
+	if($addonObject->isRejected()) {
+		include 'rejected.php';
+		die();
+	} else if(!$addonObject->getApproved()) {
 		include 'unapproved.php';
 		die();
 	}
