@@ -24,7 +24,7 @@
           labels: <?php
 					$res = array();
 					foreach($data as $time=>$dat) {
-						date_default_timezone_set('EST');
+						date_default_timezone_set('US/Eastern');
 						$res[] = date("g:ia", strtotime($time . " UTC"));
 					}
 					echo json_encode($res);
