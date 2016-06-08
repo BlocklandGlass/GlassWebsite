@@ -103,8 +103,6 @@ class DatabaseManager {
 			$sql .= "`$key` = '" . $this->sanitize($value) . "'";
 		}
 
-		echo($sql);
-
 		return $this->query($sql);
 	}
 }
