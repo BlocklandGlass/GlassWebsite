@@ -14,6 +14,7 @@
   $data = $csm->getRecentBlocklandStats(24);
 ?>
 <div class="maincontainer">
+	All times EST
   <canvas id="myChart" style="width:400px;height:400px"></canvas>
   <script>
   var ctx = document.getElementById("myChart");
@@ -24,7 +25,7 @@
 					$res = array();
 					foreach($data as $time=>$dat) {
 						date_default_timezone_set('EST');
-						$res[] = date("H:i:s e", strtotime($time . " UTC"));
+						$res[] = date("g:ia", strtotime($time . " UTC"));
 					}
 					echo json_encode($res);
 					?>,
