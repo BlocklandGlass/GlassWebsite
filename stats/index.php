@@ -11,7 +11,7 @@
 	$user = UserManager::getCurrent();
 
   $csm = new CronStatManager();
-  $data = $csm->getRecentBlocklandStats();
+  $data = $csm->getRecentBlocklandStats(24);
 ?>
 <div class="maincontainer">
   <canvas id="myChart" style="width:400px;height:400px"></canvas>
@@ -24,7 +24,7 @@
 					$res = array();
 					foreach($data as $time=>$dat) {
 						date_default_timezone_set('EST');
-						$res[] = date("H:i:s e", strtotime($dat->servers . " UTC"));
+						$res[] = date("H:i:s e", strtotime($time . " UTC"));
 					}
 					echo json_encode($res);
 					?>,
