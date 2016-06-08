@@ -12,7 +12,7 @@ class DatabaseManager {
 		//memory cached for performance
 		//infinite persistence is not guaranteed, however
 		$keyData = apc_fetch('mysqlKey');
-		
+
 		if($keyData === false) {
 			if(!is_file(dirname(__FILE__) . "/key.json")) {
 				throw new Exception("Key file not found");
@@ -75,6 +75,37 @@ class DatabaseManager {
 
 	public function debug() {
 		return $this->debug;
+	}
+
+	public function update($table, $identifiers, $values) {
+		$sql = "UPDATE `" . $table . "` SET ";
+		$first = true;
+		foreach($values as $key=>$value) {
+			if(!$first) {
+				$sql .= ", ";
+			} else {
+				$first = false;
+			}
+			$sql .= "`$key`='" . $this->sanitize($value) . "'";
+		}
+
+		if($identifiers != null) {
+			$sql .= " WHERE ";
+		}
+
+		$first = true;
+		foreach($identifiers as $key=>$value) {
+			if(!$first) {
+				$sql .= " AND ";
+			} else {
+				$first = false;
+			}
+			$sql .= "`$key` = '" . $this->sanitize($value) . "'";
+		}
+
+		echo($sql);
+
+		return $this->query($sql);
 	}
 }
 ?>

@@ -55,7 +55,7 @@ class CronStatManager {
 
   function getEntry($time, $duration) {
     $entry = apc_fetch('cronStat_' . $duration . '_' . $time, $success);
-
+    $success = false;
     if(!$success) {
       //$duration = hour, day, week, month
       $database = new DatabaseManager();
@@ -77,11 +77,14 @@ class CronStatManager {
     $stats->time = gmdate("Y-m-d H:00:00", time());
     $stats->duration = "hour";
 
+    $database = new DatabaseManager();
+
     //Addons!
     $addons = new stdClass();
     $addonArray = AddonManager::getAll();
     $addons->count = sizeof($addonArray);
     $addons->cumulative_downloads = array();
+    $addons->usage = array();
     foreach($addonArray as $addon) {
       $downloadData = new stdClass();
       // TODO we need to go back. I dont want total downloads, I want individual
@@ -89,6 +92,13 @@ class CronStatManager {
       //$downloadData->ingame =
       //$downloadData->update =
       $addons->cumulative_downloads[$addon->getId()] = $downloadData;
+      $res = $database->query("SELECT COUNT(*) FROM `stats_usage` WHERE `aid`='" . $addon->getId() . "' AND `reported` > now() - INTERVAL 1 HOUR");
+      $ret = $res->fetch_object();
+      if(!isset($ret->total)) {
+        $addons->usage[$addon->getId()] = 0;
+      } else {
+        $addons->usage[$addon->getId()] = $ret->total;
+      }
     }
     $stats->addons = $addons;
 
@@ -111,7 +121,6 @@ class CronStatManager {
     $stats->master->servers = $master[1];
 
     if($store) {
-      $database = new DatabaseManager();
       CronStatManager::verifyTable($database);
       $database->query("INSERT INTO `cron_statistics`  (`time` , `duration` , `data`) VALUES ('" . $stats->time . "',  'hour',  '" . $database->sanitize(json_encode($stats)) . "')");
     }
@@ -125,11 +134,11 @@ class CronStatManager {
     if($result === false) {
       return [0, 0];
     }
-    $entries = split("\n", $result);
+    $entries = explode("\n", $result);
     $users = 0;
     $servers = 0;
     foreach($entries as $entry) {
-      $field = split("\t", $entry);
+      $field = explode("\t", $entry);
       if($field[0] == "FIELDS") {
         continue;
       }
@@ -154,6 +163,17 @@ class CronStatManager {
       )")) {
       throw new Exception("Error creating users table: " . $database->error());
     }
+  }
+
+  public function getRecentBlocklandStats($hours = 12) {
+    $ret = array();
+    for($i = 1; $i <= $hours; $i++) {
+      $entry = $this->getEntry(gmdate("Y-m-d H:00:00", time()-(($hours-$i)*3600)), "hour");
+      if($entry != false) {
+        $ret[gmdate("Y-m-d H:00:00", time()-(($hours-$i)*3600))] = $entry->master;
+      }
+    }
+    return $ret;
   }
 }
 ?>

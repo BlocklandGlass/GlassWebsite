@@ -1,9 +1,10 @@
 <?php
 header('Content-Type: text/json');
 require_once dirname(__DIR__) . '/class/CronStatManager.php';
-CronStatManager::collectHourStat(true);
+$csm = new CronStatManager();
+$csm->collectHourStat(true);
 
 
-require_once dirname(__DIR__) . '/class/AddonManager.php';
-AddonManager::checkUpstreamRepos();
+//require_once dirname(__DIR__) . '/class/AddonManager.php';
+//AddonManager::checkUpstreamRepos();
 ?>

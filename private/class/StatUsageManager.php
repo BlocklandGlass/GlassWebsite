@@ -8,8 +8,8 @@ class StatUsageManager {
 
     $db = new DatabaseManager();
     $res = $db->query("SELECT COUNT(*) FROM `stats_usage` WHERE `blid`='" . $db->sanitize($blid) . "' AND `aid`='" . $db->sanitize($aid) . "' AND `hash`='" . $db->sanitize($version) . "' ");
-
-    if(!isset($res->fetch_object()->total) || $res->fetch_object()->total == 0) {
+    $ret = $res->fetch_object();
+    if(!isset($ret->total) || $ret->total == 0) {
       $res = $db->query("INSERT INTO `stats_usage` (`blid`, `aid`, `hash`, `version`, `beta`, `reported`) VALUES (
       '" . $db->sanitize($blid) . "',
       '" . $db->sanitize($aid) . "',
