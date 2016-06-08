@@ -92,13 +92,13 @@ class CronStatManager {
       //$downloadData->ingame =
       //$downloadData->update =
       $addons->cumulative_downloads[$addon->getId()] = $downloadData;
-      $res = $database->query("SELECT COUNT(*) FROM `stats_usage` WHERE `aid`='" . $addon->getId() . "' AND `reported` > now() - INTERVAL 1 HOUR");
+      $res = $database->query("SELECT `version` FROM `stats_usage` WHERE `aid`='" . $addon->getId() . "' AND `reported` > now() - INTERVAL 1 HOUR");
       $ret = $res->fetch_object();
-      if(!isset($ret->total)) {
-        $addons->usage[$addon->getId()] = 0;
-      } else {
-        $addons->usage[$addon->getId()] = $ret->total;
+      $usage = array();
+      while($obj = $res->fetch_object()) {
+        $usage[$obj->version] += 1;
       }
+      $addons->usage[$addon->getId()] = $usage;
     }
     $stats->addons = $addons;
 
@@ -172,6 +172,42 @@ class CronStatManager {
       if($entry != false) {
         $ret[gmdate("Y-m-d H:00:00", time()-(($hours-$i)*3600))] = $entry->master;
       }
+    }
+    return $ret;
+  }
+
+  public function getRecentAddonUsage($id, $hours = 12) {
+    $ret = array();
+    $entries = array();
+    $versions = array();
+    for($i = 1; $i <= $hours; $i++) {
+      $entry = $this->getEntry(gmdate("Y-m-d H:00:00", time()-(($hours-$i)*3600)), "hour");
+
+      if($entry != false) {
+        if(isset($entry->usage[$id])) {
+          $entries[gmdate("Y-m-d H:00:00", time()-(($hours-$i)*3600))] = $entry;
+          $usage = $entry->usage[$id];
+          foreach(array_keys($usage) as $v) {
+            if(!in_array($v, $versions)) {
+              array_push($versions, $v);
+            }
+          }
+        }
+      }
+    }
+
+    foreach($entries as $time=>$entry) {
+      $ad = array();
+      $usage = $entry->usage[$id];
+
+      foreach($versions as $v) {
+        if(isset($usage[$v])) {
+          $ad[$v] = $usage[$v];
+        } else {
+          $ad[$v] = 0;
+        }
+      }
+      $ret[$time] = $ad;
     }
     return $ret;
   }

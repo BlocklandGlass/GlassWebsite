@@ -14,7 +14,7 @@
   $data = $csm->getRecentBlocklandStats(24);
 ?>
 <div class="maincontainer">
-	All times EST
+	All times US Eastern Time. <i>Displayed Blockland information is not fully accurate. Only users logged in on the hour exactly are recorded. Additionally, only users in servers are accounted for.</i>
   <canvas id="myChart" style="width:400px;height:400px"></canvas>
   <script>
   var ctx = document.getElementById("myChart");

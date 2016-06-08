@@ -7,16 +7,18 @@ class StatUsageManager {
     }
 
     $db = new DatabaseManager();
-    $res = $db->query("SELECT COUNT(*) FROM `stats_usage` WHERE `blid`='" . $db->sanitize($blid) . "' AND `aid`='" . $db->sanitize($aid) . "' AND `hash`='" . $db->sanitize($version) . "' ");
-    $ret = $res->fetch_object();
-    if(!isset($ret->total) || $ret->total == 0) {
-      $res = $db->query("INSERT INTO `stats_usage` (`blid`, `aid`, `hash`, `version`, `beta`, `reported`) VALUES (
+    $res = $db->query($sq = "SELECT COUNT(*) FROM `stats_usage` WHERE `blid`='" . $db->sanitize($blid) . "' AND `aid`='" . $db->sanitize($aid) . "' AND `hash`='" . $db->sanitize($hash) . "' ");
+    $ret = $res->fetch_row();
+    if(!isset($ret[0]) || $ret[0] == 0) {
+      $res = $db->query($sq = "INSERT INTO `stats_usage` (`blid`, `aid`, `hash`, `version`, `beta`, `reported`) VALUES (
       '" . $db->sanitize($blid) . "',
       '" . $db->sanitize($aid) . "',
       '" . $db->sanitize($hash) . "',
       '" . $db->sanitize($version) . "',
       '" . ($beta ? 1 : 0) . "',
-      FROM_UNIXTIME(" . $db->sanitize($date) . "))");
+      '" . $db->sanitize(date("Y-m-d H:i:s", $date)) . "')");
+    } else {
+      $db->update("stats_usage", ["blid"=>$blid, "aid"=>$aid, "hash"=>$hash], ["version"=>$version, "beta"=>($beta ? 1 : 0), "reported"=>date("Y-m-d H:i:s")]);
     }
   }
 
