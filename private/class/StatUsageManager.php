@@ -43,5 +43,21 @@ class StatUsageManager {
       throw new Exception("Failed to create table stats_usage: " . $database->error());
     }
   }
+
+  public static function getDistribution($aid) {
+    $db = new DatabaseManager();
+    $res = $db->query("SELECT * FROM `stats_usage` WHERE `aid`='" . $db->sanitize($aid) ."' AND `reported` > now() - INTERVAL 30 DAY");
+
+    $ret = array();
+    while($obj = $res->fetch_object()) {
+      if(isset($ret[$obj->version])) {
+        $ret[$obj->version]++;
+      } else {
+        $ret[$obj->version] = 1;
+      }
+    }
+
+    return $ret;
+  }
 }
 ?>
