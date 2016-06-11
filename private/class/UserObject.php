@@ -17,7 +17,11 @@ class UserObject {
 		$this->admin = intval($resource->admin);
 		$this->verified = intval($resource->verified);
 		$this->email = $resource->email;
-		$this->reset = explode(" ", $resource->reset);
+		if(isset($resource->reset)) {
+			$this->reset = explode(" ", $resource->reset);
+		} else {
+			$this->reset = null;
+		}
 		//$this->profile = $resource->profile;
 	}
 

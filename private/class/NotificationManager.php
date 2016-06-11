@@ -6,6 +6,9 @@ class NotificationManager {
 	private static $objectCacheTime = 3600; //1 hour
 	private static $userCacheTime = 3600;
 
+	private static $noteServerHost = "localhost";
+	private static $noteServerPort = "27001";
+
 	public static function createNotification($user, $text, $params) {
 		if(isset($param) && !is_object($param)) {
 			throw new Exception("Object expected form \$param");
@@ -22,6 +25,14 @@ class NotificationManager {
 		$resource = $database->query("INSERT INTO `blocklandglass2`.`user_notifications` (`id`, `blid`, `date`, `text`, `params`, `seen`) VALUES " .
 			"(NULL, '" . $database->sanitize($blid) . "', NOW(), '" . $database->sanitize($text) . "', '" . $database->sanitize(json_encode($params)) . "', '0');");
 		apc_delete('userNotifications_' . $blid);
+	}
+
+	public static function sendPushNotification($blid, $title, $body, $image, $action, $duration, $sticky = false) {
+		$socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+		socket_connect($socket, gethostbyname(NotificationManager::$noteServerHost), NotificationManager::$noteServerPort);
+		socket_strerror(socket_last_error($socket));
+		socket_write($socket, "notification\t" . $blid . "\t" . $title . "\t" . $body . "\t" . $image . "\t" . $action . "\t" . $sticky . "\r\n");
+		socket_close($socket);
 	}
 
 	public static function getFromID($id, $resource = false) {

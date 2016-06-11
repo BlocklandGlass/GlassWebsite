@@ -51,11 +51,11 @@ class StatManager {
 		  if($result === false) {
 		    return [0, 0];
 		  }
-		  $entries = split("\n", $result);
+		  $entries = explode("\n", $result);
 		  $users = 0;
 		  $servers = 0;
 		  foreach($entries as $entry) {
-		    $field = split("\t", $entry);
+		    $field = explode("\t", $entry);
 		    if($field[0] == "FIELDS") {
 		      continue;
 		    }

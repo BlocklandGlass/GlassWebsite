@@ -85,6 +85,7 @@ class CronStatManager {
     $addons->count = sizeof($addonArray);
     $addons->cumulative_downloads = array();
     $addons->usage = array();
+    $addons->usage_total = array();
     foreach($addonArray as $addon) {
       $downloadData = new stdClass();
       // TODO we need to go back. I dont want total downloads, I want individual
@@ -95,10 +96,17 @@ class CronStatManager {
       $res = $database->query("SELECT `version` FROM `stats_usage` WHERE `aid`='" . $addon->getId() . "' AND `reported` > now() - INTERVAL 1 HOUR");
       $ret = $res->fetch_object();
       $usage = array();
+      $total = 0;
       while($obj = $res->fetch_object()) {
-        $usage[$obj->version] += 1;
+        $total++;
+        if(!isset($usage[$obj->version])) {
+          $usage[$obj->version] = 1;
+        } else {
+          $usage[$obj->version]++;
+        }
       }
       $addons->usage[$addon->getId()] = $usage;
+      $addons->usage_total[$addon->getId()] = $total;
     }
     $stats->addons = $addons;
 
@@ -184,10 +192,10 @@ class CronStatManager {
       $entry = $this->getEntry(gmdate("Y-m-d H:00:00", time()-(($hours-$i)*3600)), "hour");
 
       if($entry != false) {
-        if(isset($entry->usage[$id])) {
+        if(isset($entry->addons->usage->$id)) {
           $entries[gmdate("Y-m-d H:00:00", time()-(($hours-$i)*3600))] = $entry;
-          $usage = $entry->usage[$id];
-          foreach(array_keys($usage) as $v) {
+          $usage = $entry->addons->usage->$id;
+          foreach(get_object_vars($usage) as $v=>$va) {
             if(!in_array($v, $versions)) {
               array_push($versions, $v);
             }
@@ -196,13 +204,15 @@ class CronStatManager {
       }
     }
 
+    var_dump($versions);
+
     foreach($entries as $time=>$entry) {
       $ad = array();
-      $usage = $entry->usage[$id];
+      $usage = $entry->addons->usage->$id;
 
       foreach($versions as $v) {
-        if(isset($usage[$v])) {
-          $ad[$v] = $usage[$v];
+        if(isset($usage->$v)) {
+          $ad[$v] = $usage->$v;
         } else {
           $ad[$v] = 0;
         }
