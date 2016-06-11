@@ -14,7 +14,7 @@
   $addon = AddonManager::getFromId($_GET['id']);
 
   $csm = new CronStatManager();
-  $data = $csm->getRecentAddonUsage($addon->getId());
+  //$data = $csm->getRecentAddonUsage($addon->getId());
 
 	$dist = StatUsageManager::getDistribution($addon->getId());
 ?>
