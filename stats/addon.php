@@ -25,7 +25,11 @@
 	var data = {
 	    labels: <?php
 				$ret = array("Stable");
-				$vals = array($dist[$addon->getVersion()]);
+				if(isset($dist[$addon->getVersion()])) {
+					$vals = array($dist[$addon->getVersion()]);
+				} else {
+					$vals = array(0);
+				}
 				$col = array("#36A2EB");
 
 				if($addon->hasBeta()) {
