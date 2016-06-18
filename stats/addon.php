@@ -34,7 +34,11 @@
 
 				if($addon->hasBeta()) {
 					$ret[] = "Beta";
-					$vals[] = $dist[$addon->getBetaVersion()];
+					if($addon->getBetaVersion() != null) {
+						$vals[] = $dist[$addon->getBetaVersion()];
+					} else {
+						$vals[] = 0;
+					}
 					$col[] = "#FFCE56";
 				}
 

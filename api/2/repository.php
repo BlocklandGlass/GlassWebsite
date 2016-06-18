@@ -45,7 +45,7 @@ foreach($addonIds as $id) {
   $chanObj->file = "http://" . $webUrl . "/api/2/download.php?type=addon_update&id=" . $obj->getId() . "&branch=1";
   $chanObj->changelog = "http://" . $webUrl . "/api/2/changelog.php?id=" . $obj->getId() . "&branch=1";
 
-  if(isset($_REQUEST['legacy']) && $_REQUEST['legacy'] == 1) {
+  if(isset($_REQUEST['legacy']) && $_REQUEST['legacy'] == 1 && $id != 11) {
     $chanObj->name = "*";
   }
 
