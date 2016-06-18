@@ -64,4 +64,4 @@ foreach($addonIds as $id) {
   array_push($repo->$ao, $addon);
 }
 
-echo str_replace("\n", "\r\n", json_encode($repo, JSON_PRETTY_PRINT));
+echo str_replace("\n", "\r\n", json_encode($repo, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
