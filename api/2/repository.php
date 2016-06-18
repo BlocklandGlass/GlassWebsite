@@ -36,7 +36,7 @@ foreach($addonIds as $id) {
   $cdnUrl = "cdn.blocklandglass.com";
 
   $addon = new stdClass();
-	$addon->name = $obj->getFilename();
+	$addon->name = substr($obj->getFilename(), 0, strlen($obj->getFilename())-4);
 	$addon->description = str_replace("\r\n", "<br>", $obj->getDescription());
 
   $chanObj = new stdClass();
