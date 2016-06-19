@@ -20,6 +20,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 		$ret->authed = true;
 		StatUsageManager::checkExpired();
     $dat = explode("^", $_REQUEST['data']);
+		$ret->db = array();
     foreach($dat as $ad) {
       $adat = explode(",", $ad);
       $aid = $adat[0];
@@ -27,7 +28,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
       $version = $adat[2];
 			$res = StatUsageManager::addEntry($con->getBlid(), $aid, $_REQUEST['sha'], $version, ($branch == "beta"));
 			if($res !== true) {
-				$ret->db = $res;
+				$ret->db[$aid] = $res;
 			}
     }
   } else {

@@ -20,6 +20,12 @@ class StatUsageManager {
     } else {
       $db->update("stats_usage", ["blid"=>$blid, "aid"=>$aid, "hash"=>$hash], ["version"=>$version, "beta"=>($beta ? 1 : 0), "reported"=>date("Y-m-d H:i:s")]);
     }
+
+    if(($error = $db->error())) {
+      return array("status"=>"error", "error"=>$error);
+    } else {
+      return true;
+    }
   }
 
   public static function checkExpired() {
