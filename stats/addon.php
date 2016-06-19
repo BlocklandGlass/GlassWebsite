@@ -19,7 +19,7 @@
 	$dist = StatUsageManager::getDistribution($addon->getId());
 ?>
 <div class="maincontainer">
-  <canvas id="myChart" style="width:400px;height:400px"></canvas>
+  <canvas id="myChart" style="width:300px;height:300px"></canvas>
   <script>
   var ctx = document.getElementById("myChart");
 	var data = {
@@ -30,7 +30,7 @@
 				} else {
 					$vals = array(0);
 				}
-				$col = array("#36A2EB");
+				$col = array("#55acee");
 
 				if($addon->hasBeta()) {
 					$ret[] = "Beta";
@@ -39,7 +39,7 @@
 					} else {
 						$vals[] = 0;
 					}
-					$col[] = "#FFCE56";
+					$col[] = "#2ecc71";
 				}
 
 				foreach($dist as $ver=>$count) {
@@ -55,7 +55,7 @@
 
 					$ret[] = $ver;
 					$vals[] = $count;
-					$col[] = "#FFCE56";
+					$col[] = "#e74c3c";
 				}
 				echo json_encode($ret);
 			?>,
