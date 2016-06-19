@@ -25,7 +25,10 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
       $aid = $adat[0];
       $branch = $adat[1];
       $version = $adat[2];
-			StatUsageManager::addEntry($con->getBlid(), $aid, $_REQUEST['sha'], $version, ($branch == "beta"));
+			$res = StatUsageManager::addEntry($con->getBlid(), $aid, $_REQUEST['sha'], $version, ($branch == "beta"));
+			if($res !== true) {
+				$ret->db = $res;
+			}
     }
   } else {
 		$ret->authed = false;
