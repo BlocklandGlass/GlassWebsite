@@ -17,6 +17,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
   $ret->ident = $con->getIdentifier();
 
   if($con->isAuthed()) {
+		$ret->authed = true;
 		StatUsageManager::checkExpired();
     $dat = explode("^", $_REQUEST['data']);
     foreach($dat as $ad) {
@@ -26,7 +27,9 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
       $version = $adat[2];
 			StatUsageManager::addEntry($con->getBlid(), $aid, $_REQUEST['sha'], $version, ($branch == "beta"));
     }
-  }
+  } else {
+		$ret->authed = false;
+	}
   echo json_encode($ret, JSON_PRETTY_PRINT);
 } else {
 	echo "bad ident (" . $_REQUEST['ident'] . ")";
