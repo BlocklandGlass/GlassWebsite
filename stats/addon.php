@@ -34,7 +34,7 @@
 
 				if($addon->hasBeta()) {
 					$ret[] = "Beta";
-					if($addon->getBetaVersion() != null) {
+					if(isset($dist[$addon->getBetaVersion()]) && $addon->getBetaVersion() != null) {
 						$vals[] = $dist[$addon->getBetaVersion()];
 					} else {
 						$vals[] = 0;
