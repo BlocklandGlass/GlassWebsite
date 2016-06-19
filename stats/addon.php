@@ -25,7 +25,7 @@
 	var data = {
 	    labels: <?php
 				$ret = array("Stable");
-				if(isset($dist[$addon->getVersion()])) {
+				if(isset($dist[$addon->getVersion()]) && $dist[$addon->getVersion()] !== null) {
 					$vals = array($dist[$addon->getVersion()]);
 				} else {
 					$vals = array(0);
