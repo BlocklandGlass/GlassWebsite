@@ -15,6 +15,7 @@ class AddonFileHandler {
     if($res === TRUE) {
       for ($i = 0; $i < $zip->numFiles; $i++) {
         $filename = $zip->getNameIndex($i);
+        $filename = strtolower($filename);
 
         if($filename == "server.cs" || $filename == "client.cs") {
           $executable = true;
@@ -43,6 +44,7 @@ class AddonFileHandler {
     if($zip->open($file) == TRUE) {
       for ($i = 0; $i < $zip->numFiles; $i++) {
         $filename = $zip->getNameIndex($i);
+        $filename = strtolower($filename);
 
         if($filename == "colorset.txt") {
           $colors = true;
