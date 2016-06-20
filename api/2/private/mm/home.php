@@ -37,7 +37,10 @@ foreach($recent as $r) {
 $dlg->uploads = $ar;
 $dlg->date = time();
 
-$ret = array($dlg);
+$res = array($dlg);
+$ret = new stdClass();
+$ret->status = "success";
+$ret->data = $res;
 
 echo json_encode($ret, JSON_PRETTY_PRINT);
 ?>

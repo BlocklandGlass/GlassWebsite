@@ -740,7 +740,7 @@ class AddonManager {
 			$time = 60*24*7;
 		}
 		$db = new DatabaseManager();
-		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE `uploadDate` > now() - INTERVAL " . $db->sanitize($time) . " MINUTE ORDER BY `uploadDate` DESC");
+		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE `uploadDate` > now() - INTERVAL " . $db->sanitize($time) . " MINUTE AND `approved`=1 ORDER BY `uploadDate` DESC");
 		echo($db->error());
 		$arr = array();
 		while($obj = $res->fetch_object()) {
