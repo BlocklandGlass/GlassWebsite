@@ -31,7 +31,7 @@ foreach($recent as $r) {
   $o = new stdClass();
   $o->id = $r->getId();
   $o->name = $r->getName();
-  $o->author = $r->getManager()->getName();
+  $o->author = UserLog::getCurrentUsername($r->getManagerBLID());
   $ar[] = $o;
 }
 $dlg->uploads = $ar;
