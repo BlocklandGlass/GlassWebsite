@@ -7,7 +7,7 @@ require_once(realpath(dirname(__FILE__) . "/private/class/StatManager.php"));
 
 <div class="bigheadcontainer">
 	<h1>Blockland Glass</h1>
-	<h2>A service for the community, by the community</h2>
+	<h2 style="font-weight: normal">A service for the community, by the community</h2>
 	<a href="dl.php" class="btn blue"><b>Download</b></a><br />
 	<a href="builds" class="btn green" style="width: 150px">Builds</a>
 	<a href="addons" class="btn yellow" style="width: 150px">Add-Ons</a><br /><br />
