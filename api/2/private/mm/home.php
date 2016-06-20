@@ -1,41 +1,43 @@
 <?php
 require_once dirname(__DIR__) . "/../../../private/class/AddonManager.php";
 
-$trending = include(dirname(__DIR__) . "/../../../private/json/getTrendingAddonsWithUsers.php");
-$latest = include(dirname(__DIR__) . "/../../../private/json/getNewAddonsWithUsers.php");
+/*
 
-//var_dump($latest);
-$ret = new stdClass();
-$ret->status = "success";
-$ret->latest = [];
-foreach($latest['addons'] as $addon) {
-  $addonDat = new stdClass();
-  $addonDat->id = $addon->id;
-  $addonDat->name = $addon->name;
-  $addonDat->uploadDate = date("D, g:i a", strtotime($addon->uploadDate));
+[
+  {
+    type: "recent",
+    uploads: [],
+    updates: [],
+    date: 138247923
+  },{
+    type: "summary",
+    popular: [],
+    statistics: [],
+    date: 138247923
+  },{
+    type: "message",
+    text: "asdf",
+    date: 138247923
+  }
+]
 
-  $addonDat->author = $latest['users'][$addon->blid]->getUsername();
+*/
 
-  // TODO something with author info
-
-  $ret->latest[] = $addonDat;
+$recent = AddonManager::getRecentAddons();
+$dlg = new stdClass();
+$dlg->type = "recent";
+$ar = array();
+foreach($recent as $r) {
+  $o = new stdClass();
+  $o->id = $r->getId();
+  $o->name = $r->getName();
+  $o->author = $r->getManager()->getName();
+  $ar[] = $o;
 }
+$dlg->uploads = $ar;
+$dlg->date = time();
 
-$ret->trending = [];
-foreach($trending['addons'] as $addon) {
-  $addonDat = new stdClass();
-  $addonDat->id = $addon->id;
-  $addonDat->name = $addon->name;
-  $addonDat->downloads = $addon->getTotalDownloads();
-
-  $addonDat->author = $trending['users'][$addon->blid]->getUsername();
-
-  // TODO something with author info
-
-  $ret->trending[] = $addonDat;
-}
-
-//var_dump($trending);
+$ret = array($dlg);
 
 echo json_encode($ret, JSON_PRETTY_PRINT);
 ?>

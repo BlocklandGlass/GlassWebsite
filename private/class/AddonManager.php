@@ -735,6 +735,20 @@ class AddonManager {
 		return $newestAddonIDs;
 	}
 
+	public static function getRecentAddons($time = null) {
+		if($time == null) {
+			$time = 60*24*7;
+		}
+		$db = new DatabaseManager();
+		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE `uploadDate` > now() - INTERVAL " . $db->sanitize($time) . " MINUTE ORDER BY `uploadDate` DESC");
+		echo($db->error());
+		$arr = array();
+		while($obj = $res->fetch_object()) {
+			$arr[] = AddonManager::getFromId($obj->id);
+		}
+		return $arr;
+	}
+
 	public static function getUpdates($addon) {
 		$updates = apc_fetch('updates_' . $addon->getId(), $success);
 
