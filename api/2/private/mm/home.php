@@ -31,6 +31,10 @@ foreach($recent as $r) {
   $o = new stdClass();
   $o->id = $r->getId();
   $o->name = $r->getName();
+  $un = UserLog::getCurrentUsername($r->getManagerBLID());
+  if($un === false) {
+    $un = UserManager::getFromBLID($r->getManagerBLID())->getUsername();
+  }
   $o->author = UserLog::getCurrentUsername($r->getManagerBLID());
   $ar[] = $o;
 }
