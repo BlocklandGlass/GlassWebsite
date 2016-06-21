@@ -136,6 +136,7 @@ class CronStatManager {
     return $stats;
   }
 
+
   function getMasterServerStats() {
     $url = 'http://master2.blockland.us/';
 		$result = file_get_contents($url, false);
@@ -171,6 +172,10 @@ class CronStatManager {
       )")) {
       throw new Exception("Error creating users table: " . $database->error());
     }
+  }
+
+  public function saveActivityFeed() {
+
   }
 
   public function getRecentBlocklandStats($hours = 12) {

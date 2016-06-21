@@ -749,6 +749,20 @@ class AddonManager {
 		return $arr;
 	}
 
+	public static function getRecentUpdates($time = null) {
+		if($time == null) {
+			$time = 60*24*7;
+		}
+		$db = new DatabaseManager();
+		$res = $db->query("SELECT * FROM `addon_updates` WHERE `submitted` > now() - INTERVAL " . $db->sanitize($time) . " MINUTE AND `approved`=1 ORDER BY `submitted` DESC");
+		echo($db->error());
+		$arr = array();
+		while($obj = $res->fetch_object()) {
+			$arr[] = new AddonUpdateObject($obj);
+		}
+		return $arr;
+	}
+
 	public static function getUpdates($addon) {
 		$updates = apc_fetch('updates_' . $addon->getId(), $success);
 

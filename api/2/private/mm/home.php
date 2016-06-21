@@ -24,8 +24,10 @@ require_once dirname(__DIR__) . "/../../../private/class/AddonManager.php";
 */
 
 $recent = AddonManager::getRecentAddons();
+$recentUpdates = AddonManager::getRecentUpdates();
 $dlg = new stdClass();
 $dlg->type = "recent";
+
 $ar = array();
 foreach($recent as $r) {
   $o = new stdClass();
@@ -35,10 +37,22 @@ foreach($recent as $r) {
   if($un === false) {
     $un = UserManager::getFromBLID($r->getManagerBLID())->getUsername();
   }
-  $o->author = UserLog::getCurrentUsername($r->getManagerBLID());
+  $o->author = $un;
   $ar[] = $o;
 }
 $dlg->uploads = $ar;
+
+$ar = array();
+foreach($recentUpdates as $r) {
+  $o = new stdClass();
+  $ao = $r->getAddon();
+  $o->id = $ao->getId();
+  $o->name = $ao->getName();
+  $o->version = $r->getVersion();
+  $ar[] = $o;
+}
+$dlg->updates = $ar;
+
 $dlg->date = time();
 
 $res = array($dlg);
