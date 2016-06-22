@@ -201,7 +201,7 @@ class AddonManager {
 		$database = new DatabaseManager();
 		AddonManager::verifyTable($database);
 
-		$rsc = $database->query("SELECT * FROM `addon_addons` WHERE `name` = '" . $database->sanitize($name) . "' LIMIT 1");
+		$rsc = $database->query("SELECT * FROM `addon_addons` WHERE `name` = '" . $database->sanitize($name) . "' AND `approved` != '-1' LIMIT 1");
 
 		//I think we should enforce a unique file name, but not a unique addon name
 		if($rsc->num_rows > 0) {

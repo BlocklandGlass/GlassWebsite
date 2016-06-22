@@ -10,6 +10,11 @@ class CommentManager {
 	public static $SORTDATEASC = 0;
 	public static $SORTDATEDESC = 1;
 
+	public static function submitComment($aid, $blid, $comment) {
+		$db = new DatabaseManager();
+		$db->query("INSERT INTO `addon_comments` (`aid`, `blid`, `comment`) VALUES ('" . $db->sanitize($aid) . "', '" . $db->sanitize($blid) ."', '" . $db->sanitize($comment) . "');");
+	}
+
 	public static function getFromID($id, $resource = false) {
 		$commentObject = apc_fetch('commentObject_' . $id);
 
@@ -132,10 +137,6 @@ class CommentManager {
 				`timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 				`lastedit` TIMESTAMP,
 				KEY (`timestamp`),
-				FOREIGN KEY (`blid`)
-					REFERENCES users(`blid`)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE,
 				FOREIGN KEY (`aid`)
 					REFERENCES addon_addons(`id`)
 					ON UPDATE CASCADE

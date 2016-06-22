@@ -76,6 +76,19 @@ class SemVer {
     return $this->raw;
   }
 
+  function stringify() {
+    $str = $this->version;
+    if($this->hasPrerelease) {
+      if(is_numeric($this->prereleaseGreek)) {
+        $str = $str . " release " . $this->prereleaseGreek;
+      } else {
+        $str = $str . " release " . $this->prerelease;
+      }
+    }
+
+    return $str;
+  }
+
   function parseVersionText($str) {
     $parts = explode(".", $str);
 

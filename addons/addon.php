@@ -2,6 +2,7 @@
 	require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonObject.php"));
+	require_once(realpath(dirname(__DIR__) . "/private/class/CommentManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserLog.php"));
 //	require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
@@ -29,6 +30,10 @@
 	} else if(!$addonObject->getApproved()) {
 		include 'unapproved.php';
 		die();
+	}
+
+	if(isset($_POST['comment'])) {
+		CommentManager::submitComment($addonObject->getId(), UserManager::getCurrent()->getBLID(), $_POST['comment']);
 	}
 
 	$_PAGETITLE = "Glass | " . htmlspecialchars($addonObject->getName());
@@ -148,19 +153,9 @@
 	</div>
 	<hr />
 	<div class="comments" id="commentSection">
-	<?php include(realpath(dirname(__DIR__) . "/ajax/getComments.php")); ?>
+		<form action="" method="post">
+			<?php include(realpath(dirname(__DIR__) . "/ajax/getComments.php")); ?>
+		</form>
 	</div>
 </div>
-<script type="text/javascript">
-//function buildCommentSection(data) {
-//
-// }
-
-$(document).ready(function () {
-	$("#commentSection").load("/ajax/getComments.php");
-	//$.getJSON("/ajax/getComments.php", function (data) {
-	//	$("#commentSection").html(data);
-	//});
-});
-</script>
 <?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>
