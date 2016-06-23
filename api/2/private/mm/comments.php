@@ -14,6 +14,8 @@ if(!isset($_REQUEST['page'])) {
 
 $addonObject = AddonManager::getFromID($aid);
 
+$res = new stdClass();
+$res->status = "success";
 $ret = array();
 
 $start = $page*10;
@@ -33,5 +35,7 @@ foreach($comments as $comid) {
   $ret[] = $commento;
 }
 
-echo json_encode($ret, JSON_PRETTY_PRINT);
+$res->comments = $ret;
+
+echo json_encode($res, JSON_PRETTY_PRINT);
 ?>
