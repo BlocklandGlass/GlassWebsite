@@ -25,7 +25,7 @@ if($type == "addon") {
     $r->type = "addon";
     $r->title = $addon->getName();
     //$r->author
-    $r->description = $addon->getDescription();
+    $r->description = addcslashes($addon->getDescription());
     $ret->results[] = $r;
   }
 } else {
