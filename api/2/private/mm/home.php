@@ -44,8 +44,12 @@ $dlg->uploads = $ar;
 
 $ar = array();
 foreach($recentUpdates as $r) {
-  $o = new stdClass();
   $ao = $r->getAddon();
+
+  if(!$ao->getApproved())
+    continue;
+
+  $o = new stdClass();
   $o->id = $ao->getId();
   $o->name = $ao->getName();
   $o->version = $r->getVersion();
