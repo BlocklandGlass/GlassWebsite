@@ -37,9 +37,10 @@ $ret->screenshots = array();
 }*/
 
 $author = new stdClass();
-//$author->blid = $addonObject->getAuthor()->getBlid();
-//$author->name = $addonObject->getAuthor()->getName();
-$ret->authors = $author;
+$manager = UserManager::getFromBlid($addonObject->getManagerBLID());
+$author->blid = $manager->getBlid();
+$author->name = $manager->getName();
+$ret->authors = array($author);
 
 $channelId[1] = "stable";
 $channelId[2] = "beta";
