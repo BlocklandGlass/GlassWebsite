@@ -831,6 +831,48 @@ class AddonManager {
 		NotificationManager::createNotification($manager, 'Your update to $1 was approved', $params);
 	}
 
+	public static function submitRating($aid, $blid, $rating) {
+		if($rating < 1) {
+			$rating = 1;
+		}
+
+		if($rating > 5) {
+			$rating = 5;
+		}
+
+		$rating = ceil($rating);
+
+		$db = new DatabaseManager();
+		AddonManager::verifyTable($db);
+
+
+    $res = $db->query($sq = "SELECT COUNT(*) FROM `addon_ratings` WHERE `blid`='" . $db->sanitize($blid) . "' AND `aid`='" . $db->sanitize($aid) . "'");
+    $ret = $res->fetch_row();
+    if(!isset($ret[0]) || $ret[0] == 0) {
+      $res = $db->query($sq = "INSERT INTO `addon_ratings` (`blid`, `aid`, `rating`) VALUES (
+      '" . $db->sanitize($blid) . "',
+      '" . $db->sanitize($aid) . "',
+      '" . $db->sanitize($rating) . "')");
+    } else {
+      $db->update("addon_ratings", ["blid"=>$blid, "aid"=>$aid], ["rating"=>$rating]);
+    }
+
+		//recalculate total
+		$res = $db->query("SELECT * FROM `addon_ratings` WHERE `aid`='" . $db->sanitize($aid) . "'");
+		$ratings = array();
+		while($obj = $res->fetch_object()) {
+			$ratings[] = $obj->rating;
+		}
+
+		$avg = array_sum($ratings)/sizeof($ratings);
+
+		$db->update("addon_addons", ["id"=>$aid], ["rating"=>$avg]);
+
+		echo($db->error());
+
+		return $avg;
+	}
+
 	public static function verifyTable($database) {
 		/*TO DO:
 			- screenshots
@@ -868,6 +910,7 @@ class AddonManager {
 				`deleted` TINYINT NOT NULL DEFAULT 0,
 				`approved` TINYINT NOT NULL DEFAULT 0,
 				`betaVersion` TEXT DEFAULT NULL,
+				`rating` int(11) NOT NULL,
 				`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				FOREIGN KEY (`board`)
 					REFERENCES addon_boards(`id`)
@@ -892,6 +935,17 @@ class AddonManager {
 					ON DELETE CASCADE,
 			  PRIMARY KEY (`id`),
 			  UNIQUE KEY `id` (`id`))")) {
+				throw new Exception("Failed to create table addon_updates: " . $database->error());
+			}
+
+			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_ratings` (
+			  `aid` int(11) NOT NULL,
+				`blid` int(11) NOT NULL,
+				`rating` int(11) NOT NULL,
+				FOREIGN KEY (`aid`)
+					REFERENCES addon_addons(`id`)
+					ON UPDATE CASCADE
+					ON DELETE CASCADE)")) {
 				throw new Exception("Failed to create table addon_updates: " . $database->error());
 			}
 		}

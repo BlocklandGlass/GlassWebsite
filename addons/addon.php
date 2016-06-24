@@ -41,6 +41,61 @@
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>
+<script type="text/javascript">
+$(document).ready(function() {
+		var avgRating = 0<?php echo @round($addonObject->getRating()); ?>;
+
+		for(var i = 0; i < avgRating; i++) {
+			$('#star' + (i+1)).attr("src","/img/icons32/star.png");
+		}
+
+		for(var i = avgRating-1; i < 5; i++) {
+			$('#star' + (i+2)).attr("src","/img/icons32/draw_star.png");
+		}
+
+		<?php if(UserManager::getCurrent()) { ?>
+		$('.star').hover(function(){
+			var starNum = $(this).attr('id').slice(4,5);
+			for(var i = 0; i < starNum; i++) {
+				$('#star' + (i+1)).attr("src","/img/icons32/star.png");
+			}
+
+			for(var i = starNum-1; i < 5; i++) {
+				$('#star' + (i+2)).attr("src","/img/icons32/draw_star.png");
+			}
+		},function(){
+
+		});
+
+
+		$('#stars').mouseleave(function(){
+			var starNum = avgRating;
+			for(var i = 0; i < starNum; i++) {
+				$('#star' + (i+1)).attr("src","/img/icons32/star.png");
+			}
+
+			for(var i = starNum-1; i < 5; i++) {
+				$('#star' + (i+2)).attr("src","/img/icons32/draw_star.png");
+			}
+		});
+
+		$('.star').click(function() {
+			var starNum = $(this).attr('id').slice(4,5);
+			$.post("/ajax/submitRating.php", {"rating": starNum, "aid": <?php echo $_GET['id']; ?>}, function(data, status) {
+				avgRating = data;
+				var starNum = avgRating;
+				for(var i = 0; i < starNum; i++) {
+					$('#star' + (i+1)).attr("src","/img/icons32/star.png");
+				}
+
+				for(var i = starNum-1; i < 5; i++) {
+					$('#star' + (i+2)).attr("src","/img/icons32/draw_star.png");
+				}
+			});
+		});
+		<?php } ?>
+	});
+</script>
 <div class="maincontainer">
 	<?php
 		echo "<span style=\"font-size: 9pt;\"><a href=\"/addons/\">Add-Ons</a> >> ";
@@ -106,6 +161,15 @@
 			<br />
 			<image style="height:1.5em" src="http://blocklandglass.com/icon/icons32/inbox_upload.png" />
 			<?php echo date("F j, g:i a", strtotime($addonObject->getUploadDate())); ?>
+			<br />
+			<br />
+			<div id="stars" style="cursor:pointer;">
+				<image style="height:1.2em" class="star" id="star1" src="/img/icons32/draw_star.png" />
+				<image style="height:1.2em" class="star" id="star2" src="/img/icons32/draw_star.png" />
+				<image style="height:1.2em" class="star" id="star3" src="/img/icons32/draw_star.png" />
+				<image style="height:1.2em" class="star" id="star4" src="/img/icons32/draw_star.png" />
+				<image style="height:1.2em" class="star" id="star5" src="/img/icons32/draw_star.png" />
+			</div>
 		</div>
 		<div class="addoninforight">
 			<?php
