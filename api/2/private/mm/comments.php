@@ -14,13 +14,19 @@ if(!isset($_REQUEST['page'])) {
 
 $addonObject = AddonManager::getFromID($aid);
 
+if(isset($_REQUEST['newcomment'])) {
+  if($con->isAuthed()) {
+    CommentManager::submitComment($addonObject->getId(), $con->getBlid(), stripcslashes($_REQUEST['newcomment']));
+  }
+}
+
 $res = new stdClass();
 $res->status = "success";
 $ret = array();
 
 $start = $page*10;
 
-$comments = CommentManager::getCommentIDsFromAddon($addonObject->getId(), $start, 10);
+$comments = CommentManager::getCommentIDsFromAddon($addonObject->getId(), $start, 10, 1);
 foreach($comments as $comid) {
   $comment = CommentManager::getFromId($comid);
 
