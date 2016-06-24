@@ -49,7 +49,7 @@ class UserLog {
 
   //$ip - check against auth.blockland.us. if blank, ignore
   public static function addEntry($blid, $username, $ip = null) {
-    if(isset($ip)) {
+    if($ip != null) {
       if(!UserLog::isRemoteVerified($blid, $username, $ip)) {
         return "auth.blockland.us verification failed";
       }
