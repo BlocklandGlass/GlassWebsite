@@ -32,5 +32,7 @@ if($type == "addon") {
   //coming soon?
 }
 
+$ret->status = "success";
+
 echo json_encode($ret, JSON_PRETTY_PRINT);
 ?>
