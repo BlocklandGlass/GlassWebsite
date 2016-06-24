@@ -446,7 +446,7 @@ class AddonManager {
 			//	//
 			//	$query .= "`tags` LIKE '%" . $database->sanitize($search['tag']) . "%' AND ";
 			//}
-			$query .= "`deleted` = 0 ORDER BY ";
+			$query .= "`deleted` = 0 AND `approved` = 1 ORDER BY ";
 
 			switch($search['sort']) {
 				case AddonManager::$SORTNAMEASC:
@@ -538,7 +538,8 @@ class AddonManager {
 		return AddonManager::searchAddons([
 			"board" => $id,
 			"offset" => $offset,
-			"limit" => $limit
+			"limit" => $limit,
+			"approved" => 1
 		]);
 	}
 

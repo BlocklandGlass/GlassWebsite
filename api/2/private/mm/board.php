@@ -17,11 +17,18 @@ $boards = BoardManager::getAllBoards();
 
 foreach($addonIds as $aid) {
   $addon = AddonManager::getFromID($aid);
+
+  if($addon->getRating() == null) {
+    $rating = 0;
+  } else {
+    $rating = $addon->getRating();
+  }
+
   $retboard = new stdClass();
   $retboard->id = $addon->getId();
   $retboard->name = $addon->getName();
   $retboard->author = UserManager::getFromBLID($addon->getManagerBLID())->getName();
-  $retboard->rating = rand(0, 100)/20;
+  $retboard->rating = $rating;
   $retboard->downloads = $addon->getDownloads();
   $ret->addons[] = $retboard;
 }
