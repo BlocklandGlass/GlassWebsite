@@ -17,6 +17,12 @@ if(isset($_REQUEST['id']) & $_REQUEST['id'] != "") {
 $addonObject = AddonManager::getFromID($aid);
 //$screens = ScreenshotManager::getScreenshotsFromAddon($aid); //I dont think this is done
 
+if(!$addonObject->getApproved()) {
+  $ret->status = "error";
+  $ret->error = "Add-On not approved";
+  die(json_encode($ret, JSON_PRETTY_PRINT));
+}
+
 
 $ret->aid = $aid;
 $ret->filename = $addonObject->getFilename();
