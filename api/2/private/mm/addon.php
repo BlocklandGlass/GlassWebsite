@@ -30,6 +30,7 @@ $ret->boardId = $addonObject->getBoard();
 $ret->board = BoardManager::getFromID($addonObject->getBoard())->getName();
 $ret->name = $addonObject->getName();
 $ret->description = htmlspecialchars_decode($addonObject->getDescription());
+$ret->rating = $addonObject->getRating();
 
 $ret->screenshots = array();
 /*foreach($screens as $screen) {
