@@ -33,15 +33,16 @@ $ret->description = htmlspecialchars_decode($addonObject->getDescription());
 $ret->rating = $addonObject->getRating();
 
 $ret->screenshots = array();
-/*foreach($screens as $screen) {
+$screens = ScreenshotManager::getScreenshotsFromAddon($aid);
+foreach($screens as $sid) {
+  $ss = ScreenshotManager::getFromId($sid);
   $screenshot = new stdClass();
-  $screenshot->id = $screen->getId();
-  $screenshot->url = "http://api.blocklandglass.com/files/screenshots/" . $addonObject->getId() . "/" . $i . ".png";
-  $screenshot->thumbnail = "http://api.blocklandglass.com/files/screenshots/" . $addonObject->getId() . "/" . $i . "_thumb.png";
-  list($width, $height) = getimagesize(dirname(__DIR__) . "/files/screenshots/" . $addonObject->getId() . "/" . $i . ".png");
-  $screenshot->extent = $width . " " . $height;
+  $screenshot->id = $ss->getId();
+  $screenshot->url = $ss->getUrl();
+  $screenshot->thumbnail = $ss->getThumbUrl();
+  $screenshot->extent =  $ss->getX() . " " . $ss->getY();
   $ret->screenshots[] = $screenshot;
-}*/
+}
 
 $author = new stdClass();
 $manager = UserManager::getFromBlid($addonObject->getManagerBLID());

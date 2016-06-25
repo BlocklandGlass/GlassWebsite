@@ -90,7 +90,7 @@ class ScreenshotManager {
 		if($success === false) {
 			$database = new DatabaseManager();
 			ScreenshotManager::verifyTable($database);
-			$resource = $database->query("SELECT `sid` FROM `addon_screenshots` WHERE `aid` = '" . $database->sanitize($id) . "'");
+			$resource = $database->query("SELECT `sid` FROM `addon_screenshotmap` WHERE `aid` = '" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
@@ -106,29 +106,55 @@ class ScreenshotManager {
 		return $addonScreenshots;
 	}
 
-	//do we actually want to enforce unique file names?
-//	public static function getIDFromFileName($name) {
-//		$id = apc_fetch('screenshotByFileName_' . $name, $success);
-//
-//		if($success === false) {
-//			$database = new DatabaseManager();
-//			ScreenshotManager::verifyTable($database);
-//			$resource = $database->query("SELECT `id` FROM `screenshots` WHERE `filename` = '" . $database->sanitize($name) . "'");
-//
-//			if(!$resource) {
-//				throw new Exception("Database error: " . $database->error());
-//			}
-//
-//			if($resource->num_rows == 0) {
-//				$id = false;
-//			} else {
-//				$id = $resource->fetch_object()->id;
-//			}
-//			$resource->close();
-//			apc_store('screenshotByFileName_' . $name, $id, ScreenshotManager::$objectCacheTime);
-//		}
-//		return $id;
-//	}
+	public static function uploadScreenshotForAddon($addon, $ext, $tempPath) {
+		$blid = $addon->getManagerBLID();
+		$tempThumb = ScreenshotManager::createTempThumbnail($tempPath, $ext);
+		$database = new DatabaseManager();
+		ScreenshotManager::verifyTable($database);
+
+		list($width, $height) = getimagesize($tempPath);
+
+		if(!$database->query("INSERT INTO `screenshots` (`blid`, `x`, `y`) VALUES ('" .
+			$database->sanitize($blid) . "'," .
+			"'" . $width . "','" . $height . "')")) {
+			throw new Exception("Database error: " . $database->error());
+		}
+
+		$sid = $database->fetchMysqli()->insert_id;
+		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
+
+		AWSFileManager::uploadNewScreenshot($sid, "screenshot." . $ext, $tempPath, $tempThumb);
+
+		apc_delete('userScreenshots_' . $blid);
+
+		return ScreenshotManager::addScreenshotToAddon($sid, $addon->getID());
+	}
+
+	public static function addScreenshotToAddon($sid, $bid) {
+		$database = new DatabaseManager();
+		ScreenshotManager::verifyTable($database);
+		$resource = $database->query("SELECT 1 FROM `addon_screenshotmap` WHERE
+			`sid` = '" . $database->sanitize($sid) . "' AND
+			`aid` = '" . $database->sanitize($bid) . "' LIMIT 1");
+
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
+		}
+
+		if($resource->num_rows > 0 ) {
+			$resource->close();
+			return false;
+		}
+		$resource->close();
+
+		if(!$database->query("INSERT INTO `addon_screenshotmap` (sid, aid) VALUES ('" .
+			$database->sanitize($sid) . "', '" .
+			$database->sanitize($bid) . "')")) {
+			throw new Exception("Failed to create new build screenshot entry: " . $database->error());
+		}
+		apc_delete('addonScreenshots_' . $bid);
+		return true;
+	}
 
 	public static function uploadScreenshotForBuildID($bid, $tempPath) {
 		$build = BuildManager::getFromID($bid);
@@ -141,7 +167,7 @@ class ScreenshotManager {
 
 	public static function uploadScreenshotForBuild($build, $ext, $tempPath) {
 		$blid = $build->getBLID();
-		$tempThumb = ScreenshotManager::createTempThumbnail($tempPath);
+		$tempThumb = ScreenshotManager::createTempThumbnail($tempPath, $ext);
 		$database = new DatabaseManager();
 		ScreenshotManager::verifyTable($database);
 		if(!$database->query("INSERT INTO `screenshots` (`blid`) VALUES ('" .
@@ -259,11 +285,11 @@ class ScreenshotManager {
 		return true;
 	}
 
-	private static function createTempThumbnail($tempFile) {
+	private static function createTempThumbnail($tempFile, $ext) {
 		//create thumbnail
 		//requires GD2 to be installed
 		//http://www.icant.co.uk/articles/phpthumbnails/
-		if(preg_match("/\.png$/", $tempFile)) {
+		if($ext == "png") {
 			$img = imagecreatefrompng($tempFile);
 		} else {
 			$img = imagecreatefromjpeg($tempFile);
@@ -305,6 +331,8 @@ class ScreenshotManager {
 			if(!$database->query("CREATE TABLE IF NOT EXISTS `screenshots` (
 				`id` INT NOT NULL AUTO_INCREMENT,
 				`blid` INT NOT NULL,
+				`x` INT NOT NULL,
+				`y` INT NOT NULL,
 				`name` VARCHAR(60),
 				`filename` VARCHAR(60),
 				`description` TEXT,

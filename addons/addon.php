@@ -3,6 +3,7 @@
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonObject.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/CommentManager.php"));
+	require_once(realpath(dirname(__DIR__) . "/private/class/ScreenshotManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserLog.php"));
 //	require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
@@ -212,6 +213,19 @@ $(document).ready(function() {
 			$id = "beta";
 			$class = "red";
 			echo '<a href="/addons/download.php?id=' . $addonObject->getId() . '&beta=1" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />v' . $addonObject->getBetaVersion() . '</span></a>';
+		}
+		?>
+	</div>
+	<hr />
+	<div class="screenshots" style="text-align:center">
+		<?php
+		$screenshots = ScreenshotManager::getScreenshotsFromAddon($_GET['id']);
+		foreach($screenshots as $sid) {
+		  $ss = ScreenshotManager::getFromId($sid);
+		  echo "<div style=\"padding: 5px; margin: 10px 10px; background-color: #eee; display:inline-block; width: 128px; vertical-align: middle\">";
+		  echo "<a target=\"_blank\" href=\"/addons/screenshot.php?id=" . $sid . "\">";
+		  echo "<img src=\"" . $ss->getThumbUrl() . "\" /></a>";
+		  echo "</div>";
 		}
 		?>
 	</div>

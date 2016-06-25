@@ -18,6 +18,13 @@
 		return $response;
 	}
 
+	if(!isset($_screenshotContext)) {
+		$response = [
+			"message" => "Internal Error: No Context"
+		];
+		return $response;
+	}
+
 	if(!isset($_POST['submit'])) {
 		$response = [
 			"message" => "Upload a Screenshot"
@@ -40,6 +47,7 @@
 		return $response;
 	}
 	$uploadExt = pathinfo($_FILES['uploadfile']['name'], PATHINFO_EXTENSION);
+	$uploadExt = strtolower($uploadExt);
 
 	if($uploadExt != "png" && $uploadExt != "jpg") {
 		$response = [
@@ -57,6 +65,9 @@
 	}
 	$tempPath = $_FILES['uploadfile']['tmp_name'];
 
+	if($_screenshotContext == "addon") {
+		ScreenshotManager::uploadScreenshotForAddon(AddonManager::getFromId($_GET['id']), $uploadExt, $tempPath);
+	}
 	$response = [
 		"message" => "idk"
 	];

@@ -7,6 +7,8 @@ class ScreenshotObject {
 	public $description;
 	public $url;
 	public $thumburl;
+	public $x;
+	public $y;
 
 	public function __construct($resource) {
 		$this->id = intval($resource->id);
@@ -16,10 +18,20 @@ class ScreenshotObject {
 		$this->description = $resource->description;
 		$this->url = "https://s3.amazonaws.com/" . urlencode(AWSFileManager::getBucket()) . "/screenshots/" . $this->id;
 		$this->thumburl = "https://s3.amazonaws.com/" . urlencode(AWSFileManager::getBucket()) . "/screenshots/thumb/" . $this->id;
+		$this->x = $resource->x;
+		$this->y = $resource->y;
 	}
 
 	public function getID() {
 		return $this->id;
+	}
+
+	public function getX() {
+		return $this->x;
+	}
+
+	public function getY() {
+		return $this->y;
 	}
 
 	public function getAuthor() {
@@ -47,7 +59,7 @@ class ScreenshotObject {
 	}
 
 	public function getThumbUrl() {
-		return $this->url;
+		return $this->thumburl;
 	}
 }
 ?>
