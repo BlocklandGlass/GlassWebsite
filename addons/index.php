@@ -15,6 +15,7 @@
 	<ul class="addonnav">
 		<li><a href="/addons/boards.php">Boards</a></li>
 		<li><a href="/addons/boards.php">Tags</a></li>
+		<li><a href="/addons/rtb/">RTB Archive</a></li>
 		<?php
 		if($user && $user->inGroup("Reviewer")) {
 		?>
