@@ -20,6 +20,16 @@ class ServerTracker {
     }
   }
 
+  public static function getActiveServers() {
+    $db = new DatabaseManager();
+    $res = $db->query("SELECT * FROM `server_tracking` WHERE `lastUpdate` > now() - INTERVAL 10 MINUTE");
+    $ret = array();
+    while($obj = $res->fetch_object()) {
+      $ret[] = $obj;
+    }
+    return $ret;
+  }
+
   public static function verifyTable($database) {
 		if($database->debug()) {
 			if(!$database->query("CREATE TABLE IF NOT EXISTS `server_tracking` (
