@@ -77,7 +77,7 @@ class DatabaseManager {
 		return $this->debug;
 	}
 
-	public function update($table, $identifiers, $values) {
+	public function update($table, $identifiers, $values, $time = null) {
 		$sql = "UPDATE `" . $table . "` SET ";
 		$first = true;
 		foreach($values as $key=>$value) {
@@ -87,6 +87,10 @@ class DatabaseManager {
 				$first = false;
 			}
 			$sql .= "`$key`='" . $this->sanitize($value) . "'";
+		}
+
+		if($time != null) {
+			$sql .= ", `$time`= NOW()";
 		}
 
 		if($identifiers != null) {

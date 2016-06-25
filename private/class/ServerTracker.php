@@ -16,7 +16,7 @@ class ServerTracker {
       '" . $db->sanitize($host) . "',
       '" . $db->sanitize(json_encode($clients)) . "')");
     } else {
-      $db->update("server_tracking", ["ip"=>$ip, "port"=>$port], ["host"=>$host, "clients"=>json_encode($clients)]);
+      $db->update("server_tracking", ["ip"=>$ip, "port"=>$port], ["host"=>$host, "clients"=>json_encode($clients)], "lastUpdate");
     }
   }
 
