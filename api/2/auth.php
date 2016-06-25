@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__FILE__) . "/private/ClientConnection.php";
 require_once dirname(__FILE__) . "/private/BlocklandAuth.php";
+require_once dirname(__DIR__) . "/../private/class/ServerTracker.php";
 require_once dirname(__DIR__) . "/../private/class/NotificationManager.php";
 
 //fields -
@@ -8,6 +9,16 @@ require_once dirname(__DIR__) . "/../private/class/NotificationManager.php";
 // username - username
 // blid     - blockland id
 // version  - version of glass
+
+if(isset($_REQUEST['server'])) {
+	if($_REQUEST['server']) {
+		$isServer = true;
+	} else {
+		$isServer = false;
+	}
+} else {
+	$isServer = false;
+}
 
 header('Content-Type: text/json');
 if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
@@ -17,9 +28,15 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 
 	$con = ClientConnection::loadFromIdentifier($_REQUEST['ident']);
   $ret = new stdClass();
-  $ret->ident = $con->getIdentifier();
 
-  if($con->isAuthed()) {
+	if(is_object($con)) {
+	  $ret->ident = $con->getIdentifier();
+	} else {
+		$ret->action = "reauth";
+	}
+
+  if(is_object($con) && $con->isAuthed()) {
+		$con->setServer($isServer);
     // action   - verify
     // email    - correct email
     if($_REQUEST['action'] == "verify") {
@@ -42,6 +59,29 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
       }
     } else if($_REQUEST['action'] == "checkin") {
       $ret->status = "success";
+			$con->setAuthed(true);
+			if($isServer) {
+				$clients = stripcslashes($_REQUEST['clients']);
+				$clArray = array();
+				$clDatArray = explode("\n", $clients);
+				foreach($clDatArray as $clDat) {
+					$dat = explode("\t", $clDat);
+					$obj = new stdClass();
+
+					$obj->name = $dat[0];
+					$obj->blid = $dat[1];
+
+					$clArray[] = $obj;
+				}
+				$ret->cl = $clArray;
+
+				$username = $_REQUEST['username'];
+			  $blid = $_REQUEST['blid'];
+			  $port = $_REQUEST['port'];
+			  $ip = $_SERVER['REMOTE_ADDR'];
+
+				ServerTracker::updateRecord($ip, $port, $username, $clArray);
+			}
     }
   }
   echo json_encode($ret, JSON_PRETTY_PRINT);
@@ -53,13 +93,39 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
   $ip = $_SERVER['REMOTE_ADDR'];
 
 	$con = new ClientConnection(array($blid, $username, $ip));
+	$con->setServer($isServer);
 
   $blAuth = $con->attemptBlocklandAuth();
   if($blAuth === true) {
     $ret->status = "success";
     $ret->ident = $con->getIdentifier();
 
+
     $con->setAuthed(true);
+
+		if($isServer) {
+			$clients = stripcslashes($_REQUEST['clients']);
+			$clArray = array();
+			$clDatArray = explode("\n", $clients);
+			foreach($clDatArray as $clDat) {
+				$dat = explode("\t", $clDat);
+				$obj = new stdClass();
+
+				$obj->name = $dat[0];
+				$obj->blid = $dat[1];
+
+				$clArray[] = $obj;
+			}
+			$ret->cl = $clArray;
+
+			$username = $_REQUEST['username'];
+			$blid = $_REQUEST['blid'];
+			$port = $_REQUEST['port'];
+			$ip = $_SERVER['REMOTE_ADDR'];
+
+			ServerTracker::updateRecord($ip, $port, $username, $clArray);
+		}
+
 
     if($con->hasGlassAccount()) {
       $ret->debug = "glass account found";

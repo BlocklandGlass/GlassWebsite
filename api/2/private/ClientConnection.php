@@ -13,6 +13,8 @@ class ClientConnection {
 
   private $identifier;
 
+  private $server;
+
 
   public static function loadFromIdentifier($ident) {
     $data = apc_fetch("clientConnection_" . $ident);
@@ -91,6 +93,10 @@ class ClientConnection {
     if($bool) {
       UserLog::addEntry($this->blid, $this->name);
     }
+  }
+
+  function setServer($bool) {
+    $this->server = $bool;
   }
 
   function getBlid() {
