@@ -166,7 +166,7 @@ class AddonManager {
 			}
 		}
 
-		$db->query("INSERT INTO `blocklandglass2`.`addon_updates` (`id`, `aid`, `version`, `tempfile`, `changelog`, `submitted`, `upstream`, `approved`) VALUES (NULL, " .
+		$db->query("INSERT INTO `addon_updates` (`id`, `aid`, `version`, `tempfile`, `changelog`, `submitted`, `upstream`, `approved`) VALUES (NULL, " .
 			"'" . $addon->getId() . "'," .
 			"'" . $db->sanitize($version) . "'," .
 			"'" . $db->sanitize($file) . "'," .
