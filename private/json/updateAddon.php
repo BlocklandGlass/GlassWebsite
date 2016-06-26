@@ -117,7 +117,7 @@
 				return $res;
 			}
 		} else {
-			$res = AddonManager::uploadBetaAddon($addonObject, $uploadVersion, $tempLocation);
+			return $res = AddonManager::uploadBetaAddon($addonObject, $uploadVersion, $tempLocation);
 		}
 		$response = [
 			"redirect" => "/addons/review/update.php?id=" . $addonObject->getId(),

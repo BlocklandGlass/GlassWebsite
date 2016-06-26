@@ -175,6 +175,17 @@ class AddonManager {
 			"b'" . ($up ? 1 : 0) . "'," .
 			"NULL);");
 
+		$error = $db->error();
+
+		if($error != "") {
+			return array(
+				"message"=>"Database error: " . $error
+			);
+		}
+
+		return array(
+			"redirect"=>"/addons/review/update.php?id=" . $addon->getId()
+		);
 	}
 
 	public static function uploadBetaAddon($addon, $version, $file) {
