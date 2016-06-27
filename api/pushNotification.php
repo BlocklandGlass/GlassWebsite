@@ -12,6 +12,17 @@ ob_implicit_flush();
 $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 socket_connect($socket, gethostbyname('localhost'), 27001);
 socket_strerror(socket_last_error($socket));
-socket_write($socket, "notification\t" . $blid . "\t" . $header . "\t" . $body . "\t" . $image . "\t" . $action . "\t" . $sticky);
+
+$data = new stdClass();
+$data->type = "notification";
+
+$data->target = $blid;
+$data->title = $header;
+$data->text = $body;
+$data->image = $image;
+$data->callback = $action;
+$data->duration = ($sticky ? 5000 : 0);
+
+socket_write($socket, json_encode($data));
 socket_close($socket);
 ?>

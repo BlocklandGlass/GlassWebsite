@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__DIR__) . "/../../../private/class/AddonManager.php";
 require_once dirname(__DIR__) . "/../../../private/class/BoardManager.php";
+require_once dirname(__DIR__) . "/../../../private/class/UserLog.php";
 require_once dirname(__DIR__) . "/../../../private/class/ScreenshotManager.php";
 
 $ret = new stdClass();
@@ -45,9 +46,9 @@ foreach($screens as $sid) {
 }
 
 $author = new stdClass();
-$manager = UserManager::getFromBlid($addonObject->getManagerBLID());
-$author->blid = $manager->getBlid();
-$author->name = $manager->getName();
+$manager = UserLog::getCurrentUsername($addonObject->getManagerBLID());
+$author->blid = $addonObject->getManagerBLID();
+$author->name = $manager;
 $ret->authors = array($author);
 
 $channelId[1] = "stable";
