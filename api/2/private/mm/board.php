@@ -1,19 +1,48 @@
 <?php
 require_once dirname(__DIR__) . "/../../../private/class/BoardManager.php";
 require_once dirname(__DIR__) . "/../../../private/class/AddonManager.php";
+require_once dirname(__DIR__) . "/../../../private/class/RTBAddonManager.php";
 require_once dirname(__DIR__) . "/../../../private/class/UserManager.php";
 
-$boardObject = BoardManager::getFromID($_REQUEST['id']);
+
 if(isset($_REQUEST['page'])) {
   $page = $_REQUEST['page'];
 } else {
   $page = 1;
 }
+
+if($_REQUEST['id'] == "rtb") {
+  $ret = new stdClass();
+  $ret->rtb = 1;
+  $ret->addons = array();
+  $addons = RTBAddonManager::getAddons($page);
+
+  foreach($addons as $ad) {
+    $ao = new stdClass();
+    $ao->id = $ad->id;
+    $ao->name = $ad->title;
+    $ao->author = "RTB";
+    $ao->ratings = "0";
+    $ao->downloads = "N/A";
+
+    $ret->addons[] = $ao;
+  }
+
+  $ret->status = "success";
+  $ret->board_id = "rtb";
+  $ret->board_name = "RTB Archives";
+  $ret->page = $page;
+  $ret->pages = ceil(RTBAddonManager::getCount()/10);
+
+  echo json_encode($ret, JSON_PRETTY_PRINT);
+  return;
+}
+
+$boardObject = BoardManager::getFromID($_REQUEST['id']);
 $addonIds = AddonManager::getFromBoardID($boardObject->getID(), ($page-1)*10, 10);
 
 $ret = new stdClass();
 $ret->addons = array();
-$boards = BoardManager::getAllBoards();
 
 foreach($addonIds as $aid) {
   $addon = AddonManager::getFromID($aid);

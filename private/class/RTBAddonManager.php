@@ -66,6 +66,29 @@ class RTBAddonManager {
     return $ret;
   }
 
+  public static function getAddons($page, $limit = 10) {
+    $start = ($page-1)*$limit;
+    $db = new DatabaseManager();
+    $res = $db->query("SELECT * FROM `rtb_addons` ORDER BY `title` ASC LIMIT $start, $limit");
+
+    echo $db->error();
+
+    $ret = array();
+    while($obj = $res->fetch_object()) {
+      $ret[] = $obj;
+    }
+    return $ret;
+  }
+
+  public static function getCount() {
+    $db = new DatabaseManager();
+    $res = $db->query("SELECT COUNT(*) FROM `rtb_addons`");
+
+    $obj = $res->fetch_object();
+    $val = "COUNT(*)";
+    return $obj->$val;
+  }
+
   public static function getAddonFromId($id) {
     $db = new DatabaseManager();
     $res = $db->query("SELECT * FROM `rtb_addons` WHERE `id`='" . $id . "' LIMIT 0, 1");
