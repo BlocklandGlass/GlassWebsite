@@ -123,6 +123,17 @@ class AddonObject {
 		return $this->version;
 	}
 
+	public function getRestartVersion() {
+		$ups = AddonManager::getUpdates($this);
+		foreach($ups as $up) {
+			if($up->isRestart()) {
+				return $up->getVersion();
+			}
+		}
+
+		return "0";
+	}
+
 	public function getAuthorInfo() {
 		return $this->authorInfo;
 	}

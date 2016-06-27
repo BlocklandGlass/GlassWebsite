@@ -55,6 +55,7 @@ foreach($addonIds as $id) {
     $chanObj = new stdClass();
     $chanObj->name = "beta";
     $chanObj->version = $obj->getBetaVersion();
+    $chanObj->restartRequired = $obj->getBetaVersion();
     $chanObj->file = "http://" . $webUrl . "/api/2/download.php?type=addon_update&id=" . $obj->getId() . "&branch=2";
     $chanObj->changelog = "http://" . $webUrl . "/api/2/changelog.php?id=" . $obj->getId() . "&branch=2";
 

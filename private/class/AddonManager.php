@@ -149,7 +149,7 @@ class AddonManager {
 		AddonManager::submitUpdate($addonObject, $version, realpath($filepath), "Imported from upstream.", true);
 	}
 
-	public static function submitUpdate($addon, $version, $file, $changelog, $up = false) {
+	public static function submitUpdate($addon, $version, $file, $changelog, $restart) {
 		if(!is_object($addon)) {
 			$addon = AddonManager::getFromID($addon);
 		}
@@ -166,7 +166,7 @@ class AddonManager {
 			}
 		}
 
-		$db->query("INSERT INTO `addon_updates` (`id`, `aid`, `version`, `tempfile`, `changelog`, `submitted`, `upstream`, `approved`) VALUES (NULL, " .
+		$db->query("INSERT INTO `addon_updates` (`id`, `aid`, `version`, `tempfile`, `changelog`, `submitted`, `restart`, `approved`) VALUES (NULL, " .
 			"'" . $addon->getId() . "'," .
 			"'" . $db->sanitize($version) . "'," .
 			"'" . $db->sanitize($file) . "'," .
@@ -940,6 +940,7 @@ class AddonManager {
 			  `changelog` text NOT NULL,
 			  `submitted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			  `upstream` bit(1) NOT NULL DEFAULT b'0',
+			  `restart` bit(1) NOT NULL DEFAULT b'0',
 			  `approved` bit(1) DEFAULT NULL,
 				FOREIGN KEY (`aid`)
 					REFERENCES addon_addons(`id`)

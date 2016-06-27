@@ -18,6 +18,7 @@ class AddonUpdateObject {
 		$this->changelog = $row->changelog;
 		$this->version = $row->version;
 		$this->file = $row->tempfile;
+		$this->restart = $row->restart;
   }
 
 	public function getAddon() {
@@ -42,6 +43,10 @@ class AddonUpdateObject {
 
 	public function isPending() {
 		return $this->status == null;
+	}
+
+	public function isRestart() {
+		return $this->restart;
 	}
 
 	public function getDiff() {

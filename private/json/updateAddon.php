@@ -112,12 +112,12 @@
 		//repeated but slightly different path from above?
 		$tempLocation = realpath(dirname(__DIR__) . "/../addons/upload/files/" . $filename);
 		if(!$betaUpload) {
-			$res = AddonManager::submitUpdate($addonObject, $uploadVersion, $tempLocation, $uploadChangelog);
+			$res = AddonManager::submitUpdate($addonObject, $uploadVersion, $tempLocation, $uploadChangelog, $_REQUEST['restart']);
 			if(is_array($res)) {
 				return $res;
 			}
 		} else {
-			return $res = AddonManager::uploadBetaAddon($addonObject, $uploadVersion, $tempLocation);
+			return $res = AddonManager::uploadBetaAddon($addonObject, $uploadVersion, $tempLocation, $_REQUEST['restart']);
 		}
 		$response = [
 			"redirect" => "/addons/review/update.php?id=" . $addonObject->getId(),

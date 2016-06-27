@@ -54,6 +54,16 @@
 				</tr>
 				<tr>
 					<td>
+						<p><b>Restart Required</b></p>
+						<!--<span style="font-size: 0.7em;">You can find your saves in your Blockland folder!</span>-->
+						<!--<p class="description">You can find your saves in your Blockland folder!</p>-->
+					</td>
+					<td style="vertical-align: middle">
+						<input type="checkbox" name="restart">
+					</td>
+				</tr>
+				<tr>
+					<td>
 						<p><b>Beta</b></p>
 						<!--<span style="font-size: 0.7em;">You can find your saves in your Blockland folder!</span>-->
 						<!--<p class="description">You can find your saves in your Blockland folder!</p>-->
