@@ -279,14 +279,14 @@ class StatManager {
 			$groups = $resource->fetch_row()[0];
 			$resource->close();
 		}
-		$resource = $database->query("SELECT COUNT(*) FROM `build_builds` WHERE `deleted` = 0");
+		/*$resource = $database->query("SELECT COUNT(*) FROM `build_builds` WHERE `deleted` = 0");
 
 		if(!$resource) {
 			throw new Exception("Database error: " . $database->error());
 		} else {
 			$builds = $resource->fetch_row()[0];
 			$resource->close();
-		}
+		}*/
 		$resource = $database->query("SELECT COUNT(*) FROM `addon_tags`");
 
 		if(!$resource) {
