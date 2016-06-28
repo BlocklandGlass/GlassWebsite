@@ -19,6 +19,12 @@ if($type == "addon_update" || $type == "addon_download") {
     $branch = 1;
   }
 
+  if($type == "addon_update") {
+    StatManager::downloadAddonID($id, "update");
+  } else {
+    StatManager::downloadAddonID($id, "ingame");
+  }
+
 
   $head = 'Location: http://cdn.blocklandglass.com/addons/' . $id . '_' . $branch;
   if($debug) {

@@ -142,22 +142,31 @@ class StatManager {
 		return $count;
 	}
 
-	public static function downloadAddonID($aid) {
+	public static function downloadAddonID($aid, $context = "web") {
 		$addon = AddonManager::getFromID($aid);
 
 		if(!$addon) {
 			return false;
 		}
-		return downloadAddon($addon);
+		return downloadAddon($addon, $context);
 	}
 
-	public static function downloadAddon($addon) {
+	public static function downloadAddon($addon, $context = "web") {
 		$database = new DatabaseManager();
 		StatManager::verifyTable($database);
 
+		if($context == "web") {
+			$sql = "webDownloads";
+		} else if($context == "ingame") {
+			$sql = "ingameDownloads";
+		} else if($context == "update") {
+			$sql = "updateDownloads";
+		}
+
 		if(!$database->query("UPDATE `addon_stats` SET
 			`totalDownloads` = (`totalDownloads` + 1),
-			`iterationDownloads` = (`iterationDownloads` + 1)
+			`iterationDownloads` = (`iterationDownloads` + 1),
+			`$sql` = (`$sql` + 1)
 			WHERE `aid` = '" . $addon->getID() . "'")) {
 			throw new Exception("failed to register new download: " . $database->error());
 		}
