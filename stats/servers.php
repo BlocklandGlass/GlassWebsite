@@ -13,8 +13,12 @@
 <div class="maincontainer">
 	<table>
 		<tbody>
+			<tr>
+				<th>Host/Server</th>
+				<th>Users</th>
+			</tr>
 			<?php foreach($servers as $s) {
-		    echo "<tr><td><b>" . $s->host . "</b> " . $s->ip . ":" . $s->port . "</td>";
+		    echo "<tr><td style=\"vertical-align: top\"><b>" . $s->host . "</b> " . $s->ip . ":" . $s->port . "</td>";
 				$clients = json_decode($s->clients);
 				$str = "";
 				foreach($clients as $cl) {
