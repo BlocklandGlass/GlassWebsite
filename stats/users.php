@@ -2,6 +2,7 @@
 	require_once dirname(__DIR__) . "/private/class/GroupManager.php";
 	require_once dirname(__DIR__) . "/private/class/UserManager.php";
 	require_once dirname(__DIR__) . "/private/class/UserLog.php";
+	require_once dirname(__DIR__) . "/private/class/StatUsageManager.php";
 
 	$_PAGETITLE = "Glass | Current Users";
 
@@ -11,7 +12,11 @@
 	$users = UserLog::getRecentlyActive();
 ?>
 <div class="maincontainer">
-	<?php foreach($users as $u) {
-    echo "<b>" . UserLog::getCurrentUsername($u->blid) . "</b> " . $u->blid . "<br />";
-  } ?>
+	<table>
+		<tbody>
+			<?php foreach($users as $u) {
+		    echo "<tr><td>" . UserLog::getCurrentUsername($u->blid) . "</td><td>" . $u->blid . "</td><td>" . StatUsageManager::getVersionUsed($u->blid, 11) . "</td></tr>";
+		  } ?>
+		</tbody>
+	</table>
 </div>

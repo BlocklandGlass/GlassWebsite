@@ -28,6 +28,13 @@ class StatUsageManager {
     }
   }
 
+  public static function getVersionUsed($blid, $aid) {
+    $db = new DatabaseManager();
+    $res = $db->query("SELECT * FROM `stats_usage` WHERE `blid`=" . $db->sanitize($blid) . " AND `aid`=" . $db->sanitize($aid));
+    $obj = $res->fetch_object();
+    return $obj->version;
+  }
+
   public static function checkExpired() {
     $db = new DatabaseManager();
     StatUsageManager::verifyTable($db);
