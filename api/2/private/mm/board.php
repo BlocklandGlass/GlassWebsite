@@ -62,7 +62,7 @@ foreach($addonIds as $aid) {
     $user = UserManager::getFromBlid($addon->getManagerBLID())->getUsername();
   }
 
-  $retboard->author = $username;
+  $retboard->author = $user;
   $retboard->rating = $rating;
   $retboard->downloads = $addon->getDownloads();
   $ret->addons[] = $retboard;
