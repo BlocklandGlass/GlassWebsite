@@ -148,7 +148,7 @@
 			<image src="http://blocklandglass.com/img/icons16/star.png" />
 			<image src="http://blocklandglass.com/img/icons16/star.png" />
 		</td>
-		<td><?php echo ($addon->getDownloads(1) + $addon->getDownloads(2)); ?></td>
+		<td><?php echo ($addon->getDownloads("web") + $addon->getDownloads("ingame")); ?></td>
 		</tr><?php
 	}
 
