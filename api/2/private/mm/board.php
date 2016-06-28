@@ -56,7 +56,13 @@ foreach($addonIds as $aid) {
   $retboard = new stdClass();
   $retboard->id = $addon->getId();
   $retboard->name = $addon->getName();
-  $retboard->author = UserLog::getCurrentUsername($addon->getManagerBLID());
+
+  $user = UserLog::getCurrentUsername($addon->getManagerBLID());
+  if($user == false) {
+    $user = UserManager::getFromBlid($addon->getManagerBLID())->getUsername();
+  }
+
+  $retboard->author = $username;
   $retboard->rating = $rating;
   $retboard->downloads = $addon->getDownloads();
   $ret->addons[] = $retboard;

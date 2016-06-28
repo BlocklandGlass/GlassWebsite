@@ -46,9 +46,14 @@ foreach($screens as $sid) {
 }
 
 $author = new stdClass();
-$manager = UserLog::getCurrentUsername($addonObject->getManagerBLID());
+
+$user = UserLog::getCurrentUsername($addonObject->getManagerBLID());
+if($user == false) {
+  $user = UserManager::getFromBlid($addonObject->getManagerBLID())->getUsername();
+}
+
 $author->blid = $addonObject->getManagerBLID();
-$author->name = $manager;
+$author->name = $user;
 $ret->authors = array($author);
 
 $channelId[1] = "stable";
