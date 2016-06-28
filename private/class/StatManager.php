@@ -119,6 +119,22 @@ class StatManager {
 		return $count;
 	}
 
+	public static function getAddonDownloads($id, $type) {
+		if($type == "ingame") {
+			$sql = "ingameDownloads";
+		} else if($type == "update" || $type == "updates") {
+			$sql = "updateDownloads";
+		} else {
+			$sql = "webDownloads";
+		}
+
+		$db = new DatabaseManager();
+		$res = $db->query("SELECT `$sql` FROM `addon_stats` WHERE `aid`=" . $db->sanitize($id));
+		$sum = $res->fetch_object()->$sql;
+
+		return $sum;
+	}
+
 	public static function getTotalBuildDownloads($id) {
 		$count = apc_fetch('buildTotalDownloads_' . $id, $success);
 

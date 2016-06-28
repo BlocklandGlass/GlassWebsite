@@ -27,7 +27,7 @@
 			<td style="padding: 10px; width: 20px;font-family: Impact, HelveticaNeue-CondensedBold, Helvetica Neue; font-size:1.5em"><?php echo $index+1; ?></td>
 			<td style="line-height: 1em;"><a href="/addons/addon.php?id=<?php echo $addon->id?>"><?php echo htmlspecialchars($addon->name) ?></a> by
 				<a href="/user/view.php?blid=<?php echo $user->blid ?>"><?php echo htmlspecialchars($user->username) ?></a><br />
-				<span style="font-weight: bold; font-size: .6em"><?php echo $addon->getTotalDownloads() ?> downloads</span></td>
+				<span style="font-weight: bold; font-size: .6em"><?php echo $addon->getDownloads("web")+$addon->getDownloads("ingame") ?> downloads</span></td>
 		</tr>
 		<?php
 		/*echo("<tr>");

@@ -81,10 +81,6 @@ class AddonObject {
 		return $this->description;
 	}
 
-	public function getDownloads() {
-		return $this->getTotalDownloads();
-	}
-
 	public function getApproved() {
 		return $this->approved == 1;
 	}
@@ -189,6 +185,10 @@ class AddonObject {
 
 	public function getTotalDownloads() {
 		return StatManager::getTotalAddonDownloads($this->id);
+	}
+
+	public function getDownloads($type) {
+		return StatManager::getAddonDownloads($this->id, $type);
 	}
 
 	public function getUploadDate() {
