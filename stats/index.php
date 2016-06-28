@@ -10,10 +10,35 @@
 
 	$user = UserManager::getCurrent();
 
+	$web = StatManager::getAllAddonDownloads("web");
+	$ingame = StatManager::getAllAddonDownloads("ingame");
+	$updates = StatManager::getAllAddonDownloads("updates");
+	$total = $web+$ingame+$updates;
+
   $csm = new CronStatManager();
   $data = $csm->getRecentBlocklandStats(24);
 ?>
 <div class="maincontainer">
+	<style>
+		td {
+			padding: 5px;
+			font-size: 0.8em
+		}
+	</style>
+	<table>
+		<tbody>
+			<tr>
+				<th>Type</th>
+				<th>Downloads</th>
+			</tr>
+			<tr><td><b>Web:</b></td><td><?php echo $web ?></td></tr>
+			<tr><td><b>In-game:</b></td><td><?php echo $ingame ?></td></tr>
+			<tr><td><b>Update:</b></td><td><?php echo $updates ?></td></tr>
+			<tr><td><b>Total:</b></td><td><?php echo $total ?></td></tr>
+			<tr><td><b>Since Glass 2:</b></td><td><?php echo $total-49776; ?></td></tr>
+		</tbody>
+	</table>
+	<hr />
 	All times US Eastern Time. <i>Displayed Blockland information is not fully accurate. Only users logged in on the hour exactly are recorded. Additionally, only users in servers are accounted for.</i>
   <canvas id="myChart" style="width:400px;height:400px"></canvas>
   <script>

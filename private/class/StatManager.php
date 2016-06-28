@@ -312,43 +312,6 @@ class StatManager {
 		}
 
 		$resource->close();
-		$resource = $database->query("SELECT `tid` FROM `tag_stats`
-			ORDER BY `iterationDownloads` DESC");
-
-		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
-		}
-		$topTagID = [];
-		$topTagDownloads = [];
-
-		for($i=0; $i<StatManager::$tagCount; $i++) {
-			if($row = $resource->fetch_object()) {
-				$topTagID[] = $row->tid;
-				$topTagDownloads[] = $row->iterationDownloads;
-			} else {
-				$topTagID[] = 1;
-				$topTagDownloads[] = 0;
-			}
-		}
-		$resource->close();
-		$resource = $database->query("SELECT `bid` FROM `build_stats` ORDER BY `iterationDownloads` DESC LIMIT '" . $database->sanitize(StatManager::$buildCount) . "'");
-
-		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
-		}
-		$topBuildID = [];
-		$topBuildDownloads = [];
-
-		for($i=0; $i<StatManager::$buildCount; $i++) {
-			if($row = $resource->fetch_object()) {
-				$topBuildID[] = $row->tid;
-				$topBuildDownloads[] = $row->iterationDownloads;
-			} else {
-				$topBuildID[] = 1;
-				$topBuildDownloads[] = 0;
-			}
-		}
-		$resource->close();
 
 		//construct a query
 		$baseQuery = "INSERT INTO `statistics` (`users`, `addons`, `downloads`, `groups`, `comments`, `builds`, `tags`";
@@ -400,6 +363,22 @@ class StatManager {
 			throw new Exception("Database error: " . $database->error());
 		}
 		apc_delete('lastStats');
+	}
+
+	public static function getAllAddonDownloads($type) {
+		if($type == "ingame") {
+			$sql = "ingameDownloads";
+		} else if($type == "update") {
+			$sql = "updateDownloads";
+		} else {
+			$sql = "webDownloads";
+		}
+
+		$db = new DatabaseManager();
+		$res = $db->query("SELECT sum(`$sql`) as sum FROM `addon_stats`");
+		$sum = $res->fetch_object()->sum;
+
+		return $sum;
 	}
 
 	public static function verifyTable($database) {
