@@ -30,7 +30,7 @@ class StatUsageManager {
 
   public static function getVersionUsed($blid, $aid) {
     $db = new DatabaseManager();
-    $res = $db->query("SELECT * FROM `stats_usage` WHERE `blid`=" . $db->sanitize($blid) . " AND `aid`=" . $db->sanitize($aid));
+    $res = $db->query("SELECT * FROM `stats_usage` WHERE `blid`=" . $db->sanitize($blid) . " AND `aid`=" . $db->sanitize($aid) . " ORDER BY `reported` ASC LIMIT 0,1");
     $obj = $res->fetch_object();
     if(is_object($obj)) {
       return $obj->version;
