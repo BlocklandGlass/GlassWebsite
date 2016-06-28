@@ -368,7 +368,7 @@ class StatManager {
 	public static function getAllAddonDownloads($type) {
 		if($type == "ingame") {
 			$sql = "ingameDownloads";
-		} else if($type == "update") {
+		} else if($type == "update" || $type == "updates") {
 			$sql = "updateDownloads";
 		} else {
 			$sql = "webDownloads";
