@@ -1,5 +1,5 @@
 <?php
-public class DependencyObject {
+class DependencyObject {
 	private $id;
 
 	public $target;
@@ -8,7 +8,7 @@ public class DependencyObject {
 	public function __construct($resource) {
 		$this->id = $resource->id;
 		$this->target = $resource->target;
-		$this->required = $resource->required;
+		$this->required = $resource->requirement;
 	}
 
 	public function getID() {

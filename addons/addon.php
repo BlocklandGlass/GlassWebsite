@@ -216,10 +216,12 @@ $(document).ready(function() {
 		}
 		?>
 	</div>
-	<hr />
-	<div class="screenshots" style="text-align:center">
+	<div class="screenshots" style="text-align:center;margin: 0 auto">
 		<?php
 		$screenshots = ScreenshotManager::getScreenshotsFromAddon($_GET['id']);
+		if(sizeof($screenshots) > 0) {
+			echo "<hr />";
+		}
 		foreach($screenshots as $sid) {
 		  $ss = ScreenshotManager::getFromId($sid);
 		  echo "<div style=\"padding: 5px; margin: 10px 10px; background-color: #eee; display:inline-block; width: 128px; vertical-align: middle\">";
@@ -229,6 +231,20 @@ $(document).ready(function() {
 		}
 		?>
 	</div>
+	<?php
+		$deps = DependencyManager::getDependenciesFromAddonID($_GET['id']);
+		if(sizeof($deps) > 0) {
+			echo "<hr /><div style=\"text-align:center\">";
+			echo "This add-on has some dependencies, or add-ons that it requires to run!<br/>";
+			foreach($deps as $did) {
+				$dep = DependencyManager::getFromId($did);
+				$rid = $dep->getRequired();
+				$requiredAddon = AddonManager::getFromId($rid);
+				echo "<div style=\"padding: 10px; background-color: #ffbbbb; display: inline-block; border-radius: 5px\"><a href=\"addon.php?id=" . $requiredAddon->getId() . "\">" . $requiredAddon->getName() . "</a></div>";
+			}
+			echo "</div>";
+		}
+	?>
 	<hr />
 	<div class="comments" id="commentSection">
 		<form action="" method="post">

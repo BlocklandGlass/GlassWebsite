@@ -1,5 +1,6 @@
 <?php
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
+require_once(realpath(dirname(__FILE__) . '/DependencyObject.php'));
 require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
 
 //maybe should be integrated with AddonManager
@@ -10,10 +11,10 @@ class DependencyManager {
 
 	public static function getFromID($id, $resource = false) {
 		$depObject = apc_fetch('addonDependencyObject_' . $id, $success);
-
+		$success = false;
 		if($success === false) {
 			if($resource !== false) {
-				$depObject = new TagObject($resource);
+				$depObject = new DependencyObject($resource);
 			} else {
 				$database = new DatabaseManager();
 				DependencyManager::verifyTable($database);
@@ -38,11 +39,11 @@ class DependencyManager {
 	//I don't think we care about the reverse direction, but it would be trivial to implement
 	public static function getDependenciesFromAddonID($id) {
 		$addonDeps = apc_fetch('addonDependencies_' . $id, $success);
-
+		$success = false;
 		if($success === false) {
 			$database = new DatabaseManager();
 			DependencyManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `addon_tagmap` WHERE `aid` = '" . $database->sanitize($id) . "'");
+			$resource = $database->query("SELECT * FROM `addon_dependencies` WHERE `target` = '" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
@@ -75,7 +76,7 @@ class DependencyManager {
 	public static function addDependencyByAddon($target, $required) {
 		$database = new DatabaseManager();
 		DependencyManager::verifyTable($database);
-		$resource = $database->query("SELECT 1 FROM `addon_dependencies` WHERE `target` = '" . $database->sanitize($target->getID()) . "' AND `required` = '" . $database->sanitize($required->getID()) . "' LIMIT 1");
+		$resource = $database->query("SELECT * FROM `addon_dependencies` WHERE `target` = '" . $database->sanitize($target->getID()) . "' AND `requirement` = '" . $database->sanitize($required->getID()) . "' LIMIT 0,1");
 
 		if(!$resource) {
 			throw new Exception("Database error: " . $database->error());
@@ -112,7 +113,7 @@ class DependencyManager {
 	public static function removeDependencyByAddon($target, $required) {
 		$database = new DatabaseManager();
 		DependencyManager::verifyTable($database);
-		$resource = $database->query("SELECT `id` FROM `addon_dependencies` WHERE `target` = '" . $database->sanitize($target->getID()) . "' AND `required` = '" . $database->sanitize($required->getID()) . "' LIMIT 1");
+		$resource = $database->query("SELECT `id` FROM `addon_dependencies` WHERE `target` = '" . $database->sanitize($target->getID()) . "' AND `requirement` = '" . $database->sanitize($required->getID()) . "' LIMIT 1");
 
 		if(!$resource) {
 			throw new Exception("Database error: " . $database->error());
@@ -125,7 +126,7 @@ class DependencyManager {
 		$id = $resource->fetch_object()->id;
 		$resource->close();
 
-		//if(!$database->query("DELETE FROM `addon_dependencies` WHERE `target` = '" . $database->sanitize($target->getID()) . "' AND `required` = '" . $database->sanitize($required->getID()) . "'")) {
+		//if(!$database->query("DELETE FROM `addon_dependencies` WHERE `target` = '" . $database->sanitize($target->getID()) . "' AND `requirement` = '" . $database->sanitize($required->getID()) . "'")) {
 		if(!$database->query("DELETE FROM `addon_dependencies` WHERE `id` = '" . $database->sanitize($id) . "'")) {
 			throw new Exception("Error removing dependency entry: " . $database->error());
 		}
@@ -138,7 +139,7 @@ class DependencyManager {
 			AddonManager::verifyTable($database);
 
 			//this table might not need a primary key
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_dependency` (
+			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_dependencies` (
 				`id` INT NOT NULL AUTO_INCREMENT,
 				`target` INT NOT NULL,
 				`requirement` INT NOT NULL,

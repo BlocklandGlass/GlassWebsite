@@ -2,6 +2,7 @@
 	require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonObject.php"));
+	require_once(realpath(dirname(__DIR__) . "/private/class/TagManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserLog.php"));
 //	require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
@@ -122,6 +123,17 @@
 			echo $Parsedown->text($addonObject->getDescription());
 		?>
 	</p>
+	<hr />
+	Add Tag:
+	<select name="tag">
+		<?php
+		$tags = TagManager::getAllTags();
+		foreach($tags as $tag) {
+			echo "<option value=\"" . $tag->getId() . "\">" . $tag->getName() . "</option>";
+		} ?>
+	</select>
+	<br />
+	<input type="submit" value="Add" name="submit" />
 	<hr />
   <table class="formtable">
     <tbody>
