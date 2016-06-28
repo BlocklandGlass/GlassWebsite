@@ -148,7 +148,7 @@ class StatManager {
 		if(!$addon) {
 			return false;
 		}
-		return downloadAddon($addon, $context);
+		return StatManager::downloadAddon($addon, $context);
 	}
 
 	public static function downloadAddon($addon, $context = "web") {
