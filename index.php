@@ -30,7 +30,6 @@ require_once(realpath(dirname(__FILE__) . "/private/class/StatManager.php"));
 	<br />
 	<p>
 		<h3>Want to get involved?</h3>
-		&#201;&#175;bzbb&#199;&#157;n&#201;&#376;-1&#202;&#8225;=&#202;&#338;
 		As you can probably tell, this site points straight to the old one. The old one was developed independently and is very distasteful. In an attempt to modernize the site, this new one is entirely open source. Please, contribute on <a href="http://github.com/BlocklandGlass/GlassWebsite/">GitHub</a> and check out the <a href="http://forum.blockland.us/index.php?topic=282486.0">Glass Development Topic</a> over on the Blockland forums!
 	</p>
 </div>

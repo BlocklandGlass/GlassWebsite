@@ -313,8 +313,7 @@ class StatManager {
 
 		$resource->close();
 		$resource = $database->query("SELECT `tid` FROM `tag_stats`
-			ORDER BY `iterationDownloads` DESC
-			LIMIT '" . $database->sanitize(StatManager::$tagCount) . "'");
+			ORDER BY `iterationDownloads` DESC");
 
 		if(!$resource) {
 			throw new Exception("Database error: " . $database->error());
