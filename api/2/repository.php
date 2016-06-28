@@ -32,7 +32,7 @@ foreach($addonIds as $id) {
     continue;
   }
   //$webUrl = "api.blocklandglass.com";
-  $webUrl = "blocklandglass.com";
+  $webUrl = "api.blocklandglass.com";
   $cdnUrl = "cdn.blocklandglass.com";
 
   $addon = new stdClass();

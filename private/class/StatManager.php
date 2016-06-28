@@ -241,7 +241,7 @@ class StatManager {
 		}
 	}
 
-	public static function endInteration() {
+	public static function endIteration() {
 		$database = new DatabaseManager();
 		StatManager::verifyTable($database);
 
