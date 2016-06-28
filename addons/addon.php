@@ -113,7 +113,7 @@ $(document).ready(function() {
 	?>
 	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 		<div class="addoninfoleft">
-			<image style="height:1.5em" src="http://blocklandglass.com/icon/icons32/user.png" /> By <?php
+			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/user.png" /> By <?php
 			$authors = $addonObject->getAuthorInfo();
 
 			if(sizeof($authors) == 1) {
@@ -152,15 +152,15 @@ $(document).ready(function() {
 			}
 			?>
 			<br />
-			<image style="height:1.5em" src="http://blocklandglass.com/icon/icons32/folder_vertical_zipper.png" />
+			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/folder_vertical_zipper.png" />
 			<?php
 			echo $addonObject->getFilename();
 			?>
 			<br />
-			<image style="height:1.5em" src="http://blocklandglass.com/icon/icons32/accept_button.png" />
+			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/accept_button.png" />
 			Approved
 			<br />
-			<image style="height:1.5em" src="http://blocklandglass.com/icon/icons32/inbox_upload.png" />
+			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/inbox_upload.png" />
 			<?php echo date("F j, g:i a", strtotime($addonObject->getUploadDate())); ?>
 			<br />
 			<br />
@@ -176,7 +176,7 @@ $(document).ready(function() {
 			<?php
 			echo $addonObject->getDownloads(0);
 			?>
-			 <image style="height:1.5em" src="http://blocklandglass.com/icon/icons32/inbox_download.png" /><br />
+			 <image style="height:1.5em" src="http://blocklandglass.com/img/icons32/inbox_download.png" /><br />
 			<br />
 			<?php
 			$tagIDs = TagManager::getTagsFromAddonID($addonObject->getId());

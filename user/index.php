@@ -56,7 +56,7 @@
 							$board = $ao->getBoard();
 							$html = "";
 							if(!$ao->getApproved()) {
-								$html = '<img style="width: 1.2em;" src="http://blocklandglass.com/icon/icons32/hourglass.png" alt="Under Review"/> ';
+								$html = '<img style="width: 1.2em;" src="http://blocklandglass.com/img/icons32/hourglass.png" alt="Under Review"/> ';
 							}
 							?>
 							<div class="useraddon">
@@ -71,7 +71,7 @@
 
 						?>
 						<div class="useraddon" style="text-align:center; background-color: #ccffcc">
-							<img style="width: 1.2em;" src="http://blocklandglass.com/icon/icons32/add.png" alt="New"/> <a href="/addons/upload.php">Upload a new Add-on...</a>
+							<img style="width: 1.2em;" src="http://blocklandglass.com/img/icons32/add.png" alt="New"/> <a href="/addons/upload.php">Upload a new Add-on...</a>
 						</div>
 						<?php
 						echo "<hr>";
@@ -81,7 +81,7 @@
 							$bo = BuildManager::getFromId($bid);
 							?>
 							<div class="useraddon">
-								<a href="/builds/"><img style="width: 1.2em;" src="http://blocklandglass.com/icon/icons32/bricks.png" /> <span style="font-size: 1.2em; font-weight:bold;"><?php echo $bo->getName(); ?></span></a>
+								<a href="/builds/"><img style="width: 1.2em;" src="http://blocklandglass.com/img/icons32/bricks.png" /> <span style="font-size: 1.2em; font-weight:bold;"><?php echo $bo->getName(); ?></span></a>
 								<br />
 								<span style="font-size: 0.8em;">
 									<a href="/builds/manage.php?id=<?php echo $bo->getId(); ?>">Manage</a> | <a href="#">Delete</a>
@@ -91,7 +91,7 @@
 						}
 						?>
 						<div class="useraddon" style="text-align:center; background-color: #ccffcc">
-							<img style="width: 1.2em;" src="http://blocklandglass.com/icon/icons32/add.png" alt="New"/> <a href="/builds/upload.php">Upload a new Build...</a>
+							<img style="width: 1.2em;" src="http://blocklandglass.com/img/icons32/add.png" alt="New"/> <a href="/builds/upload.php">Upload a new Build...</a>
 						</div>
 					</p>
 				</td>

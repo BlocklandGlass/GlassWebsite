@@ -15,7 +15,7 @@
 	?>
 	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 		<div class="addoninfoleft">
-			<image style="height:1.5em" src="http://blocklandglass.com/icon/icons32/folder_vertical_zipper.png" />
+			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/folder_vertical_zipper.png" />
 			<?php
 			echo $addonData->filename;
 			?>

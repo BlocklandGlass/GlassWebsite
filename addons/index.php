@@ -72,7 +72,7 @@
 			echo("<tr class=\"addonheader\"><td colspan=\"3\"><b>" . htmlspecialchars($subCategory) . "</b></td></tr>");
 
 			foreach($boards as $board) {
-				echo("<tr><td><image src=\"http://blocklandglass.com/icon/icons32/" . $board->icon . ".png\" /></td>");
+				echo("<tr><td><image src=\"http://blocklandglass.com/img/icons32/" . $board->icon . ".png\" /></td>");
 				echo("<td><a href=\"board.php?id=" . $board->id . "\">   " . htmlspecialchars($board->name) . "</a></td>");
 				echo("<td>" . $board->count . "</td></tr>");
 			}
@@ -93,7 +93,7 @@
 		//		<td colspan=\"3\"><b>" . htmlspecialchars($subName) . "</b></td>
 		//	</tr>";
 		//	foreach($sub as $board) {
-		//		echo "<tr><td><image src=\"http://blocklandglass.com/icon/icons32/" . $board->getIcon() . ".png\" /></td>";
+		//		echo "<tr><td><image src=\"http://blocklandglass.com/img/icons32/" . $board->getIcon() . ".png\" /></td>";
 		//		echo "<td><a href=\"board.php?id=" . $board->getID() . "\">   " . htmlspecialchars($board->getName()) . "</a></td>";
 		//		echo "<td>" . $board->getCount() . "</td></tr>";
 		//	}

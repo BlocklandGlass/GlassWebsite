@@ -47,7 +47,7 @@ class TagObject {
 	}
 
 	public function getHTML() {
-		return "<a href=\"/addons/search.php?tag=" . $this->getId() . "\" class=\"tag\" style=\"background-color: #" . $this->getColor() . "; border: 2px solid #" . $this->getBorderColor() . ";\"><img style=\"padding-right: 4px;\" src=\"https://blocklandglass.com/icon/icons16/" . $this->getIcon() . ".png\">" . $this->getName() . "</a>";
+		return "<a href=\"/addons/search.php?tag=" . $this->getId() . "\" class=\"tag\" style=\"background-color: #" . $this->getColor() . "; border: 2px solid #" . $this->getBorderColor() . ";\"><img style=\"padding-right: 4px;\" src=\"https://blocklandglass.com/img/icons16/" . $this->getIcon() . ".png\">" . $this->getName() . "</a>";
 	}
 }
 ?>
