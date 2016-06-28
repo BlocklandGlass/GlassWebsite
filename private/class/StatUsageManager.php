@@ -32,7 +32,11 @@ class StatUsageManager {
     $db = new DatabaseManager();
     $res = $db->query("SELECT * FROM `stats_usage` WHERE `blid`=" . $db->sanitize($blid) . " AND `aid`=" . $db->sanitize($aid));
     $obj = $res->fetch_object();
-    return $obj->version;
+    if(is_object($obj)) {
+      return $obj->version;
+    } else {
+      return "";
+    }
   }
 
   public static function checkExpired() {

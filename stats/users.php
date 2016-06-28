@@ -15,7 +15,7 @@
 	<table>
 		<tbody>
 			<?php foreach($users as $u) {
-		    echo "<tr><td>" . UserLog::getCurrentUsername($u->blid) . "</td><td>" . $u->blid . "</td><td>" . StatUsageManager::getVersionUsed($u->blid, 11) . "</td></tr>";
+		    echo "<tr><td><b>" . UserLog::getCurrentUsername($u->blid) . "</b></td><td>" . $u->blid . "</td><td>" . StatUsageManager::getVersionUsed($u->blid, 11) . "</td></tr>";
 		  } ?>
 		</tbody>
 	</table>
