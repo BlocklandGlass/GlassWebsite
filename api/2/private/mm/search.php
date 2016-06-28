@@ -24,8 +24,9 @@ if($type == "addon") {
     $addon = AddonManager::getFromId($result);
     $r->type = "addon";
     $r->title = $addon->getName();
+    $r->id = $addon->getId();
     //$r->author
-    $r->description = addcslashes($addon->getDescription(), '\\');
+    $r->description = $addon->getDescription();
     $ret->results[] = $r;
   }
 } else {
