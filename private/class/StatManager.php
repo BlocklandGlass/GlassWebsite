@@ -297,7 +297,7 @@ class StatManager {
 		}
 
 		//gather top addons, tags, and builds
-		$resource = $database->query("SELECT `aid` FROM `addon_stats`
+		$resource = $database->query("SELECT `aid`,`iterationDownloads` FROM `addon_stats`
 			ORDER BY `iterationDownloads` DESC");
 
 		if(!$resource) {
@@ -306,15 +306,11 @@ class StatManager {
 		$topAddonID = [];
 		$topAddonDownloads = [];
 
-		for($i=0; $i<StatManager::$addonCount; $i++) {
-			if($row = $resource->fetch_object()) {
-				$topAddonID[] = $row->aid;
-				$topAddonDownloads[] = $row->iterationDownloads;
-			} else {
-				$topAddonID[] = 1;
-				$topAddonDownloads[] = 0;
-			}
+		while($row = $resource->fetch_object()) {
+			$topAddonID[] = $row->aid;
+			$topAddonDownloads[] = $row->iterationDownloads;
 		}
+
 		$resource->close();
 		$resource = $database->query("SELECT `tid` FROM `tag_stats`
 			ORDER BY `iterationDownloads` DESC
