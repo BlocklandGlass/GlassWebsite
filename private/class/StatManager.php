@@ -298,8 +298,7 @@ class StatManager {
 
 		//gather top addons, tags, and builds
 		$resource = $database->query("SELECT `aid` FROM `addon_stats`
-			ORDER BY `iterationDownloads` DESC
-			LIMIT '" . $database->sanitize(StatManager::$addonCount) . "'");
+			ORDER BY `iterationDownloads` DESC");
 
 		if(!$resource) {
 			throw new Exception("Database error: " . $database->error());
