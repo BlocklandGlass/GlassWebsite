@@ -1,6 +1,6 @@
 <?php
 require_once dirname(__DIR__) . '/class/DatabaseManager.php';
-
+return;
 $db = new DatabaseManager();
 
 $json = file_get_contents("http://blocklandglass.com/downloadsExport.php");
