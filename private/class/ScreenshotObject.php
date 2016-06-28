@@ -21,7 +21,7 @@ class ScreenshotObject {
 		$this->thumburl = "http://s3.amazonaws.com/" . urlencode(AWSFileManager::getBucket()) . "/screenshots/thumb/" . $this->id;
 		$this->x = $resource->x;
 		$this->y = $resource->y;
-		$this->ext = $resource->ext;
+		$this->ext = @$resource->ext;
 	}
 
 	public function getID() {
