@@ -35,7 +35,7 @@
 			<tr><td><b>In-game:</b></td><td><?php echo $ingame ?></td></tr>
 			<tr><td><b>Update:</b></td><td><?php echo $updates ?></td></tr>
 			<tr><td><b>Total:</b></td><td><?php echo $total ?></td></tr>
-			<tr><td><b>Since Glass 2:</b></td><td><?php echo $total-49776; ?></td></tr>
+			<tr><td><b>Since Glass 2:</b></td><td><?php echo $total-38535; ?></td></tr>
 		</tbody>
 	</table>
 	<hr />
