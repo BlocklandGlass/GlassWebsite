@@ -731,7 +731,7 @@ class AddonManager {
 		if($success === false) {
 			$database = new DatabaseManager();
 			AddonManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `addon_addons` ORDER BY `uploadDate` DESC LIMIT " . $database->sanitize($count));
+			$resource = $database->query("SELECT * FROM `addon_addons` WHERE `deleted`=1 AND `approved`=1 ORDER BY `uploadDate` DESC LIMIT " . $database->sanitize($count));
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
