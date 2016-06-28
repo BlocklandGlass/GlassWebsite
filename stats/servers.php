@@ -11,7 +11,17 @@
 	$servers = ServerTracker::getActiveServers();
 ?>
 <div class="maincontainer">
-	<?php foreach($servers as $s) {
-    echo "<b>" . $s->host . "</b> " . $s->ip . ":" . $s->port . "<br />";
-  } ?>
+	<table>
+		<tbody>
+			<?php foreach($servers as $s) {
+		    echo "<tr><td><b>" . $s->host . "</b> " . $s->ip . ":" . $s->port . "</td>";
+				$clients = json_decode($s->clients);
+				$str = "";
+				foreach($clients as $cl) {
+					$str = $str . $cl->name . " <i>(" . $cl->blid . ")</i><br/>";
+				}
+				echo "<td>$str</td></tr>";
+		  } ?>
+		</tbody>
+	</table>
 </div>
