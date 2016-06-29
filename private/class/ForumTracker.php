@@ -60,9 +60,9 @@ class ForumTracker {
           $author = strip_tags(substr($lines[1], 3, strlen($lines[1])));
 
           if($time > $forumTime-60) {
+            echo $topic . "\n";
             NotificationManager::sendPushNotification("9789", "Forum Update", "The topic <font:verdana bold:13>" . $name . "<font:verdana:13> has been updated!", "newspaper", "", 0);
           }
-          echo "<br />";
         }
       }
     }
