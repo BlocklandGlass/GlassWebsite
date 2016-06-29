@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . '/NotificationManager.php';
 class ForumTracker {
-  private static $boards = [1, 28, 29, 9, 34, 14];
+  private static $boards = [1, 28, 29, 9, 34];
 
   public static function getNew() {
     foreach(ForumTracker::$boards as $board) {
@@ -60,7 +60,7 @@ class ForumTracker {
 
           if($time > $forumTime-60) {
             echo $topic . "\n";
-            NotificationManager::sendPushNotification("9789", "Forum Post", $text = "<color:3333ff><font:verdana bold:13>$author<font:verdana:13><color:000000> posted a reply in <font:verdana bold:13>$name", "newspaper", "", 0);
+            //NotificationManager::sendPushNotification("9789", "Forum Post", $text = "<color:3333ff><font:verdana bold:13>$author<font:verdana:13><color:000000> posted a reply in <font:verdana bold:13>$name", "newspaper", "", 0);
           }
         }
       }
