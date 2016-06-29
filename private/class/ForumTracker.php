@@ -60,7 +60,7 @@ class ForumTracker {
 
           if($time > $forumTime-60) {
             echo $topic . "\n";
-            NotificationManager::sendPushNotification("9789", "Forum Update", "The topic <font:verdana bold:13>" . $name . "<font:verdana:13> has been updated!", "newspaper", "", 0);
+            NotificationManager::sendPushNotification("9789", "Forum Post", "<font:verdana bold:13>$author<font:verdana:13> posted a reply in <font:verdana bold:13>$name", "newspaper", "", 0);
           }
         }
       }
