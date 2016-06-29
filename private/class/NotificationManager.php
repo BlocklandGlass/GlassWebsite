@@ -6,7 +6,7 @@ class NotificationManager {
 	private static $objectCacheTime = 3600; //1 hour
 	private static $userCacheTime = 3600;
 
-	private static $noteServerHost = "localhost";
+	private static $noteServerHost = "blocklandglass.com";
 	private static $noteServerPort = "27001";
 
 	public static function createNotification($user, $text, $params) {
