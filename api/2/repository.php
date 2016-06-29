@@ -50,6 +50,10 @@ foreach($addonIds as $id) {
     $chanObj->name = "*";
   }
 
+  if($id == 193) {
+    $chanObj->name = "*";
+  }
+  
   $addon->channels[] = $chanObj;
 
   if($obj->hasBeta()) {
