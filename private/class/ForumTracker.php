@@ -27,7 +27,6 @@ class ForumTracker {
     $lines = explode("<br>", $text);
     $words = explode(" ", $lines[2]);
     $date = str_replace($words[2] . " ", "", $lines[2]);
-    echo "\"" . $date . "\"<hr />";
     $forumTime = strtotime(strip_tags($date));
 
     $table = null;
