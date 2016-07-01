@@ -14,6 +14,21 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
   } else {
     $ret->ident = $con->getIdentifier();
     $ret->blid = $con->getBLID();
+		$ret->username = UserLog::getCurrentUsername($ret->blid);
+
+		$ret->admin = false;
+		$ret->mod = false;
+
+		$user = UserManager::getFromBLID($ret->blid);
+		if($user !== false) {
+			if($user->inGroup("Administrator")) {
+				$ret->admin = true;
+				$ret->mod = true;
+			} else if($user->inGroup("Moderator")) {
+				$ret->mod = true;
+			}
+		}
+
     $ret->status = "success";
   }
 
