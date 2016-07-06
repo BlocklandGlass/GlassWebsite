@@ -156,6 +156,11 @@ class ScreenshotManager {
 		return true;
 	}
 
+	public static function deleteScreenshot($sid) {
+		$db = new DatabaseManager();
+		$db->query("DELETE FROM `screenshots` WHERE `id`='" . $db->sanitize($sid) . "'");
+	}
+
 	public static function uploadScreenshotForBuildID($bid, $tempPath) {
 		$build = BuildManager::getFromID($bid);
 
