@@ -11,8 +11,15 @@ if($query == "") {
   die("[]");
 }
 
+
 $db = new DatabaseManager();
-$res = $db->query("SELECT `id`,`name` FROM `addon_addons` WHERE `name` LIKE '" . $db->sanitize($query) . "%' AND `approved`=1 AND `deleted`=0");
+
+$sql = "";
+if(isset($_REQUEST['owner'])) {
+  $sql = " AND `blid`='" . $db->sanitize($_REQUEST['owner']) .  "' ";
+}
+
+$res = $db->query("SELECT `id`,`name` FROM `addon_addons` WHERE `name` LIKE '" . $db->sanitize($query) . "%' AND `approved`=1 AND `deleted`=0 $sql");
 
 $ret = array();
 while($obj = $res->fetch_object()) {

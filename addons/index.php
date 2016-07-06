@@ -2,6 +2,7 @@
 	require_once dirname(__DIR__) . "/private/class/GroupManager.php";
 	require_once dirname(__DIR__) . "/private/class/UserManager.php";
 	require_once dirname(__DIR__) . "/private/class/TagManager.php";
+	require_once dirname(__DIR__) . "/private/class/RTBAddonManager.php";
 
 	$_PAGETITLE = "Glass | Add-Ons";
 
@@ -21,6 +22,7 @@
 		?>
 		<li><a class="addonnavmod" href="review/list.php">Approvals<?php if(sizeof(AddonManager::getUnapproved()) > 0) { echo " <span class=\"notice\">!</span>"; } ?></a></li>
 		<li><a class="addonnavmod" href="review/updates.php">Updates<?php if(sizeof(AddonManager::getPendingUpdates()) > 0) { echo " <span class=\"notice\">!</span>"; } ?></a></li>
+		<li><a class="addonnavmod" href="review/reclaims.php">Reclaims<?php if(sizeof(RTBAddonManager::getPendingReclaims()) > 0) { echo " <span class=\"notice\">!</span>"; } ?></a></li>
 		<?php } ?>
 	</ul>
 

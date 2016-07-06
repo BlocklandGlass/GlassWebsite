@@ -96,12 +96,53 @@ class RTBAddonManager {
     return $res->fetch_object();
   }
 
+  public static function getPendingReclaims() {
+    $db = new DatabaseManager();
+    $res = $db->query("SELECT * FROM `rtb_addons` WHERE `approved`='0'");
+
+    $ret = array();
+    while($obj = $res->fetch_object()) {
+      $ret[] = $obj;
+    }
+
+    return $ret;
+  }
+
   public static function getBoardCount($type) {
     $db = new DatabaseManager();
     $res = $db->query("SELECT COUNT(*) FROM `rtb_addons` WHERE `type`='" . $db->sanitize($type) . "' ORDER BY `type` ASC");
     $obj = $res->fetch_object();
     $val = "COUNT(*)";
     return $obj->$val;
+  }
+
+  public static function requestReclaim($id, $aid) {
+    $db = new DatabaseManager();
+    if(RTBAddonManager::getReclaim($id) === false) {
+      $db->update("rtb_addons", ["id"=>$id], ["glass_id"=>$aid, "approved"=>0]);
+      return true;
+    }
+    return false;
+  }
+
+  public static function getReclaim($id) {
+    $db = new DatabaseManager();
+    $res = $db->query("SELECT `glass_id` FROM `rtb_addons` WHERE `id`='" . $db->sanitize($id) . "'");
+    if($obj = $res->fetch_object()) {
+      if($obj->glass_id != 0) {
+        return $obj->glass_id;
+      }
+    }
+    return false;
+  }
+
+  public static function acceptReclaim($id, $bool) {
+    $db = new DatabaseManager();
+    if($bool) {
+      $db->update("rtb_addons", ["id"=>$id], ["approved"=>1]);
+    } else {
+      $db->update("rtb_addons", ["id"=>$id], ["approved"=>null]);
+    }
   }
 
   public static function verifyTable($database) {
@@ -111,7 +152,8 @@ class RTBAddonManager {
       `type` text NOT NULL,
       `title` text NOT NULL,
       `glass_id` int(11) NOT NULL,
-      `filename` text NOT NULL)")) {
+      `filename` text NOT NULL,
+      `approved` INT(1) NULL DEFAULT NULL)")) {
       throw new Exception("Error creating rtb_addons table: " . $database->error());
     }
   }
