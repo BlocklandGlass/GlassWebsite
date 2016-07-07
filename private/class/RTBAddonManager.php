@@ -108,6 +108,18 @@ class RTBAddonManager {
     return $ret;
   }
 
+  public static function getReclaims() {
+    $db = new DatabaseManager();
+    $res = $db->query("SELECT * FROM `rtb_addons` WHERE `approved`='1'");
+
+    $ret = array();
+    while($obj = $res->fetch_object()) {
+      $ret[] = $obj;
+    }
+
+    return $ret;
+  }
+
   public static function getBoardCount($type) {
     $db = new DatabaseManager();
     $res = $db->query("SELECT COUNT(*) FROM `rtb_addons` WHERE `type`='" . $db->sanitize($type) . "' ORDER BY `type` ASC");
