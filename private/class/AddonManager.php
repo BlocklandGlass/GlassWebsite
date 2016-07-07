@@ -208,7 +208,7 @@ class AddonManager {
 		copy($file, dirname(__DIR__) . '/../addons/files/local/' . $addon->getId() . '_beta.zip');
 	}
 
-	public static function uploadNewAddon($user, $name, $type, $file, $filename, $description) {
+	public static function uploadNewAddon($user, $name, $type, $file, $filename, $description, $type) {
 		$database = new DatabaseManager();
 		AddonManager::verifyTable($database);
 
@@ -280,7 +280,7 @@ class AddonManager {
 		$authorArray = [$authorInfo];
 
 		// NOTE boards will be decided by reviewers now, they just seem to confuse and anger people
-		$res = $database->query("INSERT INTO `addon_addons` (`id`, `board`, `blid`, `name`, `filename`, `description`, `version`, `authorInfo`, `reviewInfo`, `deleted`, `approved`, `uploadDate`) VALUES " .
+		$res = $database->query("INSERT INTO `addon_addons` (`id`, `board`, `blid`, `name`, `filename`, `description`, `version`, `authorInfo`, `reviewInfo`, `deleted`, `approved`, `uploadDate`, `type`) VALUES " .
 		"(NULL," .
 		"NULL," .
 		"'" . $database->sanitize($user->getBlid()) . "'," .
@@ -292,7 +292,8 @@ class AddonManager {
 		"'{}'," .
 		"'0'," .
 		"'0'," .
-		"CURRENT_TIMESTAMP);");
+		"CURRENT_TIMESTAMP," .
+		"'" . $database->sanitize($type) . "');");
 		if(!$res) {
 			throw new Exception("Database error: " . $database->error());
 		}
@@ -924,6 +925,7 @@ class AddonManager {
 				`betaVersion` TEXT DEFAULT NULL,
 				`rating` int(11) NOT NULL,
 				`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				`type` TEXT NOT NULL,
 				FOREIGN KEY (`board`)
 					REFERENCES addon_boards(`id`)
 					ON UPDATE CASCADE

@@ -76,7 +76,7 @@
 		$uploadDescription = $_POST['description'];
 	}
 
-	if(isset($_POST['type']) && $_POST['type'] != "") {
+	if(isset($_GET['t']) && $_GET['t'] != "") {
 		$filename = $user->getBlid() . "_" . $uploadFileName;
 		$tempLocation = dirname(dirname(__DIR__)) . "/addons/upload/files/" . $filename;
 		if(!is_dir(dirname(dirname(__DIR__)) . "/addons/upload/files/")) {
@@ -87,17 +87,15 @@
 		move_uploaded_file($tempPath, $tempLocation);
 		chmod($tempLocation, 0777);
 
-		$type = $_POST['type'];
+		$type = $_GET['t'];
 
 		//these should probably return an array with something like
 		//	'ok' => true/false
 		//	'message' => descriptive message
-		if($type == 1) {
+		if($type == "addon" || $type == "client") {
 			$valid = AddonFileHandler::validateAddon($tempLocation);
-		} else if($type == 2) {
-			$valid = AddonFileHandler::validatePrint($tempLocation);
-		} else if($type == 3) {
-			$valid = AddonFileHandler::validateColorset($tempLocation);
+		} else if($type == "other") {
+			$valid = AddonFileHandler::validateAddon($tempLocation) || AddonFileHandler::validateColorset($tempLocation);
 		} else {
 			$valid = false;
 		}
@@ -110,7 +108,7 @@
 		} else {
 			//repeated but slightly different path from above?
 			$tempLocation = realpath(dirname(__DIR__) . "/../addons/upload/files/" . $filename);
-			$response = AddonManager::uploadNewAddon($user, $uploadAddonName, $type, $tempLocation, $uploadFileName, $uploadDescription);
+			$response = AddonManager::uploadNewAddon($user, $uploadAddonName, $type, $tempLocation, $uploadFileName, $uploadDescription, $type);
 			return $response;
 		}
 	}
