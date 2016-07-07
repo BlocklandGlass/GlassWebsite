@@ -52,7 +52,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
           if($user->getEmail() == $email) {
             $user->setVerified(true);
             $ret->result = "success";
-						NotificationManager::sendPushNotification($user->getBlid(), "Verified", "Your email address <color:ff0000>\"" . $_REQUEST['email'] . "\"<color:000000> has been verified!", "accept_button", null, 5000);
+						//NotificationManager::sendPushNotification($user->getBlid(), "Verified", "Your email address <color:ff0000>\"" . $_REQUEST['email'] . "\"<color:000000> has been verified!", "accept_button", null, 5000);
             break;
           }
         }
