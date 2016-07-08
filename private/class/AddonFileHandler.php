@@ -32,16 +32,20 @@ class AddonFileHandler {
     return ($executable && $desc);
   }
 
-  public static function validatePrint() {
+  public static function validatePrint($file) {
     // TODO I have no idea how this works
+    return true;
   }
 
-  public static function validateColorset() {
+  public static function validateColorset($file) {
     $colors = false;
     $desc = false;
 
-    $zip = new ZipArchive;
-    if($zip->open($file) == TRUE) {
+    $fullFile = realpath($file);
+
+    $zip = new ZipArchive();
+    $res = $zip->open($fullFile);
+    if($res === TRUE) {
       for ($i = 0; $i < $zip->numFiles; $i++) {
         $filename = $zip->getNameIndex($i);
         $filename = strtolower($filename);
@@ -49,14 +53,12 @@ class AddonFileHandler {
         if($filename == "colorset.txt") {
           $colors = true;
         }
-
-        if($filename == "description.txt") {
-          $desc = true;
-        }
       }
+    } else {
+      return false;
     }
 
-    return ($executable && $colors);
+    return ($colors);
   }
 
   public static function injectGlassFile($aid, $file) { //ideally, we create the addonObject and then do all the file work?
