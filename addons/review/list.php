@@ -12,7 +12,38 @@
     return;
   }
 ?>
+<style>
+thead {
+  background-color: #ccc;
+  margin-bottom: 10px;
+}
+
+table th {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+table td {
+  padding: 5px;
+}
+
+table th:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+table th:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+tbody tr:nth-child(2n) {
+  background-color: #eee;
+}
+</style>
 <div class="maincontainer">
+	<p>These add-ons have been submitted but need to be looked over. Ensure that they are not malicious and do not contain backdoors, then categorize them appropriately</p>
+	<b>Client Add-Ons:</b>
+	<br />
+	<p>I want these to be checked very carefully. These will be downloaded on the spot by users who have no idea what they're downloading. They'll likely be executed right before the server is joined. Make sure they only interact with the server they're intended for and that they clean up after themselves. Make sure that they add no additional client functionality outside of in-game changes.</p>
   <table style="width: 100%">
     <thead>
       <tr><th>Add-On</th><th>Author</th><th>Uploaded</th></tr>

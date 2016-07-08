@@ -106,17 +106,19 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 		if($isServer) {
 			$clients = stripcslashes($_REQUEST['clients']);
 			$clArray = array();
-			$clDatArray = explode("\n", $clients);
-			foreach($clDatArray as $clDat) {
-				$dat = explode("\t", $clDat);
-				$obj = new stdClass();
+			if($clients != "") {
+				$clDatArray = explode("\n", $clients);
+				foreach($clDatArray as $clDat) {
+					$dat = explode("\t", $clDat);
+					$obj = new stdClass();
 
-				$obj->name = $dat[0];
-				$obj->blid = $dat[1];
+					$obj->name = $dat[0];
+					$obj->blid = $dat[1];
 
-				$clArray[] = $obj;
+					$clArray[] = $obj;
+				}
+				$ret->cl = $clArray;
 			}
-			$ret->cl = $clArray;
 
 			$username = $_REQUEST['username'];
 			$blid = $_REQUEST['blid'];
