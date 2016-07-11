@@ -26,7 +26,7 @@ if($type == "addon") {
     $r->title = $addon->getName();
     $r->id = $addon->getId();
     //$r->author
-    $r->description = $addon->getDescription();
+    //$r->description = $addon->getDescription();
     $ret->results[] = $r;
   }
 } else {
