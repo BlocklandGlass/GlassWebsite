@@ -34,7 +34,7 @@
 		<?php
 		$id = "RTB";
 		$class = "red";
-		echo '<a href="//cdn.blocklandglass.com/rtb/' . $addonData->filename .  '" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />Imported Archive</span></a>';
+		echo '<a href="http://cdn.blocklandglass.com/rtb/' . $addonData->filename .  '" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />Imported Archive</span></a>';
 		?>
 	</div>
 	<?php } else {
