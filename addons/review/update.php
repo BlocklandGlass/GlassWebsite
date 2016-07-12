@@ -84,91 +84,52 @@ td {
   width:100%;
 }
 
-.overlay {
-	visibility: hidden;
-  display: block;
-	margin: 20px;
-	padding: 20px;
-	border-radius: 15px;
-
-  position: absolute; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  background-color: rgb(0,0,0); /* Black fallback color */
-  background-color: rgba(0,0,0, 0); /* Black w/opacity */
-  transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+.scroll {
+	display: block;
+	height: 300px;
+	overflow-y: scroll;
+	background-color: #eee;
+	border: 1px solid #bbb;
+	padding: 5px;
+	margin: 5px;
 }
 
-/* Position the content inside the overlay */
-.overlay-content {
+.source {
+	display: none;
+	height: 0;
+	background-color: #333;
+	padding: 10px;
 	color: #fff;
-  position: relative;
-  text-align: center; /* Centered text/links */
-  margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
-}
-
-/* The navigation links inside the overlay */
-.overlay a {
-    padding: 8px;
-    text-decoration: none;
-    font-size: 36px;
-    color: #818181;
-    display: block; /* Display block instead of inline */
-    transition: 0.3s; /* Transition effects on hover (color) */
-}
-
-/* When you mouse over the navigation links, change their color */
-.overlay a:hover, .overlay a:focus {
-    color: #f1f1f1;
-}
-
-/* Position the close button (top right corner) */
-.closebtn {
-    position: absolute;
-    top: 0;
-    right: 45px;
-    font-size: 60px !important; /* Override the font-size specified earlier (36px) for all navigation links */
-}
-
-/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
-@media screen and (max-height: 450px) {
-    .overlay a {font-size: 20px}
-    .closebtn {
-        font-size: 40px !important;
-        top: 15px;
-        right: 35px;
-    }
 }
 
 </style>
 <script type="text/javascript">
-/* Open when someone clicks on the span element */
-function openNav() {
-    document.getElementById("fileCompare").style.visibility = "visible";
-    document.getElementById("fileCompare").style.backgroundColor = "rgba(0,0,0, 0.8)";
-		window.scrollTo(0, 0);
-}
-
-/* Close when someone clicks on the "x" symbol inside the overlay */
-function closeNav() {
-    document.getElementById("fileCompare").style.backgroundColor = "rgba(0,0,0, 0)";
-		document.getElementById("fileCompare").style.visibility = "hidden";
+tog = [];
+function showChanges(id) {
+	if(!tog[id]) {
+		document.getElementById("source" + id).style.display = "block";
+		document.getElementById("source" + id).style.height = "auto";
+		tog[id] = true;
+	} else {
+		document.getElementById("source" + id).style.display = "none";
+		document.getElementById("source" + id).style.height = "0";
+		tog[id] = false;
+	}
 }
 </script>
-<div id="fileCompare" class="overlay">
+<!-- <div id="fileCompare" class="overlay">
 
-  <!-- Button to close the overlay navigation -->
+
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	<br />
 
-  <!-- Overlay content -->
   <div class="overlay-content">
     <table class="file-compare">
 			<tr><td colspan="2"><?php foreach($diffData['changes'] as $file=>$table) { echo $file . "<br />" . $table . "<hr />";} ?></td></tr>
 		</table>
   </div>
 
-</div>
+</div> -->
 <div class="maincontainer">
   <h2><?php echo $addon->getName(); ?></h2>
   <p><span style="font-weight:bold;padding: 2px; border: 1px solid rgb(192,192,255); background: rgb(224,224,255); border-radius: 2px;">v<?php echo $addon->getVersion();?></span> -> <span style="font-weight:bold;padding: 2px; border: 1px solid rgb(192,255,192); background: rgb(224,255,224); border-radius: 2px;">v<?php echo $update->getVersion();?></span></p>
@@ -181,11 +142,11 @@ function closeNav() {
       </tr>
       <tr>
         <td style="padding: 10px;"><b>Removed Files</b></td>
-        <td><?php foreach($diffData['removed'] as $file) { echo $file . '<br />';} ?></td>
+        <td class="scroll"><?php foreach($diffData['removed'] as $file) { echo $file . '<br />';} ?></td>
       </tr>
       <tr>
         <td style="padding: 10px;"><b>New Files</b></td>
-        <td><?php foreach($diffData['added'] as $file) { echo $file . '<br />';} ?></td>
+        <td class="scroll"><?php foreach($diffData['added'] as $file) { echo $file . '<br />';} ?></td>
       </tr>
 		</tbody>
 	</table>
@@ -193,10 +154,19 @@ function closeNav() {
 		<tbody>
       <tr>
         <td style="padding: 10px;"><b>Changed Files</b></td>
-        <td><button onclick="openNav()">View Fullscreen</button></td>
+        <td></td>
       </tr>
       <tr>
-        <td colspan="2" style="font-size:0.7em"><?php foreach($diffData['changes'] as $file=>$table) { echo $file . "<br />" . $table . "<hr />";} ?></td>
+        <td colspan="2" style="font-size:0.7em">
+					<?php
+					$idx = 0;
+					foreach($diffData['changes'] as $file=>$table) {
+						echo $file . " <button onclick=\"javascript:showChanges($idx);\">View Changes</button>";
+						echo "<br /><div class=\"source\" id=\"source$idx\">" . $table . "</div>";
+						$idx++;
+					}
+					?>
+				</td>
       </tr>
     </tbody>
   </table>
