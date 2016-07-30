@@ -63,7 +63,8 @@ class GroupManager {
 	}
 
 	public static function getGroupsFromBLID($id) {
-		$userGroups = apc_fetch('userGroups_' . $id, $success);
+		//$userGroups = apc_fetch('userGroups_' . $id, $success);
+		$success = false;
 
 		if($success === false) {
 			$database = new DatabaseManager();
