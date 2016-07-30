@@ -56,7 +56,7 @@ class AddonUpdateObject {
 	    $fileNew = realpath($this->getFile());
 	    $fileOld = dirname(__DIR__) . '/../addons/files/local/' . $this->aid . '.zip';
 
-			if(!is_file($fildOld)) {
+			if(!is_file($fileOld)) {
 				$path = realpath(dirname(__DIR__) . '/../addons/files/local/');
 				$fh = fopen($path . $this->aid . '.zip', 'w');
 				$ch = curl_init();
