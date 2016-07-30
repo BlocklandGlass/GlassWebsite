@@ -13,11 +13,12 @@ $user = UserManager::getCurrent();
 if($user === false) {
   $message = "Please log-in to join!";
 } else if($user->inGroup("Reviewer") || $user->inGroup("Moderator") || $user->inGroup("Administrator")) {
-  $message = "Welcome, reviewer, moderator, and/or administrator! You can find the latest download <a href=\"/beta/System_BlocklandGlass.zip\">here</a>!";
+  $message = "Welcome, reviewer, moderator, and/or administrator! You can find the latest download <a href=\"/api/beta/System_BlocklandGlass.zip\">here</a>!";
 } else if($user->inGroup("Beta")) {
   $message = "Welcome back, tester! You can find the latest download <a href=\"/api/beta/System_BlocklandGlass.zip\">here</a>!";
 } else {
    if($group->getMemberCount() >= $cap) {
+
     $message = "The private testing is currently full. Try again later, or wait for the Open Beta! Sorry about that.";
   } else if(isset($_POST['submit']) && $_POST['submit'] == "Join") {
     $res = GroupManager::addBLIDToGroupID($user->getBlid(), $group->getId());
