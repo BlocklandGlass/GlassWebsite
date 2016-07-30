@@ -146,7 +146,7 @@ function showChanges(id) {
       </tr>
       <tr>
         <td style="padding: 10px;"><b>New Files</b></td>
-        <td class="scroll"><?php foreach($diffData['added'] as $file) { echo $file . '<br />';} ?></td>
+        <td class="scroll"><?php foreach($diffData['added'] as $file=>$content) { echo $file . '<br />';} ?></td>
       </tr>
 		</tbody>
 	</table>
