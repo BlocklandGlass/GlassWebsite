@@ -61,7 +61,7 @@ class AddonUpdateObject {
 	    $resNew = $zipNew->open($fileNew);
 	    $resOld = $zipOld->open($fileOld);
 	    if($resNew === TRUE && $resOld === TRUE) {
-				$newFiles = new stdClass();;
+				$newFiles = array();
 	      for ($i = 0; $i < $zipNew->numFiles; $i++) {
 	        $newFiles[$zipNew->getNameIndex($i)] = $zipNew->getFromIndex($i);
 	      }
