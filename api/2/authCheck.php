@@ -27,6 +27,10 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 			} else if($user->inGroup("Moderator")) {
 				$ret->mod = true;
 			}
+
+			if($user->inGroup("Beta")) {
+				$ret->beta = true;
+			}
 		}
 
     $ret->status = "success";

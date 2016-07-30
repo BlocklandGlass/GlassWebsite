@@ -1,0 +1,17 @@
+{
+    "name": "Glass Closed Beta",
+    "add-ons": [
+        {
+            "name": "System_BlocklandGlass",
+            "description": "Blockland Glass closed beta",
+            "channels": [
+                {
+                    "name": "closedbeta",
+                    "version": "3.0.0-alpha.1",
+                    "restartRequired": "3.0.0-alpha.1",
+                    "file": "http://api.blocklandglass.com/beta/System_BlocklandGlass.zip"
+                }
+            ]
+        }
+    ]
+}

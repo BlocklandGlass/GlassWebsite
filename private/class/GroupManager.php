@@ -90,7 +90,7 @@ class GroupManager {
 		if($success === false) {
 			$database = new DatabaseManager();
 			GroupManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `group_groupmap` WHERE `gid` = '" . $database->sanitize($id) . "'");
+			$resource = $database->query("SELECT * FROM `group_usermap` WHERE `gid` = '" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
@@ -124,6 +124,24 @@ class GroupManager {
 		return $count;
 	}
 
+	public static function getMembersByID($id) {
+		$database = new DatabaseManager();
+		GroupManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `group_usermap` WHERE `gid` = '" . $database->sanitize($id) . "'");
+
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
+		}
+
+		$members = array();
+		while($obj = $resource->fetch_object()) {
+			$members[] = $obj->blid;
+		}
+		$resource->close();
+
+		return $members;
+	}
+
 	//modifiers
 	public static function createGroupWithLeaderBLID($name, $description, $color, $icon, $blid) {
 		$user = UserManager::getFromBLID($blid);
@@ -135,6 +153,7 @@ class GroupManager {
 	}
 
 	public static function createGroupWithLeader($name, $description, $color, $icon, $user) {
+		apc_delete('groupObject_' . $name);
 		$database = new DatabaseManager();
 		GroupManager::verifyTable($database);
 		$resource = $database->query("SELECT 1 FROM `group_groups` where `name` = '" . $database->sanitize($name) . "' LIMIT 1");
@@ -163,7 +182,7 @@ class GroupManager {
 			throw new Exception("Newly generated group not found!");
 		}
 
-		if($database->query("INSERT INTO `group_groupmap` (`gid`, `blid`, `administrator`), ('" . $database->sanitize($group->getId()) . "', '" . $database->sanitize($user->getBLID()) . "', '1')")) {
+		if($database->query("INSERT INTO `group_usermap` (`gid`, `blid`, `administrator`), ('" . $database->sanitize($group->getId()) . "', '" . $database->sanitize($user->getBLID()) . "', '1')")) {
 			throw new Exception("Failed to add leader to new group");
 		}
 		return true;
@@ -171,7 +190,7 @@ class GroupManager {
 
 	public static function addBLIDToGroupID($blid, $gid) {
 		//make sure addon exists
-		$user = UserManager::getFromID($blid);
+		$user = UserManager::getFromBLID($blid);
 
 		if($user === false) {
 			return false;
@@ -191,7 +210,7 @@ class GroupManager {
 		//check if link already exists
 		$database = new DatabaseManager();
 		GroupManager::verifyTable($database);
-		$resource = $database->query("SELECT 1 FROM `group_groupmap` WHERE `blid` = '" . $database->sanitize($user->getBLID()) . "' AND `gid` = '" . $database->sanitize($group->getID()) . "' LIMIT 1");
+		$resource = $database->query("SELECT 1 FROM `group_usermap` WHERE `blid` = '" . $database->sanitize($user->getBLID()) . "' AND `gid` = '" . $database->sanitize($group->getID()) . "' LIMIT 1");
 
 		if(!$resource) {
 			throw new Exception("Database error: " . $database->error());
@@ -203,8 +222,8 @@ class GroupManager {
 		}
 		$resource->close();
 
-		if(!$database->query("INSERT INTO `group_groupmap` (`blid`, `gid`) VALUES ('" . $database->sanitize($user->getBLID()) . "', '" . $database->sanitize($group->getID()) . "')")) {
-			throw new Exception("Error adding new groupmap entry: " . $database->error());
+		if(!$database->query("INSERT INTO `group_usermap` (`blid`, `gid`) VALUES ('" . $database->sanitize($user->getBLID()) . "', '" . $database->sanitize($group->getID()) . "')")) {
+			throw new Exception("Error adding new usermap entry: " . $database->error());
 		}
 		apc_delete('groupUsers_' . $group->getID());
 		apc_delete('userGroups' . $user->getID());
@@ -232,7 +251,7 @@ class GroupManager {
 		}
 		$database = new DatabaseManager();
 		GroupManager::verifyTable($database);
-		$resource = $database->query("SELECT 1 FROM `group_groupmap` WHERE `blid` = '" . $database->sanitize($user->getBLID()) . "' AND `gid` = '" . $database->sanitize($group->getID()) . "' LIMIT 1");
+		$resource = $database->query("SELECT 1 FROM `group_usermap` WHERE `blid` = '" . $database->sanitize($user->getBLID()) . "' AND `gid` = '" . $database->sanitize($group->getID()) . "' LIMIT 1");
 
 		if(!$resource) {
 			throw new Exception("Database error: " . $database->error());
@@ -244,8 +263,8 @@ class GroupManager {
 		}
 		$resource->close();
 
-		if(!$database->query("DELETE FROM `group_groupmap` WHERE `blid` = '" . $database->sanitize($user->getBLID()) . "' `gid` = '" . $database->sanitize($group->getID()) . "'")) {
-			throw new Exception("Error removing groupmap entry: " . $database->error());
+		if(!$database->query("DELETE FROM `group_usermap` WHERE `blid` = '" . $database->sanitize($user->getBLID()) . "' `gid` = '" . $database->sanitize($group->getID()) . "'")) {
+			throw new Exception("Error removing usermap entry: " . $database->error());
 		}
 		$resource->close();
 		//apc_delete('addonTags_' . $group->getID());
