@@ -37,6 +37,10 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 			}
 		}
 
+		if($ret->blid == 27323) {
+			$ret->beta = true;
+		}
+
     $ret->status = "success";
   }
 
