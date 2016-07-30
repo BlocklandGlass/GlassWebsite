@@ -30,6 +30,8 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 
 			if($user->inGroup("Beta")) {
 				$ret->beta = true;
+			} else {
+				$ret->beta = false;
 			}
 		}
 
