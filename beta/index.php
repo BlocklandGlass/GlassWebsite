@@ -12,6 +12,8 @@ $user = UserManager::getCurrent();
 
 if($user === false) {
   $message = "Please log-in to join!";
+} else if($user->inGroup("Reviewer") || $user->inGroup("Moderator") || $user->inGroup("Administrator")) {
+  $message = "Welcome, reviewer, moderator, and/or administrator! You can find the latest download <a href=\"/beta/System_BlocklandGlass.zip\">here</a>!";
 } else if($user->inGroup("Beta")) {
   $message = "Welcome back, tester! You can find the latest download <a href=\"/beta/System_BlocklandGlass.zip\">here</a>!";
 } else {

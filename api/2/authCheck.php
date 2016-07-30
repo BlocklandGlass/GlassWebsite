@@ -21,17 +21,19 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 
 		$user = UserManager::getFromBLID($ret->blid);
 		if($user !== false) {
+			$ret->beta = false;
+
 			if($user->inGroup("Administrator")) {
 				$ret->admin = true;
 				$ret->mod = true;
+					$ret->beta = true;
 			} else if($user->inGroup("Moderator")) {
 				$ret->mod = true;
+				$ret->beta = true;
 			}
 
-			if($user->inGroup("Beta")) {
+			if($user->inGroup("Beta") || $user->inGroup("Reviewer")) {
 				$ret->beta = true;
-			} else {
-				$ret->beta = false;
 			}
 		}
 
