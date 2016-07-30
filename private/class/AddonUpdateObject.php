@@ -54,7 +54,7 @@ class AddonUpdateObject {
 
 		if($success === false) {
 	    $fileNew = realpath($this->getFile());
-	    $fileOld = realpath(dirname(__DIR__) . '/../addons/files/local/' . $this->aid . '.zip');
+	    $fileOld = dirname(__DIR__) . '/../addons/files/local/' . $this->aid . '.zip';
 
 			if(!is_file($fildOld)) {
 				$path = realpath(dirname(__DIR__) . '/../addons/files/local/');
@@ -66,9 +66,9 @@ class AddonUpdateObject {
 				curl_exec($ch);
 				curl_close($ch);
 				fclose($fh);
-
-		    $fileOld = realpath(dirname(__DIR__) . '/../addons/files/local/' . $this->aid . '.zip');
 			}
+
+	    $fileOld = realpath(dirname(__DIR__) . '/../addons/files/local/' . $this->aid . '.zip');
 
 	    $zipNew = new ZipArchive();
 			$zipOld = new ZipArchive();
