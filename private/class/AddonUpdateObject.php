@@ -63,7 +63,7 @@ class AddonUpdateObject {
 	    if($resNew === TRUE && $resOld === TRUE) {
 				$newFiles = array();
 	      for ($i = 0; $i < $zipNew->numFiles; $i++) {
-	        $newFiles[$zipNew->getNameIndex($i)] = $zipNew->getFromIndex($i);
+	        $newFiles[] = $zipNew->getNameIndex($i);
 	      }
 
 				$oldFiles = [];
@@ -71,9 +71,9 @@ class AddonUpdateObject {
 	        $oldFiles[] = $zipOld->getNameIndex($i);
 	      }
 
-				$added = array_diff(array_keys($newFiles), $oldFiles);
-				$removed = array_diff($oldFiles, array_keys($newFiles), ["glass.json", "version.json"]);
-				$commonFiles = array_intersect(array_keys($newFiles), $oldFiles);
+				$added = array_diff($newFiles, $oldFiles);
+				$removed = array_diff($oldFiles, $newFiles, ["glass.json", "version.json"]);
+				$commonFiles = array_intersect($newFiles, $oldFiles);
 				$commonFiles = array_diff($commonFiles, ["glass.json", "version.json"]);
 				$diff = [];
 				foreach($commonFiles as $fi) {
