@@ -227,6 +227,8 @@ class GroupManager {
 		}
 		apc_delete('groupUsers_' . $group->getID());
 		apc_delete('userGroups' . $user->getID());
+
+		return true;
 	}
 
 	public static function removeBLIDFromGroupID($blid, $gid) {
