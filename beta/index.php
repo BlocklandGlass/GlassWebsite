@@ -5,7 +5,7 @@ require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
 require_once(realpath(dirname(__DIR__) . "/private/class/GroupManager.php"));
 require_once(realpath(dirname(__DIR__) . "/private/class/UserLog.php"));
 
-$cap = 10;
+$cap = 15;
 $group = GroupManager::getFromName("Beta");
 
 $user = UserManager::getCurrent();
@@ -17,8 +17,7 @@ if($user === false) {
 } else if($user->inGroup("Beta")) {
   $message = "Welcome back, tester! You can find the latest download <a href=\"/api/beta/System_BlocklandGlass.zip\">here</a>!";
 } else {
-   if($group->getMemberCount() >= $cap) {
-
+  if($group->getMemberCount() >= $cap) {
     $message = "The private testing is currently full. Try again later, or wait for the Open Beta! Sorry about that.";
   } else if(isset($_POST['submit']) && $_POST['submit'] == "Join") {
     $res = GroupManager::addBLIDToGroupID($user->getBlid(), $group->getId());
