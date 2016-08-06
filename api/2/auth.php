@@ -49,7 +49,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
         $userArray = $con->getUnverifiedAccounts();
 
         foreach($userArray as $user) {
-          if($user->getEmail() == $email) {
+          if(strtolower($user->getEmail()) == strtolower($email)) {
             $user->setVerified(true);
             $ret->result = "success";
 						//NotificationManager::sendPushNotification($user->getBlid(), "Verified", "Your email address <color:ff0000>\"" . $_REQUEST['email'] . "\"<color:000000> has been verified!", "accept_button", null, 5000);
