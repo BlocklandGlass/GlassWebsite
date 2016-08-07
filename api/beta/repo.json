@@ -7,8 +7,8 @@
             "channels": [
                 {
                     "name": "closedbeta",
-                    "version": "3.0.0-alpha.3.0.1+closed",
-                    "restartRequired": "3.0.0-alpha.3.0.1+closed",
+                    "version": "3.0.0-beta.1.0.0+open",
+                    "restartRequired": "3.0.0-beta.1.0.0+open",
                     "file": "http://api.blocklandglass.com/api/beta/System_BlocklandGlass.zip"
                 }
             ]
