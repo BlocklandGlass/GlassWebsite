@@ -240,6 +240,39 @@ pre {
   padding: 15px;
   border-radius: 5px;
 }
+
+.mu_function {
+	color: rgb(255, 200, 100);
+}
+
+.mu_exec {
+	color: rgb(100, 200, 255);
+}
+
+.mu_return {
+	color: rgb(255, 200, 200);
+}
+
+.mu_comment {
+	color: rgb(50, 180, 110) !important;
+}
+
+.mu_global {
+	color: rgb(170, 230, 255);
+}
+
+.mu_local {
+	color: rgb(230, 170, 255);
+}
+
+.mu_text {
+	color: rgb(200, 200, 200);
+}
+
+.mu_new {
+	color: rgb(180, 250, 180);
+}
+
 </style>
 <div class="fileNav">
 </div>

@@ -70,6 +70,24 @@ if($res === TRUE) {
       $result->error = "Failed to open file in zip";
       die(json_encode($result, JSON_PRETTY_PRINT));
     }
+    $str = preg_replace('((\").*?(\"))', "<span class=\"mu_text\">$0</span>", $str);
+
+    $str = str_replace("\t", "  ", $str);
+    $str = str_replace("function", "<span class=\"mu_function\">function</span>", $str);
+    $str = preg_replace("((?<=(\s|\())exec)", "<span class=\"mu_exec\">$0</span>", $str);
+    $str = str_replace("return", "<span class=\"mu_return\">return</span>", $str);
+    $str = str_replace("new", "<span class=\"mu_new\">new</span>", $str);
+
+    $str = preg_replace('(\/\/.*)', "<span class=\"mu_comment\">$0</span>", $str);
+
+    $str = preg_replace('((?<=(\s|\())\$[^=]+?(?=(\s|\))))', "<span class=\"mu_global\">$0</span>", $str);
+    $str = preg_replace('((?<=(\s|\())\%.*?(?=(\)|\s|\.|\[|\])))', "<span class=\"mu_local\">$0</span>", $str);
+
+
+
+
+
+    //$str = preg_replace('((?<=(\s|\())\$[^=]+?\s)', "<span class=\"mu_global\">$0</span>", $str);
 
     $result->source = $str;
     $result->file = $file;
