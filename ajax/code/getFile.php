@@ -80,8 +80,8 @@ if($res === TRUE) {
 
     $str = preg_replace('(\/\/.*)', "<span class=\"mu_comment\">$0</span>", $str);
 
-    $str = preg_replace('((?<=(\s|\())\$[^=]+?(?=(\s|\))))', "<span class=\"mu_global\">$0</span>", $str);
-    $str = preg_replace('((?<=(\s|\())\%.*?(?=(\)|\s|\.|\[|\])))', "<span class=\"mu_local\">$0</span>", $str);
+    $str = preg_replace('((?<=(\s|\())\$[^=]+?(?=(\s|\)|\,)))', "<span class=\"mu_global\">$0</span>", $str);
+    $str = preg_replace('((?<=(\s|\())\%.*?(?=(\)|\s|\.|\,|\[|\])))', "<span class=\"mu_local\">$0</span>", $str);
 
 
 

@@ -9,7 +9,10 @@
 	require_once(realpath(dirname(__DIR__) . "/../private/class/UserLog.php"));
 
 	$user = UserManager::getCurrent();
-	$review = $user->inGroup("Reviewer");
+	$review = false;
+	if(is_object($user)) {
+		$review = $user->inGroup("Reviewer");
+	}
 
   $addon = AddonManager::getFromID($_REQUEST['id']);
   $manager = UserManager::getFromBLID($addon->getManagerBLID());
@@ -128,6 +131,7 @@ function loadFileTree() {
       if(data.status == "success") {
         root = data.tree;
         $('.fileNav').html(buildFolderHTML(root));
+        loadFile('description.txt')
       } else {
         $('.fileNav').css("background-color", "rgba(150, 0, 0, 0.5)");
         $('.fileNav').html("<pre>" + JSON.stringify(data) + "</pre>");
@@ -253,10 +257,6 @@ pre {
 	color: rgb(255, 200, 200);
 }
 
-.mu_comment {
-	color: rgb(50, 180, 110) !important;
-}
-
 .mu_global {
 	color: rgb(170, 230, 255);
 }
@@ -271,6 +271,10 @@ pre {
 
 .mu_new {
 	color: rgb(180, 250, 180);
+}
+
+.mu_comment {
+	color: rgb(50, 180, 110) !important;
 }
 
 </style>
