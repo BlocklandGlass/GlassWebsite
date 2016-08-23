@@ -101,7 +101,7 @@ function renderFileNav() {
 }
 
 function renderFile(data) {
-  $('.maincontainer').html("<pre>" + data.source + "</pre>");
+  $('.maincontainer').html("<h3>" + data.file + "</h3><pre>" + data.source + "</pre>");
 }
 
 function getDirectory(directory) {
@@ -145,6 +145,7 @@ function loadFile(file) {
         console.log("loaded file " + file)
         renderFile(data);
       } else {
+        alert("uh oh");
         $('.maincontainer').css("background-color", "rgba(150, 0, 0, 0.5)");
       }
     }

@@ -51,16 +51,34 @@ $res = $zip->open($filePath);
 if($res === TRUE) {
   $files = array();
 
-  $str = $zip->getFromName($file);
+  $ext = substr($file, strrpos($file, ".")+1);
 
-  if($str === false) {
-    $result->status = "error";
-    $result->error = "Failed to open file in zip";
-    die(json_encode($result, JSON_PRETTY_PRINT));
+  $allowed = [
+    "txt",
+    "cs",
+    "gui",
+    "json",
+    "md",
+    "blb"
+  ];
+
+  if(in_array($ext, $allowed)) {
+    $str = $zip->getFromName($file);
+
+    if($str === false) {
+      $result->status = "error";
+      $result->error = "Failed to open file in zip";
+      die(json_encode($result, JSON_PRETTY_PRINT));
+    }
+
+    $result->source = $str;
+    $result->file = $file;
+    $result->status = "success";
+  } else {
+    $result->source = "Unsupported file type.";
+    $result->file = $file;
+    $result->status = "success";
   }
-
-  $result->source = $str;
-  $result->status = "success";
 } else {
   $result->status = "error";
   $result->error = "Failed to open zip";

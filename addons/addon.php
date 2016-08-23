@@ -189,6 +189,8 @@ $(document).ready(function() {
 				echo $tag->getHTML();
 			}
 			?>
+			<br />
+			<a href="review/code.php?id=<?php echo $addonObject->getId() ?>">View source code</a>
 		</div>
 	</div>
 	<hr />
