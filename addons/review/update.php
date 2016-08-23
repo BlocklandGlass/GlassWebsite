@@ -25,7 +25,7 @@
 		return;
 	}
 
-  $diffData = $update->getDiff();
+  //$diffData = $update->getDiff();
 ?>
 <style>
 table {
@@ -125,7 +125,7 @@ function showChanges(id) {
 
   <div class="overlay-content">
     <table class="file-compare">
-			<tr><td colspan="2"><?php foreach($diffData['changes'] as $file=>$table) { echo $file . "<br />" . $table . "<hr />";} ?></td></tr>
+			<tr><td colspan="2"><?php //foreach($diffData['changes'] as $file=>$table) { echo $file . "<br />" . $table . "<hr />";} ?></td></tr>
 		</table>
   </div>
 
@@ -142,11 +142,11 @@ function showChanges(id) {
       </tr>
       <tr>
         <td style="padding: 10px;"><b>Removed Files</b></td>
-        <td class="scroll"><?php foreach($diffData['removed'] as $file) { echo $file . '<br />';} ?></td>
+        <td class="scroll"><?php //foreach($diffData['removed'] as $file) { echo $file . '<br />';} ?></td>
       </tr>
       <tr>
         <td style="padding: 10px;"><b>New Files</b></td>
-        <td class="scroll"><?php foreach($diffData['added'] as $file) { echo $file . '<br />';} ?></td>
+        <td class="scroll"><?php //foreach($diffData['added'] as $file) { echo $file . '<br />';} ?></td>
       </tr>
 		</tbody>
 	</table>
@@ -160,11 +160,11 @@ function showChanges(id) {
         <td colspan="2" style="font-size:0.7em">
 					<?php
 					$idx = 0;
-					foreach($diffData['changes'] as $file=>$table) {
+					/*foreach($diffData['changes'] as $file=>$table) {
 						echo $file . " <button onclick=\"javascript:showChanges($idx);\">View Changes</button>";
 						echo "<br /><div class=\"source\" id=\"source$idx\">" . $table . "</div>";
 						$idx++;
-					}
+					}*/
 					?>
 				</td>
       </tr>
