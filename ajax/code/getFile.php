@@ -62,7 +62,13 @@ if($res === TRUE) {
     "blb"
   ];
 
-  if(in_array($ext, $allowed)) {
+  $raw = [
+    "jpg",
+    "jpeg",
+    "png"
+  ];
+
+  if(in_array(strtolower($ext), $allowed)) {
     $str = $zip->getFromName($file);
 
     if($str === false) {
@@ -92,8 +98,12 @@ if($res === TRUE) {
     $result->source = $str;
     $result->file = $file;
     $result->status = "success";
+  } else if(in_array(strtolower($ext), $raw)) {
+    $result->image = true;
+    $result->file = $file;
+    $result->status = "success";
   } else {
-    $result->source = "Unsupported file type.";
+    $result->message = "Unsupported file type.";
     $result->file = $file;
     $result->status = "success";
   }

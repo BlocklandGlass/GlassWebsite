@@ -104,7 +104,18 @@ function renderFileNav() {
 }
 
 function renderFile(data) {
-  $('.maincontainer').html("<h3>" + data.file + "</h3><pre>" + data.source + "</pre>");
+  var html = "<h3>" + data.file + "</h3>";
+  if(data.source != null) {
+    html += "<pre>" + data.source + "</pre>";
+  } else if(data.image === true) {
+		html += '<div class="roundedBox"><img src="/ajax/code/getZipFile.php?id=' + addonId + '&file=' + data.file + '" /></div>';
+	} else {
+    html += '<div class="message roundedBox">' + data.message + '<br /><br />'
+		html += '<a href="/ajax/code/getZipFile.php?id=' + addonId + '&file=' + data.file + '">View/Download Raw File</a>'
+		html += '</div>'
+  }
+
+  $('.maincontainer').html(html);
 }
 
 function getDirectory(directory) {
@@ -234,6 +245,15 @@ $(document).ready(function() {
   vertical-align : top;
   white-space    : pre;
   font-family    : monospace;
+}
+
+.roundedBox {
+  background-color: rgba(0, 0, 0, 0.5);
+
+  color: #ffffff;
+
+  padding: 15px;
+  border-radius: 5px;
 }
 
 pre {
