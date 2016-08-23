@@ -31,7 +31,7 @@
 		return $response;
 	}
 
-	if(!isset($_FILES['uploadfile']['name']) || !isset($_FILES['uploadfile']['size']) || !$_FILES['uploadfile']['size']) {
+	if(empty($_FILES['uploadfile']['name'])) {
 		$response = [
 			"message" => "No file was selected to be uploaded"
 		];

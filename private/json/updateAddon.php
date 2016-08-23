@@ -38,6 +38,14 @@
 		return $response;
 	}
 
+	if(isset($_FILES['uploadfile']['error'])) {
+		$response = [
+			"message" => "Upload error: " . $_FILES['uploadfile']['error'],
+			"version" => $addonObject->getVersion()
+		];
+		return $response;
+	}
+
 	if(!isset($_FILES['uploadfile']['name']) || !isset($_FILES['uploadfile']['size']) || !$_FILES['uploadfile']['size']) {
 		$response = [
 			"message" => "No file was selected to be uploaded",
