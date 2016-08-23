@@ -24,7 +24,7 @@ function codeToMessage($code) {
 			break;
 
 		default:
-			$message = "Unknown upload error";
+			$message = "Unknown upload error: " . $code;
 			break;
 	}
 	return $message;
