@@ -208,7 +208,7 @@ class AddonManager {
 		copy($file, dirname(__DIR__) . '/../addons/files/local/' . $addon->getId() . '_beta.zip');
 	}
 
-	public static function uploadNewAddon($user, $name, $type, $file, $filename, $description, $type) {
+	public static function uploadNewAddon($user, $name, $type, $file, $filename, $description) {
 		$database = new DatabaseManager();
 		AddonManager::verifyTable($database);
 
