@@ -69,7 +69,7 @@ function codeToMessage($code) {
 		return $response;
 	}
 
-	if(isset($_FILES['uploadfile']['error'])) {
+	if($_FILES['uploadfile']['error'] !== UPLOAD_ERR_OK) {
 		$response = [
 			"message" => "Upload error: " . codeToMessage($_FILES['uploadfile']['error']),
 			"version" => $addonObject->getVersion()
