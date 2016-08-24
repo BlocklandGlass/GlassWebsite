@@ -230,6 +230,17 @@ function loadOverview() {
   });
 }
 
+function createCommentDisplay(x, y, text) {
+	var html = "";
+	var display = $('.commentBox');
+	display.css('top', y);
+	display.css('left', x);
+	display.html(text);
+
+	display.css('opacity', 0);
+	display.animate({opacity: 1}, 250);
+}
+
 $(document).ready(function() {
   $(document).scroll(function() {
     var scrollTop = $(document).scrollTop();
@@ -248,7 +259,10 @@ $(document).ready(function() {
 	$(document).on('click', '.line', function() {
 		var lineNumber = this.id.substr(5)
 		if($(this).hasClass('linecomment')) {
-	    openPopup("Line " + lineNumber + " Comment", '\"You use eval here in a publically accessible function. Don\'t do this\"<br />- <b>Jincux</b>');
+	    //openPopup("Line " + lineNumber + " Comment", '\"You use eval here in a publically accessible function. Don\'t do this\"<br />- <b>Jincux</b>');
+			var x = $(this).offset().left + $(this).width()+30
+			var y = $(this).offset().top
+			createCommentDisplay(x, y, "This is a test comment");
 		} else {
 			var body = "Commenting on line " + lineNumber;
 			body += '<br /><div style="text-align:center; margin-top: 10px;">';
@@ -262,6 +276,17 @@ $(document).ready(function() {
 		closePopup(true);
 	})
 
+	$(window).on('resize', function() {
+		doResize();
+	});
+
+	function doResize() {
+		var x = $(document).width()
+		var y = $(document).height()
+		$('.maincontainer').width(x-235-270);
+	}
+
+	doResize();
   loadFileTree();
 });
 
@@ -272,7 +297,12 @@ textarea {
 }
 
 .maincontainer {
+  position: absolute;
+  left: 235px;
+  top: 74px;
+
   font-size: 11pt;
+	max-width: 100%
 }
 
 .fileNav {
@@ -280,7 +310,7 @@ textarea {
   left: 10px;
   top: 74px;
 
-  min-width: 300px;
+  min-width: 200px;
   /*height: 80%;*/
 
   background-color: rgba(0, 0, 0, 0.5);
@@ -496,6 +526,18 @@ pre {
 	color: #333;
 }
 
+.commentBox {
+	position: absolute;
+	width: 200px;
+	background-color: #eee;
+	border: 1px solid #ccc;
+	padding: 10px;
+	border-radius: 5px;
+	border-top-left-radius: 0;
+
+	font-size: 10pt;
+}
+
 </style>
 <div class="fileNav">
 </div>
@@ -515,7 +557,8 @@ pre {
 		<div id="popupBody">Pop-up body</div>
 	</div>
 </div>
-
+<div class="commentBox">
+</div>
 <?php
 	//TO DO:
 	//add script to bottom of page to prevent refresh on search
