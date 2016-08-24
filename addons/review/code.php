@@ -297,6 +297,14 @@ pre {
 	color: rgb(50, 180, 110) !important;
 }
 
+.mu_conditional {
+	color: rgb(130, 170, 255);
+}
+
+.mu_object {
+	color: rgb(255, 120, 170);
+}
+
 </style>
 <div class="fileNav">
 </div>

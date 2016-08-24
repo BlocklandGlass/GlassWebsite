@@ -76,22 +76,61 @@ if($res === TRUE) {
       $result->error = "Failed to open file in zip";
       die(json_encode($result, JSON_PRETTY_PRINT));
     }
-    $str = preg_replace('((\").*?(\"))', "<span class=\"mu_text\">$0</span>", $str);
+
+    $styleCodes = [
+      1 => "text",
+      2 => "function",
+      3 => "return",
+      4 => "new",
+      5 => "comment",
+      6 => "exec",
+      7 => "conditional",
+      8 => "global",
+      9 => "local",
+    ];
+
+    $unicodeChars = [
+      1 => json_decode('"\u1001"'),
+      2 => json_decode('"\u1002"'),
+      3 => json_decode('"\u1003"'),
+      4 => json_decode('"\u1004"'),
+      5 => json_decode('"\u1005"'),
+      6 => json_decode('"\u1006"'),
+      7 => json_decode('"\u1007"'),
+      8 => json_decode('"\u1008"'),
+      9 => json_decode('"\u1009"'),
+    ];
+
+    $str = htmlspecialchars($str);
+
+    $str = preg_replace('((\&quot;).*?(\&quot;))', $unicodeChars[1] . "$0</span>", $str);
 
     $str = str_replace("\t", "  ", $str);
-    $str = str_replace("function", "<span class=\"mu_function\">function</span>", $str);
-    $str = preg_replace("((?<=(\s|\())exec)", "<span class=\"mu_exec\">$0</span>", $str);
-    $str = str_replace("return", "<span class=\"mu_return\">return</span>", $str);
-    $str = str_replace("new", "<span class=\"mu_new\">new</span>", $str);
+    $str = str_replace("function", $unicodeChars[2] . "function</span>", $str);
+    $str = str_replace("package", $unicodeChars[2] . "package</span>", $str);
+    $str = str_replace("return", $unicodeChars[3] . "return</span>", $str);
+    //$str = str_replace("new ", $unicodeChars[4] . "new</span> ", $str);
 
-    $str = preg_replace('(\/\/.*)', "<span class=\"mu_comment\">$0</span>", $str);
+    $str = preg_replace('((?<=(new\s)).*(?=\())', $unicodeChars[6] . "$0</span>", $str);
 
-    $str = preg_replace('((?<=(\s|\())\$[^=]+?(?=(\s|\)|\,)))', "<span class=\"mu_global\">$0</span>", $str);
-    $str = preg_replace('((?<=(\s|\())\%.*?(?=(\)|\s|\.|\,|\[|\])))', "<span class=\"mu_local\">$0</span>", $str);
+    $str = preg_replace("((?<=(\s|\())exec)", $unicodeChars[6] . "$0</span>", $str);
 
+    $str = preg_replace("((\s|\{)((if)|(switch)[$]|for|while))", $unicodeChars[7] . "$0</span>", $str);
 
+    $str = preg_replace("(((\s==)|(=<)|(=>)|(\!=)|(\\$=)|(\!\\$=)))", $unicodeChars[7] . "$0</span>", $str);
 
+    $str = preg_replace('(\/\/.*)', $unicodeChars[5] . "$0</span>", $str);
 
+    $str = preg_replace('((?<=(\s|\())\$[^=]+?(?=(\s|\)|\,|\;)))', $unicodeChars[8] . "$0</span>", $str);
+    $str = preg_replace('((?<=(\s|\())\%.*?(?=(\)|\s|\.|\,|\[|\]|\;)))', $unicodeChars[9] . "$0</span>", $str);
+
+    $str = preg_replace('((?<=(\s|\())[a-zA-Z0-9]*(?=(::|\.)))', "<span class=\"mu_object\">$0</span>", $str);
+
+    $str = preg_replace('((?<=(\())[a-zA-Z]*(?=\)))', "<span class=\"mu_object\">$0</span>", $str);
+
+    foreach($unicodeChars as $id=>$unicode) {
+      $str = str_replace($unicode, '<span class="mu_' . $styleCodes[$id] . '">', $str);
+    }
 
     //$str = preg_replace('((?<=(\s|\())\$[^=]+?\s)', "<span class=\"mu_global\">$0</span>", $str);
 
