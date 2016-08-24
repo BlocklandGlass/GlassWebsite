@@ -1,7 +1,7 @@
 <?php
 //direct port, needs works
-require_once dirname(__DIR__) . '/DatabaseManager.php';
-require_once dirname(__DIR__) . '/UserManager.php';
+require_once dirname(__FILE__) . '/DatabaseManager.php';
+require_once dirname(__FILE__) . '/UserManager.php';
 
 class ApiSessionManager {
 	protected $remoteVerified = false; //auth.blockland.us

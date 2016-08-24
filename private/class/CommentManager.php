@@ -135,7 +135,7 @@ class CommentManager {
 				`aid` INT NOT NULL,
 				`comment` TEXT NOT NULL,
 				`timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-				`lastedit` TIMESTAMP,
+				`lastedit` TIMESTAMP  DEFAULT CURRENT_TIMESTAMP,
 				KEY (`timestamp`),
 				FOREIGN KEY (`aid`)
 					REFERENCES addon_addons(`id`)
