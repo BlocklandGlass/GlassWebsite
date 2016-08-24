@@ -19,7 +19,31 @@
 ?>
 <script type="text/javascript">
 var addonId = <?php echo $addon->getId(); ?>;
+var isReviewer = <?php echo ($review ? 1 : 0) ?>;
 var root = null;
+
+function openPopup(title, body) {
+	$("#popupTitle").html(title);
+	$("#popupBody").html(body);
+
+	$(".popupOverlay").css("display", "block");
+	$(".popupOverlay").animate({
+    opacity: 1,
+  }, 200);
+}
+
+function closePopup(animate) {
+	if(animate !== true) {
+		$(".popupOverlay").css("display", "none");
+		$(".popupOverlay").css("opacity", "0");
+	} else {
+		$(".popupOverlay").animate({
+	    opacity: 0
+	  }, 200, function() {
+			$(".popupOverlay").css("display", "none");
+		});
+	}
+}
 
 function buildFolderHTML(folder) {
   var html = '<ul class="filelist">';
@@ -100,13 +124,29 @@ function toggleFolder(directory) {
 }
 
 function renderFileNav() {
-  $('.fileNav').html(buildFolderHTML(root));
+	var html = "";
+	html += '<img src="/img/icons16/database_gear.png" /> <a onclick="loadOverview();" href="#">Overview</a><hr />';
+	html += buildFolderHTML(root)
+  $('.fileNav').html(html);
 }
 
 function renderFile(data) {
   var html = "<h3>" + data.file + "</h3>";
   if(data.source != null) {
-    html += "<pre>" + data.source + "</pre>";
+		html += '<pre>';
+		lines = data.source.split('\n');
+		for(i in lines) {
+			var line = lines[i];
+			if(line.trim().length == 0) {
+				line = " ";
+			}
+
+			var rand = Math.floor((Math.random() * 10) + 1);
+			var comment = rand == 7;
+
+			html += '<span class="line' + (comment ? " linecomment" : "") +'" id="line_' + i + '">' + line + '</span>';
+		}
+		html += "</pre>";
   } else if(data.image === true) {
 		html += '<div class="roundedBox"><img src="/ajax/code/getZipFile.php?id=' + addonId + '&file=' + data.file + '" /></div>';
 	} else {
@@ -116,6 +156,15 @@ function renderFile(data) {
   }
 
   $('.maincontainer').html(html);
+}
+
+function renderOverview(data) {
+	var html = "";
+
+	html += "<h2>" + data.title + "</h2> by <b>" + data.authorName + "<b><br />";
+	html += data.filename;
+
+	$('.maincontainer').html(html);
 }
 
 function getDirectory(directory) {
@@ -141,8 +190,8 @@ function loadFileTree() {
     success: function(data) {
       if(data.status == "success") {
         root = data.tree;
-        $('.fileNav').html(buildFolderHTML(root));
-        loadFile('description.txt')
+        renderFileNav();
+				loadOverview();
       } else {
         $('.fileNav').css("background-color", "rgba(150, 0, 0, 0.5)");
         $('.fileNav').html("<pre>" + JSON.stringify(data) + "</pre>");
@@ -167,6 +216,20 @@ function loadFile(file) {
   });
 }
 
+function loadOverview() {
+  $.ajax({
+    type: "GET",
+    url: "/ajax/code/getOverview.php?id=" + addonId,
+    success: function(data) {
+      if(data.status == "success") {
+        renderOverview(data);
+      } else {
+        $('.maincontainer').css("background-color", "rgba(150, 0, 0, 0.5)");
+      }
+    }
+  });
+}
+
 $(document).ready(function() {
   $(document).scroll(function() {
     var scrollTop = $(document).scrollTop();
@@ -181,11 +244,33 @@ $(document).ready(function() {
 
     $('.fileNav').css('top', pos);
   });
+
+	$(document).on('click', '.line', function() {
+		var lineNumber = this.id.substr(5)
+		if($(this).hasClass('linecomment')) {
+	    openPopup("Line " + lineNumber + " Comment", '\"You use eval here in a publically accessible function. Don\'t do this\"<br />- <b>Jincux</b>');
+		} else {
+			var body = "Commenting on line " + lineNumber;
+			body += '<br /><div style="text-align:center; margin-top: 10px;">';
+			body += '<textarea style="width:270px; height: 100px;"></textarea><br />';
+			body += '<button>Post</button></div>';
+	    openPopup("Write Comment", body);
+		}
+	});
+
+	$("#popupClose").click(function() {
+		closePopup(true);
+	})
+
   loadFileTree();
 });
 
 </script>
 <style>
+textarea {
+	font-size: 10pt;
+}
+
 .maincontainer {
   font-size: 11pt;
 }
@@ -263,6 +348,22 @@ pre {
 
   padding: 15px;
   border-radius: 5px;
+
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size: 10pt;
+}
+
+.line {
+	display: block;
+}
+
+.linecomment {
+	background-color: rgba(255, 100, 100, 0.5);
+	display: block;
+}
+
+.line:hover {
+	background-color: rgba(255, 255, 255, 0.1);
 }
 
 .mu_function {
@@ -305,10 +406,114 @@ pre {
 	color: rgb(255, 120, 170);
 }
 
+.review {
+	background-color: rgba(220, 210, 200, 0.9);
+	position: fixed;
+
+	width: 500px;
+
+	bottom: 10px;
+	left: 50%;
+	margin-left: -250px; /* Negative half of width. */
+	padding: 20px;
+	border-radius: 15px;
+}
+
+.acceptButton {
+	background-color: rgb(90, 220, 100);
+	padding: 5px;
+	vertical-align: middle;
+	border-radius: 5px;
+
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+.acceptButton:hover {
+	color: #eee;
+	background-color: rgb(150, 255, 150);
+}
+
+.rejectButton {
+	background-color: rgb(255, 100, 100);
+	padding: 5px;
+	vertical-align: middle;
+	border-radius: 5px;
+
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+.rejectButton:hover {
+	color: #eee;
+	background-color: rgb(255, 150, 150);
+}
+
+.popup {
+	width: 300px;
+	height: 300px;
+	top: 50%;
+	left: 50%;
+	margin-left: -150px; /* Negative half of width. */
+	margin-top: -150px; /* Negative half of width. */
+
+	background-color: #eeeeee;
+	border: 1px solid #cecece;
+	border-radius: 15px;
+
+	padding: 15px;
+
+	position: fixed;
+}
+
+.popupOverlay {
+	background-color: rgba(0, 0, 0, 0.7);
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+
+	z-index: 999999;
+
+	display: none;
+}
+
+#popupClose {
+	float: right;
+	font-size: 30px;
+	font-weight: bold;
+
+	margin: 0;
+	padding: 0;
+
+	text-decoration: none;
+
+	color: #ccc;
+}
+
+#popupClose:hover {
+	color: #333;
+}
+
 </style>
 <div class="fileNav">
 </div>
 <div class="maincontainer">
+</div>
+<div class="review">
+	<b>Review Options</b>
+	<hr />
+	<a class="acceptButton"><img src="/img/icons16/accept_button.png" /> Accept</a>
+	<a class="rejectButton"><img src="/img/icons16/delete.png" /> Reject</a>
+</div>
+<div class="popupOverlay">
+	<div class="popup">
+		<a id="popupClose" href="#">X</a>
+		<h2 id="popupTitle">Popup Title</h2>
+		<hr />
+		<div id="popupBody">Pop-up body</div>
+	</div>
 </div>
 
 <?php

@@ -115,9 +115,9 @@ if($res === TRUE) {
 
     $str = preg_replace("((?<=(\s|\())exec)", $unicodeChars[6] . "$0</span>", $str);
 
-    $str = preg_replace("((\s|\{)((if)|(switch)[$]|for|while))", $unicodeChars[7] . "$0</span>", $str);
+    $str = preg_replace("((?<=(\s|\{))((if)|(switch)[$]|for|while))", $unicodeChars[7] . "$0</span>", $str);
 
-    $str = preg_replace("(((\s==)|(=<)|(=>)|(\!=)|(\\$=)|(\!\\$=)))", $unicodeChars[7] . "$0</span>", $str);
+    $str = preg_replace("(((\s==)|(=<)|(=>)|(\!=)|(\\$=)|(\!\\$=))[^=])", $unicodeChars[7] . "$0</span>", $str);
 
     $str = preg_replace('(\/\/.*)', $unicodeChars[5] . "$0</span>", $str);
 
@@ -134,7 +134,12 @@ if($res === TRUE) {
 
     //$str = preg_replace('((?<=(\s|\())\$[^=]+?\s)', "<span class=\"mu_global\">$0</span>", $str);
 
-    $result->source = $str;
+    if(strlen(trim($str)) == 0) {
+      $result->message = "<i>This file is empty!</i>";
+    } else {
+      $result->source = $str;
+    }
+
     $result->file = $file;
     $result->status = "success";
   } else if(in_array(strtolower($ext), $raw)) {
