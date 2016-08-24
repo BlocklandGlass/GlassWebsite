@@ -136,10 +136,14 @@ class AddonObject {
 
 	public function getManagerBLID() {
 		$authorInfo = $this->getAuthorInfo();
-		foreach($authorInfo as $author) {
-			if($author->main) {
-				return $author->blid;
+		if(is_array($authorInfo)) {
+			foreach($authorInfo as $author) {
+				if($author->main) {
+					return $author->blid;
+				}
 			}
+		} else {
+			return false;
 		}
 	}
 
