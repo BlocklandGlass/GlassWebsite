@@ -156,6 +156,7 @@ function renderFile(data) {
   }
 
   $('.maincontainer').html(html);
+	onResize();
 }
 
 function renderOverview(data) {
@@ -232,6 +233,19 @@ function loadOverview() {
   });
 }
 
+var commentFirstDisplay = false;
+
+function displayComment(x, y, text) {
+	if(!commentFirstDisplay) {
+		$(".maincontainer").animate({width: $(document).width()-260-240}, 300, function() {
+			createCommentDisplay(x-240, y, text);
+		}.bind({x:x, y:y, text:text}));
+		commentFirstDisplay = true;
+	} else {
+		createCommentDisplay(x, y, text);
+	}
+}
+
 function createCommentDisplay(x, y, text) {
 	var html = "";
 	var display = $('.commentBox');
@@ -241,6 +255,12 @@ function createCommentDisplay(x, y, text) {
 
 	display.css('opacity', 0);
 	display.animate({opacity: 1}, 250);
+}
+
+function doResize() {
+	var x = $(document.body).width()
+	var y = $(document.body).height()
+	$('.maincontainer').width(x-260);
 }
 
 $(document).ready(function() {
@@ -264,7 +284,7 @@ $(document).ready(function() {
 	    //openPopup("Line " + lineNumber + " Comment", '\"You use eval here in a publically accessible function. Don\'t do this\"<br />- <b>Jincux</b>');
 			var x = $(this).offset().left + $(this).width()+35
 			var y = $(this).offset().top
-			createCommentDisplay(x, y, "This is a test comment");
+			displayComment(x, y, "This is a test comment");
 		} else {
 			var body = "Commenting on line " + lineNumber;
 			body += '<br /><div style="text-align:center; margin-top: 10px;">';
@@ -281,12 +301,6 @@ $(document).ready(function() {
 	$(window).on('resize', function() {
 		doResize();
 	});
-
-	function doResize() {
-		var x = $(document).width()
-		var y = $(document).height()
-		$('.maincontainer').width(x-235-270);
-	}
 
 	doResize();
   loadFileTree();
@@ -315,7 +329,7 @@ textarea {
   left: 10px;
   top: 74px;
 
-  min-width: 200px;
+  width: 200px;
   /*height: 80%;*/
 
   background-color: rgba(0, 0, 0, 0.5);
@@ -324,6 +338,8 @@ textarea {
 
   padding: 15px;
   border-radius: 5px;
+
+	overflow-x: auto;
 
   z-index: 9999;
 }
@@ -343,6 +359,9 @@ textarea {
   padding: 0;
 
   padding-left: 15px;
+	margin-right: 15px;
+
+	display: block;
 }
 
 .filelist li {
@@ -351,6 +370,8 @@ textarea {
 
   list-style: none;
   white-space: nowrap;
+
+	padding-right: 15px;
 }
 
 .fileli > a {
