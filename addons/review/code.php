@@ -131,7 +131,7 @@ function renderFileNav() {
 }
 
 function renderFile(data) {
-  var html = "<h3>" + data.file + "</h3>";
+  var html = '<div class="roundedBox"><h2 style="margin: 0">' + data.file + "</h2></div>";
   if(data.source != null) {
 		html += '<pre>';
 		lines = data.source.split('\n');
@@ -159,10 +159,12 @@ function renderFile(data) {
 }
 
 function renderOverview(data) {
-	var html = "";
+	var html = '<div class="roundedBox">';
 
-	html += "<h2>" + data.title + "</h2> by <b>" + data.authorName + "<b><br />";
+	html += '<h2 style="padding: 0;margin: 0;display:inline">' + data.title + "</h2> by <b>" + data.authorName + "<b><br />";
 	html += data.filename;
+
+	html += '</div>';
 
 	$('.maincontainer').html(html);
 }
@@ -234,7 +236,7 @@ function createCommentDisplay(x, y, text) {
 	var html = "";
 	var display = $('.commentBox');
 	display.css('top', y);
-	display.css('left', x);
+	display.css('right', $(document).width()-x-display.width()-display.css('padding').replace("px", ""));
 	display.html(text);
 
 	display.css('opacity', 0);
@@ -260,7 +262,7 @@ $(document).ready(function() {
 		var lineNumber = this.id.substr(5)
 		if($(this).hasClass('linecomment')) {
 	    //openPopup("Line " + lineNumber + " Comment", '\"You use eval here in a publically accessible function. Don\'t do this\"<br />- <b>Jincux</b>');
-			var x = $(this).offset().left + $(this).width()+30
+			var x = $(this).offset().left + $(this).width()+35
 			var y = $(this).offset().top
 			createCommentDisplay(x, y, "This is a test comment");
 		} else {
@@ -300,6 +302,9 @@ textarea {
   position: absolute;
   left: 235px;
   top: 74px;
+
+  padding-top: 0;
+	margin-top: 0;
 
   font-size: 11pt;
 	max-width: 100%
@@ -536,6 +541,8 @@ pre {
 	border-top-left-radius: 0;
 
 	font-size: 10pt;
+
+	opacity: 0;
 }
 
 </style>
