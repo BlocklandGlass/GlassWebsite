@@ -8,6 +8,7 @@ $userObject = UserManager::getCurrent();
 
 $reviewer = false;
 
+$owner = false;
 if($userObject->getBlid() == $addon->getManagerBLID()) {
   $owner = true;
 }

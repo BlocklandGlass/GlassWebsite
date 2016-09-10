@@ -137,8 +137,15 @@ function codeToMessage($code) {
 		}
 
 		//to do: aws stuff instead of this
-		move_uploaded_file($tempPath, $tempLocation);
-		chmod($tempLocation, 0777);
+		$res = move_uploaded_file($tempPath, $tempLocation);
+		if($res) {
+			chmod($tempLocation, 0777);
+		} else {
+			$response = [
+				"message"=> "Error moving uploaded file; please contact an administrator",
+				"version" => $addonObject->getVersion()
+			];
+		}
 	}
 
 	if(isset($_POST['changelog'])) {

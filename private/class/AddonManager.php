@@ -842,6 +842,7 @@ class AddonManager {
 		$addon->id = $update->getAddon()->getId();
 		$params->vars[] = $addon;
 		NotificationManager::createNotification($manager, 'Your update to $1 was approved', $params);
+		@unlink($update->getFile());
 	}
 
 	public static function submitRating($aid, $blid, $rating) {
