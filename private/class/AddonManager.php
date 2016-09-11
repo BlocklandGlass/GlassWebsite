@@ -296,7 +296,10 @@ class AddonManager {
 		"CURRENT_TIMESTAMP," .
 		"'" . $database->sanitize($type) . "');");
 		if(!$res) {
-			throw new Exception("Database error: " . $database->error());
+			$result = [
+				"response" => "Database error encountered: " . $database->error()
+			];
+			return $result;
 		}
 
 		$id = $database->fetchMysqli()->insert_id;
