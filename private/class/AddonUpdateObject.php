@@ -61,7 +61,7 @@ class AddonUpdateObject {
 				$path = realpath(dirname(__DIR__) . '/../addons/files/local/');
 				$fh = fopen($path . '/' . $this->aid . '.zip', 'w');
 				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, "http://" + AWSFileManager::getBucket() + "/addons/" . $this->aid . "_1");
+				curl_setopt($ch, CURLOPT_URL, "http://" . AWSFileManager::getBucket() . "/addons/" . $this->aid . "_1");
 				curl_setopt($ch, CURLOPT_FILE, $fh);
 				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // this will follow redirects
 				curl_exec($ch);

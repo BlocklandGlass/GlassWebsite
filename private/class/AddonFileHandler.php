@@ -127,7 +127,7 @@ class AddonFileHandler {
     $mainRepo->id = $aid;
 
     $backupRepo = new stdClass();
-    $backupRepo->url = "http://" + AWSFileManager::getBucket() + "/repository.txt";
+    $backupRepo->url = "http://" . AWSFileManager::getBucket() . "/repository.txt";
     $backupRepo->format = "JSON";
     $backupRepo->id = $aid;
 
