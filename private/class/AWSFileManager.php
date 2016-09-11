@@ -4,11 +4,6 @@ use Aws\S3\S3Client;
 
 //maybe this should end up working like databasemanager
 class AWSFileManager {
-	public static function getBucket() {
-		$keyData = AWSFileManager::getCredentials();
-		return $keyData->aws_bucket;
-	}
-
 	public static function upload($target, $local) {
 		$keyData = AWSFileManager::getCredentials();
 
