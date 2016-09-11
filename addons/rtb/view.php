@@ -1,5 +1,6 @@
 <?php
 	include(realpath(dirname(__DIR__) . "/../private/class/RTBAddonManager.php"));
+	include(realpath(dirname(__DIR__) . "/../private/class/AWSFileManager.php"));
 	include(realpath(dirname(__DIR__) . "/../private/class/AddonManager.php"));
 
   $addonData = RTBAddonManager::getAddonFromId($_GET['id']);
@@ -34,7 +35,7 @@
 		<?php
 		$id = "RTB";
 		$class = "red";
-		echo '<a href="http://cdn.blocklandglass.com/rtb/' . $addonData->filename .  '" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />Imported Archive</span></a>';
+		echo '<a href="http://' + AWSFileManager::getBucket() + '/rtb/' . $addonData->filename .  '" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />Imported Archive</span></a>';
 		?>
 	</div>
 	<?php } else {

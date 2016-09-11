@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/AddonManager.php';
+require_once dirname(__FILE__) . '/AWSFileManager.php';
 
 class AddonFileHandler {
   public static function validateAddon($file) {
@@ -107,27 +108,6 @@ class AddonFileHandler {
   public static function injectVersionInfo($aid, $branchId, $file) {
     $addonObject = AddonManager::getFromID($aid);
 
-    /*
-
-    {
-        "version": "1.0.0",
-        "channel": "stable",
-        "repositories": [
-            {
-                "url": "http://blocklandglass.com/api/support_updater/repo.php",
-                "format": "JSON",
-                "id": "11"
-            },
-            {
-                "url": "http://cdn.blocklandglass.com/repo.txt",
-                "format": "JSON",
-                "id": "11"
-            }
-        ]
-    }
-
-    */
-
     $branchName[1] = "stable";
     $branchName[2] = "beta";
 
@@ -147,7 +127,7 @@ class AddonFileHandler {
     $mainRepo->id = $aid;
 
     $backupRepo = new stdClass();
-    $backupRepo->url = "http://cdn.blocklandglass.com/repository.txt";
+    $backupRepo->url = "http://" + AWSFileManager::getBucket() + "/repository.txt";
     $backupRepo->format = "JSON";
     $backupRepo->id = $aid;
 

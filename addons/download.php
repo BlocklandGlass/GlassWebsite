@@ -1,5 +1,6 @@
 <?php
 require_once(realpath(dirname(__DIR__) . "/private/class/AddonManager.php"));
+require_once(realpath(dirname(__DIR__) . "/private/class/AWSFileManager.php"));
 require_once(realpath(dirname(__DIR__) . "/private/class/StatManager.php"));
 
 $id = $_REQUEST['id'];
@@ -12,9 +13,7 @@ if($addonObject) {
     $bid = 1;
   }
 
-  //StatManager::addStatsToAddon($addonObject->getId());
-  //header('Location: http://cdn.blocklandglass.com/builds/6.bls');
-  header('Location: http://cdn.blocklandglass.com/addons/' . $id . "_" . $bid);
+  header('Location: http://' + AWSFileManager::getBucket() + '/addons/' . $id . "_" . $bid);
 } else {
   header('Status: 404');
   header('Location: /error.php');

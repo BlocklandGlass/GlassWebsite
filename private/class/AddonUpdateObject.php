@@ -1,5 +1,6 @@
 <?php
 require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
+require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
 require_once(realpath(dirname(__DIR__) . '/lib/class.Diff.php'));
 class AddonUpdateObject {
 	//public fields are ones automatically converted to json
@@ -60,7 +61,7 @@ class AddonUpdateObject {
 				$path = realpath(dirname(__DIR__) . '/../addons/files/local/');
 				$fh = fopen($path . '/' . $this->aid . '.zip', 'w');
 				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, "http://cdn.blocklandglass.com/addons/" . $this->aid . "_1");
+				curl_setopt($ch, CURLOPT_URL, "http://" + AWSFileManager::getBucket() + "/addons/" . $this->aid . "_1");
 				curl_setopt($ch, CURLOPT_FILE, $fh);
 				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // this will follow redirects
 				curl_exec($ch);

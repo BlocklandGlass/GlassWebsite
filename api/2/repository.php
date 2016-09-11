@@ -1,5 +1,6 @@
 <?php
 require_once dirname(dirname(__DIR__)) . '/private/class/AddonManager.php';
+require_once dirname(dirname(__DIR__)) . '/private/class/AWSFileManager.php';
 require_once dirname(dirname(__DIR__)) . '/private/class/DatabaseManager.php';
 require_once dirname(dirname(__DIR__)) . '/private/class/SemVer.php';
 header('Content-Type: text/json');
@@ -33,7 +34,7 @@ foreach($addonIds as $id) {
   }
   //$webUrl = "api.blocklandglass.com";
   $webUrl = "api.blocklandglass.com";
-  $cdnUrl = "cdn.blocklandglass.com";
+  $cdnUrl = AWSFileManager::getBucket();
 
   $addon = new stdClass();
 	$addon->name = substr($obj->getFilename(), 0, strlen($obj->getFilename())-4);
