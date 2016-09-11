@@ -184,6 +184,7 @@ class AddonManager {
 		}
 
 		return array(
+			"message"=>"You're being redirected...",
 			"redirect"=>"/addons/review/update.php?id=" . $addon->getId()
 		);
 	}

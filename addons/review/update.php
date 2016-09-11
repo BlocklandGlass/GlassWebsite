@@ -104,7 +104,7 @@ td {
 
 </style>
 <script type="text/javascript">
-tog = [];
+var tog = [];
 function showChanges(id) {
 	if(!tog[id]) {
 		document.getElementById("source" + id).style.display = "block";
