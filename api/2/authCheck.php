@@ -1,7 +1,7 @@
 <?php
 require_once dirname(__FILE__) . "/private/ClientConnection.php";
 
-header('Content-Type: text/json; charset=utf-8');
+header('Content-Type: text/json; charset=ascii');
 
 if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 	$con = ClientConnection::loadFromIdentifier($_REQUEST['ident']);
