@@ -1,7 +1,8 @@
 <?php
 require_once dirname(__FILE__) . "/private/ClientConnection.php";
 
-header('Content-Type: text/json');
+header('Content-Type: text/json; charset=utf-8');
+
 if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 	$con = ClientConnection::loadFromIdentifier($_REQUEST['ident']);
   $ret = new stdClass();
@@ -12,7 +13,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 		error_log("Auth pass for " . $_REQUEST['ident']);
     $ret->ident = $con->getIdentifier();
     $ret->blid = $con->getBLID();
-		$ret->username = mb_convert_encoding(UserLog::getCurrentUsername($ret->blid), "ASCII", "UTF-8");
+		$ret->username = mb_convert_encoding(UserLog::getCurrentUsername($ret->blid), "UTF-8", "ASCII");
 		error_log("Username is " . $ret->username);
 
 		$ret->admin = false;
