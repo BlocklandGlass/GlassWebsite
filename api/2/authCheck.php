@@ -12,7 +12,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 		error_log("Auth pass for " . $_REQUEST['ident']);
     $ret->ident = $con->getIdentifier();
     $ret->blid = $con->getBLID();
-		$ret->username = utf8_encode(UserLog::getCurrentUsername($ret->blid));
+		$ret->username = mb_convert_encoding(UserLog::getCurrentUsername($ret->blid), "UTF-8", "ASCII");
 		error_log("Username is " . $ret->username);
 
 		$ret->admin = false;
@@ -47,7 +47,6 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 	if($json === false) {
 		error_log("...but JSON conversion failed!");
 	} else {
-		$json = mb_convert_encoding($json, "UTF-8", "ASCII");
 		die($json);
 	}
 }
