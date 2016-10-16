@@ -13,7 +13,8 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 		error_log("Auth pass for " . $_REQUEST['ident']);
     $ret->ident = $con->getIdentifier();
     $ret->blid = $con->getBLID();
-		$ret->username = mb_convert_encoding(UserLog::getCurrentUsername($ret->blid), "UTF-8", "ASCII");
+
+		$ret->username = iconv("ISO-8859-1", "UTF-8", UserLog::getCurrentUsername($ret->blid));
 		error_log("Username is " . $ret->username);
 
 		$ret->admin = false;
