@@ -3,22 +3,6 @@ require_once dirname(__FILE__) . "/BlocklandAuth.php";
 require_once dirname(dirname(__DIR__)) . "/../private/class/UserManager.php";
 require_once dirname(dirname(__DIR__)) . "/../private/class/UserLog.php";
 
-function base62_encode ($data) {
-  $outstring = '';
-  $len = strlen($data);
-  for ($i = 0; $i < $len; $i += 8) {
-    $chunk = substr($data, $i, 8);
-    $outlen = ceil((strlen($chunk) * 8) / 6);
-    $x = bin2hex($chunk);
-    $number = ltrim($x, '0');
-    if ($number === '') $number = '0';
-    $w = gmp_strval(gmp_init($number, 16), 62);
-    $pad = str_pad($w, $outlen, '0', STR_PAD_LEFT);
-    $outstring .= $pad;
-  }
-  return $outstring;
-}
-
 class ClientConnection {
   private $blid;
   private $name;
@@ -55,7 +39,7 @@ class ClientConnection {
       //don't set account data until run through BlocklandAuth
       $unique = false;
       while(!$unique) { //avoiding the extremely rare case of a random id being non-unique
-        $ident = base62_encode(rand());
+        $ident = base64_encode(rand());
         if(apc_fetch("clientConnection_" . $ident) === false) {
           $unique = true;
         }
