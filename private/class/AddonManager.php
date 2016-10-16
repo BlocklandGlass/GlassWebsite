@@ -924,13 +924,13 @@ class AddonManager {
 				`version` TEXT NOT NULL,
 				`authorInfo` TEXT NOT NULL,
 				`reviewInfo` TEXT NOT NULL,
-				`repositoryInfo` TEXT NOT NULL,
+				`repositoryInfo` TEXT NULL DEFAULT NULL,
 				`deleted` TINYINT NOT NULL DEFAULT 0,
 				`approved` TINYINT NOT NULL DEFAULT 0,
 				`betaVersion` TEXT DEFAULT NULL,
-				`rating` int(11) NOT NULL,
+				`rating` int(11) NOT NULL DEFAULT 0,
 				`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				`type` TEXT NOT NULL,
+				`type` TEXT NOT NULL DEFAULT '',
 				FOREIGN KEY (`board`)
 					REFERENCES addon_boards(`id`)
 					ON UPDATE CASCADE
