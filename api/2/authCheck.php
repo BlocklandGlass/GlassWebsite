@@ -41,7 +41,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 
     $ret->status = "success";
   }
-
+	error_log("Auth completed");
   echo json_encode($ret, JSON_PRETTY_PRINT);
 }
 ?>
