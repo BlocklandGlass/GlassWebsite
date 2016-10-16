@@ -12,7 +12,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 		error_log("Auth pass for " . $_REQUEST['ident']);
     $ret->ident = $con->getIdentifier();
     $ret->blid = $con->getBLID();
-		$ret->username = UserLog::getCurrentUsername($ret->blid);
+		$ret->username = utf8_encode(UserLog::getCurrentUsername($ret->blid));
 		error_log("Username is " . $ret->username);
 
 		$ret->admin = false;
