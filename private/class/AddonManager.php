@@ -930,7 +930,7 @@ class AddonManager {
 				`betaVersion` TEXT DEFAULT NULL,
 				`rating` int(11) NOT NULL DEFAULT 0,
 				`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				`type` TEXT NOT NULL DEFAULT '',
+				`type` TEXT NOT NULL,
 				FOREIGN KEY (`board`)
 					REFERENCES addon_boards(`id`)
 					ON UPDATE CASCADE

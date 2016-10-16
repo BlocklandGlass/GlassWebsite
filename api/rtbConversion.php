@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__) . '/class/DatabaseManager.php';
+require_once dirname(__DIR__) . '/private/class/DatabaseManager.php';
 $db = new DatabaseManager();
 
 $mods = split("-", $_GET['mods']);

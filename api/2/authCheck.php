@@ -11,10 +11,12 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
   $ret = new stdClass();
   if(!is_object($con)) {
     $ret->status = "fail";
+		error_log("Auto failed for ident " . $_REQUEST['ident']);
   } else {
     $ret->ident = $con->getIdentifier();
     $ret->blid = $con->getBLID();
 		$ret->username = UserLog::getCurrentUsername($ret->blid);
+		error_log("Auth username: " . $ret->username);
 
 		$ret->admin = false;
 		$ret->mod = false;
@@ -26,7 +28,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 			if($user->inGroup("Administrator")) {
 				$ret->admin = true;
 				$ret->mod = true;
-					$ret->beta = true;
+				$ret->beta = true;
 			} else if($user->inGroup("Moderator")) {
 				$ret->mod = true;
 				$ret->beta = true;
