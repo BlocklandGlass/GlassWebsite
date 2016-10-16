@@ -47,6 +47,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 	if($json === false) {
 		error_log("...but JSON conversion failed!");
 	} else {
+		$json = mb_convert_encoding($json, "UTF-8", "ASCII");
 		die($json);
 	}
 }
