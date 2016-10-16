@@ -13,6 +13,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
     $ret->ident = $con->getIdentifier();
     $ret->blid = $con->getBLID();
 		$ret->username = UserLog::getCurrentUsername($ret->blid);
+		error_log("Username is " . $ret->username);
 
 		$ret->admin = false;
 		$ret->mod = false;
@@ -42,6 +43,11 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
     $ret->status = "success";
   }
 	error_log("Auth completed");
-  echo json_encode($ret, JSON_PRETTY_PRINT);
+  $json = json_encode($ret, JSON_PRETTY_PRINT);
+	if($json === false) {
+		error_log("...but JSON conversion failed!");
+	} else {
+		die($json);
+	}
 }
 ?>
