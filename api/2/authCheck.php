@@ -9,6 +9,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
     $ret->status = "fail";
 		error_log("Auth failed for ident " . $_REQUEST['ident']);
   } else {
+		error_log("Auth pass for " . $_REQUEST['ident']);
     $ret->ident = $con->getIdentifier();
     $ret->blid = $con->getBLID();
 		$ret->username = UserLog::getCurrentUsername($ret->blid);
