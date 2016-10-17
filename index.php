@@ -25,7 +25,18 @@ require_once(realpath(dirname(__FILE__) . "/private/class/StatManager.php"));
 	<br />
 	<p>
 		<h3>Live Stats</h3>
-		Right now, there's <b><?php echo StatManager::getMasterServerStats()['servers']; ?></b> Blockland servers online with <b><?php echo StatManager::getMasterServerStats()['users']; ?></b> users. Of those, <a href="stats/users.php"><?php echo sizeof(UserLog::getRecentlyActive()); ?></a> users are running Glass! Glass has <a href="stats/usage.php"><?php echo UserLog::getUniqueCount(); ?></a> active users, with a total of <a href="stats/usage.php">15000</a> downloads.
+		Right now, there's <b><?php
+		echo StatManager::getMasterServerStats()['servers'];
+		?></b> Blockland servers online with <b><?php
+		echo StatManager::getMasterServerStats()['users'];
+		?></b> users. Of those, <a href="stats/users.php"><?php
+		echo sizeof(UserLog::getRecentlyActive());
+		?></a> users are running Glass! Glass has <a href="stats/usage.php"><?php
+		echo UserLog::getUniqueCount();?> </a> active users, with a total of <a href="stats/usage.php"><?php
+		$web = StatManager::getAllAddonDownloads("web");
+		$ingame = StatManager::getAllAddonDownloads("ingame");
+		$updates = StatManager::getAllAddonDownloads("updates");
+		echo $web+$ingame+$updates; ?></a> downloads.
 	</p>
 	<br />
 	<p>
