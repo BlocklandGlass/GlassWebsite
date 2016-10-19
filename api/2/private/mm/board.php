@@ -5,7 +5,7 @@ require_once dirname(__DIR__) . "/../../../private/class/RTBAddonManager.php";
 require_once dirname(__DIR__) . "/../../../private/class/UserManager.php";
 require_once dirname(__DIR__) . "/../../../private/class/UserLog.php";
 
-header('Content-Type: text/json');
+header('Content-Type: text/json; charset=utf-8');
 
 
 if(isset($_REQUEST['page'])) {
@@ -23,7 +23,7 @@ if($_REQUEST['id'] == "rtb") {
   foreach($addons as $ad) {
     $ao = new stdClass();
     $ao->id = $ad->id;
-    $ao->name = iconv("UTF-16", "UTF-8", $ad->title);
+    $ao->name = $ad->title;
     $ao->author = "RTB";
     $ao->ratings = "0";
     $ao->downloads = "N/A";
@@ -58,7 +58,7 @@ foreach($addonIds as $aid) {
 
   $retboard = new stdClass();
   $retboard->id = $addon->getId();
-  $retboard->name = utf8_encode($addon->getName());
+  $retboard->name = $addon->getName();
 
   $user = UserLog::getCurrentUsername($addon->getManagerBLID());
   if($user == false) {
@@ -70,7 +70,7 @@ foreach($addonIds as $aid) {
     }
   }
 
-  $retboard->author = utf8_encode($user);
+  $retboard->author = $user;
   $retboard->rating = $rating;
   $retboard->downloads = $addon->getDownloads("web")+$addon->getDownloads("ingame");
   $ret->addons[] = $retboard;
