@@ -1,5 +1,7 @@
 <?php
 require_once dirname(__DIR__) . "/../../../private/class/AddonManager.php";
+require_once dirname(__DIR__) . "/../../../private/class/UserLog.php";
+require_once dirname(__DIR__) . "/../../../private/class/UserManager.php";
 
 /*
 
