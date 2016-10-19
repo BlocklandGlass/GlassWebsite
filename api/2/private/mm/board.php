@@ -78,7 +78,7 @@ foreach($addonIds as $aid) {
 
 $ret->status = "success";
 $ret->board_id = $boardObject->getId();
-$ret->board_name = utf8_encode($boardObject->getName());
+$ret->board_name = $boardObject->getName();
 $ret->page = $page;
 $ret->pages = ceil($boardObject->getCount()/10);
 

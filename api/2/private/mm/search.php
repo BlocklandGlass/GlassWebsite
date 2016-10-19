@@ -23,7 +23,7 @@ if($type == "addon") {
     $r = new stdClass();
     $addon = AddonManager::getFromId($result);
     $r->type = "addon";
-    $r->title = utf8_encode($addon->getName());
+    $r->title = $addon->getName();
     $r->id = $addon->getId();
     //$r->author
     //$r->description = $addon->getDescription();
@@ -35,5 +35,5 @@ if($type == "addon") {
 
 $ret->status = "success";
 
-echo json_encode($ret, JSON_PRETTY_PRINT);
+echo json_encode($ret, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ?>

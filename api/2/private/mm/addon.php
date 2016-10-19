@@ -29,8 +29,8 @@ $ret->aid = $aid;
 $ret->filename = $addonObject->getFilename();
 $ret->boardId = $addonObject->getBoard();
 $ret->board = BoardManager::getFromID($addonObject->getBoard())->getName();
-$ret->name = utf8_encode($addonObject->getName());
-$ret->description = utf8_encode(htmlspecialchars_decode($addonObject->getDescription()));
+$ret->name = $addonObject->getName();
+$ret->description = htmlspecialchars_decode($addonObject->getDescription());
 $ret->rating = $addonObject->getRating();
 
 $ret->screenshots = array();
@@ -53,7 +53,7 @@ if($user == false) {
 }
 
 $author->blid = $addonObject->getManagerBLID();
-$author->name = utf8_encode($user);
+$author->name = $user;
 $ret->authors = array($author);
 
 $channelId[1] = "stable";
@@ -67,5 +67,5 @@ $channel->version = $addonObject->getVersion();
 $ret->branches[] = $channel;
 
 
-echo json_encode($ret, JSON_PRETTY_PRINT);
+echo json_encode($ret, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ?>

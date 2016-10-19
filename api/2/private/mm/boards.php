@@ -8,7 +8,7 @@ $boards = BoardManager::getAllBoards();
 foreach($boards as $board) {
   $retboard = new stdClass();
   $retboard->id = $board->getId();
-  $retboard->name = utf8_encode($board->getName());
+  $retboard->name = $board->getName();
   $retboard->video = $board->getVideo();
   $retboard->description = $board->getDescription();
   $ret->boards[] = $retboard;
@@ -16,5 +16,5 @@ foreach($boards as $board) {
 
 $ret->status = "success";
 
-echo json_encode($ret, JSON_PRETTY_PRINT);
+echo json_encode($ret, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ?>
