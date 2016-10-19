@@ -23,7 +23,7 @@ if($_REQUEST['id'] == "rtb") {
   foreach($addons as $ad) {
     $ao = new stdClass();
     $ao->id = $ad->id;
-    $ao->name = utf8_encode($ad->title);
+    $ao->name = iconv("UTF-16", "UTF-8", $ad->title);
     $ao->author = "RTB";
     $ao->ratings = "0";
     $ao->downloads = "N/A";
