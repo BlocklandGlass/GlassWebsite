@@ -23,7 +23,7 @@ if($type == "addon") {
     $r = new stdClass();
     $addon = AddonManager::getFromId($result);
     $r->type = "addon";
-    $r->title = $addon->getName();
+    $r->title = utf8_encode($addon->getName());
     $r->id = $addon->getId();
     //$r->author
     //$r->description = $addon->getDescription();

@@ -32,12 +32,12 @@ $ar = array();
 foreach($recent as $r) {
   $o = new stdClass();
   $o->id = $r->getId();
-  $o->name = $r->getName();
+  $o->name = utf8_encode($r->getName());
   $un = UserLog::getCurrentUsername($r->getManagerBLID());
   if($un === false) {
     $un = UserManager::getFromBLID($r->getManagerBLID())->getUsername();
   }
-  $o->author = $un;
+  $o->author = utf8_encode($un);
   $ar[] = $o;
 }
 $dlg->uploads = $ar;
@@ -51,7 +51,7 @@ foreach($recentUpdates as $r) {
 
   $o = new stdClass();
   $o->id = $ao->getId();
-  $o->name = $ao->getName();
+  $o->name = utf8_encode($ao->getName());
   $o->version = $r->getVersion();
   $ar[] = $o;
 }

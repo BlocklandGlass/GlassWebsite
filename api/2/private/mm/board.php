@@ -23,7 +23,7 @@ if($_REQUEST['id'] == "rtb") {
   foreach($addons as $ad) {
     $ao = new stdClass();
     $ao->id = $ad->id;
-    $ao->name = $ad->title;
+    $ao->name = utf8_encode($ad->title);
     $ao->author = "RTB";
     $ao->ratings = "0";
     $ao->downloads = "N/A";
@@ -58,7 +58,7 @@ foreach($addonIds as $aid) {
 
   $retboard = new stdClass();
   $retboard->id = $addon->getId();
-  $retboard->name = $addon->getName();
+  $retboard->name = utf8_encode($addon->getName());
 
   $user = UserLog::getCurrentUsername($addon->getManagerBLID());
   if($user == false) {
@@ -70,7 +70,7 @@ foreach($addonIds as $aid) {
     }
   }
 
-  $retboard->author = $user;
+  $retboard->author = utf8_encode($user);
   $retboard->rating = $rating;
   $retboard->downloads = $addon->getDownloads("web")+$addon->getDownloads("ingame");
   $ret->addons[] = $retboard;
@@ -78,7 +78,7 @@ foreach($addonIds as $aid) {
 
 $ret->status = "success";
 $ret->board_id = $boardObject->getId();
-$ret->board_name = $boardObject->getName();
+$ret->board_name = utf8_encode($boardObject->getName());
 $ret->page = $page;
 $ret->pages = ceil($boardObject->getCount()/10);
 
