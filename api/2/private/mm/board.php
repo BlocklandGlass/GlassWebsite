@@ -82,5 +82,5 @@ $ret->board_name = utf8_encode($boardObject->getName());
 $ret->page = $page;
 $ret->pages = ceil($boardObject->getCount()/10);
 
-echo json_encode($ret, JSON_PRETTY_PRINT);
+echo json_encode($ret, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ?>
