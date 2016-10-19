@@ -8,7 +8,7 @@ $boards = BoardManager::getAllBoards();
 foreach($boards as $board) {
   $retboard = new stdClass();
   $retboard->id = $board->getId();
-  $retboard->name = utf8_encode($board->getName());
+  $retboard->name = $board->getName();
   $retboard->video = $board->getVideo();
   $retboard->description = $board->getDescription();
   $ret->boards[] = $retboard;
