@@ -37,7 +37,7 @@ if($_REQUEST['id'] == "rtb") {
   $ret->page = $page;
   $ret->pages = ceil(RTBAddonManager::getCount()/10);
 
-  echo json_encode($ret, JSON_PRETTY_PRINT);
+  echo json_encode($ret, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
   return;
 }
 
@@ -58,7 +58,7 @@ foreach($addonIds as $aid) {
 
   $retboard = new stdClass();
   $retboard->id = $addon->getId();
-  $retboard->name = iconv("UTF-16BE", "UTF-8", $addon->getName());
+  $retboard->name = $addon->getName();
 
   $user = UserLog::getCurrentUsername($addon->getManagerBLID());
   if($user == false) {
