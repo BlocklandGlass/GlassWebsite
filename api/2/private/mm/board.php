@@ -58,7 +58,7 @@ foreach($addonIds as $aid) {
 
   $retboard = new stdClass();
   $retboard->id = $addon->getId();
-  $retboard->name = iconv("ISO-8859-1", "UTF-8", $addon->getName());
+  $retboard->name = $addon->getName();
 
   $user = UserLog::getCurrentUsername($addon->getManagerBLID());
   if($user == false) {
