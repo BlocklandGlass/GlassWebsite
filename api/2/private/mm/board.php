@@ -68,6 +68,8 @@ foreach($addonIds as $aid) {
     } else {
       $user = "Blockhead";
     }
+  } else {
+    $user = utf8_encode($user);
   }
 
   $retboard->author = $user;
