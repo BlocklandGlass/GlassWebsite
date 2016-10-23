@@ -32,11 +32,11 @@ foreach($comments as $comid) {
 
   $commento = new stdClass();
   $commento->id = $comment->getId();
-  $commento->author = UserLog::getCurrentUsername($comment->getBLID());
+  $commento->author = utf8_encode(UserLog::getCurrentUsername($comment->getBLID()));
   $commento->authorblid = $comment->getBlid();
   $text = str_replace("\r\n", "<br>", $comment->getComment());
   $text = str_replace("\n", "<br>", $text);
-  $commento->text = $text;
+  $commento->text = utf8_encode($text);
   $commento->date = date("F j, g:i a", strtotime($comment->getTimeStamp()));
   $ret[] = $commento;
 }
