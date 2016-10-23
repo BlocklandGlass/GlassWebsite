@@ -119,8 +119,8 @@ $(document).ready(function() {
 			if(sizeof($authors) == 1) {
 				//$uo = new UserHandler();
 				//$uo->initFromId($authors[0]->id);
-				$uo = UserLog::getCurrentUsername($authors[0]->blid);
-				echo "<a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>";
+				$name = UserLog::getCurrentUsername($authors[0]->blid);
+				echo "<a href=\"#\">" . htmlspecialchars($name) . "</a>";
 			} else if(sizeof($authors) == 2) {
 				//we cant use UserHandler here because we may not have accounts for all
 
