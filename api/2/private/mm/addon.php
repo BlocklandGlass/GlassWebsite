@@ -30,7 +30,7 @@ $ret->filename = $addonObject->getFilename();
 $ret->boardId = $addonObject->getBoard();
 $ret->board = BoardManager::getFromID($addonObject->getBoard())->getName();
 $ret->name = $addonObject->getName();
-$ret->description = htmlspecialchars_decode($addonObject->getDescription());
+$ret->description = utf8_encode(htmlspecialchars_decode($addonObject->getDescription()));
 $ret->rating = $addonObject->getRating();
 
 $ret->screenshots = array();
@@ -50,6 +50,8 @@ $author = new stdClass();
 $user = UserLog::getCurrentUsername($addonObject->getManagerBLID());
 if($user == false) {
   $user = UserManager::getFromBlid($addonObject->getManagerBLID())->getUsername();
+} else {
+  $user = utf8_encode($user);
 }
 
 $author->blid = $addonObject->getManagerBLID();
