@@ -190,7 +190,8 @@ $(document).ready(function() {
 			}
 			?>
 			<br />
-			<a href="review/code.php?id=<?php echo $addonObject->getId() ?>">View source code</a>
+			<!-- add this back when it's finished -->
+			<!-- <a href="review/code.php?id=<?php echo $addonObject->getId() ?>">View source code</a> -->
 		</div>
 	</div>
 	<hr />
