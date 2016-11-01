@@ -31,7 +31,7 @@
 			<li><a href="?id=<?php echo $_GET['id'] ?>&tab=author">Authors</a></li>
 		</ul>
 		<ul class="sidenav">
-			<li><a href="https://blocklandglass.com/addons/update.php?id=<?php echo $_GET['id'] ?>&tab=upd">Update</a></li>
+			<li><a href="https://blocklandglass.com/addons/update.php?id=<?php echo $_GET['id'] ?>">Update</a></li>
 			<li><a href="?id=<?php echo $_GET['id'] ?>&tab=beta">Betas</a></li>
 		</ul>
 		<ul class="sidenav">
