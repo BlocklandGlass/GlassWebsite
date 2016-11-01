@@ -31,16 +31,16 @@ require_once(realpath(dirname(__FILE__) . "/private/class/StatManager.php"));
 		echo StatManager::getMasterServerStats()['users'];
 		?></b> users. Of those, <a href="stats/users.php"><?php
 		echo sizeof(UserLog::getRecentlyActive());
-		?></a> users are running Glass - which equates to <?php
+		?></a> users are running Glass - which equates to <b><?php
 		$nonglass = StatManager::getMasterServerStats()['users'];
 		$glass = sizeof(UserLog::getRecentlyActive());
-		echo 100/$nonglass*$glass;
-		?>%! Glass has <?php
-		echo UserLog::getUniqueCount();?> active users, with a total of <?php
+		echo floor(100/$nonglass*$glass);
+		?>%</b> of Blockland as of this moment. Glass has <b><?php
+		echo UserLog::getUniqueCount();?></b> active users, with a total of <b><?php
 		$web = StatManager::getAllAddonDownloads("web");
 		$ingame = StatManager::getAllAddonDownloads("ingame");
 		$updates = StatManager::getAllAddonDownloads("updates");
-		echo $web+$ingame+$updates; ?> downloads.
+		echo $web+$ingame+$updates; ?></b> downloads.
 	</p>
 	<br />
 	<p>
