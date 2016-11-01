@@ -1,1 +1,3 @@
-<?php include(realpath(dirname(__DIR__) . "/stats/addon.php?id=" . $_GET['id'])); ?>
+<?php
+  echo "This feature is not currently available."
+?>
