@@ -31,12 +31,16 @@ require_once(realpath(dirname(__FILE__) . "/private/class/StatManager.php"));
 		echo StatManager::getMasterServerStats()['users'];
 		?></b> users. Of those, <a href="stats/users.php"><?php
 		echo sizeof(UserLog::getRecentlyActive());
-		?></a> users are running Glass! Glass has <a href="stats/usage.php"><?php
-		echo UserLog::getUniqueCount();?> </a> active users, with a total of <a href="stats/usage.php"><?php
+		?></a> users are running Glass - which equates to <?php
+		$nonglass = StatManager::getMasterServerStats()['users'];
+		$glass = sizeof(UserLog::getRecentlyActive());
+		echo 100/$nonglass*$glass;
+		?>%! Glass has <?php
+		echo UserLog::getUniqueCount();?> active users, with a total of <?php
 		$web = StatManager::getAllAddonDownloads("web");
 		$ingame = StatManager::getAllAddonDownloads("ingame");
 		$updates = StatManager::getAllAddonDownloads("updates");
-		echo $web+$ingame+$updates; ?></a> downloads.
+		echo $web+$ingame+$updates; ?> downloads.
 	</p>
 	<br />
 	<p>
