@@ -4,7 +4,7 @@
 		<a class="homebtn" href="/">Blockland Glass</a>
 		<ul>
 			<li><a href="/addons" class="navbtn">Add-Ons</a></li>
-			<li><a href="/builds" class="navbtn">Builds</a></li>
+			<!-- <li><a href="/builds" class="navbtn">Builds</a></li> -->
 			<li><a href="/stats" class="navbtn">Statistics</a></li>
 			<?php
 				require_once dirname(__FILE__) . '/class/UserManager.php';
