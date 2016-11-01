@@ -15,7 +15,7 @@
 	<?php include(realpath(dirname(__DIR__) . "/private/searchbar.php")); ?>
 	<ul class="addonnav">
 		<li><a href="/addons/boards.php">Boards</a></li>
-		<li><a href="/addons/boards.php">Tags</a></li>
+		<!-- <li><a href="/addons/boards.php">Tags</a></li> -->
 		<li><a href="/addons/rtb/">RTB Archive</a></li>
 		<?php
 		if($user && $user->inGroup("Reviewer")) {
@@ -48,7 +48,7 @@
 					</table>
 				</td>
 			</tr>
-			<tr>
+			<!-- <tr>
 				<td colspan="2">
 					<h3>Tags</h3>
 					<p>
@@ -61,7 +61,7 @@
 						?>
 					</p>
 				</td>
-			</tr>
+			</tr> -->
 		</tbody>
 	</table>
 	<?php /*

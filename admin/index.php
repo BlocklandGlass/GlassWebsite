@@ -22,7 +22,7 @@
 	<div style="width: 200px; float: left; background-color: #ddd; border-radius: 15px">
 		<ul class="sidenav">
 			<li><a href="?tab=board">Boards</a></li>
-			<li><a href="?tab=tag">Tags</a></li>
+			<!-- <li><a href="?tab=tag">Tags</a></li> -->
 			<li><a href="?tab=user">Users</a></li>
 			<li><a href="?tab=groups">Groups</a></li>
 			<li><a href="?tab=bans">Bans</a></li>

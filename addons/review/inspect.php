@@ -60,12 +60,14 @@
         ?>
         </td>
       </tr>
+      <!--
       <tr>
         <td style="padding: 10px;"><b>Tags</b></td>
         <td>
 
         </td>
       </tr>
+      -->
 			<tr>
         <td colspan="2" style="font-size:0.8em">
 					<?php
