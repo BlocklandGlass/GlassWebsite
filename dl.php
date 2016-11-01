@@ -6,7 +6,7 @@ require_once(realpath(dirname(__FILE__) . "/private/class/AddonManager.php"));
 <div class="maincontainer">
 	<p>
 		<h2>Download</h2>
-		In addition to offering add-on and build hosting services online, Glass offers a variety of in-game features. You'll be able to automatically install your downloaded add-ons and builds, as well as keep them up to date.
+		In addition to offering add-on services online, Glass offers a variety of in-game features. You'll be able to automatically install your downloaded add-ons (as well as keep them up to date), be able to talk to other people playing Blockland and manage your servers' preferences.
 	</p>
   <?php
   $glassAddonId = 11; //this needs to be changed before going live, or we need a "find addon by name"
