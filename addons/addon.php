@@ -159,10 +159,10 @@ $(document).ready(function() {
 			?>
 			<br />
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/email_authentication.png" />
-			This file was inspected by a Glass Reviewer
+			This add-on was inspected by a Glass Reviewer
 			<br />
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/inbox_upload.png" />
-			<?php echo date("F j, g:i a", strtotime($addonObject->getUploadDate())); ?>
+			<?php echo date("M jS Y, g:i a", strtotime($addonObject->getUploadDate())); ?>
 			<br />
 			<br />
 			<div id="stars" style="cursor:pointer;">
@@ -239,7 +239,7 @@ $(document).ready(function() {
 		$deps = DependencyManager::getDependenciesFromAddonID($_GET['id']);
 		if(sizeof($deps) > 0) {
 			echo "<hr /><div style=\"text-align:center\">";
-			echo "This add-on has some dependencies, or add-ons that it requires to run!<br/>";
+			echo "<b>This add-on has some dependencies or add-ons that it requires to run...</b><br/><br/>";
 			foreach($deps as $did) {
 				$dep = DependencyManager::getFromId($did);
 				$rid = $dep->getRequired();

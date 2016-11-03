@@ -37,7 +37,7 @@ foreach($comments as $comid) {
   $text = str_replace("\r\n", "<br>", $comment->getComment());
   $text = str_replace("\n", "<br>", $text);
   $commento->text = utf8_encode($text);
-  $commento->date = date("F j, g:i a", strtotime($comment->getTimeStamp()));
+  $commento->date = date("M jS Y, g:i a", strtotime($comment->getTimeStamp()));
   $ret[] = $commento;
 }
 

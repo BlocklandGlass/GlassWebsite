@@ -37,13 +37,14 @@
 <div class="maincontainer">
 	<?php
 		echo "<span style=\"font-size: 9pt;\"><a href=\"/addons/\">Add-Ons</a> >> ";
+		echo "<a href=\"/addons/boards.php\">Boards</a> >> ";
 		echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . htmlspecialchars($boardObject->getName()) . "</a> >> ";
 		echo "<a href=\"#\">" . htmlspecialchars($addonObject->getName()) . "</a></span>";
 		echo "<h2>Moderating: <i>" . htmlspecialchars($addonObject->getName()) . "</i></h2>";
 	?>
 	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 		<div class="addoninfoleft">
-			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/user.png" /> By <?php
+			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/user.png" /> Uploaded by <?php
 			$authors = $addonObject->getAuthorInfo();
 
 			if(sizeof($authors) == 1) {
@@ -87,11 +88,11 @@
 			echo $addonObject->getFilename();
 			?>
 			<br />
-			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/accept_button.png" />
-			Approved
+			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/email_authentication.png" />
+			This add-on was inspected by a Glass Reviewer
 			<br />
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/inbox_upload.png" />
-			<?php echo date("F j, g:i a", strtotime($addonObject->getUploadDate())); ?>
+			<?php echo date("M jS Y, g:i a", strtotime($addonObject->getUploadDate())); ?>
 		</div>
 		<div class="addoninforight">
 			<?php
@@ -123,6 +124,7 @@
 			echo $Parsedown->text($addonObject->getDescription());
 		?>
 	</p>
+	<!--
 	<hr />
 	Add Tag:
 	<select name="tag">
@@ -134,6 +136,7 @@
 	</select>
 	<br />
 	<input type="submit" value="Add" name="submit" />
+	-->
 	<hr />
   <table class="formtable">
     <tbody>

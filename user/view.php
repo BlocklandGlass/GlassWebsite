@@ -33,7 +33,7 @@
 		echo("<h3>" . htmlspecialchars($userObject->getName()) . "</h3>");
 		if(sizeof($history) > 0) echo("<p><b>Last Seen:</b> " . $history[0]->lastseen);
 		echo("<br /><b>BL_ID:</b> " . $userObject->getBLID());
-		echo "</p><hr />";
+		//echo "</p><hr />";
 		//echo("<a href=\"/addons/search.php?blid=" . htmlspecialchars($userObject->getBLID()) . "\"><b>Find Add-Ons by this user</b></a>");
 		?>
 		<hr />

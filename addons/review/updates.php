@@ -38,7 +38,7 @@
       }
 
 			if(sizeof($updates) == 0) {
-				echo "<tr><td colspan=\"3\" style=\"text-align:center\">Nothing to approve!</td></tr>";
+				echo "<tr><td colspan=\"3\" style=\"text-align:center\">Nothing to review!</td></tr>";
 			}
     ?>
     </tbody>

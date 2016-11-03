@@ -27,7 +27,7 @@
   <hr />
   You can reclaim your old RTB add-ons and have them automatically imported and updated, reclaiming your old users and issuing them the latest version.<br />
   <br />
-  Name of current add-on: <input type="text" id="addon" />
+  Name of Current Add-On on Glass: <input type="text" id="addon" />
   <form method="post" action="">
     <input type="hidden" name="action" value="reclaim" />
     <div id="options">

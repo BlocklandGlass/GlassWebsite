@@ -41,6 +41,7 @@ tbody tr:nth-child(2n) {
 </style>
 <div class="maincontainer">
   <h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Glass Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/3/2016)</span></h2>
+  <p>If you would like to suggest amendments to the following information, contact a Glass Administrator.</p>
 	<h3><image style="height: 1.4em" src="/img/icons32/gear_in.png" /> On the Subject of Client Add-Ons</h3>
   <p>These add-ons are to be inspected very carefully. Ensure that...</p>
 	<ul>
@@ -56,11 +57,11 @@ tbody tr:nth-child(2n) {
 		<li>Duplicates of other add-ons.</li>
 	</ul>
 	<h3><image style="height: 1.4em" src="/img/icons32/caution_biohazard.png" /> On the Subject of Malicious Add-Ons</h3>
-	<p><b>Above all else, ensure that the add-on is not malicious and that it can not be easily exploited by a regular user - <i style="color: red">this is your top priority</i>.</b></p>
-  <hr>
+	<p><b>Above all else, ensure the add-on is not malicious, that it can not be easily exploited by a regular user and has no backdoors - <i style="color: red">this is your top priority</i>.</b></p>
+  <hr />
 	<table style="width: 100%">
     <thead>
-      <tr><th>Add-On</th><th>Uploader</th><th>Uploaded</th></tr>
+      <tr><th>Add-On</th><th>User</th><th>Uploaded</th></tr>
     </thead>
     <tbody>
     <?php
@@ -75,12 +76,12 @@ tbody tr:nth-child(2n) {
         echo "<tr>";
         echo "<td><a href=\"inspect.php?id=" . $addon->getId() . "\">" . $addon->getName() . "</a></td>";
         echo "<td>" . $name . "</td>";
-        echo "<td>" . date("D, g:i a", strtotime($addon->getUploadDate())) . "</td>";
+        echo "<td>" . date("M jS Y, g:i a", strtotime($addon->getUploadDate())) . "</td>";
         echo "</tr>";
       }
 
 			if(sizeof($list) == 0) {
-				echo "<tr><td colspan=\"3\" style=\"text-align:center\">Nothing to approve!</td></tr>";
+				echo "<tr><td colspan=\"3\" style=\"text-align:center\">Nothing to review!</td></tr>";
 			}
     ?>
     </tbody>

@@ -5,11 +5,12 @@
 <div class="maincontainer">
 	<?php
 		echo "<span style=\"font-size: 9pt;\"><a href=\"/addons/\">Add-Ons</a> >> ";
+		echo "<a href=\"/addons/boards.php\">Boards</a> >> ";
 		echo "<a href=\"#\">" . htmlspecialchars($addonObject->getName()) . "</a></span>";
 		echo "<h2>" . htmlspecialchars($addonObject->getName()) . "</h2>";
 	?>
 	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em; background-color: #ffcccc; text-align:center; border-radius: 10px; padding: 10px; font-size: 1em">
-		<b>This Add-On has been failed!</b><br />
+		<b>This add-on has been rejected by a Glass Reviewer.</b><br />
     <i>"<?php echo $addonObject->getRejectReason() ?>"</i>
   </div>
 </div>

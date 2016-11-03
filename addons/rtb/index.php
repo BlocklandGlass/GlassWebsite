@@ -16,7 +16,7 @@
 ?>
 <div class="maincontainer">
   <h1 style="text-align:center"><img src="/img/rtb_logo.gif"><br />Archives</h1>
-  <a href="/addons/">Addons</a> >> <a href="/addons/rtb/">RTB Archives</a>
+  <a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archives</a>
 	<table class="boardtable">
 	<tbody>
 		<tr class="boardheader">

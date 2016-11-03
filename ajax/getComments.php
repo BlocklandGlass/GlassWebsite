@@ -38,16 +38,17 @@
 				echo("<tr style=\"vertical-align:top\">");
 				echo("<td style=\"width: 150px;\">");
 				echo("<a href=\"/user/view.php?blid=" . $user->getBLID() . "\">" . htmlspecialchars($user->getUsername()) . "</a>");
-				echo("<br /><span style=\"font-size: .8em;\">" . $user->getBLID() . "<br />");
+        echo("<br /><span style=\"font-size: .8em;\">" . date("M jS Y, g:i a", strtotime($comment->getTimeStamp())));
+				echo("<br />" . $user->getBLID() . "<br />");
 
-				if($user->inGroup("Administrator")) {
-					echo("Administrator");
+				if($user->inGroup("Administrator")) { //add check if user is author of add-on
+					echo("<b style=\"color: red\">Administrator</b>");
 				} elseif($user->inGroup("Moderator")) {
-					echo("Moderator");
+					echo("<b style=\"color: orange\">Moderator</b>");
 				} elseif($user->inGroup("Reviewer")) {
-					echo("Reviewer");
-				} elseif($user->banned) {
-					echo("Banned");
+					echo("<b style=\"color: green\">Reviewer</b>");
+				//} elseif($user->banned) {
+					//echo("<b>Banned</b>");
 				}
 				echo("</span></td><td>");
 				echo(htmlspecialchars($comment->getComment()));

@@ -64,8 +64,9 @@ form {
 						$str = $str . $name . " <i>(" . $cl->blid . ")</i><br/>";
 					}
 					echo "<td>$str</td></tr>";
-				//} else {
+				} else {
 					//echo "<td style=\"vertical-align: top\"><i>Empty</i></td></tr>";
+					echo "<td></td></tr>";
 				}
 		  } ?>
 		</tbody>
