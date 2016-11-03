@@ -37,7 +37,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td style="width:50%; vertical-align:top; border-right: 1px solid #ccc">
+				<td style="width:50%; vertical-align:top">
 					<table id="trending" style="width: 100%; text-align:left;">
 						<?php include(realpath(dirname(__DIR__) . "/ajax/getTrendingAddons.php")); ?>
 					</table>

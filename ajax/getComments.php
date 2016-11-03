@@ -38,15 +38,15 @@
 				echo("<tr style=\"vertical-align:top\">");
 				echo("<td style=\"width: 150px;\">");
 				echo("<a href=\"/user/view.php?blid=" . $user->getBLID() . "\">" . htmlspecialchars($user->getUsername()) . "</a>");
-        echo("<br /><span style=\"font-size: .8em;\">" . date("M jS Y, g:i a", strtotime($comment->getTimeStamp())));
-				echo("<br />" . $user->getBLID() . "<br />");
+				echo("<span style=\"font-size: .8em;\">" . $user->getBLID());
+				echo("<br />" . date("M jS Y, g:i a", strtotime($comment->getTimeStamp())) . "<br />");
 
 				if($user->inGroup("Administrator")) { //add check if user is author of add-on
-					echo("<b style=\"color: red\">Administrator</b>");
+					echo("<span style=\"color: red\">Administrator</span>");
 				} elseif($user->inGroup("Moderator")) {
-					echo("<b style=\"color: orange\">Moderator</b>");
+					echo("<span style=\"color: orange\">Moderator</span>");
 				} elseif($user->inGroup("Reviewer")) {
-					echo("<b style=\"color: green\">Reviewer</b>");
+					echo("<span style=\"color: green\">Reviewer</span>");
 				//} elseif($user->banned) {
 					//echo("<b>Banned</b>");
 				}

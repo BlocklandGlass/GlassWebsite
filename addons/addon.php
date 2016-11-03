@@ -152,6 +152,11 @@ $(document).ready(function() {
 				}
 			}
 			?>
+      <br />
+			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/tag.png" />
+			<?php
+			echo htmlspecialchars($boardObject->getName());
+			?>
 			<br />
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/folder_vertical_zipper.png" />
 			<?php

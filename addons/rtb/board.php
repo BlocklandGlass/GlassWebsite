@@ -16,7 +16,7 @@
 ?>
 <div class="maincontainer">
   <h1 style="text-align:center"><img src="/img/rtb_logo.gif"><br /><?php echo $_GET['name']; ?></h1>
-  <a href="/addons/">Addons</a> >> <a href="/addons/rtb/">RTB Archives</a> >> <a href="#"><?php echo $_GET['name']; ?></a>
+  <a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archives</a> >> <a href="#"><?php echo $_GET['name']; ?></a>
 	<table class="boardtable">
 	<tbody>
 		<tr class="boardheader">
