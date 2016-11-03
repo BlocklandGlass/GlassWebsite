@@ -58,7 +58,7 @@ form {
 		    echo "<tr><td style=\"vertical-align: top\"><b>" . $s->host . "</b></td><td>" . $s->ip . ":" . $s->port . "</td>";
 				$clients = json_decode($s->clients);
 				$str = "";
-				if(count($clients) > 0) {
+				if((count($clients) - 1) > 0) {
 					foreach($clients as $cl) {
 						$name = utf8_encode($cl->name);
 						$str = $str . $name . " <i>(" . $cl->blid . ")</i><br/>";
