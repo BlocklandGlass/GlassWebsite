@@ -37,11 +37,15 @@
 				$user = $users[$comment->blid];
 				echo("<tr style=\"vertical-align:top\">");
 				echo("<td style=\"width: 150px;\">");
-				echo("<a href=\"/user/view.php?id=" . $user->getBLID() . "\">" . htmlspecialchars($user->getUsername()) . "</a>");
+				echo("<a href=\"/user/view.php?blid=" . $user->getBLID() . "\">" . htmlspecialchars($user->getUsername()) . "</a>");
 				echo("<br /><span style=\"font-size: .8em;\">" . $user->getBLID() . "<br />");
 
 				if($user->inGroup("Administrator")) {
 					echo("Administrator");
+				} elseif($user->inGroup("Moderator")) {
+					echo("Moderator");
+				} elseif($user->inGroup("Reviewer")) {
+					echo("Reviewer");
 				} elseif($user->banned) {
 					echo("Banned");
 				}

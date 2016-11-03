@@ -50,17 +50,23 @@ form {
 	<table class="list">
 		<tbody>
 			<tr>
-				<td>Host/Server</td>
+				<td>Host</td>
+				<td>IP</td>
 				<td>Users</td>
 			</tr>
 			<?php foreach($servers as $s) {
-		    echo "<tr><td style=\"vertical-align: top\"><b>" . $s->host . "</b> " . $s->ip . ":" . $s->port . "</td>";
+		    echo "<tr><td style=\"vertical-align: top\"><b>" . $s->host . "</b></td><td>" . $s->ip . ":" . $s->port . "</td>";
 				$clients = json_decode($s->clients);
 				$str = "";
-				foreach($clients as $cl) {
-					$str = $str . $cl->name . " <i>(" . $cl->blid . ")</i><br/>";
+				if(count($clients) > 0) {
+					foreach($clients as $cl) {
+						$name = utf8_encode($cl->name);
+						$str = $str . $name . " <i>(" . $cl->blid . ")</i><br/>";
+					}
+					echo "<td>$str</td></tr>";
+				} else {
+					echo "<td><i>Empty</i></td></tr>";
 				}
-				echo "<td>$str</td></tr>";
 		  } ?>
 		</tbody>
 	</table>

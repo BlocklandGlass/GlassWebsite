@@ -56,8 +56,9 @@ form {
         <td>Version</td>
       </tr>
 			<?php foreach($users as $u) {
-		    echo "<tr><td><b>" . UserLog::getCurrentUsername($u->blid) . "</b></td><td>" . $u->blid . "</td><td>" . StatUsageManager::getVersionUsed($u->blid, 11) . "</td></tr>";
-		  } ?>
+				$username = utf8_encode(UserLog::getCurrentUsername($u->blid));
+				echo "<tr><td><b>" . $username . "</b></td><td>" . $u->blid . "</td><td>" . StatUsageManager::getVersionUsed($u->blid, 11) . "</td></tr>";
+			} ?>
 		</tbody>
 	</table>
 </div>

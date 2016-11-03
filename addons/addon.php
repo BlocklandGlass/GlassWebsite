@@ -113,14 +113,14 @@ $(document).ready(function() {
 	?>
 	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 		<div class="addoninfoleft">
-			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/user.png" /> By <?php
+			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/user.png" /> Uploaded by <?php
 			$authors = $addonObject->getAuthorInfo();
 
 			if(sizeof($authors) == 1) {
 				//$uo = new UserHandler();
 				//$uo->initFromId($authors[0]->id);
 				$name = UserLog::getCurrentUsername($authors[0]->blid);
-				echo "<a href=\"#\">" . htmlspecialchars($name) . "</a>";
+				echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . htmlspecialchars($name) . "</a>";
 			} else if(sizeof($authors) == 2) {
 				//we cant use UserHandler here because we may not have accounts for all
 
@@ -157,8 +157,8 @@ $(document).ready(function() {
 			echo $addonObject->getFilename();
 			?>
 			<br />
-			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/accept_button.png" />
-			Approved
+			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/email_authentication.png" />
+			This file was inspected by a Glass Reviewer
 			<br />
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/inbox_upload.png" />
 			<?php echo date("F j, g:i a", strtotime($addonObject->getUploadDate())); ?>
