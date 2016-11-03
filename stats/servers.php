@@ -3,7 +3,7 @@
 	require_once dirname(__DIR__) . "/private/class/UserManager.php";
 	require_once dirname(__DIR__) . "/private/class/ServerTracker.php";
 
-	$_PAGETITLE = "Glass | Current Servers";
+	$_PAGETITLE = "Blockland Glass | Current Servers";
 
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
@@ -51,21 +51,21 @@ form {
 		<tbody>
 			<tr>
 				<td>Host</td>
-				<td>IP</td>
+				<td>IP:Port</td>
 				<td>Users</td>
 			</tr>
 			<?php foreach($servers as $s) {
-		    echo "<tr><td style=\"vertical-align: top\"><b>" . $s->host . "</b></td><td>" . $s->ip . ":" . $s->port . "</td>";
+		    echo "<tr><td style=\"vertical-align: top\"><b>" . $s->host . "</b></td><td style=\"vertical-align: top\">" . $s->ip . ":" . $s->port . "</td>";
 				$clients = json_decode($s->clients);
 				$str = "";
-				if((count($clients) - 1) > 0) {
+				if((sizeof($clients) - 1) > 0) {
 					foreach($clients as $cl) {
-						$name = utf8_encode($cl->name);
+						$name = htmlspecialchars($cl->name);
 						$str = $str . $name . " <i>(" . $cl->blid . ")</i><br/>";
 					}
 					echo "<td>$str</td></tr>";
-				} else {
-					echo "<td><i>Empty</i></td></tr>";
+				//} else {
+					//echo "<td style=\"vertical-align: top\"><i>Empty</i></td></tr>";
 				}
 		  } ?>
 		</tbody>

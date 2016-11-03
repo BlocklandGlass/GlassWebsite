@@ -9,7 +9,7 @@ if(!$user) {
 	die();
 }
 
-$_PAGETITLE = "Glass | Upload";
+$_PAGETITLE = "Blockland Glass | Upload";
 
 include(realpath(dirname(dirname(__DIR__)) . "/private/header.php"));
 include(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php"));

@@ -3,7 +3,7 @@
 	require_once dirname(__DIR__) . "/private/class/UserManager.php";
 	require_once dirname(__DIR__) . "/private/class/CronStatManager.php";
 
-	$_PAGETITLE = "Glass | Add-Ons";
+	$_PAGETITLE = "Blockland Glass | Statistics";
 
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));

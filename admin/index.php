@@ -4,7 +4,7 @@
   session_start();
 	$user = UserManager::getCurrent();
 
-	$_PAGETITLE = "Control Panel";
+	$_PAGETITLE = "Blockland Glass | Control Panel";
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 

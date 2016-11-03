@@ -1,5 +1,5 @@
 <?php
-	$_PAGETITLE = "Glass | Inspect Update";
+	$_PAGETITLE = "Blockland Glass | Inspect Update";
 
 	require_once(realpath(dirname(__DIR__) . "/../private/class/AddonManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/class/BoardManager.php"));

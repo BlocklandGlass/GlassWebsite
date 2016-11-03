@@ -7,7 +7,7 @@
 		header("Location: " . $status['redirect']);
 		die();
 	}
-	$_PAGETITLE = "Build Upload";
+	$_PAGETITLE = "Blockland Glass | Build Upload";
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>

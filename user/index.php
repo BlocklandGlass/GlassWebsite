@@ -90,9 +90,11 @@
 							<?php
 						}
 						?>
+            <!--
 						<div class="useraddon" style="text-align:center; background-color: #ccffcc">
 							<img style="width: 1.2em;" src="http://blocklandglass.com/img/icons32/add.png" alt="New"/> <a href="/builds/upload.php">Upload a new Build...</a>
 						</div>
+            -->
 					</p>
 				</td>
 			</tr>

@@ -7,7 +7,7 @@
 		header("Location: " . $loginStatus['redirect']);
 		die();
 	}
-	$_PAGETITLE = "Log In";
+	$_PAGETITLE = "Blockland Glass | Log In";
 	include(realpath(dirname(__FILE__) . "/private/header.php"));
 	include(realpath(dirname(__FILE__) . "/private/navigationbar.php"));
 ?>

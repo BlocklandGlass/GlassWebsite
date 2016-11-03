@@ -1,5 +1,5 @@
 <?php
-	$_PAGETITLE = "Glass | Reclaim List";
+	$_PAGETITLE = "Blockland Glass | Reclaim List";
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/class/AddonManager.php"));

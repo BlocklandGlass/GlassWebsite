@@ -1,7 +1,7 @@
 <?php
 	require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
 
-	$_PAGETITLE = "Glass | Builds";
+	$_PAGETITLE = "Blockland Glass | Builds";
 	$_OPENHEAD = true;
 	require_once(realpath(dirname(__DIR__) . "/private/header.php"));
 ?>

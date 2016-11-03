@@ -5,7 +5,7 @@
 
   $addonData = RTBAddonManager::getAddonFromId($_GET['id']);
 
-	$_PAGETITLE = "Glass | " . htmlspecialchars($addonData->title);
+	$_PAGETITLE = "Blockland Glass | " . htmlspecialchars($addonData->title);
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));

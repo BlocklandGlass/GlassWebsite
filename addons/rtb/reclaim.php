@@ -3,7 +3,7 @@
 	require_once(realpath(dirname(__DIR__) . "/../private/class/UserManager.php"));
   require_once(realpath(dirname(__DIR__) . "/../private/class/RTBAddonManager.php"));
 
-	$_PAGETITLE = "Glass | RTB Reclaim";
+	$_PAGETITLE = "Blockland Glass | RTB Reclaim";
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 

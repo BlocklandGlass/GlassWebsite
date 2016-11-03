@@ -4,7 +4,7 @@
 	require_once dirname(__DIR__) . "/private/class/UserLog.php";
 	require_once dirname(__DIR__) . "/private/class/StatUsageManager.php";
 
-	$_PAGETITLE = "Glass | Current Users";
+	$_PAGETITLE = "Blockland Glass | Current Users";
 
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));

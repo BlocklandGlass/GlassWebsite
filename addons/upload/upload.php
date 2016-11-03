@@ -7,7 +7,7 @@
 		header("Location: " . $status['redirect']);
 		die();
 	}
-	$_PAGETITLE = "Addon Upload";
+	$_PAGETITLE = "Blockland Glass | Add-On Upload";
 	include(__DIR__ . "/../../private/header.php");
 	include(__DIR__ . "/../../private/navigationbar.php");
 ?>

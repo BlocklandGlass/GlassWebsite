@@ -10,7 +10,7 @@
 		header("Location: " . $info['redirect']);
 		die();
 	}
-	$_PAGETITLE = "Manage Build";
+	$_PAGETITLE = "Blockland Glass | Manage Build";
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>

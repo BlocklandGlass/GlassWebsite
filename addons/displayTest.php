@@ -5,7 +5,7 @@
 
 require_once(realpath(dirname(__FILE__) . "/analyze.php"));
 
-$_PAGETITLE = "Glass | Code Analysis";
+$_PAGETITLE = "Blockland Glass | Code Analysis";
 
 require_once(realpath(dirname(__DIR__) . "/private/header.php"));
 require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));

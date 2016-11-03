@@ -37,7 +37,7 @@
 		CommentManager::submitComment($addonObject->getId(), UserManager::getCurrent()->getBLID(), $_POST['comment']);
 	}
 
-	$_PAGETITLE = "Glass | " . htmlspecialchars($addonObject->getName());
+	$_PAGETITLE = "Blockland Glass | " . htmlspecialchars($addonObject->getName());
 
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
@@ -100,6 +100,7 @@ $(document).ready(function() {
 <div class="maincontainer">
 	<?php
 		echo "<span style=\"font-size: 9pt;\"><a href=\"/addons/\">Add-Ons</a> >> ";
+		echo "<a href=\"/addons/boards.php\">Boards</a> >> ";
 		echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . htmlspecialchars($boardObject->getName()) . "</a> >> ";
 		echo "<a href=\"#\">" . htmlspecialchars($addonObject->getName()) . "</a></span>";
 

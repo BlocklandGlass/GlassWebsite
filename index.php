@@ -7,7 +7,7 @@ require_once(realpath(dirname(__FILE__) . "/private/class/StatManager.php"));
 
 <div class="bigheadcontainer">
 	<!-- <h1>Blockland Glass</h1> -->
-	<image style="margin: 10px 0px 5px 0px; max-width: 100%" src="http://blocklandglass.com/img/logoWhite.png" />
+	<image style="margin: 10px 0px 5px 0px; max-width: 100%" src="/img/logoWhite.png" />
 	<h2 style="font-weight: normal">A service for the community, by the community</h2>
 	<a href="dl.php" class="btn blue"><b>Download</b></a><br />
 	<!-- <a href="builds" class="btn green" style="width: 150px">Builds</a> -->
@@ -37,11 +37,11 @@ require_once(realpath(dirname(__FILE__) . "/private/class/StatManager.php"));
 		$glass = sizeof(UserLog::getRecentlyActive());
 		echo floor(100/$nonglass*$glass);
 		?>%</b> of Blockland as of this moment. Glass has <b><?php
-		echo UserLog::getUniqueCount();?></b> active users, with a total of <b><?php
+		echo UserLog::getUniqueCount();?></b> active users, with a total of <a href="stats/"><?php
 		$web = StatManager::getAllAddonDownloads("web");
 		$ingame = StatManager::getAllAddonDownloads("ingame");
 		$updates = StatManager::getAllAddonDownloads("updates");
-		echo $web+$ingame+$updates; ?></b> downloads.
+		echo $web+$ingame+$updates; ?></b></a> downloads.
 	</p>
 	<br />
 	<p>

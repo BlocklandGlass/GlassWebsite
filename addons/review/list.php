@@ -1,5 +1,5 @@
 <?php
-	$_PAGETITLE = "Glass | Review List";
+	$_PAGETITLE = "Blockland Glass | Review List";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
@@ -40,13 +40,27 @@ tbody tr:nth-child(2n) {
 }
 </style>
 <div class="maincontainer">
-	<p>These add-ons have been submitted but need to be looked over. Ensure that they are not malicious and do not contain backdoors, then categorize them appropriately</p>
-	<b>Client Add-Ons:</b>
-	<br />
-	<p>I want these to be checked very carefully. These will be downloaded on the spot by users who have no idea what they're downloading. They'll likely be executed right before the server is joined. Make sure they only interact with the server they're intended for and that they clean up after themselves. Make sure that they add no additional client functionality outside of in-game changes.</p>
-  <table style="width: 100%">
+  <h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Glass Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/3/2016)</span></h2>
+	<h3><image style="height: 1.4em" src="/img/icons32/gear_in.png" /> On the Subject of Client Add-Ons</h3>
+  <p>These add-ons are to be inspected very carefully. Ensure that...</p>
+	<ul>
+		<li>They only interact with the server(s) they're intended for.</li>
+    <li>They add no additional functionality outside of their intended operation.</li>
+    <li>They clean up after themselves.</li>
+	</ul>
+	<h3><image style="height: 1.4em" src="/img/icons32/roadworks.png" /> On the Subject of Quality</h3>
+	<p>Glass is not as stringent as RTB used to be, but do ensure that the add-on is not complete garbage (i.e. has a practical use) and that a reasonable amount of effort has been put into it. Bad examples...</p>
+	<ul>
+		<li>Variants of the Shoe RP gamemode.</li>
+		<li>Clearly unfinished add-ons.</li>
+		<li>Duplicates of other add-ons.</li>
+	</ul>
+	<h3><image style="height: 1.4em" src="/img/icons32/caution_biohazard.png" /> On the Subject of Malicious Add-Ons</h3>
+	<p><b>Above all else, ensure that the add-on is not malicious and that it can not be easily exploited by a regular user - <i style="color: red">this is your top priority</i>.</b></p>
+  <hr>
+	<table style="width: 100%">
     <thead>
-      <tr><th>Add-On</th><th>Author</th><th>Uploaded</th></tr>
+      <tr><th>Add-On</th><th>Uploader</th><th>Uploaded</th></tr>
     </thead>
     <tbody>
     <?php

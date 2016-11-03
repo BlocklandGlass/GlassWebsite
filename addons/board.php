@@ -20,7 +20,7 @@
 		header('Location: /addons');
 		die();
 	}
-	$_PAGETITLE = "Glass | " . $boardObject->getName();
+	$_PAGETITLE = "Blockland Glass | " . $boardObject->getName();
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>
@@ -91,7 +91,7 @@
 	<tbody>
 		<tr class="boardheader">
 			<td>Name</td>
-			<td>Author(s)</td>
+			<td>Uploader</td>
 			<td>Rating</td>
 			<td>Downloads</td>
 		</tr>
@@ -112,7 +112,7 @@
 			//$uo = new UserHandler();
 			//$uo->initFromId($authors[0]->id);
 			$uo = UserManager::getFromBLID($authors[0]->blid);
-			echo "<a href=\"#\">" . $uo->getName() . "</a>";
+			echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . htmlspecialchars($uo->getName()) . "</a>";
 		} else if(sizeof($authors) == 2) {
 			//$uo = new UserHandler();
 			//$uo->initFromId($authors[0]->id);
@@ -142,11 +142,11 @@
 		} ?>
 		</td>
 		<td>
-			<image src="http://blocklandglass.com/img/icons16/star.png" />
-			<image src="http://blocklandglass.com/img/icons16/star.png" />
-			<image src="http://blocklandglass.com/img/icons16/star.png" />
-			<image src="http://blocklandglass.com/img/icons16/star.png" />
-			<image src="http://blocklandglass.com/img/icons16/star.png" />
+			<image src="/img/icons16/draw_star.png" />
+			<image src="/img/icons16/draw_star.png" />
+			<image src="/img/icons16/draw_star.png" />
+			<image src="/img/icons16/draw_star.png" />
+			<image src="/img/icons16/draw_star.png" />
 		</td>
 		<td><?php echo ($addon->getDownloads("web") + $addon->getDownloads("ingame")); ?></td>
 		</tr><?php

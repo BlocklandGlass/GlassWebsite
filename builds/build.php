@@ -5,7 +5,7 @@
 		header("Location: " . $data['redirect']);
 		die();
 	}
-	$_PAGETITLE = "Glass | " . htmlspecialchars($data['build']->name);
+	$_PAGETITLE = "Blockland Glass | " . htmlspecialchars($data['build']->name);
 	include(__DIR__ . "/../private/header.php");
 	include(__DIR__ . "/../private/navigationbar.php");
 

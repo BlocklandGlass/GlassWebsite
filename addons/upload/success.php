@@ -3,7 +3,7 @@ require_once(realpath(dirname(__DIR__) . "/../private/class/UserManager.php"));
 require_once(realpath(dirname(__DIR__) . "/../private/class/AddonFileHandler.php"));
 $user = UserManager::getCurrent();
 
-$_PAGETITLE = "Glass | Upload Success";
+$_PAGETITLE = "Blockland Glass | Upload Success";
 
 include(realpath(dirname(dirname(__DIR__)) . "/private/header.php"));
 include(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php"));

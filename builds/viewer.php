@@ -1,5 +1,5 @@
 <?php
-	$_PAGETITLE = "Glass | Build Viewer";
+	$_PAGETITLE = "Blockland Glass | Build Viewer";
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 ?>
 

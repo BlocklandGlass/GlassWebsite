@@ -11,7 +11,7 @@
 		header("Location: " . $info['redirect']);
 		die();
 	}
-	$_PAGETITLE = "Manage Addon";
+	$_PAGETITLE = "Blockland Glass | Manage Add-On";
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 
@@ -167,7 +167,7 @@ td:first-child {
 				</tr>
 				<tr>
 					<td>
-						<p>Update Addon</p>
+						<p>Update Add-On</p>
 					</td>
 					<td>
 						<p>

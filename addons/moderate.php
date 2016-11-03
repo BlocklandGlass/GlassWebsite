@@ -29,7 +29,7 @@
 		die();
 	}
 
-	$_PAGETITLE = "Glass | " . htmlspecialchars($addonObject->getName());
+	$_PAGETITLE = "Blockland Glass | " . htmlspecialchars($addonObject->getName());
 
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
