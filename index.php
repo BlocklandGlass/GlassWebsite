@@ -16,7 +16,7 @@ require_once(realpath(dirname(__FILE__) . "/private/class/StatManager.php"));
 <div class="maincontainer">
 	<p>
 		<h3>What's Glass?</h3>
-		Blockland Glass is a service made for <a href="http://blockland.us">Blockland</a> to help expand and cultivate the community. Currently, Glass acts as a content and social platform offering the ability to download Glass add-ons ingame, manage your servers' preferences, add friends and talk to others through the chatroom or direct messaging.
+		Blockland Glass is a service made for <a href="http://blockland.us">Blockland</a> to help expand and cultivate the community. Currently, Glass acts as a content and social platform offering the ability to download Glass add-ons in-game, manage your servers' preferences, add friends and talk to others through the chatroom or direct messaging.
 	</p>
 	<br />
 	<p>
