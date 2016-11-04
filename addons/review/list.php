@@ -61,7 +61,7 @@ tbody tr:nth-child(2n) {
   <hr />
 	<table style="width: 100%">
     <thead>
-      <tr><th>Add-On</th><th>User</th><th>Uploaded</th></tr>
+      <tr><th>Add-On</th><th>Uploader</th><th>Uploaded</th></tr>
     </thead>
     <tbody>
     <?php
