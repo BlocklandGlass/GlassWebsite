@@ -111,8 +111,10 @@ $(document).ready(function() {
 		}
 
 		echo "<h2 style=\"margin-bottom: 0px;\">" . htmlspecialchars($addonObject->getName()) . "</h2>";
-		echo "Uploaded by " .
+
     $authors = $addonObject->getAuthorInfo();
+
+		echo "Uploaded by "
 
     if(sizeof($authors) == 1) {
       //$uo = new UserHandler();
@@ -148,6 +150,8 @@ $(document).ready(function() {
         }
       }
     }
+
+    echo "<br />"
 	?>
 	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 		<div class="addoninfoleft">

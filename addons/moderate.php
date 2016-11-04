@@ -42,49 +42,49 @@
 		echo "<a href=\"#\">" . htmlspecialchars($addonObject->getName()) . "</a></span>";
 
 		echo "<h2 style=\"margin-bottom: 0px;\">Moderating: <i>" . htmlspecialchars($addonObject->getName()) . "</i></h2>";
-		echo "Uploaded by " . htmlspecialchars($addonObject->getAuthorInfo()) . "<br />";
+    $authors = $addonObject->getAuthorInfo();
+
+		echo "Uploaded by "
+
+    if(sizeof($authors) == 1) {
+      //$uo = new UserHandler();
+      //$uo->initFromId($authors[0]->id);
+      $name = UserLog::getCurrentUsername($authors[0]->blid);
+      echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . htmlspecialchars($name) . "</a>";
+    } else if(sizeof($authors) == 2) {
+      //we cant use UserHandler here because we may not have accounts for all
+
+      $name1 = UserLog::getCurrentUsername($authors[0]->blid);
+      if($name1 === false) {
+        $name1 = "Blockhead" . $authors[0]->blid;
+      }
+      $name2 = UserLog::getCurrentUsername($authors[1]->blid);
+      if($name2 === false) {
+        $name2 = "Blockhead" . $authors[1]->blid;
+      }
+      echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . htmlspecialchars($name1) . "</a>";
+      echo " and ";
+      echo "<a href=\"/user/view.php?blid=" . $authors[1]->blid . "\">" . htmlspecialchars($name2) . "</a>";
+    } else {
+      var_dump($authors);
+      $count = sizeof($authors);
+      foreach($authors as $num=>$author) {
+        //$uo = new UserHandler();
+        //$uo->initFromId($auth->id);
+        $uo = UserManager::getFromBLID($author->blid);
+
+        if($count-$num == 1) {
+          echo "and <a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>";
+        } else {
+          echo "<a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>, ";
+        }
+      }
+    }
+
+    echo "<br />"
 	?>
 	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 		<div class="addoninfoleft">
-			<?php
-			$authors = $addonObject->getAuthorInfo();
-
-			if(sizeof($authors) == 1) {
-				//$uo = new UserHandler();
-				//$uo->initFromId($authors[0]->id);
-				$uo = UserManager::getFromBLID($authors[0]->blid);
-				echo "<a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>";
-			} else if(sizeof($authors) == 2) {
-				//we cant use UserHandler here because we may not have accounts for all
-
-				$name1 = UserLog::getCurrentUsername($authors[0]->blid);
-				if($name1 === false) {
-					$name1 = "Blockhead" . $authors[0]->blid;
-				}
-				$name2 = UserLog::getCurrentUsername($authors[1]->blid);
-				if($name2 === false) {
-					$name2 = "Blockhead" . $authors[1]->blid;
-				}
-				echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . htmlspecialchars($name1) . "</a>";
-				echo " and ";
-				echo "<a href=\"/user/view.php?blid=" . $authors[1]->blid . "\">" . htmlspecialchars($name2) . "</a>";
-			} else {
-				var_dump($authors);
-				$count = sizeof($authors);
-				foreach($authors as $num=>$author) {
-					//$uo = new UserHandler();
-					//$uo->initFromId($auth->id);
-					$uo = UserManager::getFromBLID($author->blid);
-
-					if($count-$num == 1) {
-						echo "and <a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>";
-					} else {
-						echo "<a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>, ";
-					}
-				}
-			}
-			?>
-      <br />
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/tag.png" />
 			<?php
 			echo htmlspecialchars($boardObject->getName());
