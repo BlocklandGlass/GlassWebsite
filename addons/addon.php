@@ -111,10 +111,11 @@ $(document).ready(function() {
 		}
 
 		echo "<h2>" . htmlspecialchars($addonObject->getName()) . "</h2>";
+		echo "Uploaded by " . htmlspecialchars($addonObject->getAuthorInfo());
 	?>
 	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 		<div class="addoninfoleft">
-			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/user.png" /> Uploaded by <?php
+			<?php
 			$authors = $addonObject->getAuthorInfo();
 
 			if(sizeof($authors) == 1) {
