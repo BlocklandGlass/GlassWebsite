@@ -40,14 +40,16 @@ tbody tr:nth-child(2n) {
 }
 </style>
 <div class="maincontainer">
-  <h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Glass Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/3/2016)</span></h2>
-  <p>If you would like to suggest amendments to the following information, contact a Glass Administrator.</p>
+	<h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Glass Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/3/2016)</span></h2>
+	<p>If you would like to suggest amendments to the following information, contact a Glass Administrator.</p>
+	<h3><image style="height: 1.4em" src="/img/icons32/creative_commons.png" /> On the Subject of Ownership</h3>
+	<p>Ensure that the user uploading the add-on is the original author of it.</p>
 	<h3><image style="height: 1.4em" src="/img/icons32/gear_in.png" /> On the Subject of Client Add-Ons</h3>
-  <p>These add-ons are to be inspected very carefully. Ensure that...</p>
+	<p>These add-ons are to be inspected very carefully. Ensure that...</p>
 	<ul>
 		<li>They only interact with the server(s) they're intended for.</li>
-    <li>They add no additional functionality outside of their intended operation.</li>
-    <li>They clean up after themselves.</li>
+        <li>They add no additional functionality outside of their intended operation.</li>
+        <li>They clean up after themselves.</li>
 	</ul>
 	<h3><image style="height: 1.4em" src="/img/icons32/roadworks.png" /> On the Subject of Quality</h3>
 	<p>Glass is not as stringent as RTB used to be, but do ensure that the add-on is not complete garbage (i.e. has a practical use) and that a reasonable amount of effort has been put into it. Bad examples...</p>
@@ -58,7 +60,7 @@ tbody tr:nth-child(2n) {
 	</ul>
 	<h3><image style="height: 1.4em" src="/img/icons32/caution_biohazard.png" /> On the Subject of Malicious Add-Ons</h3>
 	<p><b>Above all else, ensure the add-on is not malicious, that it can not be easily exploited by a regular user and has no backdoors - <i style="color: red">this is your top priority</i>.</b></p>
-  <hr />
+	<hr />
 	<table style="width: 100%">
     <thead>
       <tr><th>Add-On</th><th>Uploader</th><th>Uploaded</th></tr>

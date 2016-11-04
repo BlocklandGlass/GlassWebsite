@@ -39,7 +39,7 @@
 				echo("<td style=\"width: 150px;\">");
 				echo("<a href=\"/user/view.php?blid=" . $user->getBLID() . "\">" . htmlspecialchars($user->getUsername()) . "</a>");
 				echo("<br /><span style=\"font-size: .8em;\">" . $user->getBLID());
-				echo("<br /><br />" . date("M jS Y, g:i a", strtotime($comment->getTimeStamp())) . "<br />");
+				echo("<br />" . date("M jS Y, g:i a", strtotime($comment->getTimeStamp())) . "<br />");
 
 				if($user->inGroup("Administrator")) { //add check if user is author of add-on
 					echo("<span style=\"color: red\">Glass Administrator</span>");
