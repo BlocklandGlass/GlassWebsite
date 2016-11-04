@@ -11,7 +11,37 @@
     return;
   }
 ?>
+<style>
+thead {
+  background-color: #ccc;
+  margin-bottom: 10px;
+}
+
+table th {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+table td {
+  padding: 5px;
+}
+
+table th:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+table th:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+tbody tr:nth-child(2n) {
+  background-color: #eee;
+}
+</style>
 <div class="maincontainer">
+  <h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Glass Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/3/2016)</span></h2>
+  <p>To be written.</p>
+  <hr />
   <table style="width: 100%">
     <thead>
       <tr><th>Add-On</th><th>Submitted</th><th>Version</th></tr>
