@@ -41,8 +41,8 @@
 		echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . htmlspecialchars($boardObject->getName()) . "</a> >> ";
 		echo "<a href=\"#\">" . htmlspecialchars($addonObject->getName()) . "</a></span>";
 
-		echo "<h2 style=\"margin-bottom: 10px;\">Moderating: <i>" . htmlspecialchars($addonObject->getName()) . "</i></h2>";
-		echo "Uploaded by " . htmlspecialchars($addonObject->getAuthorInfo()) . "<br />";
+		echo "<h2 style=\"margin-bottom: 0px;\">Moderating: <i>" . htmlspecialchars($addonObject->getName()) . "</i></h2>";
+		echo "<span style=\"margin-bottom: 5px;\">Uploaded by " . htmlspecialchars($addonObject->getAuthorInfo()) . "</span>";
 	?>
 	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 		<div class="addoninfoleft">

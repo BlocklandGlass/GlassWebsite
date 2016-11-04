@@ -110,8 +110,8 @@ $(document).ready(function() {
 			}
 		}
 
-		echo "<h2 style=\"margin-bottom: 10px;\">" . htmlspecialchars($addonObject->getName()) . "</h2>";
-		echo "Uploaded by " . htmlspecialchars($addonObject->getAuthorInfo()) . "<br />";
+		echo "<h2 style=\"margin-bottom: 0px;\">" . htmlspecialchars($addonObject->getName()) . "</h2>";
+		echo "<span style=\"margin-bottom: 5px;\">Uploaded by " . htmlspecialchars($addonObject->getAuthorInfo()) . "</span>";
 	?>
 	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 		<div class="addoninfoleft">

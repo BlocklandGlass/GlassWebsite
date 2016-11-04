@@ -25,7 +25,7 @@
 		?>
 		<tr style="background-color:#<?php echo $col;?>; border-radius: 15px; padding: 5px; margin:5px; display:block;<?php echo $med ? "box-shadow: 1px 2px 3px #888888;" : "" ?> ">
 			<td style="padding: 10px; width: 20px;font-family: Impact, HelveticaNeue-CondensedBold, Helvetica Neue; font-size:1.5em"><?php echo $index+1; ?></td>
-			<td style="line-height: 1em;"><a href="/addons/addon.php?id=<?php echo $addon->id?>"><?php echo htmlspecialchars($addon->getName()) ?></a> in
+			<td style="line-height: 1em;"><a href="/addons/addon.php?id=<?php echo $addon->id ?>"><?php echo htmlspecialchars($addon->getName()) ?></a> in
 				<a href="/addons/board.php?id=<?php echo $addon->getBoard() ?>"><?php echo Category ?></a><br />
 				<span style="font-weight: bold; font-size: .6em"><?php echo date("M jS Y, g:i a", strtotime($addon->uploadDate)) ?></span></td>
 		</tr>
