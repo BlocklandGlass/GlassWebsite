@@ -59,7 +59,7 @@ tbody tr:nth-child(2n) {
 		<li>Duplicates of other add-ons.</li>
 	</ul>
 	<h3><image style="height: 1.4em" src="/img/icons32/caution_biohazard.png" /> On the Subject of Malicious Add-Ons</h3>
-	<p><b>Above all else, ensure the add-on is not malicious, that it can not be easily exploited by a regular user and has no backdoors - <i style="color: red">this is your top priority</i>.</b></p>
+	<p><b>Above all else, ensure the add-on is not malicious, that it can not be easily exploited by a regular user and has no backdoors - <span style="color: red">this is your top priority</span>.</b></p>
 	<hr />
 	<table style="width: 100%">
     <thead>
