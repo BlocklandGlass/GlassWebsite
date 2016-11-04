@@ -40,11 +40,13 @@
 		echo "<a href=\"/addons/boards.php\">Boards</a> >> ";
 		echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . htmlspecialchars($boardObject->getName()) . "</a> >> ";
 		echo "<a href=\"#\">" . htmlspecialchars($addonObject->getName()) . "</a></span>";
-		echo "<h2>Moderating: <i>" . htmlspecialchars($addonObject->getName()) . "</i></h2>";
+
+		echo "<h2 style=\"margin-bottom: 10px;\">Moderating: <i>" . htmlspecialchars($addonObject->getName()) . "</i></h2>";
+		echo "Uploaded by " . htmlspecialchars($addonObject->getAuthorInfo()) . "<br />";
 	?>
 	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 		<div class="addoninfoleft">
-			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/user.png" /> Uploaded by <?php
+			<?php
 			$authors = $addonObject->getAuthorInfo();
 
 			if(sizeof($authors) == 1) {
