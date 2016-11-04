@@ -150,10 +150,8 @@ $(document).ready(function() {
         }
       }
     }
-
-    echo "<br />";
 	?>
-	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
+	<div style="margin-top: 15px; margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 		<div class="addoninfoleft">
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/tag.png" />
 			<?php
