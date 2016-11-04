@@ -114,7 +114,7 @@ $(document).ready(function() {
 
     $authors = $addonObject->getAuthorInfo();
 
-		echo "Uploaded by "
+		echo "Uploaded by ";
 
     if(sizeof($authors) == 1) {
       //$uo = new UserHandler();
@@ -151,7 +151,7 @@ $(document).ready(function() {
       }
     }
 
-    echo "<br />"
+    echo "<br />";
 	?>
 	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 		<div class="addoninfoleft">
