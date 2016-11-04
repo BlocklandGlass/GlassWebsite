@@ -142,7 +142,7 @@
 		} ?>
 		</td>
 		<td>
-			<p>N/A</p>
+			N/A
 			<!--
 			<image src="/img/icons16/draw_star.png" />
 			<image src="/img/icons16/draw_star.png" />
