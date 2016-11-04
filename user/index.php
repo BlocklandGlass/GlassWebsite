@@ -38,7 +38,7 @@
 								$noteObject = NotificationManager::getFromId($noteId);
 								echo '<div style="background-color: #eee; border-radius: 15px; padding: 15px; margin: 5px;">';
 								echo $noteObject->toHTML();
-								echo '<br /><span style="font-size: 0.8em;">' . echo date("M jS Y, g:i a", strtotime($noteObject->getDate())); . '</span>';
+								echo '<br /><span style="font-size: 0.8em;">' . date("M jS Y, g:i a", strtotime($noteObject->getDate())) . '</span>';
 								echo '</div>';
 							}
 						}
