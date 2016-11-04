@@ -40,7 +40,7 @@ tbody tr:nth-child(2n) {
 </style>
 <div class="maincontainer">
 	<h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Glass Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/4/2016)</span></h2>
-	<p>If you would like to suggest amendments to the following information, contact a Glass Administrator.</p>
+	<p><i>If you would like to suggest amendments to the following information, contact a Glass Administrator.</i></p>
 	<h3><image style="height: 1.4em" src="/img/icons32/brick_error.png" /> On the Subject of Brick Packs</h3>
 	<p><b>If the add-on being updated was previously imported from RTB</b>, ensure the update does not change UI names as this will break old save files.</p>
 	<h3><image style="height: 1.4em" src="/img/icons32/caution_biohazard.png" /> On the Subject of Malicious Updates</h3>

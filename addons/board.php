@@ -142,11 +142,14 @@
 		} ?>
 		</td>
 		<td>
+			<p>N/A</p>
+			<!--
 			<image src="/img/icons16/draw_star.png" />
 			<image src="/img/icons16/draw_star.png" />
 			<image src="/img/icons16/draw_star.png" />
 			<image src="/img/icons16/draw_star.png" />
 			<image src="/img/icons16/draw_star.png" />
+			-->
 		</td>
 		<td><?php echo ($addon->getDownloads("web") + $addon->getDownloads("ingame")); ?></td>
 		</tr><?php

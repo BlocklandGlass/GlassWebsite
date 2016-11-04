@@ -41,7 +41,7 @@ tbody tr:nth-child(2n) {
 </style>
 <div class="maincontainer">
 	<h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Glass Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/3/2016)</span></h2>
-	<p>If you would like to suggest amendments to the following information, contact a Glass Administrator.</p>
+	<p><i>If you would like to suggest amendments to the following information, contact a Glass Administrator.</i></p>
 	<h3><image style="height: 1.4em" src="/img/icons32/creative_commons.png" /> On the Subject of Ownership</h3>
 	<p>Ensure that the user uploading the add-on is the original author of it.</p>
 	<h3><image style="height: 1.4em" src="/img/icons32/gear_in.png" /> On the Subject of Client Add-Ons</h3>
