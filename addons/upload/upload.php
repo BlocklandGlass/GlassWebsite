@@ -22,26 +22,26 @@
 			<tbody>
 				<tr>
 					<td class="center" colspan="2" id="uploadStatus">
-						<?php echo(htmlspecialchars($status["message"])); ?>
+						<h2><?php echo(htmlspecialchars($status["message"])); ?></h2>
 					</td>
 				</tr>
 				<tr>
-					<td><b>Name</b><br /><span style="font-size: 0.7em;">This should be different than your add-on name!</span></td>
+					<td><b>Name</b><br /><span style="font-size: 0.7em;">This should be different than your add-on's filename!</span></td>
 					<td><input type="text" name="addonname" id="addonname"/></td>
 				</tr>
 				<tr>
-					<td style="vertical-align:top"><b>Description</b><br /><span style="font-size: 0.7em;">Summarize how your add-on works!</span></td>
+					<td style="vertical-align:top"><b>Description</b><br /><span style="font-size: 0.7em;">Summarize how your add-on works.</span></td>
 					<td><textarea style="font-size:0.8em;width:400px;height:200px" name="description" /></textarea></td>
 				</tr>
 				<tr>
-					<td><b>Filename</b></td>
+					<td style="vertical-align:top"><b>Filename</b><br /><span style="font-size: 0.7em;">Ensure add-on follows BL .zip name convention e.g. <i>Weapon_Gun</i></span></td>
 					<td><input type="text" name="filename" /></td>
 				</tr>
 				<tr>
 					<td>
 						<p><b>File</b></p>
-						<!--<span style="font-size: 0.7em;">You can find your saves in your Blockland folder!</span>-->
-						<!--<p class="description">You can find your saves in your Blockland folder!</p>-->
+						<!--<span style="font-size: 0.7em;">You can find your saves in your Blockland folder!</span>
+						<p class="description">You can find your saves in your Blockland folder!</p>-->
 					</td>
 					<td style="vertical-align: middle">
 						<input type="file" name="uploadfile" id="uploadfile">

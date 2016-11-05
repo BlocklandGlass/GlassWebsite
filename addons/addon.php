@@ -244,7 +244,7 @@ $(document).ready(function() {
 		$deps = DependencyManager::getDependenciesFromAddonID($_GET['id']);
 		if(sizeof($deps) > 0) {
 			echo "<hr /><div style=\"text-align:center\">";
-			echo "<b>This add-on has some dependencies or add-ons that it requires to run...</b><br/><br/>";
+			echo "<b>This add-on has some dependencies or add-ons that it requires to run:</b><br/><br/>";
 			foreach($deps as $did) {
 				$dep = DependencyManager::getFromId($did);
 				$rid = $dep->getRequired();

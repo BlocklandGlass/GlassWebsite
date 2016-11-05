@@ -19,7 +19,7 @@
 
 	if(!isset($_POST['submit'])) {
 		$response = [
-			"message" => "Upload an addon"
+			"message" => "Upload an Add-On"
 		];
 		return $response;
 	}
@@ -76,41 +76,45 @@
 		$uploadDescription = $_POST['description'];
 	}
 
-	if(isset($_GET['t']) && $_GET['t'] != "") {
-		$filename = $user->getBlid() . "_" . $uploadFileName;
-		$tempLocation = dirname(dirname(__DIR__)) . "/addons/upload/files/" . $filename;
-		if(!is_dir(dirname(dirname(__DIR__)) . "/addons/upload/files/")) {
-			mkdir(dirname(dirname(__DIR__)) . "/addons/upload/files/");
-		}
+	//if(isset($_GET['t']) && $_GET['t'] != "") {
+  $filename = $user->getBlid() . "_" . $uploadFileName;
+  $tempLocation = dirname(dirname(__DIR__)) . "/addons/upload/files/" . $filename;
+  if(!is_dir(dirname(dirname(__DIR__)) . "/addons/upload/files/")) {
+    mkdir(dirname(dirname(__DIR__)) . "/addons/upload/files/");
+  }
 
-		//to do: aws stuff instead of this
-		move_uploaded_file($tempPath, $tempLocation);
-		chmod($tempLocation, 0777);
+  //to do: aws stuff instead of this
+  move_uploaded_file($tempPath, $tempLocation);
+  chmod($tempLocation, 0777);
 
-		$type = $_GET['t'];
+  /*
+  $type = $_GET['t'];
 
-		//these should probably return an array with something like
-		//	'ok' => true/false
-		//	'message' => descriptive message
-		if($type == "addon" || $type == "client") {
-			$valid = AddonFileHandler::validateAddon($tempLocation);
-		} else if($type == "other") {
-			$valid = AddonFileHandler::validateAddon($tempLocation) || AddonFileHandler::validateColorset($tempLocation);
-		} else {
-			$valid = false;
-		}
+  //these should probably return an array with something like
+  //	'ok' => true/false
+  //	'message' => descriptive message
+  if($type == "addon" || $type == "client") {
+    $valid = AddonFileHandler::validateAddon($tempLocation);
+  } else if($type == "other") {
+    $valid = AddonFileHandler::validateAddon($tempLocation) || AddonFileHandler::validateColorset($tempLocation);
+  } else {
+    $valid = false;
+  }
+  */
 
-		if(!$valid) {
-			$response = [
-				"message" => "Your add-on is missing required files"
-			];
-			return $response;
-		} else {
-			//repeated but slightly different path from above?
-			$tempLocation = realpath(dirname(__DIR__) . "/../addons/upload/files/" . $filename);
-			$response = AddonManager::uploadNewAddon($user, $uploadAddonName, $type, $tempLocation, $uploadFileName, $uploadDescription, $type);
-			return $response;
-		}
-	}
+  $valid = AddonFileHandler::validateAddon($tempLocation) || AddonFileHandler::validateColorset($tempLocation) || AddonFileHandler::validatePrint($tempLocation);
+
+  if(!$valid) {
+    $response = [
+      "message" => "Your add-on is missing required files"
+    ];
+    return $response;
+  } else {
+    //repeated but slightly different path from above?
+    $tempLocation = realpath(dirname(__DIR__) . "/../addons/upload/files/" . $filename);
+    $response = AddonManager::uploadNewAddon($user, $uploadAddonName, $type, $tempLocation, $uploadFileName, $uploadDescription, $type);
+    return $response;
+  }
+	//}
 	return $response;
 ?>

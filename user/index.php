@@ -49,7 +49,7 @@
 					<p>
 						<h3>My Content</h3>
 						<div class="useraddon" style="text-align:center; background-color: #ccffcc">
-							<img style="width: 1.2em;" src="http://blocklandglass.com/img/icons32/inbox_upload.png" alt="New"/> <a href="/addons/upload.php">Upload New Add-On</a>
+							<img style="width: 1.2em;" src="http://blocklandglass.com/img/icons32/inbox_upload.png" alt="New"/> <a href="/addons/upload/upload.php">Upload New Add-On</a>
 						</div>
             <!--
 						<?php

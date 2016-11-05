@@ -45,14 +45,14 @@ tbody tr:nth-child(2n) {
 	<h3><image style="height: 1.4em" src="/img/icons32/creative_commons.png" /> On the Subject of Ownership</h3>
 	<p>Ensure that the user uploading the add-on is the original author of it.</p>
 	<h3><image style="height: 1.4em" src="/img/icons32/gear_in.png" /> On the Subject of Client Add-Ons</h3>
-	<p>These add-ons are to be inspected very carefully. Ensure that...</p>
+	<p>These add-ons are to be inspected very carefully. Ensure that:</p>
 	<ul>
 		<li>They only interact with the server(s) they're intended for.</li>
-        <li>They add no additional functionality outside of their intended operation.</li>
-        <li>They clean up after themselves.</li>
+		<li>They add no additional functionality outside of their intended operation.</li>
+		<li>They clean up after themselves.</li>
 	</ul>
 	<h3><image style="height: 1.4em" src="/img/icons32/roadworks.png" /> On the Subject of Quality</h3>
-	<p>Glass is not as stringent as RTB used to be, but do ensure that the add-on is not complete garbage (i.e. has a practical use) and that a reasonable amount of effort has been put into it. Bad examples...</p>
+	<p>Glass is not as stringent as RTB used to be, but do ensure that the add-on is not complete garbage (i.e. has a practical use) and that a reasonable amount of effort has been put into it. Bad examples:</p>
 	<ul>
 		<li>Variants of the Shoe RP gamemode.</li>
 		<li>Clearly unfinished add-ons.</li>

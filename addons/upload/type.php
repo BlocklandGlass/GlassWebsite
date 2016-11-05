@@ -34,8 +34,8 @@ include(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php"));
 }
 </style>
 <div class="maincontainer">
-  <h3>Select an Add-on type</h3>
-  There's a few types of content that we accept here.
+  <h2>Select an Add-On Type</h3>
+  There's a few types of content that we accept here:
   <ul>
     <li><b>Add-Ons</b> are anything that starts with a server.cs or client.cs file.</li>
     <li><b>Clients</b> are typically server-specific and are mainly delivered in-game. These add-ons add GUIs or specific client effects that correspond to a modded server</li>
