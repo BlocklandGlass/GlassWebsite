@@ -180,7 +180,7 @@ $(document).ready(function() {
 		</div>
 		<div class="addoninforight">
 			<?php
-			echo $addonObject->getDownloads(0);
+			echo ($addonObject->getDownloads("web") + $addonObject->getDownloads("ingame"));
 			?>
 			 <image style="height:1.5em" src="http://blocklandglass.com/img/icons32/inbox_download.png" /><br />
 			<br />
