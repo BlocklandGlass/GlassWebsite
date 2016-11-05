@@ -35,22 +35,22 @@ foreach($recent as $ao) {
   if($ao->getBoard() == 10) // bargain bin
     continue;
 
-  $category[1] = "Client Mods";
-  $category[2] = "Server Mods";
-  $category[3] = "Bricks";
-  $category[4] = "Cosmetics";
-  $category[5] = "Gamemodes";
-  $category[6] = "Tools";
-  $category[7] = "Weapons";
-  $category[8] = "Colorsets";
-  $category[9] = "Vehicles";
-  $category[10] = "Bargain Bin";
-  $category[11] = "Sounds";
+  $board[1] = "Client Mods";
+  $board[2] = "Server Mods";
+  $board[3] = "Bricks";
+  $board[4] = "Cosmetics";
+  $board[5] = "Gamemodes";
+  $board[6] = "Tools";
+  $board[7] = "Weapons";
+  $board[8] = "Colorsets";
+  $board[9] = "Vehicles";
+  $board[10] = "Bargain Bin";
+  $board[11] = "Sounds";
 
   $o = new stdClass();
   $o->id = $ao->getId();
   $o->name = $ao->getName();
-  $o->category = $category[$ao->getBoard()];
+  $o->board = $board[$ao->getBoard()];
   $un = utf8_encode(UserLog::getCurrentUsername($ao->getManagerBLID()));
   if($un === false) {
     $un = UserManager::getFromBLID($ao->getManagerBLID())->getUsername();

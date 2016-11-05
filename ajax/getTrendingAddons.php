@@ -29,19 +29,19 @@
 				<a href="/addons/board.php?id=<?php echo $addon->getBoard() ?>">
         <?php
         // work around because boardmanager::getfromid decides to hang if you're not logged into the site
-        $category[1] = "Client Mods";
-        $category[2] = "Server Mods";
-        $category[3] = "Bricks";
-        $category[4] = "Cosmetics";
-        $category[5] = "Gamemodes";
-        $category[6] = "Tools";
-        $category[7] = "Weapons";
-        $category[8] = "Colorsets";
-        $category[9] = "Vehicles";
-        $category[10] = "Bargain Bin";
-        $category[11] = "Sounds";
+        $board[1] = "Client Mods";
+        $board[2] = "Server Mods";
+        $board[3] = "Bricks";
+        $board[4] = "Cosmetics";
+        $board[5] = "Gamemodes";
+        $board[6] = "Tools";
+        $board[7] = "Weapons";
+        $board[8] = "Colorsets";
+        $board[9] = "Vehicles";
+        $board[10] = "Bargain Bin";
+        $board[11] = "Sounds";
 
-        echo $category[$addon->board];
+        echo $board[$addon->board];
         ?></a><br />
 				<span style="font-weight: bold; font-size: .6em"><?php echo date("M jS Y, g:i A", strtotime($addon->uploadDate)) ?></span></td>
 		</tr>

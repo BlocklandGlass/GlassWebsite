@@ -166,7 +166,7 @@ $(document).ready(function() {
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/email_authentication.png" />
 			This add-on was inspected by a Glass Reviewer
 			<br />
-			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/inbox_upload.png" />
+			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/time.png" />
 			<?php echo date("M jS Y, g:i A", strtotime($addonObject->getUploadDate())); ?>
 			<br />
 			<br />
