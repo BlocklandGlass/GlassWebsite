@@ -32,6 +32,8 @@ $dlg->type = "recent";
 
 $ar = array();
 foreach($recent as $r) {
+  $ao = $r->getAddon();
+
   if($ao->getBoard() == 10) // bargain bin
     continue;
 
@@ -46,8 +48,6 @@ foreach($recent as $r) {
   $category[9] = "Vehicles";
   $category[10] = "Bargain Bin";
   $category[11] = "Sounds";
-
-  $ao = $r->getAddon();
 
   $o = new stdClass();
   $o->id = $r->getId();
