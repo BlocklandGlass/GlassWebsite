@@ -112,7 +112,7 @@
 			//$uo = new UserHandler();
 			//$uo->initFromId($authors[0]->id);
 			$uo = UserManager::getFromBLID($authors[0]->blid);
-			echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . htmlspecialchars($uo->getName()) . "</a>";
+			echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . utf8_encode($uo->getName()) . "</a>";
 		} else if(sizeof($authors) == 2) {
 			//$uo = new UserHandler();
 			//$uo->initFromId($authors[0]->id);

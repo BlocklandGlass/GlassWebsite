@@ -55,12 +55,12 @@ form {
 				<td>Users</td>
 			</tr>
 			<?php foreach($servers as $s) {
-		    echo "<tr><td style=\"vertical-align: top\"><b>" . htmlspecialchars($s->host) . "</b></td><td style=\"vertical-align: top\">" . $s->ip . ":" . $s->port . "</td>";
+		    echo "<tr><td style=\"vertical-align: top\"><b>" . utf8_encode($s->host) . "</b></td><td style=\"vertical-align: top\">" . $s->ip . ":" . $s->port . "</td>";
 				$clients = json_decode($s->clients);
 				$str = "";
 				if((sizeof($clients) - 1) > 0) {
 					foreach($clients as $cl) {
-						$name = htmlspecialchars($cl->name);
+						$name = utf8_encode($cl->name);
 						$str = $str . $name . " <i>(" . $cl->blid . ")</i><br/>";
 					}
 					echo "<td>$str</td></tr>";
