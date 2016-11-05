@@ -19,7 +19,7 @@
 
 	if(!isset($_POST['submit'])) {
 		$response = [
-			"message" => "Upload an Add-On"
+			"message" => "Upload New Add-On"
 		];
 		return $response;
 	}

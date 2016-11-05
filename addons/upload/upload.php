@@ -26,11 +26,11 @@
 					</td>
 				</tr>
 				<tr>
-					<td><b>Name</b><br /><span style="font-size: 0.7em;">This should be different than your add-on's filename!</span></td>
+					<td><b>Name</b><br /><span style="font-size: 0.7em;">This should be different than your add-on's filename</span></td>
 					<td><input type="text" name="addonname" id="addonname"/></td>
 				</tr>
 				<tr>
-					<td style="vertical-align:top"><b>Description</b><br /><span style="font-size: 0.7em;">Summarize how your add-on works.</span></td>
+					<td style="vertical-align:top"><b>Description</b><br /><span style="font-size: 0.7em;">Summarize how your add-on works</span></td>
 					<td><textarea style="font-size:0.8em;width:400px;height:200px" name="description" /></textarea></td>
 				</tr>
 				<tr>
