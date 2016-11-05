@@ -14,6 +14,12 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
     $ret->ident = $con->getIdentifier();
     $ret->blid = $con->getBLID();
 
+		if($ret->blid == 118256 || $ret->blid == 43364 || $ret->blid == 21186) {
+			$ret->status = "barred";
+			$json = json_encode($ret, JSON_PRETTY_PRINT);
+			die($json);
+		}
+
 		$ret->username = iconv("ISO-8859-1", "UTF-8", UserLog::getCurrentUsername($ret->blid));
 		error_log("Username is " . $ret->username);
 
