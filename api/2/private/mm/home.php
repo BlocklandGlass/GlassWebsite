@@ -32,10 +32,10 @@ $dlg->type = "recent";
 
 $ar = array();
 foreach($recent as $r) {
-  $ao = $r->getAddon();
+  // $ao = $r->getAddon();
 
-  if($ao->getBoard() == 10) // bargain bin
-    continue;
+  // if($ao->getBoard() == 10) // bargain bin
+    // continue;
 
   // $category[1] = "Client Mods";
   // $category[2] = "Server Mods";
