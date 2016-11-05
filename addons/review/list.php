@@ -78,7 +78,7 @@ tbody tr:nth-child(2n) {
         echo "<tr>";
         echo "<td><a href=\"inspect.php?id=" . $addon->getId() . "\">" . $addon->getName() . "</a></td>";
         echo "<td>" . $name . "</td>";
-        echo "<td>" . date("M jS Y, g:i a", strtotime($addon->getUploadDate())) . "</td>";
+        echo "<td>" . date("M jS Y, g:i A", strtotime($addon->getUploadDate())) . "</td>";
         echo "</tr>";
       }
 

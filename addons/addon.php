@@ -167,7 +167,7 @@ $(document).ready(function() {
 			This add-on was inspected by a Glass Reviewer
 			<br />
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/inbox_upload.png" />
-			<?php echo date("M jS Y, g:i a", strtotime($addonObject->getUploadDate())); ?>
+			<?php echo date("M jS Y, g:i A", strtotime($addonObject->getUploadDate())); ?>
 			<br />
 			<br />
 			<div id="stars" style="cursor:pointer;">

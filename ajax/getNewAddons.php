@@ -32,7 +32,7 @@
 
         echo $category[$addon->board];
         ?></a><br />
-				<span style="font-weight: bold; font-size: .6em"><?php echo date("M jS Y, g:i a", strtotime($addon->uploadDate)) ?></span></td>
+				<span style="font-weight: bold; font-size: .6em"><?php echo date("M jS Y, g:i A", strtotime($addon->uploadDate)) ?></span></td>
 		</tr>
 		<?php
 	}

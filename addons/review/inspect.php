@@ -30,7 +30,7 @@
 	}
 	</style>
   <h2><?php echo $addon->getName(); ?></h2>
-  <p>Uploaded <?php echo date("M jS Y, g:i a", strtotime($addon->getUploadDate())); ?> by <?php echo '<a href="/user/view.php?blid=' . $manager->getBlid() . '"?>' . $manager->getName() . '</a>'; ?></p>
+  <p>Uploaded <?php echo date("M jS Y, g:i A", strtotime($addon->getUploadDate())); ?> by <?php echo '<a href="/user/view.php?blid=' . $manager->getBlid() . '"?>' . $manager->getName() . '</a>'; ?></p>
   <hr />
   <table>
     <tbody>
