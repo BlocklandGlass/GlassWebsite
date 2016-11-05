@@ -32,9 +32,27 @@ $dlg->type = "recent";
 
 $ar = array();
 foreach($recent as $r) {
+  if($ao->getBoard() == 10) // bargain bin
+    continue;
+
+  $category[1] = "Client Mods";
+  $category[2] = "Server Mods";
+  $category[3] = "Bricks";
+  $category[4] = "Cosmetics";
+  $category[5] = "Gamemodes";
+  $category[6] = "Tools";
+  $category[7] = "Weapons";
+  $category[8] = "Colorsets";
+  $category[9] = "Vehicles";
+  $category[10] = "Bargain Bin";
+  $category[11] = "Sounds";
+
+  $ao = $r->getAddon();
+
   $o = new stdClass();
   $o->id = $r->getId();
   $o->name = $r->getName();
+  $o->category = $category[$ao->getBoard()];
   $un = utf8_encode(UserLog::getCurrentUsername($r->getManagerBLID()));
   if($un === false) {
     $un = UserManager::getFromBLID($r->getManagerBLID())->getUsername();
@@ -54,23 +72,10 @@ foreach($recentUpdates as $r) {
   if($ao->getBoard() == 10) // bargain bin
     continue;
 
-  $category[1] = "Client Mods";
-  $category[2] = "Server Mods";
-  $category[3] = "Bricks";
-  $category[4] = "Cosmetics";
-  $category[5] = "Gamemodes";
-  $category[6] = "Tools";
-  $category[7] = "Weapons";
-  $category[8] = "Colorsets";
-  $category[9] = "Vehicles";
-  $category[10] = "Bargain Bin";
-  $category[11] = "Sounds";
-
   $o = new stdClass();
   $o->id = $ao->getId();
   $o->name = $ao->getName();
   $o->version = $r->getVersion();
-  $o->category = $category[$ao->getBoard()];
 
   $ar[] = $o;
 }
