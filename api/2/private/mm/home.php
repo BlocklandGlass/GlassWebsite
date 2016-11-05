@@ -51,10 +51,27 @@ foreach($recentUpdates as $r) {
   if(!$ao->getApproved())
     continue;
 
+  if($ao->getBoard() == 10) // bargain bin
+    continue;
+
+  $category[1] = "Client Mods";
+  $category[2] = "Server Mods";
+  $category[3] = "Bricks";
+  $category[4] = "Cosmetics";
+  $category[5] = "Gamemodes";
+  $category[6] = "Tools";
+  $category[7] = "Weapons";
+  $category[8] = "Colorsets";
+  $category[9] = "Vehicles";
+  $category[10] = "Bargain Bin";
+  $category[11] = "Sounds";
+
   $o = new stdClass();
   $o->id = $ao->getId();
   $o->name = $ao->getName();
   $o->version = $r->getVersion();
+  $o->category = $category[$ao->getBoard()];
+
   $ar[] = $o;
 }
 $dlg->updates = $ar;
