@@ -55,7 +55,7 @@ form {
 				<td>Users</td>
 			</tr>
 			<?php foreach($servers as $s) {
-		    echo "<tr><td style=\"vertical-align: top\"><b>" . $s->host . "</b></td><td style=\"vertical-align: top\">" . $s->ip . ":" . $s->port . "</td>";
+		    echo "<tr><td style=\"vertical-align: top\"><b>" . htmlspecialchars($s->host) . "</b></td><td style=\"vertical-align: top\">" . $s->ip . ":" . $s->port . "</td>";
 				$clients = json_decode($s->clients);
 				$str = "";
 				if((sizeof($clients) - 1) > 0) {

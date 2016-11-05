@@ -47,7 +47,7 @@
 				<?php
 				foreach($history as $namedata) {
 					echo "<tr>";
-					echo "<td>" . $namedata->username . "</td>";
+					echo "<td>" . htmlspecialchars($namedata->username) . "</td>";
 					echo "<td>" . $namedata->lastseen . "</td>";
 					echo "<td>" . $namedata->firstseen . "</td>";
 					echo "</tr>";
