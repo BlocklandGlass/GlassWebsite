@@ -17,7 +17,7 @@
 			<tbody>
 				<tr>
 					<td class="center" colspan="2" id="uploadStatus">
-						<?php echo("<h2>" . htmlspecialchars($status['message']) . "</h2>"); ?>
+						<?php echo("<h2>" . utf8_encode($status['message']) . "</h2>"); ?>
 					</td>
 				</tr>
 				<tr>

@@ -13,7 +13,7 @@
 ?>
 <div class="maincontainer">
 	<div class="center" id="loginStatus">
-		<?php echo("<p>" . htmlspecialchars($loginStatus['message']) . "</p>"); ?>
+		<?php echo("<p>" . utf8_encode($loginStatus['message']) . "</p>"); ?>
 	</div>
 	<form action="login.php" method="post" id="mainLoginForm">
 		<table class="formtable">

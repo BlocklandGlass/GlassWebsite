@@ -19,7 +19,7 @@
 				$user = UserManager::getFromBLID($_POST['blid']);
 				$extendedQuery = $extendedQuery . " AND `author` = '" . $db->sanitize($_POST['blid']) . "'";
 			} catch(Exception $e) {
-				echo("<p>User " . htmlspecialchars($_POST['blid']) . " not found.</p>");
+				echo("<p>User " . utf8_encode($_POST['blid']) . " not found.</p>");
 			}
 		}
 
@@ -27,16 +27,16 @@
 		$result = $db->query($baseQuery . $extendedQuery);
 
 		echo("<h2>Search Results for ");
-		echo("\"<u>" . htmlspecialchars($_POST['query']) . "</u>\"");
+		echo("\"<u>" .utf8_encode($_POST['query']) . "</u>\"");
 
 		if(isset($user) && $user) {
-			echo(" by <a href=\"/user/view.php?id=" . $user->getID() . "\">" . htmlspecialchars($user->getUsername()) . "</a>");
+			echo(" by <a href=\"/user/view.php?id=" . $user->getID() . "\">" . utf8_encode($user->getUsername()) . "</a>");
 		}
 		echo("</h2><hr />");
 
 		if($result->num_rows) {
 			while($row = $result->fetch_object()) {
-				echo "<p><b><a href=\"addon.php?id=" . $row->id . "\">" . htmlspecialchars($row->name) . "</a></b><br />";
+				echo "<p><b><a href=\"addon.php?id=" . $row->id . "\">" . utf8_encode($row->name) . "</a></b><br />";
 
 				if(strlen($row->description) > 200) {
 					$desc = substr($row->description, 0, 196) . " ...";

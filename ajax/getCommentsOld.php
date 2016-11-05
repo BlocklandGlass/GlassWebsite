@@ -26,13 +26,13 @@
 				$user = UserManager::getFromId($row->uid);
 				echo("<tr style=\"vertical-align:top\">");
 				echo("<td style=\"width: 150px;\">");
-				echo("<a href=\"/user/view.php?id=" . $user->getID() . "\">" . htmlspecialchars($user->getUsername()) . "</a>");
+				echo("<a href=\"/user/view.php?id=" . $user->getID() . "\">" . utf8_encode($user->getUsername()) . "</a>");
 
 				//Not sure where administrator status is stored.  My guess is 'groups' but I can't be certain.
 				//At any rate, we should probably go and rethink the database tables for long term use.
 				echo("<br /><span style=\"font-size: .8em;\">" . $user->getBLID() . "<br />Administrator?</span>");
 				echo("</td><td>");
-				echo(htmlspecialchars($row->comment));
+				echo(utf8_encode($row->comment));
 				echo("</td></tr>");
 			}
 		}

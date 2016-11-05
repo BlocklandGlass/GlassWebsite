@@ -37,7 +37,7 @@
 				$user = $users[$comment->blid];
 				echo("<tr style=\"vertical-align:top\">");
 				echo("<td style=\"width: 150px;\">");
-				echo("<a href=\"/user/view.php?blid=" . $user->getBLID() . "\">" . htmlspecialchars($user->getUsername()) . "</a>");
+				echo("<a href=\"/user/view.php?blid=" . $user->getBLID() . "\">" . utf8_encode($user->getUsername()) . "</a>");
 				echo("<br /><span style=\"font-size: .8em;\">" . $user->getBLID());
 				echo("<br />" . date("M jS Y, g:i A", strtotime($comment->getTimeStamp())) . "<br />");
 
@@ -51,7 +51,7 @@
 					//echo("<b>Banned</b>");
 				}
 				echo("</span></td><td>");
-				echo(htmlspecialchars($comment->getComment()));
+				echo(utf8_encode($comment->getComment()));
 				echo("</td></tr>");
 			}
 		}

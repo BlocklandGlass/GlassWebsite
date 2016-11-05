@@ -37,7 +37,7 @@
 		CommentManager::submitComment($addonObject->getId(), UserManager::getCurrent()->getBLID(), $_POST['comment']);
 	}
 
-	$_PAGETITLE = "Blockland Glass | " . htmlspecialchars($addonObject->getName());
+	$_PAGETITLE = "Blockland Glass | " . utf8_encode($addonObject->getName());
 
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
@@ -101,8 +101,8 @@ $(document).ready(function() {
 	<?php
 		echo "<span style=\"font-size: 9pt;\"><a href=\"/addons/\">Add-Ons</a> >> ";
 		echo "<a href=\"/addons/boards.php\">Boards</a> >> ";
-		echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . htmlspecialchars($boardObject->getName()) . "</a> >> ";
-		echo "<a href=\"#\">" . htmlspecialchars($addonObject->getName()) . "</a></span>";
+		echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . utf8_encode($boardObject->getName()) . "</a> >> ";
+		echo "<a href=\"#\">" . utf8_encode($addonObject->getName()) . "</a></span>";
 
 		if($current = UserManager::getCurrent()) {
 			if($current->inGroup("Moderator")) {
@@ -110,7 +110,7 @@ $(document).ready(function() {
 			}
 		}
 
-		echo "<h2 style=\"margin-bottom: 0px;\">" . htmlspecialchars($addonObject->getName()) . "</h2>";
+		echo "<h2 style=\"margin-bottom: 0px;\">" . utf8_encode($addonObject->getName()) . "</h2>";
 
     $authors = $addonObject->getAuthorInfo();
 
@@ -120,7 +120,7 @@ $(document).ready(function() {
       //$uo = new UserHandler();
       //$uo->initFromId($authors[0]->id);
       $name = UserLog::getCurrentUsername($authors[0]->blid);
-      echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . htmlspecialchars($name) . "</a>";
+      echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . utf8_encode($name) . "</a>";
     } else if(sizeof($authors) == 2) {
       //we cant use UserHandler here because we may not have accounts for all
 
@@ -132,9 +132,9 @@ $(document).ready(function() {
       if($name2 === false) {
         $name2 = "Blockhead" . $authors[1]->blid;
       }
-      echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . htmlspecialchars($name1) . "</a>";
+      echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . utf8_encode($name1) . "</a>";
       echo " and ";
-      echo "<a href=\"/user/view.php?blid=" . $authors[1]->blid . "\">" . htmlspecialchars($name2) . "</a>";
+      echo "<a href=\"/user/view.php?blid=" . $authors[1]->blid . "\">" . utf8_encode($name2) . "</a>";
     } else {
       var_dump($authors);
       $count = sizeof($authors);
@@ -144,9 +144,9 @@ $(document).ready(function() {
         $uo = UserManager::getFromBLID($author->blid);
 
         if($count-$num == 1) {
-          echo "and <a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>";
+          echo "and <a href=\"#\">" . utf8_encode($uo->getName()) . "</a>";
         } else {
-          echo "<a href=\"#\">" . htmlspecialchars($uo->getName()) . "</a>, ";
+          echo "<a href=\"#\">" . utf8_encode($uo->getName()) . "</a>, ";
         }
       }
     }
@@ -155,7 +155,7 @@ $(document).ready(function() {
 		<div class="addoninfoleft">
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/tag.png" />
 			<?php
-			echo htmlspecialchars($boardObject->getName());
+			echo utf8_encode($boardObject->getName());
 			?>
 			<br />
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/folder_vertical_zipper.png" />

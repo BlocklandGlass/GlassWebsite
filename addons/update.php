@@ -25,7 +25,7 @@
 				</tr> -->
 				<tr>
 					<td class="center" colspan="2" id="uploadStatus">
-						<?php echo(htmlspecialchars($status["message"])); ?>
+						<?php echo(utf8_encode($status["message"])); ?>
 					</td>
 				</tr>
 				<tr>

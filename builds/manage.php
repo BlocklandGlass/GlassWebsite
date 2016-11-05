@@ -20,7 +20,7 @@
 			<tbody>
 				<tr>
 					<td class="center" colspan="2" id="statusMessage">
-						<?php echo("<p>" . htmlspecialchars($info['message']) . "</p>"); ?>
+						<?php echo("<p>" . utf8_encode($info['message']) . "</p>"); ?>
 					</td>
 				</tr>
 				<tr>
@@ -28,7 +28,7 @@
 						<p>Title</p>
 					</td>
 					<td>
-						<input type="text" name="buildname" id="buildname" value="<?php echo(htmlspecialchars($info['build']->name)); ?>" style="margin: 0; float: none; width: 80%;">
+						<input type="text" name="buildname" id="buildname" value="<?php echo(utf8_encode($info['build']->name)); ?>" style="margin: 0; float: none; width: 80%;">
 					</td>
 				</tr>
 				<tr>
@@ -36,7 +36,7 @@
 						<p>File Name</p>
 					</td>
 					<td>
-						<p><?php echo(htmlspecialchars($info['build']->filename)); ?></p>
+						<p><?php echo(utf8_encode($info['build']->filename)); ?></p>
 					</td>
 				</tr>
 				<tr>
@@ -45,7 +45,7 @@
 					</td>
 					<td>
 						<textarea name="description" id="description" form="manageForm" rows="5" style="margin: 0; float: none; width: 80%;"><?php
-							echo(htmlspecialchars($info['build']->description));
+							echo(utf8_encode($info['build']->description));
 						?></textarea>
 					</td>
 				</tr>

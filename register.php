@@ -12,7 +12,7 @@
 ?>
 <div class="maincontainer">
 	<div class="center" id="registerStatus" style="display: none;">
-		<?php echo("<p>" . htmlspecialchars($registerStatus['message']) . "</p>"); ?>
+		<?php echo("<p>" . utf8_encode($registerStatus['message']) . "</p>"); ?>
 	</div>
 	<form action="/register.php" method="post" id="mainRegisterForm">
 		<table class="formtable">

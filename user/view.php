@@ -30,7 +30,7 @@
 	} else {
 		$history = UserLog::getHistory($userObject->getBLID());
 
-		echo("<h3>" . htmlspecialchars($userObject->getName()) . "</h3>");
+		echo("<h3>" . utf8_encode($userObject->getName()) . "</h3>");
 		if(sizeof($history) > 0) echo("<p><b>Last Seen:</b> " . $history[0]->lastseen);
 		echo("<br /><b>BL_ID:</b> " . $userObject->getBLID());
 		//echo "</p><hr />";
@@ -47,7 +47,7 @@
 				<?php
 				foreach($history as $namedata) {
 					echo "<tr>";
-					echo "<td>" . htmlspecialchars($namedata->username) . "</td>";
+					echo "<td>" . utf8_encode($namedata->username) . "</td>";
 					echo "<td>" . $namedata->lastseen . "</td>";
 					echo "<td>" . $namedata->firstseen . "</td>";
 					echo "</tr>";

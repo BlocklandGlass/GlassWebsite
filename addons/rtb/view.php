@@ -5,7 +5,7 @@
 
   $addonData = RTBAddonManager::getAddonFromId($_GET['id']);
 
-	$_PAGETITLE = "Blockland Glass | " . htmlspecialchars($addonData->title);
+	$_PAGETITLE = "Blockland Glass | " . utf8_encode($addonData->title);
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
@@ -13,7 +13,7 @@
 <div class="maincontainer">
 	<span style="font-size: 9pt;"><a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archives</a> >> <a href="board.php?name=<?php echo $addonData->type; ?>"><?php echo $addonData->type; ?></a> >> <a href="#"><?php echo htmlspecialchars($addonData->title); ?></a></span>
   <?php
-		echo "<h2>" . htmlspecialchars($addonData->title) . "</h2>";
+		echo "<h2>" . utf8_encode($addonData->title) . "</h2>";
 	?>
 	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 		<div class="addoninfoleft">

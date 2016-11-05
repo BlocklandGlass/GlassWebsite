@@ -5,7 +5,7 @@
 		header("Location: " . $data['redirect']);
 		die();
 	}
-	$_PAGETITLE = "Blockland Glass | " . htmlspecialchars($data['build']->name);
+	$_PAGETITLE = "Blockland Glass | " . utf8_encode($data['build']->name);
 	include(__DIR__ . "/../private/header.php");
 	include(__DIR__ . "/../private/navigationbar.php");
 
@@ -18,8 +18,8 @@
 			echo("<img src=\"" . $data['screenshots']['data'][$primary]->url . "\">");
 		}
 	?>
-	<p><?php echo(htmlspecialchars($data['build']->name)); ?></p>
-	<p><?php echo(htmlspecialchars($data['build']->description)); ?></p>
+	<p><?php echo(utf8_encode($data['build']->name)); ?></p>
+	<p><?php echo(utf8_encode($data['build']->description)); ?></p>
 	<a href="<?php echo($data['build']->url); ?>">Download</a>
 	<p>Downloads: <?php echo($data['downloads']); ?></p>
 

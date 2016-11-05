@@ -92,11 +92,11 @@
 		//}
 		//foreach($subcat as $subName=>$sub) {
 		//	echo "<tr class=\"addonheader\">
-		//		<td colspan=\"3\"><b>" . htmlspecialchars($subName) . "</b></td>
+		//		<td colspan=\"3\"><b>" . utf8_encode($subName) . "</b></td>
 		//	</tr>";
 		//	foreach($sub as $board) {
 		//		echo "<tr><td><image src=\"http://blocklandglass.com/img/icons32/" . $board->getIcon() . ".png\" /></td>";
-		//		echo "<td><a href=\"board.php?id=" . $board->getID() . "\">   " . htmlspecialchars($board->getName()) . "</a></td>";
+		//		echo "<td><a href=\"board.php?id=" . $board->getID() . "\">   " . utf8_encode($board->getName()) . "</a></td>";
 		//		echo "<td>" . $board->getCount() . "</td></tr>";
 		//	}
 		//}
