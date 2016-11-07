@@ -63,8 +63,8 @@ form {
 	<table class="list">
 		<tbody>
 			<tr>
-				<th>Type</th>
-				<th>Downloads</th>
+				<td>Type</td>
+				<td>Downloads</td>
 			</tr>
 			<tr><td><b>Web:</b></td><td><?php echo $web ?></td></tr>
 			<tr><td><b>In-game:</b></td><td><?php echo $ingame ?></td></tr>
