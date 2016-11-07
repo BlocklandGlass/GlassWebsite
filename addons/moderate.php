@@ -29,7 +29,7 @@
 		die();
 	}
 
-	$_PAGETITLE = "Blockland Glass | " . utf8_encode($addonObject->getName());
+	$_PAGETITLE = "Blockland Glass | " . $addonObject->getName();
 
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
@@ -39,9 +39,9 @@
 		echo "<span style=\"font-size: 9pt;\"><a href=\"/addons/\">Add-Ons</a> >> ";
 		echo "<a href=\"/addons/boards.php\">Boards</a> >> ";
 		echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . utf8_encode($boardObject->getName()) . "</a> >> ";
-		echo "<a href=\"#\">" . utf8_encode($addonObject->getName()) . "</a></span>";
+		echo "<a href=\"#\">" . $addonObject->getName() . "</a></span>";
 
-		echo "<h2 style=\"margin-bottom: 0px;\">Moderating: <i>" . utf8_encode($addonObject->getName()) . "</i></h2>";
+		echo "<h2 style=\"margin-bottom: 0px;\">Moderating: <i>" . $addonObject->getName() . "</i></h2>";
     $authors = $addonObject->getAuthorInfo();
 
 		echo "Uploaded by ";

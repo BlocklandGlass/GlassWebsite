@@ -37,7 +37,7 @@
 		CommentManager::submitComment($addonObject->getId(), UserManager::getCurrent()->getBLID(), $_POST['comment']);
 	}
 
-	$_PAGETITLE = "Blockland Glass | " . utf8_encode($addonObject->getName());
+	$_PAGETITLE = "Blockland Glass | " . $addonObject->getName();
 
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
@@ -102,7 +102,7 @@ $(document).ready(function() {
 		echo "<span style=\"font-size: 9pt;\"><a href=\"/addons/\">Add-Ons</a> >> ";
 		echo "<a href=\"/addons/boards.php\">Boards</a> >> ";
 		echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . utf8_encode($boardObject->getName()) . "</a> >> ";
-		echo "<a href=\"#\">" . utf8_encode($addonObject->getName()) . "</a></span>";
+		echo "<a href=\"#\">" . $addonObject->getName() . "</a></span>";
 
 		if($current = UserManager::getCurrent()) {
 			if($current->inGroup("Moderator")) {
@@ -110,7 +110,7 @@ $(document).ready(function() {
 			}
 		}
 
-		echo "<h2 style=\"margin-bottom: 0px;\">" . utf8_encode($addonObject->getName()) . "</h2>";
+		echo "<h2 style=\"margin-bottom: 0px;\">" . $addonObject->getName() . "</h2>";
 
     $authors = $addonObject->getAuthorInfo();
 

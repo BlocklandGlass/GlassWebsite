@@ -103,7 +103,7 @@
 	foreach($addonIDs as $aid) {
 		$addon = AddonManager::getFromID($aid); ?>
 		<tr>
-		<td style="width: 33%"><a href="addon.php?id=<?php echo $addon->getID(); ?>"><?php echo $addon->getName() ?></a></td>
+		<td style="width: 33%"><a href="addon.php?id=<?php echo $addon->getID(); ?>"><?php echo $addon->getName(); ?></a></td>
 		<td style="font-size: 11pt"><?php
 		$authors = $addon->getAuthorInfo();
 
