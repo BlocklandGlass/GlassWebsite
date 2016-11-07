@@ -60,7 +60,7 @@ form {
 			font-size: 0.8em
 		}
 	</style>
-	<table>
+	<table class="list">
 		<tbody>
 			<tr>
 				<th>Type</th>
