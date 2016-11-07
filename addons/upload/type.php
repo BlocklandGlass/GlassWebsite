@@ -1,7 +1,8 @@
 <?php
 require_once(realpath(dirname(__DIR__) . "/../private/class/UserManager.php"));
 require_once(realpath(dirname(__DIR__) . "/../private/class/AddonFileHandler.php"));
-$user = UserManager::getCurrent();
+//$user = UserManager::getCurrent();
+$user = false;
 
 if(!$user) {
 	header("Location: " . "/index.php");
