@@ -11,7 +11,7 @@
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 ?>
 <div class="maincontainer">
-	<span style="font-size: 9pt;"><a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archives</a> >> <a href="board.php?name=<?php echo $addonData->type; ?>"><?php echo $addonData->type; ?></a> >> <a href="#"><?php echo htmlspecialchars($addonData->title); ?></a></span>
+	<span style="font-size: 9pt;"><a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archive</a> >> <a href="board.php?name=<?php echo $addonData->type; ?>"><?php echo $addonData->type; ?></a> >> <a href="#"><?php echo htmlspecialchars($addonData->title); ?></a></span>
   <?php
 		echo "<h2>" . utf8_encode($addonData->title) . "</h2>";
 	?>

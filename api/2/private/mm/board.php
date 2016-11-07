@@ -33,7 +33,7 @@ if($_REQUEST['id'] == "rtb") {
 
   $ret->status = "success";
   $ret->board_id = "rtb";
-  $ret->board_name = "RTB Archives";
+  $ret->board_name = "RTB Archive";
   $ret->page = $page;
   $ret->pages = ceil(RTBAddonManager::getCount()/10);
 
