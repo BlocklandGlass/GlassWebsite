@@ -21,8 +21,7 @@
 		?>
 		<tr>
 		<td style="width: 33%"><a href="board.php?id=<?php echo($board->getID()); ?>"><?php echo($board->getName()); ?></a></td>
-		<!--<td><?php echo BoardManager::getBoardCount($board); ?></td>-->
-        <td>N/A</td>
+		<td><?php echo($board->getCount()); ?></td>
 		</tr><?php
 	}
 ?>
