@@ -1,13 +1,10 @@
 <?php
-	require_once(realpath(dirname(__DIR__) . "/../private/class/BoardManager.php"));
-	require_once(realpath(dirname(__DIR__) . "/../private/class/AddonManager.php"));
-	//require_once(realpath(dirname(__DIR__) . "/private/class/AddonObject.php"));
-	require_once(realpath(dirname(__DIR__) . "/../private/class/UserManager.php"));
-	//require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
+	require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
 
 	$_PAGETITLE = "Blockland Glass | Boards";
-	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
+
+	include(realpath(dirname(__DIR__) . "/private/header.php"));
+	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>
 <div class="maincontainer">
   <a href="/addons/">Add-Ons</a> >> <a href="/addons/newboards.php">Boards</a>
@@ -36,4 +33,4 @@
 	</table>
 </div>
 
-<?php include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>
+<?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>
