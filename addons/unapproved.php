@@ -1,6 +1,8 @@
 <?php
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+
+    $_PAGETITLE = "Blockland Glass | " . utf8_encode($addonObject->getName());
 ?>
 <div class="maincontainer">
 	<?php
