@@ -35,8 +35,13 @@ require_once(realpath(dirname(__FILE__) . "/private/class/StatManager.php"));
 		?></a> users are running Glass - which equates to <b><?php
 		$nonglass = StatManager::getMasterServerStats()['users'];
 		$glass = sizeof(UserLog::getRecentlyActive());
-		echo floor(100/$nonglass*$glass);
-		?>%</b> of Blockland as of this moment. Glass has <b><?php
+        $percentage = floor(100/$nonglass*$glass);
+		if($percentage > 100) {
+            echo $percentage . "% (how is this happening?)";
+        } else {
+            echo $percentage . "%";
+        }
+		?></b> of Blockland as of this moment. Glass has <b><?php
 		echo UserLog::getUniqueCount();?></b> active users, with a total of <a href="stats/"><?php
 		$web = StatManager::getAllAddonDownloads("web");
 		$ingame = StatManager::getAllAddonDownloads("ingame");
