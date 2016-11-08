@@ -5,6 +5,7 @@ private/class/key.json
 builds/uploads/*
 private/vendor/
 private/test.json
+private/config.json
 
 local/*
 

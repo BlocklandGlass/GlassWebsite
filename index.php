@@ -1,4 +1,11 @@
 <?php
+require_once(realpath(dirname(__FILE__) . "/private/class/InstallationManager.php"));
+
+if(InstallationManager::checkInstallation() == false) {
+	header('Location: /install/');
+	return;
+}
+
 require_once(realpath(dirname(__FILE__) . "/private/header.php"));
 require_once(realpath(dirname(__FILE__) . "/private/navigationbar.php"));
 require_once(realpath(dirname(__FILE__) . "/private/class/UserLog.php"));
