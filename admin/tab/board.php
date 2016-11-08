@@ -1,4 +1,7 @@
 <?php
+if(($_adminAuthed ?? false) != true)
+  die();
+
 require_once(realpath(dirname(__DIR__) . "/../private/class/DatabaseManager.php"));
 require_once(realpath(dirname(__DIR__) . "/../private/class/BoardManager.php"));
 
