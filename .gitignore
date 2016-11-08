@@ -4,6 +4,7 @@ private/class/mysql.json
 private/class/key.json
 builds/uploads/*
 private/vendor/
+private/test.json
 
 local/*
 
