@@ -3,6 +3,11 @@ require_once(realpath(dirname(__FILE__) . "/private/header.php"));
 require_once(realpath(dirname(__FILE__) . "/private/navigationbar.php"));
 require_once(realpath(dirname(__FILE__) . "/private/class/UserLog.php"));
 require_once(realpath(dirname(__FILE__) . "/private/class/StatManager.php"));
+
+$testEnvironment = false;
+if(is_file(dirname(__FILE__) . '/private/test.json')) {
+	$testEnvironment = true;
+}
 ?>
 
 <div class="bigheadcontainer">
@@ -14,6 +19,17 @@ require_once(realpath(dirname(__FILE__) . "/private/class/StatManager.php"));
 	<a href="addons" class="btn yellow" style="width: 150px">Add-Ons</a><br /><br />
 </div>
 <div class="maincontainer">
+	<?php
+	if($testEnvironment) {
+	?>
+	<p>
+		<h3>Glass Test Site</h3>
+		Welcome to the Glass test site! This is not the same as our normal site. The test site operates independently with it's own database and file system. Changes on the test site reflect future versions of the live Glass website.
+	</p>
+	<br />
+	<?php
+	}
+	?>
 	<p>
 		<h3>What's Glass?</h3>
 		Blockland Glass is a service made for <a href="http://blockland.us">Blockland</a> to help expand and cultivate the community. Currently, Glass acts as a content and social platform offering the ability to download Glass add-ons in-game, manage your servers' preferences, add friends and talk to others through the chatroom or direct messaging.
