@@ -10,11 +10,8 @@ class StatObject {
 	public $groups;
 	public $comments;
 	public $builds;
-	public $tags;
 	public $topAddonID;
 	public $topAddonDownloads;
-	public $topTagID;
-	public $topTagDownloads;
 	public $topBuildID;
 	public $topBuildDownloads;
 
@@ -27,23 +24,15 @@ class StatObject {
 		$this->groups = intval($resource->groups);
 		$this->comments = intval($resource->comments);
 		$this->builds = intval($resource->builds);
-		$this->tags = intval($resource->tags);
 
 		$this->topAddonID = [];
 		$this->topAddonDownloads = [];
-		$this->topTagID = [];
-		$this->topTagDownloads = [];
 		$this->topBuildID = [];
 		$this->topBuildDownloads = [];
 
 		for($i=0; $i<StatManager::$addonCount; $i++) {
 			$this->topAddonID[$i] = intval($resource->{'addon' . $i});
 			$this->topAddonDownloads[$i] = intval($resource->{'addonDownloads' . $i});
-		}
-
-		for($i=0; $i<StatManager::$tagCount; $i++) {
-			$this->topTagID[$i] = intval($resource->{'tag' . $i});
-			$this->topTagDownloads[$i] = intval($resource->{'tagDownloads' . $i});
 		}
 
 		for($i=0; $i<StatManager::$buildCount; $i++) {

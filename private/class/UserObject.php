@@ -96,14 +96,13 @@ class UserObject {
 		NotificationManager::createNotification($this, "Your account was verified.", array());
 		$database = new DatabaseManager();
 		$database->query("UPDATE `users` SET `verified`='" . $database->sanitize($bool) . "' WHERE `email`='" . $database->sanitize($this->getEmail()) . "'");
-		apc_store('userObject_' . $this->blid, $this, 600);
 	}
 
 	public function setUsername($name) {
 		if($this->verified) {
 			$database = new DatabaseManager();
 			$database->query("UPDATE `users` SET `username`='" . $database->sanitize($name) . "' WHERE `email`='" . $database->sanitize($this->getEmail()) . "'");
-			apc_store('userObject_' . $this->blid, $this, 600);
+
 		}
 	}
 
@@ -111,7 +110,6 @@ class UserObject {
 		$database = new DatabaseManager();
 		$database->query("UPDATE `users` SET `email`='" . $database->sanitize($email) . "' WHERE `blid`='" . $database->sanitize($this->getBlid()) . "'");
 		$this->email = $email;
-		apc_store('userObject_' . $this->blid, $this, 600);
 	}
 }
 ?>

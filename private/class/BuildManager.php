@@ -36,51 +36,43 @@ class BuildManager {
 	}
 
 	public static function getFromID($id, $resource = false) {
-		$buildObject = apc_fetch('buildObject_' . $id, $success);
+		if($resource !== false) {
+			$buildObject = new BuildObject($resource);
+		} else {
+			$database = new DatabaseManager();
+			BuildManager::verifyTable($database);
+			$resource = $database->query("SELECT * FROM `build_builds` WHERE `id` = '" . $database->sanitize($id) . "' LIMIT 1");
 
-		if($success === false) {
-			if($resource !== false) {
-				$buildObject = new BuildObject($resource);
-			} else {
-				$database = new DatabaseManager();
-				BuildManager::verifyTable($database);
-				$resource = $database->query("SELECT * FROM `build_builds` WHERE `id` = '" . $database->sanitize($id) . "' LIMIT 1");
-
-				if(!$resource) {
-					throw new Exception("Database error: " . $database->error());
-				}
-
-				if($resource->num_rows == 0) {
-					$buildObject = false;
-				} else {
-					$buildObject = new BuildObject($resource->fetch_object());
-				}
-				$resource->close();
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
 			}
-			apc_store('buildObject_' . $id, $buildObject, BuildManager::$objectCacheTime);
+
+			if($resource->num_rows == 0) {
+				$buildObject = false;
+			} else {
+				$buildObject = new BuildObject($resource->fetch_object());
+			}
+			$resource->close();
 		}
 		return $buildObject;
 	}
 
 	public static function getBuildsFromBLID($id) {
-		$userBuilds = apc_fetch('userBuilds_' . $id, $success);
 
-		if($success === false) {
-			$database = new DatabaseManager();
-			BuildManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `build_builds` WHERE `blid` = '" . $database->sanitize($id) . "'");
+		$database = new DatabaseManager();
+		BuildManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `build_builds` WHERE `blid` = '" . $database->sanitize($id) . "'");
 
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$userBuilds = [];
-
-			while($row = $resource->fetch_object()) {
-				$userBuilds[] = BuildManager::getFromID($row->id, $row)->getID();
-			}
-			$resource->close();
-			apc_store('userBuilds_' . $id, $userBuilds, BuildManager::$userBuildsCacheTime);
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+		$userBuilds = [];
+
+		while($row = $resource->fetch_object()) {
+			$userBuilds[] = BuildManager::getFromID($row->id, $row)->getID();
+		}
+		$resource->close();
+
 		return $userBuilds;
 	}
 
@@ -369,7 +361,6 @@ class BuildManager {
 				throw new Exception("Database error: " . $database->error());
 			}
 			$build->name = $buildname;
-			apc_store('buildObject_' . $build->id, $build, BuildManager::$objectCacheTime);
 			$changed = true;
 		}
 
@@ -412,7 +403,6 @@ class BuildManager {
 				throw new Exception("Database error: " . $database->error());
 			}
 			$build->description = $description;
-			apc_store('buildObject_' . $build->id, $build, BuildManager::$objectCacheTime);
 			$changed = true;
 		}
 

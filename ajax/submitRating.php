@@ -7,7 +7,6 @@ if(isset($_REQUEST['aid']) && isset($_REQUEST['rating'])) {
   $blid = $uo->getBLID();
 
   $newAvg = AddonManager::submitRating($aid, $blid, $rating);
-  apc_delete('addonObject_' . $aid);
   echo $newAvg;
 }
 ?>

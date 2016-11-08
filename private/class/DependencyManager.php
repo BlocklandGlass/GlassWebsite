@@ -10,52 +10,46 @@ class DependencyManager {
 	private static $addonCacheTime = 180;
 
 	public static function getFromID($id, $resource = false) {
-		$depObject = apc_fetch('addonDependencyObject_' . $id, $success);
-		$success = false;
-		if($success === false) {
-			if($resource !== false) {
-				$depObject = new DependencyObject($resource);
-			} else {
-				$database = new DatabaseManager();
-				DependencyManager::verifyTable($database);
-				$resource = $database->query("SELECT * FROM `addon_dependencies` WHERE `id` = '" . $database->sanitize($id) . "' LIMIT 1");
 
-				if(!$resource) {
-					throw new Exception("Database error: " . $database->error());
-				}
+		if($resource !== false) {
+			$depObject = new DependencyObject($resource);
+		} else {
+			$database = new DatabaseManager();
+			DependencyManager::verifyTable($database);
+			$resource = $database->query("SELECT * FROM `addon_dependencies` WHERE `id` = '" . $database->sanitize($id) . "' LIMIT 1");
 
-				if($resource->num_rows == 0) {
-					$depObject = false;
-				} else {
-					$depObject = new DependencyObject($resource->fetch_object());
-				}
-				$resource->close();
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
 			}
-			apc_store('addonDependencyObject_' . $id, $depObject, DependencyManager::$objectCacheTime);
+
+			if($resource->num_rows == 0) {
+				$depObject = false;
+			} else {
+				$depObject = new DependencyObject($resource->fetch_object());
+			}
+			$resource->close();
 		}
+
 		return $depObject;
 	}
 
 	//I don't think we care about the reverse direction, but it would be trivial to implement
 	public static function getDependenciesFromAddonID($id) {
-		$addonDeps = apc_fetch('addonDependencies_' . $id, $success);
-		$success = false;
-		if($success === false) {
-			$database = new DatabaseManager();
-			DependencyManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `addon_dependencies` WHERE `target` = '" . $database->sanitize($id) . "'");
 
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$addonDeps = [];
+		$database = new DatabaseManager();
+		DependencyManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `addon_dependencies` WHERE `target` = '" . $database->sanitize($id) . "'");
 
-			while($row = $resource->fetch_object()) {
-				$addonDeps[] = DependencyManager::getFromID($row->id, $row)->getID();
-			}
-			$resource->close();
-			apc_store('addonDependencies_' . $id, $addonDeps, DependencyManager::$addonCacheTime);
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+		$addonDeps = [];
+
+		while($row = $resource->fetch_object()) {
+			$addonDeps[] = DependencyManager::getFromID($row->id, $row)->getID();
+		}
+		$resource->close();
+
 		return $addonDeps;
 	}
 
@@ -91,9 +85,6 @@ class DependencyManager {
 		if(!$database->query("INSERT INTO `addon_dependencies` (target, requirement) VALUES ('" . $database->sanitize($target->getID()) . "', '" . $database->sanitize($required->getID()) . "')")) {
 			throw new Exception("Error adding new dependency entry: " . $database->error());
 		}
-
-		//clear cache
-		apc_delete('addonDependencies_' . $target->getID());
 	}
 
 	public static function removeDependencyByAddonID($targetID, $requiredID) {
@@ -130,8 +121,6 @@ class DependencyManager {
 		if(!$database->query("DELETE FROM `addon_dependencies` WHERE `id` = '" . $database->sanitize($id) . "'")) {
 			throw new Exception("Error removing dependency entry: " . $database->error());
 		}
-		apc_delete('addonDependencies_' . $target->getID());
-		apc_delete('dependencyObject_' . $id);
 	}
 
 	public static function verifyTable($database) {

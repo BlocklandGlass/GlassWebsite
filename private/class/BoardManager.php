@@ -35,25 +35,20 @@ class BoardManager {
 	}
 
 	private static function getBoardIndexData() {
-		$boardData = apc_fetch('boardIndexData');
-		$boardData = false;
+		$database = new DatabaseManager();
+		BoardManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `addon_boards`");
 
-		if($boardData === false) {
-			$database = new DatabaseManager();
-			BoardManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `addon_boards`");
-
-			if(!$resource) {
-				throw new Exception("Error getting data from database: " . $database->error());
-			}
-			$boardData = array();
-
-			while($row = $resource->fetch_object()) {
-				$boardData[$row->id] = new BoardObject($row);
-			}
-			$resource->close();
-			apc_store('boardIndexData', $boardData);
+		if(!$resource) {
+			throw new Exception("Error getting data from database: " . $database->error());
 		}
+		$boardData = array();
+
+		while($row = $resource->fetch_object()) {
+			$boardData[$row->id] = new BoardObject($row);
+		}
+		$resource->close();
+
 		return $boardData;
 	}
 

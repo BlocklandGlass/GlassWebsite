@@ -8,73 +8,62 @@ class RatingManager {
 	private static $objectCacheTime = 3600;
 
 	public static function getFromID($id, $resource = false) {
-		$ratingObject = apc_fetch('ratingObject_' . $id);
 
-		if($ratingObject === false) {
-			if($resource !== false) {
-				$ratingObject = new RatingObject($resource);
-			} else {
-				$database = new DatabaseManager();
-				RatingManager::verifyTable($database);
-				$resource = $database->query("SELECT * FROM `addon_ratings` WHERE `id` = '" . $database->sanitize($id) . "'");
+		if($resource !== false) {
+			$ratingObject = new RatingObject($resource);
+		} else {
+			$database = new DatabaseManager();
+			RatingManager::verifyTable($database);
+			$resource = $database->query("SELECT * FROM `addon_ratings` WHERE `id` = '" . $database->sanitize($id) . "'");
 
-				if(!$resource) {
-					throw new Exception("Database error: " . $database->error());
-				}
-
-				if($resource->num_rows == 0) {
-					$ratingObject = false;
-				}
-				$ratingObject = new RatingObject($resource->fetch_object());
-				$resource->close();
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
 			}
-			apc_store('ratingObject_' . $id, $ratingObject, RatingManager::$objectCacheTime);
+
+			if($resource->num_rows == 0) {
+				$ratingObject = false;
+			}
+			$ratingObject = new RatingObject($resource->fetch_object());
+			$resource->close();
 		}
 		return $ratingObject;
 	}
 
-	//honestly this probably shouldn't be needed
 	public static function getRatingsFromBLID($blid) {
-		$userRatings = apc_fetch('userRatings_' . $blid);
 
-		if($userRatings === false) {
-			$database = new DatabaseManager();
-			RatingManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `addon_ratings` WHERE `blid` = '" . $database->sanitize($blid) . "'");
+		$database = new DatabaseManager();
+		RatingManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `addon_ratings` WHERE `blid` = '" . $database->sanitize($blid) . "'");
 
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$userRatings = [];
-
-			while($row = $resource->fetch_object()) {
-				$userRatings[] = RatingManager::getFromID($row->id, $row)->getID();
-			}
-			$resource->close();
-			apc_store('userRatings_' . $blid, $userRatings, RatingManager::$userCacheTime);
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+		$userRatings = [];
+
+		while($row = $resource->fetch_object()) {
+			$userRatings[] = RatingManager::getFromID($row->id, $row)->getID();
+		}
+		$resource->close();
+
 		return $userRatings;
 	}
 
 	public static function getRatingsFromAddon($aid) {
-		$addonRatings = apc_fetch('addonRatings_' . $aid);
 
-		if($addonRatings === false) {
-			$database = new DatabaseManager();
-			RatingManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `addon_ratings` WHERE `aid` = '" . $database->sanitize($aid) . "'");
+		$database = new DatabaseManager();
+		RatingManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `addon_ratings` WHERE `aid` = '" . $database->sanitize($aid) . "'");
 
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$addonRatings = [];
-
-			while($row = $resource->fetch_object()) {
-				$addonRatings[] = RatingManager::getFromID($row->id, $row)->getID();
-			}
-			$resource->close();
-			apc_store('addonRatings_' . $aid, $addonRatings, RatingManager::$addonCacheTime);
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+		$addonRatings = [];
+
+		while($row = $resource->fetch_object()) {
+			$addonRatings[] = RatingManager::getFromID($row->id, $row)->getID();
+		}
+		$resource->close();
+
 		return $addonRatings;
 	}
 

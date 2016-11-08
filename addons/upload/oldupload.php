@@ -55,7 +55,6 @@ if(isset($_FILES['uploadfile'])){
       header('Location: index.php');
     }
   ?>
-  Tags<br />
   Screenshots<br />
   Authors<br />
   Version

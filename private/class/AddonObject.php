@@ -1,6 +1,5 @@
 <?php
 require_once(realpath(dirname(__FILE__) . "/DependencyManager.php"));
-require_once(realpath(dirname(__FILE__) . "/TagManager.php"));
 require_once(realpath(dirname(__FILE__) . "/StatManager.php"));
 
 //this should be the only class to interact with `addon_files` ?
@@ -20,7 +19,6 @@ class AddonObject {
 	public $authorInfo;
 	//public $file;
 	//public $dependencies;
-	//public $tags
 	public $uploadDate;
 	public $url;
 
@@ -181,10 +179,6 @@ class AddonObject {
 
 	public function getDependencies() {
 		return DependencyManager::getDependenciesFromAddonID($this->id);
-	}
-
-	public function getTags() {
-		return TagManager::getTagsFromAddonID($this->id);
 	}
 
 	public function getTotalDownloads() {

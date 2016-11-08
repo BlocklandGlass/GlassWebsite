@@ -9,7 +9,6 @@ if(is_object($con) && $con->isAuthed()) {
     $blid = $con->getBLID();
 
     $newAvg = AddonManager::submitRating($aid, $blid, $rating);
-    apc_delete('addonObject_' . $aid);
 
     $ret = new stdClass();
     $ret->status = "success";

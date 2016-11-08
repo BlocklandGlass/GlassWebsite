@@ -16,28 +16,25 @@ class CommentManager {
 	}
 
 	public static function getFromID($id, $resource = false) {
-		$commentObject = apc_fetch('commentObject_' . $id);
 
-		if($commentObject === false) {
-			if($resource !== false) {
-				$commentObject = new CommentObject($resource);
-			} else {
-				$database = new DatabaseManager();
-				CommentManager::verifyTable($database);
-				$resource = $database->query("SELECT * FROM `addon_comments` WHERE `id` = '" . $database->sanitize($id) . "'");
+		if($resource !== false) {
+			$commentObject = new CommentObject($resource);
+		} else {
+			$database = new DatabaseManager();
+			CommentManager::verifyTable($database);
+			$resource = $database->query("SELECT * FROM `addon_comments` WHERE `id` = '" . $database->sanitize($id) . "'");
 
-				if(!$resource) {
-					throw new Exception("Database error: " . $database->error());
-				}
-
-				if($resource->num_rows == 0) {
-					$commentObject = false;
-				}
-				$commentObject = new CommentObject($resource->fetch_object());
-				$resource->close();
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
 			}
-			apc_store('commentObject_' . $id, $commentObject, CommentManager::$objectCacheTime);
+
+			if($resource->num_rows == 0) {
+				$commentObject = false;
+			}
+			$commentObject = new CommentObject($resource->fetch_object());
+			$resource->close();
 		}
+
 		return $commentObject;
 	}
 
@@ -49,33 +46,30 @@ class CommentManager {
 			"limit" => $limit,
 			"sort" => $sort
 		]);
-		$userComments = apc_fetch('userComments_' . $cacheString);
 
-		if($userComments === false) {
-			$database = new DatabaseManager();
-			CommentManager::verifyTable($database);
-			$baseQuery = "SELECT * FROM `addon_comments` WHERE `blid` = '" . $database->sanitize($blid) . "' ORDER BY `timestamp` ";
+		$database = new DatabaseManager();
+		CommentManager::verifyTable($database);
+		$baseQuery = "SELECT * FROM `addon_comments` WHERE `blid` = '" . $database->sanitize($blid) . "' ORDER BY `timestamp` ";
 
-			if($sort == CommentManager::$SORTDATEASC) {
-				$sortQuery = "ASC ";
-			} else {
-				$sortQuery = "DESC ";
-			}
-			$extQuery = "LIMIT '" . $database->sanitize($offset) . "', '" . $database->sanitize($limit) . "'";
-			$resource = $database->query($baseQuery . $sortQuery . $extQuery);
-
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$userComments = [];
-
-			while($row = $resource->fetch_object()) {
-				//this is mostly to get the data cached for the inevitable call to getFromID
-				$userComments[] = CommentManager::getFromID($row->id, $row)->getID();
-			}
-			$resource->close();
-			apc_store('userComments_' . $cacheString, $userComments, CommentManager::$userCacheTime);
+		if($sort == CommentManager::$SORTDATEASC) {
+			$sortQuery = "ASC ";
+		} else {
+			$sortQuery = "DESC ";
 		}
+		$extQuery = "LIMIT '" . $database->sanitize($offset) . "', '" . $database->sanitize($limit) . "'";
+		$resource = $database->query($baseQuery . $sortQuery . $extQuery);
+
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
+		}
+		$userComments = [];
+
+		while($row = $resource->fetch_object()) {
+			//this is mostly to get the data cached for the inevitable call to getFromID
+			$userComments[] = CommentManager::getFromID($row->id, $row)->getID();
+		}
+		$resource->close();
+
 		return $userComments;
 	}
 
@@ -87,38 +81,33 @@ class CommentManager {
 			"sort" => $sort
 		]);
 
-		//$addonComments = apc_fetch('addonComments_' . $cacheString);
-		$addonComments = false;
+		$database = new DatabaseManager();
+		CommentManager::verifyTable($database);
+		$query = "SELECT * FROM `addon_comments` WHERE `aid` = '" . $database->sanitize($aid) . "' ORDER BY ";
 
-		if($addonComments === false) {
-			$database = new DatabaseManager();
-			CommentManager::verifyTable($database);
-			$query = "SELECT * FROM `addon_comments` WHERE `aid` = '" . $database->sanitize($aid) . "' ORDER BY ";
-
-			switch($sort) {
-				case CommentManager::$SORTDATEASC:
-					$query .= "`timestamp` ASC";
-					break;
-				case CommentManager::$SORTDATEDESC:
-					$query .= "`timestamp` DESC";
-					break;
-				default:
-					$query .= "`timestamp` ASC";
-			}
-			$query .=  " LIMIT " . $database->sanitize($offset) . ", " . $database->sanitize($limit);
-			$resource = $database->query($query);
-
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$addonComments = [];
-
-			while($row = $resource->fetch_object()) {
-				$addonComments[] = CommentManager::getFromID($row->id, $row)->getID();
-			}
-			$resource->close();
-			apc_store('addonComments_' . $cacheString, $addonComments, CommentManager::$addonCacheTime);
+		switch($sort) {
+			case CommentManager::$SORTDATEASC:
+				$query .= "`timestamp` ASC";
+				break;
+			case CommentManager::$SORTDATEDESC:
+				$query .= "`timestamp` DESC";
+				break;
+			default:
+				$query .= "`timestamp` ASC";
 		}
+		$query .=  " LIMIT " . $database->sanitize($offset) . ", " . $database->sanitize($limit);
+		$resource = $database->query($query);
+
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
+		}
+		$addonComments = [];
+
+		while($row = $resource->fetch_object()) {
+			$addonComments[] = CommentManager::getFromID($row->id, $row)->getID();
+		}
+		$resource->close();
+
 		return $addonComments;
 	}
 

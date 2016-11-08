@@ -24,7 +24,6 @@ class NotificationManager {
 		NotificationManager::verifyTable($database);
 		$resource = $database->query("INSERT INTO `blocklandglass2`.`user_notifications` (`id`, `blid`, `date`, `text`, `params`, `seen`) VALUES " .
 			"(NULL, '" . $database->sanitize($blid) . "', NOW(), '" . $database->sanitize($text) . "', '" . $database->sanitize(json_encode($params)) . "', '0');");
-		apc_delete('userNotifications_' . $blid);
 	}
 
 	public static function sendPushNotification($blid, $title, $body, $image, $action, $duration, $sticky = false) {
@@ -47,53 +46,47 @@ class NotificationManager {
 	}
 
 	public static function getFromID($id, $resource = false) {
-		$notificationObject = apc_fetch('notificationObject_' . $id, $success);
 
-		if($success === false) {
-			if($resource !== false) {
-				$notificationObject = new NotificationObject($resource);
-			} else {
-				$database = new DatabaseManager();
-				NotificationManager::verifyTable($database);
-				$resource = $database->query("SELECT * FROM `user_notifications` WHERE id='" . $database->sanitize($id) . "'");
-
-				if(!$resource) {
-					throw new Exception("Database error: " . $database->error());
-				}
-
-				if($resource->num_rows == 0) {
-					$notificationObject = false;
-				}
-				$notificationObject = new NotificationObject($resource->fetch_object());
-				$resource->close();
-			}
-			apc_store('notificationObject_' . $id, $notificationObject, NotificationManager::$objectCacheTime);
-		}
-		return $notificationObject;
-	}
-
-	public static function getFromBLID($blid, $offset, $limit) {
-		$userNotes = apc_fetch('userNotifications_' . $blid, $success);
-
-		if($success === false) {
+		if($resource !== false) {
+			$notificationObject = new NotificationObject($resource);
+		} else {
 			$database = new DatabaseManager();
 			NotificationManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `user_notifications` WHERE
-				`blid` = '" . $database->sanitize($blid) . "'
-				ORDER BY `date` DESC
-				LIMIT " . $database->sanitize($offset) . ", " . $database->sanitize($limit));
+			$resource = $database->query("SELECT * FROM `user_notifications` WHERE id='" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
 				throw new Exception("Database error: " . $database->error());
 			}
-			$userNotes = [];
 
-			while($row = $resource->fetch_object()) {
-				$userNotes[] = $row->id;
+			if($resource->num_rows == 0) {
+				$notificationObject = false;
 			}
+			$notificationObject = new NotificationObject($resource->fetch_object());
 			$resource->close();
-			apc_store('userNotifications_' . $blid, $userNotes, NotificationManager::$userCacheTime);
 		}
+
+		return $notificationObject;
+	}
+
+	public static function getFromBLID($blid, $offset, $limit) {
+
+		$database = new DatabaseManager();
+		NotificationManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `user_notifications` WHERE
+			`blid` = '" . $database->sanitize($blid) . "'
+			ORDER BY `date` DESC
+			LIMIT " . $database->sanitize($offset) . ", " . $database->sanitize($limit));
+
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
+		}
+		$userNotes = [];
+
+		while($row = $resource->fetch_object()) {
+			$userNotes[] = $row->id;
+		}
+		$resource->close();
+
 		return $userNotes;
 	}
 

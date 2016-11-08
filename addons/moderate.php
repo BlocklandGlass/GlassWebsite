@@ -2,7 +2,6 @@
 	require_once(realpath(dirname(__DIR__) . "/private/class/BoardManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/AddonObject.php"));
-	require_once(realpath(dirname(__DIR__) . "/private/class/TagManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/class/UserLog.php"));
 //	require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
@@ -104,18 +103,6 @@
 			echo ($addonObject->getDownloads("web") + $addonObject->getDownloads("ingame"));
 			?>
 			 <image style="height:1.5em" src="http://blocklandglass.com/img/icons32/inbox_download.png" /><br />
-			<br />
-			<?php
-			$tagIDs = TagManager::getTagsFromAddonID($addonObject->getId());
-			$tags = array();
-			foreach($tagIDs as $tid) {
-				$tags[] = TagManager::getFromId($tid);
-			}
-
-			foreach($tags as $tag) {
-				echo $tag->getHTML();
-			}
-			?>
 		</div>
 	</div>
 	<hr />
@@ -129,19 +116,6 @@
 			echo $Parsedown->text($addonObject->getDescription());
 		?>
 	</p>
-	<!--
-	<hr />
-	Add Tag:
-	<select name="tag">
-		<?php
-		$tags = TagManager::getAllTags();
-		foreach($tags as $tag) {
-			echo "<option value=\"" . $tag->getId() . "\">" . $tag->getName() . "</option>";
-		} ?>
-	</select>
-	<br />
-	<input type="submit" value="Add" name="submit" />
-	-->
 	<hr />
   <table class="formtable">
     <tbody>

@@ -101,14 +101,6 @@ td:first-child {
 				</tr>
 				<tr>
 					<td>
-						<p>Add Tags</p>
-					</td>
-					<td>
-						<p>Coming Soon</p>
-					</td>
-				</tr>
-				<tr>
-					<td>
 						<p>Add Dependencies</p>
 					</td>
 					<td>

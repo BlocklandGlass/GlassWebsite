@@ -10,16 +10,13 @@ class DatabaseManager {
 	function __construct() {
 		//memory cached for performance
 		//infinite persistence is not guaranteed, however
-		$keyData = apc_fetch('mysqlKey');
 
-		if($keyData === false) {
-			if(!is_file(dirname(__DIR__) . "/config.json")) {
-				throw new Exception("Key file not found");
-			} else {
-				$keyData = json_decode(file_get_contents(dirname(__DIR__) . "/config.json"));
-				apc_store('mysqlKey', $keyData);
-			}
+		if(!is_file(dirname(__DIR__) . "/config.json")) {
+			throw new Exception("Key file not found");
+		} else {
+			$keyData = json_decode(file_get_contents(dirname(__DIR__) . "/config.json"));
 		}
+
 		$this->database = $keyData->database;
 		$this->username = $keyData->username;
 		$this->password = $keyData->password;

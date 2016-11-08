@@ -48,26 +48,18 @@ class BoardObject {
 	}
 
 	function getCount() {
-		//I think $this->numberOfAddons will be persistent across many requests, which is an issue if more addons are uploaded
 		if(!isset($this->numberOfAddons)) {
-			$this->numberOfAddons = apc_fetch('boardData_count_' . $this->id);
 
-			if($this->numberOfAddons === false) {
-				$database = new DatabaseManager();
-				$this->verifyTable($database);
-				$resource = $database->query("SELECT COUNT(*) FROM `addon_addons` WHERE board='" . $database->sanitize($this->id) . "'  AND deleted=0");
+			$database = new DatabaseManager();
+			$this->verifyTable($database);
+			$resource = $database->query("SELECT COUNT(*) FROM `addon_addons` WHERE board='" . $database->sanitize($this->id) . "'  AND deleted=0");
 
-				if(!$resource) {
-					throw new Exception("Database error: " . $database->error());
-				}
-				$this->numberOfAddons = $resource->fetch_row()[0];
-				$resource->close();
-
-				//Cache result for 1 hour
-				//Ideally we cache indefinitely and flush the value when it updates
-				//But I get the feeling that we may forget and end up with stale values
-				apc_store('boardData_count_' . $this->id, $this->numberOfAddons, 3600);
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
 			}
+			$this->numberOfAddons = $resource->fetch_row()[0];
+			$resource->close();
+
 		}
 		return $this->numberOfAddons;
 	}

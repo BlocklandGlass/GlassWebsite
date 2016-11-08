@@ -184,18 +184,6 @@ $(document).ready(function() {
 			?>
 			 <image style="height:1.5em" src="http://blocklandglass.com/img/icons32/inbox_download.png" /><br />
 			<br />
-			<?php
-			$tagIDs = TagManager::getTagsFromAddonID($addonObject->getId());
-			$tags = array();
-			foreach($tagIDs as $tid) {
-				$tags[] = TagManager::getFromId($tid);
-			}
-
-			foreach($tags as $tag) {
-				echo $tag->getHTML();
-			}
-			?>
-			<br />
 			<!-- add this back when it's finished -->
 			<!-- <a href="review/code.php?id=<?php echo $addonObject->getId() ?>">View source code</a> -->
 		</div>

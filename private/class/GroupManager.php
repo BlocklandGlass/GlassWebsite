@@ -9,119 +9,103 @@ class GroupManager {
 	private static $groupUsersCacheTime = 3600;
 
 	public static function getFromID($id, $resource = false) {
-		$groupObject = apc_fetch('groupObject_' . $id, $success);
 
-		if($success === false) {
-			if($resource !== false) {
-				$groupObject = new GroupObject($resource);
-			} else {
-				$database = new DatabaseManager();
-				GroupManager::verifyTable($database);
-				$resource = $database->query("SELECT * FROM `group_groups` WHERE `id` = '" . $database->sanitize($id) . "' LIMIT 1");
+		if($resource !== false) {
+			$groupObject = new GroupObject($resource);
+		} else {
+			$database = new DatabaseManager();
+			GroupManager::verifyTable($database);
+			$resource = $database->query("SELECT * FROM `group_groups` WHERE `id` = '" . $database->sanitize($id) . "' LIMIT 1");
 
-				if(!$resource) {
-					throw new Exception("Database error: " . $database->error());
-				}
-
-				if($resource->num_rows == 0) {
-					$groupObject = false;
-				} else {
-					$groupObject = new GroupObject($resource->fetch_object());
-				}
-				$resource->close();
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
 			}
-			//apc_store('tagObject_' . $id, $groupObject, GroupManager::$objectCacheTime);
+
+			if($resource->num_rows == 0) {
+				$groupObject = false;
+			} else {
+				$groupObject = new GroupObject($resource->fetch_object());
+			}
+			$resource->close();
 		}
+
 		return $groupObject;
 	}
 
 	public static function getFromName($name, $resource = false) {
-		$groupObject = apc_fetch('groupObject_' . $name, $success);
 
-		if($success === false) {
-			if($resource !== false) {
-				$groupObject = new GroupObject($resource);
-			} else {
-				$database = new DatabaseManager();
-				GroupManager::verifyTable($database);
-				$resource = $database->query("SELECT * FROM `group_groups` WHERE `name` = '" . $database->sanitize($name) . "' LIMIT 1");
+		if($resource !== false) {
+			$groupObject = new GroupObject($resource);
+		} else {
+			$database = new DatabaseManager();
+			GroupManager::verifyTable($database);
+			$resource = $database->query("SELECT * FROM `group_groups` WHERE `name` = '" . $database->sanitize($name) . "' LIMIT 1");
 
-				if(!$resource) {
-					throw new Exception("Database error: " . $database->error());
-				}
-
-				if($resource->num_rows == 0) {
-					$groupObject = false;
-				} else {
-					$groupObject = new GroupObject($resource->fetch_object());
-				}
-				$resource->close();
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
 			}
-			apc_store('groupObject_' . $name, $groupObject, GroupManager::$objectCacheTime);
+
+			if($resource->num_rows == 0) {
+				$groupObject = false;
+			} else {
+				$groupObject = new GroupObject($resource->fetch_object());
+			}
+			$resource->close();
 		}
+
 		return $groupObject;
 	}
 
 	public static function getGroupsFromBLID($id) {
-		//$userGroups = apc_fetch('userGroups_' . $id, $success);
-		$success = false;
 
-		if($success === false) {
-			$database = new DatabaseManager();
-			GroupManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `group_usermap` WHERE `blid` = '" . $database->sanitize($id) . "'");
+		$database = new DatabaseManager();
+		GroupManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `group_usermap` WHERE `blid` = '" . $database->sanitize($id) . "'");
 
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$userGroups = [];
-
-			while($row = $resource->fetch_object()) {
-				$userGroups[] = GroupManager::getFromID($row->gid)->getID();
-			}
-			$resource->close();
-			apc_store('userGroups_' . $id, $userGroups, GroupManager::$userGroupsCacheTime);
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+		$userGroups = [];
+
+		while($row = $resource->fetch_object()) {
+			$userGroups[] = GroupManager::getFromID($row->gid)->getID();
+		}
+		$resource->close();
+
 		return $userGroups;
 	}
 
 	public static function getUsersFromGroupID($id) {
-		$groupUsers = apc_fetch('groupUsers_' . $id, $success);
 
-		if($success === false) {
-			$database = new DatabaseManager();
-			GroupManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `group_usermap` WHERE `gid` = '" . $database->sanitize($id) . "'");
+		$database = new DatabaseManager();
+		GroupManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `group_usermap` WHERE `gid` = '" . $database->sanitize($id) . "'");
 
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$groupUsers = [];
-
-			while($row = $resource->fetch_object()) {
-				$groupUsers[] = UserManager::getFromID($row->blid)->getID();
-			}
-			$resource->close();
-			apc_store('groupUsers_' . $id, $groupUsers, GroupManager::$groupUsersCacheTime); //this cache time is arbitrary
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+		$groupUsers = [];
+
+		while($row = $resource->fetch_object()) {
+			$groupUsers[] = UserManager::getFromID($row->blid)->getID();
+		}
+		$resource->close();
+
 		return $groupUsers;
 	}
 
 	public static function getMemberCountByID($id) {
-		$count = apc_fetch('groupMemberCount_' . $id, $success);
 
-		if($success === false) {
-			$database = new DatabaseManager();
-			GroupManager::verifyTable($database);
-			$resource = $database->query("SELECT COUNT(*) FROM `group_usermap` WHERE `gid` = '" . $database->sanitize($id) . "'");
+		$database = new DatabaseManager();
+		GroupManager::verifyTable($database);
+		$resource = $database->query("SELECT COUNT(*) FROM `group_usermap` WHERE `gid` = '" . $database->sanitize($id) . "'");
 
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$count = $resource->fetch_row()[0];
-			$resource->close();
-			apc_store('groupMemberCount_' . $id, $count, GroupManager::$groupUsersCacheTime);
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+		$count = $resource->fetch_row()[0];
+		$resource->close();
+
 		return $count;
 	}
 
@@ -154,7 +138,6 @@ class GroupManager {
 	}
 
 	public static function createGroupWithLeader($name, $description, $color, $icon, $user) {
-		apc_delete('groupObject_' . $name);
 		$database = new DatabaseManager();
 		GroupManager::verifyTable($database);
 		$resource = $database->query("SELECT 1 FROM `group_groups` where `name` = '" . $database->sanitize($name) . "' LIMIT 1");
@@ -226,8 +209,6 @@ class GroupManager {
 		if(!$database->query("INSERT INTO `group_usermap` (`blid`, `gid`) VALUES ('" . $database->sanitize($user->getBLID()) . "', '" . $database->sanitize($group->getID()) . "')")) {
 			throw new Exception("Error adding new usermap entry: " . $database->error());
 		}
-		apc_delete('groupUsers_' . $group->getID());
-		apc_delete('userGroups' . $user->getID());
 
 		return true;
 	}
@@ -270,8 +251,6 @@ class GroupManager {
 			throw new Exception("Error removing usermap entry: " . $database->error());
 		}
 		$resource->close();
-		//apc_delete('addonTags_' . $group->getID());
-		//apc_delete('tagAddons_' . $tag->getID());
 		return true;
 	}
 

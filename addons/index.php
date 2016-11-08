@@ -1,7 +1,6 @@
 <?php
 	require_once dirname(__DIR__) . "/private/class/GroupManager.php";
 	require_once dirname(__DIR__) . "/private/class/UserManager.php";
-	require_once dirname(__DIR__) . "/private/class/TagManager.php";
 	require_once dirname(__DIR__) . "/private/class/RTBAddonManager.php";
 
 	$_PAGETITLE = "Blockland Glass | Add-Ons";
@@ -15,7 +14,6 @@
 	<?php include(realpath(dirname(__DIR__) . "/private/searchbar.php")); ?>
 	<ul class="addonnav">
 		<li><a href="/addons/boards.php">Boards</a></li>
-		<!-- <li><a href="/addons/boards.php">Tags</a></li> -->
 		<li><a href="/addons/rtb/">RTB Archive</a></li>
 		<?php
 		if($user && $user->inGroup("Reviewer")) {
@@ -48,63 +46,7 @@
 					</table>
 				</td>
 			</tr>
-			<!-- <tr>
-				<td colspan="2">
-					<h3>Tags</h3>
-					<p>
-						<?php
-						//considering users can create tags on the fly, this should be temporary
-						$tags = TagManager::getAllTags();
-						foreach($tags as $tag) {
-							echo $tag->getHtml();
-						}
-						?>
-					</p>
-				</td>
-			</tr> -->
 		</tbody>
 	</table>
-	<?php /*
-	<table class="addontable">
-	<tbody>
-	<?php
-		$boardIndex = include(realpath(dirname(__DIR__) . "/private/json/getBoardIndex.php"));
-
-		foreach($boardIndex as $subCategory => $boards) {
-			echo("<tr class=\"addonheader\"><td colspan=\"3\"><b>" . htmlspecialchars($subCategory) . "</b></td></tr>");
-
-			foreach($boards as $board) {
-				echo("<tr><td><image src=\"http://blocklandglass.com/img/icons32/" . $board->icon . ".png\" /></td>");
-				echo("<td><a href=\"board.php?id=" . $board->id . "\">   " . htmlspecialchars($board->name) . "</a></td>");
-				echo("<td>" . $board->count . "</td></tr>");
-			}
-		}
-
-		//This got kind of messy when I edited it to reflect boardManager changes
-		//We should probably redo part of it anyway to reflect tags
-		//$boards = BoardManager::getAllBoards();
-		//usort($boards, function($a, $b) {
-		//	return strcmp($a->getName(), $b->getName());
-		//});
-		//$subcat = array();
-		//foreach($boards as $board) {
-		//	$subcat[$board->getSubCategory()][] = $board;
-		//}
-		//foreach($subcat as $subName=>$sub) {
-		//	echo "<tr class=\"addonheader\">
-		//		<td colspan=\"3\"><b>" . utf8_encode($subName) . "</b></td>
-		//	</tr>";
-		//	foreach($sub as $board) {
-		//		echo "<tr><td><image src=\"http://blocklandglass.com/img/icons32/" . $board->getIcon() . ".png\" /></td>";
-		//		echo "<td><a href=\"board.php?id=" . $board->getID() . "\">   " . utf8_encode($board->getName()) . "</a></td>";
-		//		echo "<td>" . $board->getCount() . "</td></tr>";
-		//	}
-		//}
-		?>
-		<tr class="addonheader">
-			<td colspan="3"></td>
-		</tr>
-	</tbody>
-	</table> */?>
 </div>
 <?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>

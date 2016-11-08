@@ -12,48 +12,42 @@ class UserManager {
 	}
 
 	public static function getFromBLID($blid) {
-		$userObject = apc_fetch('userObject_' . $blid, $success);
 
-		if($success === false) {
-			$database = new DatabaseManager();
-			UserManager::verifyTable($database);
-			$resource = $database->query("SELECT username, blid, banned, admin, verified, email, reset FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "' AND `verified` = 1");
+		$database = new DatabaseManager();
+		UserManager::verifyTable($database);
+		$resource = $database->query("SELECT username, blid, banned, admin, verified, email, reset FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "' AND `verified` = 1");
 
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-
-			if($resource->num_rows == 0) {
-				$userObject = false;
-			} else {
-				$userObject = new UserObject($resource->fetch_object());
-			}
-			$resource->close();
-			apc_store('userObject_' . $blid, $userObject, UserManager::$cacheTime);
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+
+		if($resource->num_rows == 0) {
+			$userObject = false;
+		} else {
+			$userObject = new UserObject($resource->fetch_object());
+		}
+		$resource->close();
+
 		return $userObject;
 	}
 
 	//includes accounts that have not been activated
 	public static function getAllAccountsFromBLID($blid) {
-		$userObject = apc_fetch('allUserObjects_' . $blid);
 
-		if($userObject === false) {
-			$database = new DatabaseManager();
-			UserManager::verifyTable($database);
-			$resource = $database->query("SELECT username, blid, banned, admin, verified, email FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "'");
+		$database = new DatabaseManager();
+		UserManager::verifyTable($database);
+		$resource = $database->query("SELECT username, blid, banned, admin, verified, email FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "'");
 
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$userObject = [];
-
-			while($row = $resource->fetch_object()) {
-				$userObject[] = new UserObject($row);
-			}
-			$resource->close();
-			apc_store('allUserObjects_' . $blid, $userObject, UserManager::$cacheTime);
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+		$userObject = [];
+
+		while($row = $resource->fetch_object()) {
+			$userObject[] = new UserObject($row);
+		}
+		$resource->close();
+
 		return $userObject;
 	}
 
@@ -199,26 +193,20 @@ class UserManager {
 	}
 
 	private static function getLoginDetailsFromEmail($email) {
-		$loginDetails = apc_fetch('loginDetailsFromEmail_' . $email);
 
-		if($loginDetails === false) {
-			$database = new DatabaseManager();
-			$query = "SELECT password, salt, blid, username, email, verified FROM users WHERE `email` = '" . $database->sanitize($email) . "'";
-			$loginDetails = UserManager::buildLoginDetailsFromQuery($database, $query);
-			apc_store('loginDetailsFromEmail_' . $email, $loginDetails, UserManager::$credentialsCacheTime);
-		}
+		$database = new DatabaseManager();
+		$query = "SELECT password, salt, blid, username, email, verified FROM users WHERE `email` = '" . $database->sanitize($email) . "'";
+		$loginDetails = UserManager::buildLoginDetailsFromQuery($database, $query);
+
 		return $loginDetails;
 	}
 
 	private static function getLoginDetailsFromBLID($blid) {
-		$loginDetails = apc_fetch('loginDetailsFromBLID_' . $blid);
 
-		if($loginDetails === false) {
-			$database = new DatabaseManager();
-			$query = "SELECT password, salt, blid, username, email, verified FROM users WHERE `blid` = '" . $database->sanitize($blid) . "' AND  `verified` = 1";
-			$loginDetails = UserManager::buildLoginDetailsFromQuery($database, $query);
-			apc_store('loginDetailsFromBLID_' . $blid, $loginDetails, UserManager::$credentialsCacheTime);
-		}
+		$database = new DatabaseManager();
+		$query = "SELECT password, salt, blid, username, email, verified FROM users WHERE `blid` = '" . $database->sanitize($blid) . "' AND  `verified` = 1";
+		$loginDetails = UserManager::buildLoginDetailsFromQuery($database, $query);
+
 		return $loginDetails;
 	}
 

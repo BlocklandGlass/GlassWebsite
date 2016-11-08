@@ -199,7 +199,6 @@ class AddonManager {
 		$db = new DatabaseManager();
 		$db->query("UPDATE `addon_addons` SET `betaVersion`='" . $db->sanitize($version) . "' WHERE `id`='" . $db->sanitize($addon->getId()) . "'");
 
-		apc_delete('addonObject_' . $addon->getId());
 		$addon = AddonManager::getFromID($addon->getId());
 
 		AddonFileHandler::injectGlassFile($addon->getId(), $file);
@@ -343,7 +342,6 @@ class AddonManager {
 		$params->vars[] = $user;
 		$params->vars[] = $addon;
 		NotificationManager::createNotification($manager, '$2 was approved by $1', $params);
-		apc_delete('addonObject_' . $id);
 
 		StatManager::addStatsToAddon($id);
 	}
@@ -374,39 +372,26 @@ class AddonManager {
 		$params->vars[] = $user;
 		$params->vars[] = $addon;
 		NotificationManager::createNotification($manager, '$2 was rejected by $1', $params);
-		apc_delete('addonObject_' . $id);
 	}
 
 	public static function getFromID($id, $resource = false) {
-		$addonObject = apc_fetch('addonObject_' . $id, $success);
+		if($resource !== false) {
+			$addonObject = new AddonObject($resource);
+		} else {
+			$database = new DatabaseManager();
+			AddonManager::verifyTable($database);
+			$resource = $database->query("SELECT * FROM `addon_addons` WHERE `id` = '" . $database->sanitize($id) . "'");
 
-		if(!is_object($addonObject)) {
-			$success = false;
-		}
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
+			}
 
-		if($success === false) {
-			if($resource !== false) {
-				$addonObject = new AddonObject($resource);
+			if($resource->num_rows == 0) {
+				$addonObject = false;
 			} else {
-				$database = new DatabaseManager();
-				AddonManager::verifyTable($database);
-				$resource = $database->query("SELECT * FROM `addon_addons` WHERE `id` = '" . $database->sanitize($id) . "'");
-
-				if(!$resource) {
-					throw new Exception("Database error: " . $database->error());
-				}
-
-				if($resource->num_rows == 0) {
-					$addonObject = false;
-				} else {
-					$addonObject = new AddonObject($resource->fetch_object());
-				}
-				$resource->close();
+				$addonObject = new AddonObject($resource->fetch_object());
 			}
-			//cache result for one hour
-			if(is_object($addonObject)) {
-				apc_store('addonObject_' . $id, $addonObject, AddonManager::$objectCacheTime);
-			}
+			$resource->close();
 		}
 		return $addonObject;
 	}
@@ -416,14 +401,12 @@ class AddonManager {
 	 *  	$name - (STRING) string to search for in addon name
 	 *  	$blid - (INT) BLID of addon uploader
 	 *  	$board - (INT) id of board to search in
-	 *  	$tag - (INT ARRAY) an array of integers representing tag ids
 	 *  	$offset - (INT) offset for results
 	 *  	$limit - (INT) maximum number of results to return, defaults to 10
 	 *  	$sort - (INT) a number representing the sorting method, defaults to ORDER BY `name` ASC
 	 *
-	 *  	Needs to be updated to reflect new tag system
 	 */
-	public static function searchAddons($search) { //$name = false, $blid = false, $board = false, $tag = false) {
+	public static function searchAddons($search) { //$name = false, $blid = false, $board = false) {
 		//Caching this seems difficult and can cause issues with stale data easily
 		//oh well whatever
 		if(!isset($search['offset'])) {
@@ -438,114 +421,61 @@ class AddonManager {
 			$search['sort'] = AddonManager::$SORTNAMEASC;
 		}
 		$cacheString = serialize($search);
-		$searchAddons = apc_fetch('searchAddons_' . $cacheString);
 
-		if($searchAddons === false) {
-			$database = new DatabaseManager();
-			AddonManager::verifyTable($database);
-			$query = "SELECT * FROM `addon_addons` WHERE ";
 
-			if(isset($search['name'])) {
-				$query .= "`name` LIKE '%" . $database->sanitize($search['name']) . "%' AND ";
-			}
+		$database = new DatabaseManager();
+		AddonManager::verifyTable($database);
+		$query = "SELECT * FROM `addon_addons` WHERE ";
 
-			if(isset($search['blid'])) {
-				$query .= "`blid` = '" . $database->sanitize($search['blid']) . "' AND ";
-			}
-
-			if(isset($search['board'])) {
-				$query .= "`board` = '" . $database->sanitize($search['board']) . "' AND ";
-			}
-
-			//to do: tag searching, probably requires quite a bit of this to be reworked
-			//if(isset($search['tag']) && !empty($search['tag']) {
-			//	//
-			//	$query .= "`tags` LIKE '%" . $database->sanitize($search['tag']) . "%' AND ";
-			//}
-			$query .= "`deleted` = 0 AND `approved` = 1 ORDER BY ";
-
-			switch($search['sort']) {
-				case AddonManager::$SORTNAMEASC:
-					$query .= "`name` ASC ";
-					break;
-				case AddonManager::$SORTNAMEDESC:
-					$query .= "`name` DESC ";
-					break;
-				case AddonManager::$SORTDOWNLOADASC:
-					$query .= "(`downloads_web` + `downloads_ingame` + `downloads_update`) ASC ";
-					break;
-				case AddonManager::$SORTDOWNLOADSDESC:
-					$query .= "(`downloads_web` + `downloads_ingame` + `downloads_update`) DESC ";
-					break;
-				case AddonManager::$SORTRATINGASC:
-					$query .= "-rating DESC "; //this forces NULL values to be last
-					break;
-				case AddonManager::$SORTRATINGDESC:
-					$query .= "`rating` ASC ";
-					break;
-				default:
-					$query .= "`name` ASC ";
-			}
-			$query .= "LIMIT " . $database->sanitize(intval($search['offset'])) . ", " . $database->sanitize(intval($search['limit']));
-			$resource = $database->query($query);
-
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$searchAddons = [];
-
-			while($row = $resource->fetch_object()) {
-				$searchAddons[] = AddonManager::getFromID($row->id, $row)->getID();
-			}
-			$resource->close();
-			//apc_store('searchAddons_' . $cacheString, $searchAddons, AddonManager::$searchCacheTime);
-			//we can't effectively clear/update the cache, so we shouldn't store it.
+		if(isset($search['name'])) {
+			$query .= "`name` LIKE '%" . $database->sanitize($search['name']) . "%' AND ";
 		}
+
+		if(isset($search['blid'])) {
+			$query .= "`blid` = '" . $database->sanitize($search['blid']) . "' AND ";
+		}
+
+		if(isset($search['board'])) {
+			$query .= "`board` = '" . $database->sanitize($search['board']) . "' AND ";
+		}
+		$query .= "`deleted` = 0 AND `approved` = 1 ORDER BY ";
+
+		switch($search['sort']) {
+			case AddonManager::$SORTNAMEASC:
+				$query .= "`name` ASC ";
+				break;
+			case AddonManager::$SORTNAMEDESC:
+				$query .= "`name` DESC ";
+				break;
+			case AddonManager::$SORTDOWNLOADASC:
+				$query .= "(`downloads_web` + `downloads_ingame` + `downloads_update`) ASC ";
+				break;
+			case AddonManager::$SORTDOWNLOADSDESC:
+				$query .= "(`downloads_web` + `downloads_ingame` + `downloads_update`) DESC ";
+				break;
+			case AddonManager::$SORTRATINGASC:
+				$query .= "-rating DESC "; //this forces NULL values to be last
+				break;
+			case AddonManager::$SORTRATINGDESC:
+				$query .= "`rating` ASC ";
+				break;
+			default:
+				$query .= "`name` ASC ";
+		}
+		$query .= "LIMIT " . $database->sanitize(intval($search['offset'])) . ", " . $database->sanitize(intval($search['limit']));
+		$resource = $database->query($query);
+
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
+		}
+		$searchAddons = [];
+
+		while($row = $resource->fetch_object()) {
+			$searchAddons[] = AddonManager::getFromID($row->id, $row)->getID();
+		}
+		$resource->close();
 		return $searchAddons;
 	}
-
-	//Approval information should be in its own table probably
-	//the only thing that needs to be in the addons table is the true/false value
-//	public static function getUnapproved() {
-//		$unapprovedAddons = apc_fetch('unapprovedAddons');
-//
-//		if($unapprovedAddons === false) {
-//			$database = new DatabaseManager();
-//			AddonManager::verifyTable($database);
-//			$resource = $database->query("SELECT * FROM `addon_addons` WHERE `approved` = 0");
-//
-//			if(!$resource) {
-//				throw new Exception("Database error: " . $database->error());
-//			}
-//			$unapprovedAddons = [];
-//
-//			while($row = $resource->fetch_object()) {
-//				$unapprovedAddons[] = AddonManager::getFromID($row->id, $row)->getID();
-//			}
-//			$resource->close();
-//			apc_store('unapprovedAddons', $unapprovedAddons, AddonManager::$searchCacheTime);
-//		}
-//		return $unapprovedAddons;
-//	}
-
-
-	//	$ret = array();
-	//	foreach(AddonManager::getAll() as $addon) {
-	//		if($addon->isDeleted() || $addon->getFile($addon->getLatestBranch())->getMalicious() == 2) {
-	//			continue;
-	//		}
-    //
-	//		$info = json_decode($addon->getApprovalInfo());
-	//		if(isset($info->format) && $info->format == 2) {
-	//			if(sizeof($info->reports) < 5) {
-	//				$ret[] = $addon;
-	//			}
-	//		} else if($info == null) {
-	//			$ret[] = $addon;
-	//		}
-	//	}
-	//	return $ret;
-	//}
 
 	//bargain should be changed to a board
 	//this should probably just call searchAddons()
@@ -558,31 +488,6 @@ class AddonManager {
 			"approved" => 1
 		]);
 	}
-
-		//$boardAddons = apc_fetch('boardAddons_' . $id . '_' . $offset . '_' . $limit);
-        //
-		//if($boardAddons === false) {
-		//	$database = new DatabaseManager();
-		//	AddonManager::verifyTable($database);
-		//	$query = "SELECT * FROM `addon_addons` WHERE board='" . $database->sanitize($id) . "' AND deleted=0 ORDER BY `name` ASC";
-        //
-		//	if($limit > 0) {
-		//		$query .= " LIMIT " . $database->sanitize($offset) . ", " . $database->sanitize($limit);
-		//	}
-		//	$resource = $database->query($query);
-        //
-		//	if(!$resource) {
-		//		throw new Exception("Database error: " . $database->error());
-		//	}
-		//	$boardAddons = [];
-        //
-		//	while($row = $resource->fetch_object()) {
-		//		$boardAddons[] = AddonManager::getFromID($row->id, $row)->getID();
-		//	}
-		//	$resource->close();
-		//	apc_store('boardAddons_' . $id . '_' . $offset . '_' . $limit, $boardAddons, AddonManager::$searchCacheTime);
-		//}
-		//return $boardAddons;
 
 	//bargain bin should probably just be a board instead of a flag in the database
 //	public static function getBargain() {
@@ -619,28 +524,6 @@ class AddonManager {
 			"limit" => $limit
 		]);
 	}
-	//	$authorAddons = apc_fetch('authorAddons_' . $blid);
-    //
-	//	if($authorAddons === false) {
-	//		$authorAddons = array();
-	//		$database = new DatabaseManager();
-	//		AddonManager::verifyTable($database);
-    //
-	//		//include deleted addons here?
-	//		$resource = $database->query("SELECT * FROM `addon_addons` WHERE `blid` = '" . $database->sanitize($blid) . "'");
-    //
-	//		if(!$resource) {
-	//			throw new Exception("Database error: " . $database->error());
-	//		}
-    //
-	//		while($row = $resource->fetch_object()) {
-	//			$authorAddons[$row->id] = AddonManager::getFromId($row->id, $row);
-	//		}
-	//		$resource->close();
-	//		apc_store('authorAddons_' . $blid, $authorAddons, AddonManager::$searchCacheTime);
-	//	}
-	//	return $authorAddons;
-	//}
 
 	//from a caching perspective, I already have each board cached, so I would like to avoid duplicate data
 	//oh well, this function isn't actually used anyway
@@ -667,30 +550,21 @@ class AddonManager {
 	}
 
 	public static function getCountFromBoard($boardID) {
-		$count = apc_fetch('boardData_count_' . $boardID);
+		$database = new DatabaseManager();
+		AddonManager::verifyTable($database);
+		$resource = $database->query("SELECT COUNT(*) FROM `addon_addons` WHERE board='" . $boardID . "'  AND deleted=0");
 
-		if($count === false) {
-			$database = new DatabaseManager();
-			AddonManager::verifyTable($database);
-			$resource = $database->query("SELECT COUNT(*) FROM `addon_addons` WHERE board='" . $boardID . "'  AND deleted=0");
-
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$count = $resource->fetch_row()[0];
-			$resource->close();
-
-			//Cache result for 1 hour
-			//Ideally we cache indefinitely and flush the value when it updates
-			//But I get the feeling that we may forget and end up with stale values
-			apc_store('boardData_count_' . $boardID, $count, AddonManager::$indexCacheTime);
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+		$count = $resource->fetch_row()[0];
+		$resource->close();
+
 		return $count;
 	}
 
 	public static function clearSearchCache() {
-		$cached = new APCIterator('searchAddons_');
-		apc_delete($cached);
+
 	}
 
 	public static function updateName($addon, $name) {
@@ -698,7 +572,6 @@ class AddonManager {
 			$database = new DatabaseManager();
 			AddonManager::verifyTable($database);
 			$resource = $database->query("UPDATE `addon_addons` SET `name`='" . $database->sanitize($name) . "' WHERE `id`='" . $database->sanitize($addon->getId()) . "';");
-			apc_delete('addonObject_' . $addon->getId());
 
 			$res = [
 				"message" => "Updated add-on name",
@@ -715,7 +588,6 @@ class AddonManager {
 			$database = new DatabaseManager();
 			AddonManager::verifyTable($database);
 			$resource = $database->query("UPDATE `addon_addons` SET `description`='" . $database->sanitize($desc) . "' WHERE `id`='" . $database->sanitize($addon->getId()) . "';");
-			apc_delete('addonObject_' . $addon->getId());
 
 			$res = [
 				"message" => "Updated description",
@@ -731,24 +603,21 @@ class AddonManager {
 	//we should really be doing that more instead of caching entire objects in multiple places
 	public static function getNewAddons($count = 10) {
 		$count += 0;
-		$newestAddonIDs = apc_fetch('newestAddonIDs_' . $count, $success);
 
-		if($success === false) {
-			$database = new DatabaseManager();
-			AddonManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `addon_addons` WHERE `deleted`=0 AND `approved`=1 ORDER BY `uploadDate` DESC LIMIT " . $database->sanitize($count));
+		$database = new DatabaseManager();
+		AddonManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `addon_addons` WHERE `deleted`=0 AND `approved`=1 ORDER BY `uploadDate` DESC LIMIT " . $database->sanitize($count));
 
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$newestAddonIDs = [];
-
-			while($row = $resource->fetch_object()) {
-				$newestAddonIDs[] = AddonManager::getFromID($row->id, $row)->getID();
-			}
-			$resource->close();
-			apc_store('newestAddonIDs_' . $count, $newestAddonIDs, AddonManager::$searchCacheTime);
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+		$newestAddonIDs = [];
+
+		while($row = $resource->fetch_object()) {
+			$newestAddonIDs[] = AddonManager::getFromID($row->id, $row)->getID();
+		}
+		$resource->close();
+
 		return $newestAddonIDs;
 	}
 
@@ -781,23 +650,19 @@ class AddonManager {
 	}
 
 	public static function getUpdates($addon) {
-		$updates = apc_fetch('updates_' . $addon->getId(), $success);
+		$database = new DatabaseManager();
+		AddonManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `addon_updates` WHERE `aid`='" . $database->sanitize($addon->getId()) . "' ORDER BY `submitted` DESC");
 
-		if($success === false) {
-			$database = new DatabaseManager();
-			AddonManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `addon_updates` WHERE `aid`='" . $database->sanitize($addon->getId()) . "' ORDER BY `submitted` DESC");
-
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$updates = [];
-
-			while($row = $resource->fetch_object()) {
-				$updates[] = new AddonUpdateObject($row);
-			}
-			$resource->close();
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+		$updates = [];
+
+		while($row = $resource->fetch_object()) {
+			$updates[] = new AddonUpdateObject($row);
+		}
+		$resource->close();
 
 		return $updates;
 	}
@@ -833,8 +698,6 @@ class AddonManager {
 
 		$database->query("UPDATE `addon_updates` SET `approved` = b'1' WHERE `id` = '" . $database->sanitize($id) . "'");
 		$database->query("UPDATE `addon_addons` SET `version` = '" . $database->sanitize($update->version) . "' WHERE `id` = '" . $database->sanitize($update->aid) . "'");
-
-		apc_delete('addonObject_' . $update->aid);
 
 		AddonFileHandler::injectGlassFile($update->aid, $update->getFile());
 		AddonFileHandler::injectVersionInfo($update->aid, 1, $update->getFile());
@@ -894,7 +757,6 @@ class AddonManager {
 	public static function verifyTable($database) {
 		/*TO DO:
 			- screenshots
-			- tags
 			- approval info should probably be in a different table,
 			or actually maybe not I dunno
 			- do we really need stable vs testing vs dev?

@@ -10,65 +10,50 @@ require_once dirname(__FILE__) . '/DatabaseManager.php';
 
 class CronStatManager {
   function compare($stat1, $stat2) { //older, newer
-    $entry = apc_fetch('cronStat_compare_' . serialize($stat1->time . $stat2->time), $success);
-
-    if($success) {
-      return $entry;
-    } else {
-      $result = new stdClass();
-      $result->duration = strtotime($stat2->time) - strtotime($stat1->time);
+    $result = new stdClass();
+    $result->duration = strtotime($stat2->time) - strtotime($stat1->time);
 
 
-      //Addons
-      $addons = new stdClass();
-      $addons->count = $stat2->addons->count - $stat1->addons->count;
-      $result->addons = $addons;
-      $result->addons->cumulative_downloads = array();
-      foreach($stat2->addons->cumulative_downloads as $aid=>$downloadDat) {
-        $dow = new stdClass();
-        if(isset($stat1->addons->cumulative_downloads->$aid)) {
-          /*$dow->web = $stat2->addons->cumulative_downloads->$aid->web - $stat1->addons->cumulative_downloads->$aid->web;
-          $dow->web = $stat2->addons->cumulative_downloads->$aid->ingame - $stat1->addons->cumulative_downloads->$aid->ingame;
-          $dow->web = $stat2->addons->cumulative_downloads->$aid->update - $stat1->addons->cumulative_downloads->$aid->update;*/
-        } else {
-          /*$dow->web = $stat2->addons->cumulative_downloads->$aid->web;
-          $dow->web = $stat2->addons->cumulative_downloads->$aid->ingame;
-          $dow->web = $stat2->addons->cumulative_downloads->$aid->update;*/
-        }
-
-        $result->addons->cumulative_downloads[$aid] = $dow;
+    //Addons
+    $addons = new stdClass();
+    $addons->count = $stat2->addons->count - $stat1->addons->count;
+    $result->addons = $addons;
+    $result->addons->cumulative_downloads = array();
+    foreach($stat2->addons->cumulative_downloads as $aid=>$downloadDat) {
+      $dow = new stdClass();
+      if(isset($stat1->addons->cumulative_downloads->$aid)) {
+        /*$dow->web = $stat2->addons->cumulative_downloads->$aid->web - $stat1->addons->cumulative_downloads->$aid->web;
+        $dow->web = $stat2->addons->cumulative_downloads->$aid->ingame - $stat1->addons->cumulative_downloads->$aid->ingame;
+        $dow->web = $stat2->addons->cumulative_downloads->$aid->update - $stat1->addons->cumulative_downloads->$aid->update;*/
+      } else {
+        /*$dow->web = $stat2->addons->cumulative_downloads->$aid->web;
+        $dow->web = $stat2->addons->cumulative_downloads->$aid->ingame;
+        $dow->web = $stat2->addons->cumulative_downloads->$aid->update;*/
       }
 
-      //Builds
-
-      //Master
-      $result->master = new stdClass();
-      $result->master->servers = $stat2->master->servers - $stat1->master->servers;
-      $result->master->users = $stat2->master->users - $stat1->master->users;
-
-      //$result->stat1 = $stat1;
-      //$result->stat2 = $stat2;
-      apc_store('cronStat_compare_' . serialize($stat1->time . $stat2->time), $result);
-      return $result;
+      $result->addons->cumulative_downloads[$aid] = $dow;
     }
+
+    //Builds
+
+    //Master
+    $result->master = new stdClass();
+    $result->master->servers = $stat2->master->servers - $stat1->master->servers;
+    $result->master->users = $stat2->master->users - $stat1->master->users;
+
+    //$result->stat1 = $stat1;
+    //$result->stat2 = $stat2;
+    return $result;
   }
 
   function getEntry($time, $duration) {
-    $entry = apc_fetch('cronStat_' . $duration . '_' . $time, $success);
-    $success = false;
-    if(!$success) {
-      //$duration = hour, day, week, month
-      $database = new DatabaseManager();
-      $res = $database->query("SELECT * FROM `cron_statistics` WHERE `duration`='" . $database->sanitize($duration) . "' AND `time`='" . $database->sanitize($time) . "'");
-      if($res->num_rows == 0) {
-        return false;
-      } else {
-        $obj = json_decode($res->fetch_object()->data);
-        apc_store('cronStat_' . $duration . '_' . $time, $obj);
-        return $obj;
-      }
+    $database = new DatabaseManager();
+    $res = $database->query("SELECT * FROM `cron_statistics` WHERE `duration`='" . $database->sanitize($duration) . "' AND `time`='" . $database->sanitize($time) . "'");
+    if($res->num_rows == 0) {
+      return false;
     } else {
-      return $entry;
+      $obj = json_decode($res->fetch_object()->data);
+      return $obj;
     }
   }
 

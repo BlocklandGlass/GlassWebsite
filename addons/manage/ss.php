@@ -4,7 +4,6 @@ require_once(realpath(dirname(__DIR__) . "/../private/class/ScreenshotManager.ph
 if(isset($_POST['delete'])) {
   if($_POST['delete'] == 1) {
     ScreenshotManager::deleteScreenshot($_POST['sid']);
-    apc_delete('addonScreenshots_' . $_GET['id']);
   }
 }
 $_screenshotContext = "addon";

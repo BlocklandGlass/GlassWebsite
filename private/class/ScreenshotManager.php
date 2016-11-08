@@ -14,95 +14,82 @@ class ScreenshotManager {
 	public static $thumbHeight = 128;
 
 	public static function getFromID($id, $resource = false) {
-		$ScreenshotObject = apc_fetch('ScreenshotObject_' . $id, $success);
 
-		if($success === false) {
-			if($resource !== false) {
-				$ScreenshotObject = new ScreenshotObject($resource);
-			} else {
-				$database = new DatabaseManager();
-				ScreenshotManager::verifyTable($database);
-				$resource = $database->query("SELECT * FROM `screenshots` WHERE `id` = '" . $database->sanitize($id) . "' LIMIT 1");
+		if($resource !== false) {
+			$ScreenshotObject = new ScreenshotObject($resource);
+		} else {
+			$database = new DatabaseManager();
+			ScreenshotManager::verifyTable($database);
+			$resource = $database->query("SELECT * FROM `screenshots` WHERE `id` = '" . $database->sanitize($id) . "' LIMIT 1");
 
-				if(!$resource) {
-					throw new Exception("Database error: " . $database->error());
-				}
-
-				if($resource->num_rows == 0) {
-					$ScreenshotObject = false;
-				} else {
-					$ScreenshotObject = new ScreenshotObject($resource->fetch_object());
-				}
-				$resource->close();
+			if(!$resource) {
+				throw new Exception("Database error: " . $database->error());
 			}
-			apc_store('ScreenshotObject_' . $id, $ScreenshotObject, ScreenshotManager::$objectCacheTime);
+
+			if($resource->num_rows == 0) {
+				$ScreenshotObject = false;
+			} else {
+				$ScreenshotObject = new ScreenshotObject($resource->fetch_object());
+			}
+			$resource->close();
 		}
+
 		return $ScreenshotObject;
 	}
 
 	public static function getScreenshotsFromBLID($id) {
-		$userScreenshots = apc_fetch('userScreenshots_' . $id, $success);
 
-		if($success === false) {
-			$database = new DatabaseManager();
-			ScreenshotManager::verifyTable($database);
-			$resource = $database->query("SELECT * FROM `screenshots` WHERE `blid` = '" . $database->sanitize($id) . "'");
+		$database = new DatabaseManager();
+		ScreenshotManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `screenshots` WHERE `blid` = '" . $database->sanitize($id) . "'");
 
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$userScreenshots = [];
-
-			while($row = $resource->fetch_object()) {
-				$userScreenshots[] = ScreenshotManager::getFromID($row->id, $row)->getID();
-			}
-			$resource->close();
-			apc_store('userScreenshots_' . $id, $userScreenshots, ScreenshotManager::$userScreenshotsCacheTime);
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+		$userScreenshots = [];
+
+		while($row = $resource->fetch_object()) {
+			$userScreenshots[] = ScreenshotManager::getFromID($row->id, $row)->getID();
+		}
+		$resource->close();
+
 		return $userScreenshots;
 	}
 
 	public static function getScreenshotsFromBuild($id) {
-		$buildScreenshots = apc_fetch('buildScreenshots_' . $id, $success);
 
-		if($success === false) {
-			$database = new DatabaseManager();
-			ScreenshotManager::verifyTable($database);
-			$resource = $database->query("SELECT `sid` FROM `build_screenshotmap` WHERE `bid` = '" . $database->sanitize($id) . "'");
+		$database = new DatabaseManager();
+		ScreenshotManager::verifyTable($database);
+		$resource = $database->query("SELECT `sid` FROM `build_screenshotmap` WHERE `bid` = '" . $database->sanitize($id) . "'");
 
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$buildScreenshots = [];
-
-			while($row = $resource->fetch_object()) {
-				$buildScreenshots[] = $row->sid;
-			}
-			$resource->close();
-			apc_store('buildScreenshots_' . $id, $buildScreenshots, ScreenshotManager::$buildScreenshotsCacheTime);
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+		$buildScreenshots = [];
+
+		while($row = $resource->fetch_object()) {
+			$buildScreenshots[] = $row->sid;
+		}
+		$resource->close();
+
 		return $buildScreenshots;
 	}
 
 	public static function getScreenshotsFromAddon($id) {
-		$addonScreenshots = apc_fetch('addonScreenshots_' . $id, $success);
+		$database = new DatabaseManager();
+		ScreenshotManager::verifyTable($database);
+		$resource = $database->query("SELECT `sid` FROM `addon_screenshotmap` WHERE `aid` = '" . $database->sanitize($id) . "'");
 
-		if($success === false) {
-			$database = new DatabaseManager();
-			ScreenshotManager::verifyTable($database);
-			$resource = $database->query("SELECT `sid` FROM `addon_screenshotmap` WHERE `aid` = '" . $database->sanitize($id) . "'");
-
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-			$addonScreenshots = [];
-
-			while($row = $resource->fetch_object()) {
-				$addonScreenshots[] = $row->sid;
-			}
-			$resource->close();
-			apc_store('addonScreenshots_' . $id, $addonScreenshots, ScreenshotManager::$addonScreenshotsCacheTime);
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+		$addonScreenshots = [];
+
+		while($row = $resource->fetch_object()) {
+			$addonScreenshots[] = $row->sid;
+		}
+		$resource->close();
+
 		return $addonScreenshots;
 	}
 
@@ -124,8 +111,6 @@ class ScreenshotManager {
 		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
 
 		AWSFileManager::uploadNewScreenshot($sid, "screenshot." . $ext, $tempPath, $tempThumb);
-
-		apc_delete('userScreenshots_' . $blid);
 
 		return ScreenshotManager::addScreenshotToAddon($sid, $addon->getID());
 	}
@@ -152,7 +137,6 @@ class ScreenshotManager {
 			$database->sanitize($bid) . "')")) {
 			throw new Exception("Failed to create new build screenshot entry: " . $database->error());
 		}
-		apc_delete('addonScreenshots_' . $bid);
 		return true;
 	}
 
@@ -182,7 +166,6 @@ class ScreenshotManager {
 		$sid = $database->fetchMysqli()->insert_id;
 		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
 		AWSFileManager::uploadNewScreenshot($sid, "screenshot." . $ext, $tempPath, $tempThumb);
-		apc_delete('userScreenshots_' . $blid);
 
 		if(ScreenshotManager::buildHasPrimaryScreenshot($build->getID())) {
 			return ScreenshotManager::addScreenshotToBuild($sid, $build->getID());
@@ -211,28 +194,25 @@ class ScreenshotManager {
 	}
 
 	public static function getBuildPrimaryScreenshot($bid) {
-		$sid = apc_fetch('buildPrimaryScreenshot_' . $bid, $success);
 
-		if(!$success) {
-			$database = new DatabaseManager();
-			ScreenshotManager::verifyTable($database);
-			$resource = $database->query("SELECT `sid` FROM `build_screenshotmap` WHERE
-				`bid` = '" . $database->sanitize($bid) . "' AND
-				`primary` = 1 LIMIT 1");
+		$database = new DatabaseManager();
+		ScreenshotManager::verifyTable($database);
+		$resource = $database->query("SELECT `sid` FROM `build_screenshotmap` WHERE
+			`bid` = '" . $database->sanitize($bid) . "' AND
+			`primary` = 1 LIMIT 1");
 
-			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
-			}
-
-			if($resource->num_rows == 0 ) {
-				$resource->close();
-				return false;
-			}
-			$row = $resource->fetch_object();
-			$sid = ScreenshotManager::getFromID($row->sid);
-			$resource->close();
-			apc_store('buildPrimaryScreenshot_' . $bid, $sid, ScreenshotManager::$buildScreenshotsCacheTime);
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
 		}
+
+		if($resource->num_rows == 0 ) {
+			$resource->close();
+			return false;
+		}
+		$row = $resource->fetch_object();
+		$sid = ScreenshotManager::getFromID($row->sid);
+		$resource->close();
+
 		return $sid;
 	}
 
@@ -258,7 +238,6 @@ class ScreenshotManager {
 			$database->sanitize($bid) . "')")) {
 			throw new Exception("Failed to create new build screenshot entry: " . $database->error());
 		}
-		apc_delete('buildScreenshots_' . $bid);
 		return true;
 	}
 
@@ -271,22 +250,12 @@ class ScreenshotManager {
 			`bid` = '" . $database->sanitize($bid) . "'")) {
 			throw new Exception("Database error: " . $database->error());
 		}
-		//$oldPrimaryID = getBuildPrimaryScreenshot($bid);
-        //
-		//if($oldPrimaryID !== false) {
-		//	if(!$database->query("UPDATE `build_screenshotmap` SET `primary` = '0' WHERE
-		//		`sid` = '" . $database->sanitize($oldPrimaryID) . "'")) {
-		//		throw new Exception("Database error: " . $database->error());
-		//	}
-		//	apc_delete('ScreenshotObject_' . $oldPrimaryID);
-		//}
 
 		if(!$database->query("UPDATE `build_screenshotmap` SET `primary` = '1' WHERE
 			`bid` = '" . $database->sanitize($bid) . "' AND
 			`sid` = '" . $database->sanitize($sid) . "'")) {
 			throw new Exception("Database error: " . $database->error());
 		}
-		apc_delete('buildPrimaryScreenshot_' . $bid);
 		return true;
 	}
 

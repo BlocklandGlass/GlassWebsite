@@ -14,10 +14,6 @@
 		$searchArray['board'] = intval($_POST['board']);
 	}
 
-	if(isset($_POST['tag'])) {
-		$searchArrau['tag'] = $_POST['tag'];
-	}
-
 	if(isset($_POST['offset'])) {
 		$searchArray['offset'] = intval($_POST['offset']);
 	}

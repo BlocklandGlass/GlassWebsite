@@ -136,28 +136,20 @@ class AccountManager {
 	}
 
 	private static function getLoginDetailsFromEmail($email) {
-		$loginDetails = apc_fetch('loginDetailsFromEmail_' . $email);
 
-		if($loginDetails === false) {
-			$database = new DatabaseManager();
-			$query = "SELECT password, salt, blid, username FROM users WHERE `email` = '" . $database->sanitize($email) . "'";
-			$loginDetails = AccountManager::buildLoginDetailsFromQuery($database, $query);
-			apc_store('loginDetailsFromEmail_' . $email, $loginDetails, AccountManager::$cacheTime);
-			//$loginDetails = apc_fetch('loginDetails_' . $email); //causing error?
-		}
+		$database = new DatabaseManager();
+		$query = "SELECT password, salt, blid, username FROM users WHERE `email` = '" . $database->sanitize($email) . "'";
+		$loginDetails = AccountManager::buildLoginDetailsFromQuery($database, $query);
+
 		return $loginDetails;
 	}
 
 	private static function getLoginDetailsFromBLID($blid) {
-		$loginDetails = apc_fetch('loginDetailsFromBLID_' . $blid);
 
-		if($loginDetails === false) {
-			$database = new DatabaseManager();
-			$query = "SELECT password, salt, blid, username FROM users WHERE `blid` = '" . $database->sanitize($blid) . "' AND  `verified` = 1";
-			$loginDetails = AccountManager::buildLoginDetailsFromQuery($database, $query);
-			apc_store('loginDetailsFromBLID_' . $blid, $loginDetails, AccountManager::$cacheTime);
-			//$loginDetails = apc_fetch('loginDetails_' . $blid); - causing error?
-		}
+		$database = new DatabaseManager();
+		$query = "SELECT password, salt, blid, username FROM users WHERE `blid` = '" . $database->sanitize($blid) . "' AND  `verified` = 1";
+		$loginDetails = AccountManager::buildLoginDetailsFromQuery($database, $query);
+
 		return $loginDetails;
 	}
 
