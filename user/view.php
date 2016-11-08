@@ -31,16 +31,24 @@
 		$history = UserLog::getHistory($userObject->getBLID());
 
 		echo("<h3>" . utf8_encode($userObject->getName()) . "</h3>");
+		echo "<p>";
+		if($userObject->inGroup("Administrator")) {
+			echo("This user is a <span style=\"color: red; font-weight: bold;\">Glass Administrator</span>.");
+		} else if($userObject->inGroup("Moderator")) {
+			echo("This user is a <span style=\"color: orange; font-weight: bold;\">Glass Moderator</span>.");
+		} else if($userObject->inGroup("Reviewer")) {
+			echo("This user is a <span style=\"color: green; font-weight: bold;\">Glass Reviewer</span>.");
+		}
 		if(sizeof($history) > 0) echo("<p><b>Last Seen:</b> " . $history[0]->lastseen);
 		echo("<br /><b>BL_ID:</b> " . $userObject->getBLID());
-		//echo "</p><hr />";
+		echo "</p>";
 		//echo("<a href=\"/addons/search.php?blid=" . htmlspecialchars($userObject->getBLID()) . "\"><b>Find Add-Ons by this user</b></a>");
 		?>
 		<hr />
 		<table style="width: 100%">
 			<thead>
 				<tr>
-					<th style="width: 33%">Username</th><th>Last Seen</th><th>First Seen</th>
+					<th style="width: 33%">Username</th><th>First Seen</th><th>Last Seen</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -48,8 +56,8 @@
 				foreach($history as $namedata) {
 					echo "<tr>";
 					echo "<td>" . utf8_encode($namedata->username) . "</td>";
-					echo "<td>" . $namedata->lastseen . "</td>";
 					echo "<td>" . $namedata->firstseen . "</td>";
+					echo "<td>" . $namedata->lastseen . "</td>";
 					echo "</tr>";
 				}
 				?>
