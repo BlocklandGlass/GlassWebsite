@@ -391,6 +391,7 @@ class StatManager {
 		}
 
 		$db = new DatabaseManager();
+		StatManager::verifyTable($db);
 		$res = $db->query("SELECT sum(`$sql`) as sum FROM `addon_stats`");
 		$sum = $res->fetch_object()->sum;
 
@@ -398,108 +399,106 @@ class StatManager {
 	}
 
 	public static function verifyTable($database) {
-		if($database->debug()) {
-			UserManager::verifyTable($database);
-			AddonManager::verifyTable($database);
-			TagManager::verifyTable($database);
-			BuildManager::verifyTable($database);
-			GroupManager::verifyTable($database);
+		UserManager::verifyTable($database);
+		AddonManager::verifyTable($database);
+		TagManager::verifyTable($database);
+		BuildManager::verifyTable($database);
+		GroupManager::verifyTable($database);
 
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_stats` (
-				`aid` INT NOT NULL,
-				`rating` FLOAT,
-				`totalDownloads` INT NOT NULL DEFAULT 0,
-				`iterationDownloads` INT NOT NULL DEFAULT 0,
-				`webDownloads` INT NOT NULL DEFAULT 0,
-				`ingameDownloads` INT NOT NULL DEFAULT 0,
-				`updateDownloads` INT NOT NULL DEFAULT 0,
-				KEY (`totalDownloads`),
-				KEY (`iterationDownloads`),
-				FOREIGN KEY (`aid`)
-					REFERENCES addon_addons(`id`)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE)")) {
-				throw new Exception("Failed to create addon stats table: " . $database->error());
-			}
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_stats` (
+			`aid` INT NOT NULL,
+			`rating` FLOAT,
+			`totalDownloads` INT NOT NULL DEFAULT 0,
+			`iterationDownloads` INT NOT NULL DEFAULT 0,
+			`webDownloads` INT NOT NULL DEFAULT 0,
+			`ingameDownloads` INT NOT NULL DEFAULT 0,
+			`updateDownloads` INT NOT NULL DEFAULT 0,
+			KEY (`totalDownloads`),
+			KEY (`iterationDownloads`),
+			FOREIGN KEY (`aid`)
+				REFERENCES addon_addons(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE)")) {
+			throw new Exception("Failed to create addon stats table: " . $database->error());
+		}
 
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `build_stats` (
-				`bid` INT NOT NULL,
-				`rating` FLOAT,
-				`totalDownloads` INT NOT NULL DEFAULT 0,
-				`iterationDownloads` INT NOT NULL DEFAULT 0,
-				KEY (`totalDownloads`),
-				KEY (`iterationDownloads`),
-				FOREIGN KEY (`bid`)
-					REFERENCES build_builds(`id`)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE)")) {
-				throw new Exception("Failed to create build stats table: " . $database->error());
-			}
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `build_stats` (
+			`bid` INT NOT NULL,
+			`rating` FLOAT,
+			`totalDownloads` INT NOT NULL DEFAULT 0,
+			`iterationDownloads` INT NOT NULL DEFAULT 0,
+			KEY (`totalDownloads`),
+			KEY (`iterationDownloads`),
+			FOREIGN KEY (`bid`)
+				REFERENCES build_builds(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE)")) {
+			throw new Exception("Failed to create build stats table: " . $database->error());
+		}
 
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `tag_stats` (
-				`tid` INT NOT NULL,
-				`totalDownloads` INT NOT NULL DEFAULT 0,
-				`iterationDownloads` INT NOT NULL DEFAULT 0,
-				KEY (`totalDownloads`),
-				KEY (`iterationDownloads`),
-				FOREIGN KEY (`tid`)
-					REFERENCES addon_tags(`id`)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE)")) {
-				throw new Exception("Failed to create tag stats table: " . $database->error());
-			}
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `tag_stats` (
+			`tid` INT NOT NULL,
+			`totalDownloads` INT NOT NULL DEFAULT 0,
+			`iterationDownloads` INT NOT NULL DEFAULT 0,
+			KEY (`totalDownloads`),
+			KEY (`iterationDownloads`),
+			FOREIGN KEY (`tid`)
+				REFERENCES addon_tags(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE)")) {
+			throw new Exception("Failed to create tag stats table: " . $database->error());
+		}
 
-			//includes a lot of foreign keys, not sure if it is a good idea to include them all
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `statistics` (
-				`id` INT NOT NULL AUTO_INCREMENT,
-				`date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				`users` INT NOT NULL DEFAULT 0,
-				`addons` INT NOT NULL DEFAULT 0,
-				`downloads` INT NOT NULL DEFAULT 0,
-				`groups` INT NOT NULL DEFAULT 0,
-				`comments` INT NOT NULL DEFAULT 0,
-				`builds` INT NOT NULL DEFAULT 0,
-				`tags` INT NOT NULL DEFAULT 0,
-				`addon0` INT NOT NULL,
-				`addon1` INT NOT NULL,
-				`addon2` INT NOT NULL,
-				`addon3` INT NOT NULL,
-				`addon4` INT NOT NULL,
-				`addon5` INT NOT NULL,
-				`addon6` INT NOT NULL,
-				`addon7` INT NOT NULL,
-				`addon8` INT NOT NULL,
-				`addon9` INT NOT NULL,
-				`addonDownloads0` INT NOT NULL,
-				`addonDownloads1` INT NOT NULL,
-				`addonDownloads2` INT NOT NULL,
-				`addonDownloads3` INT NOT NULL,
-				`addonDownloads4` INT NOT NULL,
-				`addonDownloads5` INT NOT NULL,
-				`addonDownloads6` INT NOT NULL,
-				`addonDownloads7` INT NOT NULL,
-				`addonDownloads8` INT NOT NULL,
-				`addonDownloads9` INT NOT NULL,
-				`tag0` INT NOT NULL,
-				`tag1` INT NOT NULL,
-				`tag2` INT NOT NULL,
-				`tag3` INT NOT NULL,
-				`tag4` INT NOT NULL,
-				`tagDownloads0` INT NOT NULL,
-				`tagDownloads1` INT NOT NULL,
-				`tagDownloads2` INT NOT NULL,
-				`tagDownloads3` INT NOT NULL,
-				`tagDownloads4` INT NOT NULL,
-				`build0` INT NOT NULL,
-				`build1` INT NOT NULL,
-				`build2` INT NOT NULL,
-				`buildDownloads0` INT NOT NULL,
-				`buildDownloads1` INT NOT NULL,
-				`buildDownloads2` INT NOT NULL,
-				KEY (`date`),
-				PRIMARY KEY (`id`))")) {
-				throw new Exception("Failed to create stat history table: " . $database->error());
-			}
+		//includes a lot of foreign keys, not sure if it is a good idea to include them all
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `statistics` (
+			`id` INT NOT NULL AUTO_INCREMENT,
+			`date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`users` INT NOT NULL DEFAULT 0,
+			`addons` INT NOT NULL DEFAULT 0,
+			`downloads` INT NOT NULL DEFAULT 0,
+			`groups` INT NOT NULL DEFAULT 0,
+			`comments` INT NOT NULL DEFAULT 0,
+			`builds` INT NOT NULL DEFAULT 0,
+			`tags` INT NOT NULL DEFAULT 0,
+			`addon0` INT NOT NULL,
+			`addon1` INT NOT NULL,
+			`addon2` INT NOT NULL,
+			`addon3` INT NOT NULL,
+			`addon4` INT NOT NULL,
+			`addon5` INT NOT NULL,
+			`addon6` INT NOT NULL,
+			`addon7` INT NOT NULL,
+			`addon8` INT NOT NULL,
+			`addon9` INT NOT NULL,
+			`addonDownloads0` INT NOT NULL,
+			`addonDownloads1` INT NOT NULL,
+			`addonDownloads2` INT NOT NULL,
+			`addonDownloads3` INT NOT NULL,
+			`addonDownloads4` INT NOT NULL,
+			`addonDownloads5` INT NOT NULL,
+			`addonDownloads6` INT NOT NULL,
+			`addonDownloads7` INT NOT NULL,
+			`addonDownloads8` INT NOT NULL,
+			`addonDownloads9` INT NOT NULL,
+			`tag0` INT NOT NULL,
+			`tag1` INT NOT NULL,
+			`tag2` INT NOT NULL,
+			`tag3` INT NOT NULL,
+			`tag4` INT NOT NULL,
+			`tagDownloads0` INT NOT NULL,
+			`tagDownloads1` INT NOT NULL,
+			`tagDownloads2` INT NOT NULL,
+			`tagDownloads3` INT NOT NULL,
+			`tagDownloads4` INT NOT NULL,
+			`build0` INT NOT NULL,
+			`build1` INT NOT NULL,
+			`build2` INT NOT NULL,
+			`buildDownloads0` INT NOT NULL,
+			`buildDownloads1` INT NOT NULL,
+			`buildDownloads2` INT NOT NULL,
+			KEY (`date`),
+			PRIMARY KEY (`id`))")) {
+			throw new Exception("Failed to create stat history table: " . $database->error());
 		}
 	}
 }

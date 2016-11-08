@@ -908,66 +908,64 @@ class AddonManager {
 			- I think users should just credit people in their descriptions
 			instead of having a dedicated authorInfo json object
 		*/
-		if($database->debug()) {
-			require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
-			require_once(realpath(dirname(__FILE__) . '/BoardManager.php'));
-			UserManager::verifyTable($database);
-			BoardManager::verifyTable($database);
+		require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
+		require_once(realpath(dirname(__FILE__) . '/BoardManager.php'));
+		UserManager::verifyTable($database);
+		BoardManager::verifyTable($database);
 
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_addons` (
-				`id` INT NOT NULL AUTO_INCREMENT,
-				`board` INT,
-				`blid` INT NOT NULL,
-				`name` VARCHAR(30) NOT NULL,
-				`filename` TEXT NOT NULL,
-				`description` TEXT NOT NULL,
-				`version` TEXT NOT NULL,
-				`authorInfo` TEXT NOT NULL,
-				`reviewInfo` TEXT NOT NULL,
-				`repositoryInfo` TEXT NULL DEFAULT NULL,
-				`deleted` TINYINT NOT NULL DEFAULT 0,
-				`approved` TINYINT NOT NULL DEFAULT 0,
-				`betaVersion` TEXT DEFAULT NULL,
-				`rating` int(11) NOT NULL DEFAULT 0,
-				`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				`type` TEXT NOT NULL,
-				FOREIGN KEY (`board`)
-					REFERENCES addon_boards(`id`)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE,
-				PRIMARY KEY (`id`))")) {
-				throw new Exception("Failed to create table addon_addons: " . $database->error());
-			}
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_addons` (
+			`id` INT NOT NULL AUTO_INCREMENT,
+			`board` INT,
+			`blid` INT NOT NULL,
+			`name` VARCHAR(30) NOT NULL,
+			`filename` TEXT NOT NULL,
+			`description` TEXT NOT NULL,
+			`version` TEXT NOT NULL,
+			`authorInfo` TEXT NOT NULL,
+			`reviewInfo` TEXT NOT NULL,
+			`repositoryInfo` TEXT NULL DEFAULT NULL,
+			`deleted` TINYINT NOT NULL DEFAULT 0,
+			`approved` TINYINT NOT NULL DEFAULT 0,
+			`betaVersion` TEXT DEFAULT NULL,
+			`rating` int(11) NOT NULL DEFAULT 0,
+			`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`type` TEXT NOT NULL,
+			FOREIGN KEY (`board`)
+				REFERENCES addon_boards(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			PRIMARY KEY (`id`))")) {
+			throw new Exception("Failed to create table addon_addons: " . $database->error());
+		}
 
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_updates` (
-				`id` int(11) NOT NULL AUTO_INCREMENT,
-			  `aid` int(11) NOT NULL,
-			  `version` text NOT NULL,
-			  `tempfile` text NOT NULL,
-			  `changelog` text NOT NULL,
-			  `submitted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-			  `upstream` bit(1) NOT NULL DEFAULT b'0',
-			  `restart` bit(1) NOT NULL DEFAULT b'0',
-			  `approved` bit(1) DEFAULT NULL,
-				FOREIGN KEY (`aid`)
-					REFERENCES addon_addons(`id`)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE,
-			  PRIMARY KEY (`id`),
-			  UNIQUE KEY `id` (`id`))")) {
-				throw new Exception("Failed to create table addon_updates: " . $database->error());
-			}
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_updates` (
+			`id` int(11) NOT NULL AUTO_INCREMENT,
+		  `aid` int(11) NOT NULL,
+		  `version` text NOT NULL,
+		  `tempfile` text NOT NULL,
+		  `changelog` text NOT NULL,
+		  `submitted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		  `upstream` bit(1) NOT NULL DEFAULT b'0',
+		  `restart` bit(1) NOT NULL DEFAULT b'0',
+		  `approved` bit(1) DEFAULT NULL,
+			FOREIGN KEY (`aid`)
+				REFERENCES addon_addons(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+		  PRIMARY KEY (`id`),
+		  UNIQUE KEY `id` (`id`))")) {
+			throw new Exception("Failed to create table addon_updates: " . $database->error());
+		}
 
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_ratings` (
-			  `aid` int(11) NOT NULL,
-				`blid` int(11) NOT NULL,
-				`rating` int(11) NOT NULL,
-				FOREIGN KEY (`aid`)
-					REFERENCES addon_addons(`id`)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE)")) {
-				throw new Exception("Failed to create table addon_updates: " . $database->error());
-			}
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_ratings` (
+		  `aid` int(11) NOT NULL,
+			`blid` int(11) NOT NULL,
+			`rating` int(11) NOT NULL,
+			FOREIGN KEY (`aid`)
+				REFERENCES addon_addons(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE)")) {
+			throw new Exception("Failed to create table addon_updates: " . $database->error());
 		}
 	}
 }

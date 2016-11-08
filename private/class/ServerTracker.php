@@ -31,16 +31,14 @@ class ServerTracker {
   }
 
   public static function verifyTable($database) {
-		if($database->debug()) {
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `server_tracking` (
-      `ip` text NOT NULL,
-      `port` int(6) NOT NULL,
-      `host` text NOT NULL,
-      `clients` text NOT NULL,
-      `lastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)")) {
-				throw new Exception("Failed to create table server_tracking: " . $database->error());
-			}
-    }
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `server_tracking` (
+    `ip` text NOT NULL,
+    `port` int(6) NOT NULL,
+    `host` text NOT NULL,
+    `clients` text NOT NULL,
+    `lastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)")) {
+			throw new Exception("Failed to create table server_tracking: " . $database->error());
+		}
   }
 }
 

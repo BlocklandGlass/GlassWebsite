@@ -9,6 +9,7 @@ class UserLog {
 
 	public static function getRecentlyActive($min = 10) {
 		$db = new DatabaseManager();
+		UserLog::verifyTable($db);
 		$res = $db->query("SELECT * FROM `user_log` WHERE `lastseen` > now() - INTERVAL 10 MINUTE");
 		$ret = array();
 		while($obj = $res->fetch_object()) {

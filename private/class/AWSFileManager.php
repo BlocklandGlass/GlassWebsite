@@ -92,7 +92,7 @@ class AWSFileManager {
 		$key = apc_fetch('aws_credentials', $success);
 
 		if(!$success) {
-			$key = json_decode(file_get_contents(dirname(__FILE__) . "/key.json"));
+			$key = json_decode(file_get_contents(dirname(__DIR__) . "/config.json"));
 			apc_store('aws_credentials', $key);
 		}
 		return $key;

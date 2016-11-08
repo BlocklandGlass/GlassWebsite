@@ -135,25 +135,23 @@ class DependencyManager {
 	}
 
 	public static function verifyTable($database) {
-		if($database->debug()) {
-			AddonManager::verifyTable($database);
+		AddonManager::verifyTable($database);
 
-			//this table might not need a primary key
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_dependencies` (
-				`id` INT NOT NULL AUTO_INCREMENT,
-				`target` INT NOT NULL,
-				`requirement` INT NOT NULL,
-				FOREIGN KEY (`target`)
-					REFERENCES addon_addons(id)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE,
-				FOREIGN KEY (`requirement`)
-					REFERENCES addon_addons(id)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE,
-				PRIMARY KEY (`id`))")) {
-				throw new Exception("Error creating dependency table: " . $database->error());
-			}
+		//this table might not need a primary key
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_dependencies` (
+			`id` INT NOT NULL AUTO_INCREMENT,
+			`target` INT NOT NULL,
+			`requirement` INT NOT NULL,
+			FOREIGN KEY (`target`)
+				REFERENCES addon_addons(id)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			FOREIGN KEY (`requirement`)
+				REFERENCES addon_addons(id)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			PRIMARY KEY (`id`))")) {
+			throw new Exception("Error creating dependency table: " . $database->error());
 		}
 	}
 }

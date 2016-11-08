@@ -273,37 +273,35 @@ class TagManager {
 	}
 
 	public static function verifyTable($database) {
-		if($database->debug()) {
-			AddonManager::verifyTable($database);
+		AddonManager::verifyTable($database);
 
-			//to do: change addon_tags to something more general so build and stuff can be tagged
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_tags` (
-				`id` INT NOT NULL AUTO_INCREMENT,
-				`name` varchar(16) NOT NULL,
-				`base_color` varchar(6) NOT NULL,
-				`icon` text NOT NULL,
-				`important` TINYINT NOT NULL DEFAULT 0,
-				KEY (`name`),
-				PRIMARY KEY (`id`))")) {
-				throw new Exception("Error creating tag table: " . $database->error());
-			}
+		//to do: change addon_tags to something more general so build and stuff can be tagged
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_tags` (
+			`id` INT NOT NULL AUTO_INCREMENT,
+			`name` varchar(16) NOT NULL,
+			`base_color` varchar(6) NOT NULL,
+			`icon` text NOT NULL,
+			`important` TINYINT NOT NULL DEFAULT 0,
+			KEY (`name`),
+			PRIMARY KEY (`id`))")) {
+			throw new Exception("Error creating tag table: " . $database->error());
+		}
 
-			//this table might not need a primary key
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_tagmap` (
-				`id` INT NOT NULL AUTO_INCREMENT,
-				`aid` INT NOT NULL,
-				`tid` INT NOT NULL,
-				FOREIGN KEY (`aid`)
-					REFERENCES addon_addons(id)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE,
-				FOREIGN KEY (`tid`)
-					REFERENCES addon_tags(id)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE,
-				PRIMARY KEY (`id`))")) {
-				throw new Exception("Error creating tagmap table: " . $database->error());
-			}
+		//this table might not need a primary key
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_tagmap` (
+			`id` INT NOT NULL AUTO_INCREMENT,
+			`aid` INT NOT NULL,
+			`tid` INT NOT NULL,
+			FOREIGN KEY (`aid`)
+				REFERENCES addon_addons(id)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			FOREIGN KEY (`tid`)
+				REFERENCES addon_tags(id)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			PRIMARY KEY (`id`))")) {
+			throw new Exception("Error creating tagmap table: " . $database->error());
 		}
 	}
 }

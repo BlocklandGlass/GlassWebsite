@@ -98,23 +98,21 @@ class NotificationManager {
 	}
 
 	public static function verifyTable($database) {
-		if($database->debug()) {
-			UserManager::verifyTable($database);
+		UserManager::verifyTable($database);
 
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `user_notifications` (
-				`id` INT NOT NULL AUTO_INCREMENT,
-				`blid` INT NOT NULL,
-				`date` timestamp NOT NULL,
-				`text` text NOT NULL,
-				`params` text NOT NULL,
-				`seen` TINYINT NOT NULL DEFAULT 0,
-				FOREIGN KEY (`blid`)
-					REFERENCES users(`blid`)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE,
-				PRIMARY KEY (`id`))")) {
-				throw new Exception("Error creating table: " . $database->error());
-			}
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `user_notifications` (
+			`id` INT NOT NULL AUTO_INCREMENT,
+			`blid` INT NOT NULL,
+			`date` timestamp NOT NULL,
+			`text` text NOT NULL,
+			`params` text NOT NULL,
+			`seen` TINYINT NOT NULL DEFAULT 0,
+			FOREIGN KEY (`blid`)
+				REFERENCES users(`blid`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			PRIMARY KEY (`id`))")) {
+			throw new Exception("Error creating table: " . $database->error());
 		}
 	}
 }

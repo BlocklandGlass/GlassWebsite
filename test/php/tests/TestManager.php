@@ -24,9 +24,6 @@ class TestManager {
 		//make sure we don't accidentally load dummy data on live database
 		//to do: make sure this actually works
 		//if(strpos($name, "test" === false)) {
-		if(!$database->debug()) {
-			throw new Exception("Database may not be safe to run tests on");
-		}
 
 		//addon_addons, addon_boards, addon_tags, addon_tagmap, group_groups, group_usermap, addon_comments, addon_ratings
 		if(!$database->query("SET FOREIGN_KEY_CHECKS=0")) {

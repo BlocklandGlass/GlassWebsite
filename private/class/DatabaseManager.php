@@ -4,7 +4,6 @@ class DatabaseManager {
 	private $database;
 	private $username;
 	private $password;
-	private $debug;
 
 	private $mysqli;
 
@@ -14,22 +13,16 @@ class DatabaseManager {
 		$keyData = apc_fetch('mysqlKey');
 
 		if($keyData === false) {
-			if(!is_file(dirname(__FILE__) . "/key.json")) {
+			if(!is_file(dirname(__DIR__) . "/config.json")) {
 				throw new Exception("Key file not found");
 			} else {
-				$keyData = json_decode(file_get_contents(dirname(__FILE__) . "/key.json"));
+				$keyData = json_decode(file_get_contents(dirname(__DIR__) . "/config.json"));
 				apc_store('mysqlKey', $keyData);
 			}
 		}
 		$this->database = $keyData->database;
 		$this->username = $keyData->username;
 		$this->password = $keyData->password;
-
-		if(isset($keyData->debug) && $keyData->debug) {
-			$this->debug = true;
-		} else {
-			$this->debug = false;
-		}
 
 		try {
 			$this->mysqli = @new mysqli("localhost", $this->username, $this->password, $this->database);
@@ -71,10 +64,6 @@ class DatabaseManager {
 
 	public function error() {
 		return $this->mysqli->error;
-	}
-
-	public function debug() {
-		return $this->debug;
 	}
 
 	public function update($table, $identifiers, $values, $time = null) {

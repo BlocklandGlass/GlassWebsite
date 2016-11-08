@@ -323,65 +323,63 @@ class ScreenshotManager {
 	}
 
 	public static function verifyTable($database) {
-		if($database->debug()) {
-			require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
-			require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
-			require_once(realpath(dirname(__FILE__) . '/BuildManager.php'));
-			UserManager::verifyTable($database); //we need users table to exist before we can create this one
-			AddonManager::verifyTable($database);
-			BuildManager::verifyTable($database);
+		require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
+		require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
+		require_once(realpath(dirname(__FILE__) . '/BuildManager.php'));
+		UserManager::verifyTable($database); //we need users table to exist before we can create this one
+		AddonManager::verifyTable($database);
+		BuildManager::verifyTable($database);
 
-			//we need to be able to build a url out of this data too
-			//	UNIQUE KEY (`filename`),
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `screenshots` (
-				`id` INT NOT NULL AUTO_INCREMENT,
-				`blid` INT NOT NULL,
-				`x` INT NOT NULL,
-				`y` INT NOT NULL,
-				`name` VARCHAR(60),
-				`filename` VARCHAR(60),
-				`description` TEXT,
-				FOREIGN KEY (`blid`)
-					REFERENCES users(`blid`)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE,
-				KEY (`name`),
-				PRIMARY KEY (`id`))")) {
-				throw new Exception("Error creating screenshots table: " . $database->error());
-			}
+		//we need to be able to build a url out of this data too
+		//	UNIQUE KEY (`filename`),
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `screenshots` (
+			`id` INT NOT NULL AUTO_INCREMENT,
+			`blid` INT NOT NULL,
+			`x` INT NOT NULL,
+			`y` INT NOT NULL,
+			`name` VARCHAR(60),
+			`filename` VARCHAR(60),
+			`description` TEXT,
+			FOREIGN KEY (`blid`)
+				REFERENCES users(`blid`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			KEY (`name`),
+			PRIMARY KEY (`id`))")) {
+			throw new Exception("Error creating screenshots table: " . $database->error());
+		}
 
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `build_screenshotmap` (
-				`id` INT NOT NULL AUTO_INCREMENT,
-				`sid` INT NOT NULL,
-				`bid` INT NOT NULL,
-				`primary` TINYINT NOT NULL DEFAULT 0,
-				FOREIGN KEY (`sid`)
-					REFERENCES screenshots(`id`)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE,
-				FOREIGN KEY (`bid`)
-					REFERENCES build_builds(`id`)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE,
-				PRIMARY KEY (`id`))")) {
-				throw new Exception("Error creating build_screenshotmap table: " . $database->error());
-			}
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `build_screenshotmap` (
+			`id` INT NOT NULL AUTO_INCREMENT,
+			`sid` INT NOT NULL,
+			`bid` INT NOT NULL,
+			`primary` TINYINT NOT NULL DEFAULT 0,
+			FOREIGN KEY (`sid`)
+				REFERENCES screenshots(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			FOREIGN KEY (`bid`)
+				REFERENCES build_builds(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			PRIMARY KEY (`id`))")) {
+			throw new Exception("Error creating build_screenshotmap table: " . $database->error());
+		}
 
-			if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_screenshotmap` (
-				`id` INT NOT NULL AUTO_INCREMENT,
-				`sid` INT NOT NULL,
-				`aid` INT NOT NULL,
-				FOREIGN KEY (`sid`)
-					REFERENCES screenshots(`id`)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE,
-				FOREIGN KEY (`aid`)
-					REFERENCES addon_addons(`id`)
-					ON UPDATE CASCADE
-					ON DELETE CASCADE,
-				PRIMARY KEY (`id`))")) {
-				throw new Exception("Error creating addon_screenshotmap table: " . $database->error());
-			}
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_screenshotmap` (
+			`id` INT NOT NULL AUTO_INCREMENT,
+			`sid` INT NOT NULL,
+			`aid` INT NOT NULL,
+			FOREIGN KEY (`sid`)
+				REFERENCES screenshots(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			FOREIGN KEY (`aid`)
+				REFERENCES addon_addons(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			PRIMARY KEY (`id`))")) {
+			throw new Exception("Error creating addon_screenshotmap table: " . $database->error());
 		}
 	}
 }
