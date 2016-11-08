@@ -63,7 +63,7 @@ if($status == 403)
 {
 	$status = 404;
 }
-
+echo $status;
 switch($status)
 {
 	case 400:
@@ -74,9 +74,14 @@ switch($status)
 		header("HTTP/1.0 500 Server Error", true, 500);
 		echo "<h1>An Error Occurred</h1>\n<p>Code: $status Server Error</p>";
 		break;
-	default:
+	case 404:
 		header("HTTP/1.0 404 Not Found", true, 404);
 		echo "<h1>Page Not Found</h1>\n<p>Sorry, but the page you were trying to view does not exist.</p>";
+    break;
+	default:
+		header("HTTP/1.0 " . $status, true, $status);
+		echo "<h1>Unhandled Error Code</h1>\n<p>This is an error page, but we're not set up to detail you about status " . $status . "</p>";
+    break;
 }
 ?>
 

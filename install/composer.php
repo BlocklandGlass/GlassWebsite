@@ -1,1 +1,1 @@
-Please run composer on the root directory
+Please run composer on the root directory and move vendor to private/vendor
