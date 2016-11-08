@@ -15,6 +15,8 @@
 	if(!$user || !$user->inGroup("Administrator")) {
     header('Location: /login.php?redirect=' . urlencode("/admin/index.php"));
     return;
+  } else {
+    $_adminAuthed = true;
   }
 ?>
 
