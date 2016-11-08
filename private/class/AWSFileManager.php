@@ -1,4 +1,8 @@
 <?php
+if(!is_file(realpath(dirname(__DIR__) . '/vendor/autoload.php'))) {
+	header('Location: /install/composer.php');
+	die();
+}
 require_once(realpath(dirname(__DIR__) . '/vendor/autoload.php'));
 use Aws\S3\S3Client;
 
