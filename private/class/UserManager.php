@@ -123,6 +123,7 @@ class UserManager {
 
 	public static function updatePassword($blid, $password) {
 		$database = new DatabaseManager();
+		UserManager::verifyTable($database);
 		$intermediateSalt = md5(uniqid(rand(), true));
 		$salt = substr($intermediateSalt, 0, 6);
 		$hash = hash("sha256", $password . $salt);
@@ -168,6 +169,7 @@ class UserManager {
 			];
 		}
 		$database = new DatabaseManager();
+		UserManager::verifyTable($database);
 		$intermediateSalt = md5(uniqid(rand(), true));
 		$salt = substr($intermediateSalt, 0, 6);
 		$hash = hash("sha256", $password1 . $salt);
@@ -192,6 +194,7 @@ class UserManager {
 	private static function getLoginDetailsFromEmail($email) {
 
 		$database = new DatabaseManager();
+		UserManager::verifyTable($database);
 		$query = "SELECT password, salt, blid, username, email, verified FROM users WHERE `email` = '" . $database->sanitize($email) . "'";
 		$loginDetails = UserManager::buildLoginDetailsFromQuery($database, $query);
 
@@ -201,6 +204,7 @@ class UserManager {
 	private static function getLoginDetailsFromBLID($blid) {
 
 		$database = new DatabaseManager();
+		UserManager::verifyTable($database);
 		$query = "SELECT password, salt, blid, username, email, verified FROM users WHERE `blid` = '" . $database->sanitize($blid) . "' AND  `verified` = 1";
 		$loginDetails = UserManager::buildLoginDetailsFromQuery($database, $query);
 
@@ -240,6 +244,7 @@ class UserManager {
 	public static function sendPasswordResetEmail($user) {
 		$resetToken = substr(base64_encode(sha1(mt_rand())), 0, 16);
 		$db = new DatabaseManager();
+		UserManager::verifyTable($db);
 		$db->query("UPDATE `users` SET `reset`='" . $db->sanitize($resetToken . " " . time()) . "' WHERE `blid`='" . $db->sanitize($user->getBlid()) . "'");
 
 		$body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
