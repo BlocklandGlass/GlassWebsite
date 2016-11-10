@@ -9,7 +9,8 @@ foreach($boards as $board) {
   $retboard = new stdClass();
   $retboard->id = $board->getId();
   $retboard->name = $board->getName();
-  $retboard->video = $board->getVideo();
+  $retboard->video = "";
+  $retboard->icon = $board->getIcon();
   $retboard->description = $board->getDescription();
   $ret->boards[] = $retboard;
 }
