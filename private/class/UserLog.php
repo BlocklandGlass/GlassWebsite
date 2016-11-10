@@ -107,7 +107,7 @@ class UserLog {
 		//maybe replace verified/banned with 'status'
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `user_log` (
       `blid` int(11) NOT NULL,
-      `firstseen` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+      `firstseen` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
       `lastseen` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       `username` varchar(64) NOT NULL
       )")) {
