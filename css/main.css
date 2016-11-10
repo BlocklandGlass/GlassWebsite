@@ -514,7 +514,8 @@ input[type="submit"]:active {
 .boardheader td {
   font-size: 1.2em;
   padding: 5px 10px 5px 10px;
-  background-color: #fdfdfd;
+  background-color: #69dd9a;
+  color: #fff;
   font-weight: bold;
   text-align: center !important;
 }
