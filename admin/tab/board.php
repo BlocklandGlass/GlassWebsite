@@ -7,16 +7,16 @@ require_once(realpath(dirname(__DIR__) . "/../private/class/BoardManager.php"));
 
 if(isset($_POST['name']) && isset($_POST['icon']) && isset($_POST['desc'])) {
   $db = new DatabaseManager();
-  $db->query("INSERT INTO `addon_boards` (`id`, `name`, `video`, `description`) VALUES (NULL, '" . $db->sanitize($_POST['name']) . "', '" . $db->sanitize($_POST['icon']) . "', '" . $db->sanitize($_POST['desc']) . "');");
+  $db->query("INSERT INTO `addon_boards` (`id`, `name`, `icon`, `description`) VALUES (NULL, '" . $db->sanitize($_POST['name']) . "', '" . $db->sanitize($_POST['icon']) . "', '" . $db->sanitize($_POST['desc']) . "');");
 }
 
 ?>
-<table>
+<table style="width: 100%">
   <tbody>
     <tr>
-      <th style="width: 200px">Board</th>
-      <th style="width: 100px">Add-Ons</th>
-      <th style="width: 100px">Options</th>
+      <th style="width: 50%">Board</th>
+      <th style="">Add-Ons</th>
+      <th style="">Options</th>
     </tr>
     <?php
     $boards = BoardManager::getAllBoards();

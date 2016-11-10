@@ -87,81 +87,86 @@
 	}
 ?>
 	</div>
+	<div class="tile">
 	<table class="boardtable">
-	<tbody>
-		<tr class="boardheader">
-			<td>Name</td>
-			<td>Uploader</td>
-			<td>Rating</td>
-			<td>Downloads</td>
-		</tr>
-<?php
-	//$addons = $boardObject->getAddons(($page-1)*10, 10);
-	$addonIDs = AddonManager::getFromBoardID($boardObject->getID(), ($page-1)*10, 10);
-	//$addons = BoardManager::getAddonsFromBoardID($boardObject->getID(), ($page-1)*10, 10);
+		<tbody>
+			<tr class="boardheader">
+				<td>Name</td>
+				<td>Uploader</td>
+				<td>Rating</td>
+				<td>Downloads</td>
+			</tr>
+			<?php
+				//$addons = $boardObject->getAddons(($page-1)*10, 10);
+				$addonIDs = AddonManager::getFromBoardID($boardObject->getID(), ($page-1)*10, 10);
+				//$addons = BoardManager::getAddonsFromBoardID($boardObject->getID(), ($page-1)*10, 10);
 
-	foreach($addonIDs as $aid) {
-		$addon = AddonManager::getFromID($aid); ?>
-		<tr>
-		<td style="width: 33%"><a href="addon.php?id=<?php echo $addon->getID(); ?>"><?php echo $addon->getName(); ?></a></td>
-		<td style="font-size: 11pt"><?php
-		$authors = $addon->getAuthorInfo();
+				foreach($addonIDs as $aid) {
+					$addon = AddonManager::getFromID($aid); ?>
+					<tr>
+					<td style="width: 33%"><a href="addon.php?id=<?php echo $addon->getID(); ?>"><?php echo $addon->getName(); ?></a></td>
+					<td style="font-size: 11pt"><?php
+					$authors = $addon->getAuthorInfo();
 
-		//This system should probably be rethought
-		if(sizeof($authors) == 1) {
-			//$uo = new UserHandler();
-			//$uo->initFromId($authors[0]->id);
-			$uo = UserManager::getFromBLID($authors[0]->blid);
-			echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . utf8_encode($uo->getName()) . "</a>";
-		} else if(sizeof($authors) == 2) {
-			//$uo = new UserHandler();
-			//$uo->initFromId($authors[0]->id);
-			$uo = UserManager::getFromBLID($authors[0]->blid);
-			$uo2 = new UserHandler();
-			$uo2->initFromId($authors[1]->id);
-			$uo2 = UserManager::getFromBLID($authors[1]->blid);
-			echo "<a href=\"#\">" . $uo->getName() . "</a>";
-			echo " and ";
-			echo "<a href=\"#\">" . $uo2->getName() . "</a>";
-		} else {
-			$count = sizeof($authors);
-			//echo("DATA: ");
-			//print_r($authors);
+					//This system should probably be rethought
+					if(sizeof($authors) == 1) {
+						//$uo = new UserHandler();
+						//$uo->initFromId($authors[0]->id);
+						$uo = UserManager::getFromBLID($authors[0]->blid);
+						echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . utf8_encode($uo->getName()) . "</a>";
+					} else if(sizeof($authors) == 2) {
+						//$uo = new UserHandler();
+						//$uo->initFromId($authors[0]->id);
+						$uo = UserManager::getFromBLID($authors[0]->blid);
+						$uo2 = new UserHandler();
+						$uo2->initFromId($authors[1]->id);
+						$uo2 = UserManager::getFromBLID($authors[1]->blid);
+						echo "<a href=\"#\">" . $uo->getName() . "</a>";
+						echo " and ";
+						echo "<a href=\"#\">" . $uo2->getName() . "</a>";
+					} else {
+						$count = sizeof($authors);
+						//echo("DATA: ");
+						//print_r($authors);
 
-			foreach($authors as $num=>$author) {
-				//$uo = new UserHandler();
-				//$uo->initFromId($auth->id);
-				$uo = UserManager::getFromBLID($author->blid);
+						foreach($authors as $num=>$author) {
+							//$uo = new UserHandler();
+							//$uo->initFromId($auth->id);
+							$uo = UserManager::getFromBLID($author->blid);
 
-				if($count-$num == 1) {
-					echo "and <a href=\"#\">" . $uo->getName() . "</a>";
-				} else {
-					echo "<a href=\"#\">" . $uo->getName() . "</a>, ";
+							if($count-$num == 1) {
+								echo "and <a href=\"#\">" . $uo->getName() . "</a>";
+							} else {
+								echo "<a href=\"#\">" . $uo->getName() . "</a>, ";
+							}
+						}
+					} ?>
+					</td>
+					<td>
+						N/A
+						<!--
+						<image src="/img/icons16/draw_star.png" />
+						<image src="/img/icons16/draw_star.png" />
+						<image src="/img/icons16/draw_star.png" />
+						<image src="/img/icons16/draw_star.png" />
+						<image src="/img/icons16/draw_star.png" />
+						-->
+					</td>
+					<td><?php echo ($addon->getDownloads("web") + $addon->getDownloads("ingame")); ?></td>
+					</tr><?php
 				}
-			}
-		} ?>
-		</td>
-		<td>
-			N/A
-			<!--
-			<image src="/img/icons16/draw_star.png" />
-			<image src="/img/icons16/draw_star.png" />
-			<image src="/img/icons16/draw_star.png" />
-			<image src="/img/icons16/draw_star.png" />
-			<image src="/img/icons16/draw_star.png" />
-			-->
-		</td>
-		<td><?php echo ($addon->getDownloads("web") + $addon->getDownloads("ingame")); ?></td>
-		</tr><?php
-	}
 
-	//TO DO: page number links should also appear at the bottom, probably inside of the grey footer
-?>
-		<tr class="boardheader">
-			<td colspan="4"></td>
-		</tr>
+				if(sizeof($addonIDs) == 0) {
+					echo '<tr><td colspan="4">No Add-Ons!</td></tr>';
+				}
+				//TO DO: page number links should also appear at the bottom, probably inside of the grey footer
+			?>
+			<tr class="boardheader">
+				<td colspan="4"></td>
+			</tr>
 		</tbody>
 	</table>
+	</div>
 </div>
 
 <?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>

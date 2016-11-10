@@ -101,15 +101,12 @@ class UserManager {
 		if($hash === hash("sha256", $password . $salt)) {
 			$_SESSION['loggedin'] = 1;
 
-			if($loginDetails['verified']) {
-				$_SESSION['blid'] = $loginDetails['blid'];
-			} else {
-				$_SESSION['email'] = $loginDetails['email'];
-			}
+			$_SESSION['blid']			= $loginDetails['blid'];
+			$_SESSION['email']		= $loginDetails['email'];
 			$_SESSION['username'] = $loginDetails['username'];
 
 			$userObject = UserManager::getFromBLID($_SESSION['blid']);
-			if($userObject->isMigrated()) {
+			if($userObject == false || $userObject->isMigrated()) {
 				return [
 					"redirect" => $redirect
 				];

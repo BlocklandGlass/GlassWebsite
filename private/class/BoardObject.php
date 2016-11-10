@@ -2,13 +2,13 @@
 class BoardObject {
 	public $id;
 	public $name;
-	public $video;
+	public $icon;
 	public $description;
 
 	public function __construct($resource) {
 		$this->id = intval($resource->id);
 		$this->name = $resource->name;
-		$this->video = $resource->video;
+		$this->icon = $resource->icon;
 		$this->description = $resource->description;
 	}
 
@@ -20,8 +20,8 @@ class BoardObject {
 		return $this->name;
 	}
 
-	function getVideo() {
-		return $this->video;
+	function getIcon() {
+		return $this->icon;
 	}
 
 	function getDescription() {

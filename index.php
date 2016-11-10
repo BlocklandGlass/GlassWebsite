@@ -74,7 +74,7 @@ if(is_file(dirname(__FILE__) . '/private/test.json')) {
 	<br />
 	<p>
 		<h3>Want to get involved?</h3>
-		As you can probably tell, this site points straight to the old one. The old one was developed independently and is very distasteful. In an attempt to modernize the site, this new one is entirely open source. Please, contribute on <a href="https://github.com/BlocklandGlass">GitHub</a> and check out the <a href="https://forum.blockland.us/index.php?topic=284376.0">Glass Development Topic</a> over on the Blockland Forums!
+		Blockland Glass is an open-source project open to any contributions. If you're interested, please contribute on <a href="https://github.com/BlocklandGlass">GitHub</a> and check out the <a href="https://forum.blockland.us/index.php?topic=284376.0">Blockland Glass Topic</a> over on the Blockland Forums!
 	</p>
 </div>
 

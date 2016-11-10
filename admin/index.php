@@ -21,7 +21,7 @@
 ?>
 
 <div class="maincontainer">
-	<div style="width: 200px; float: left; background-color: #ddd; border-radius: 15px">
+	<div class="tile" style="width: 185px; float: left;">
 		<ul class="sidenav">
 			<li><a href="?tab=board">Boards</a></li>
 			<li><a href="?tab=user">Users</a></li>
@@ -29,7 +29,7 @@
 			<li><a href="?tab=bans">Bans</a></li>
     </ul>
 	</div>
-	<div style="width: 700px; padding: 15px; float: right;">
+	<div class="tile" style="width: 685px; padding: 15px; float: right;">
 		<?php
       if(!isset($_GET['tab']) || !is_file(dirname(__FILE__) . "/tab/" . $_GET['tab'] . ".php")) {
         echo "Invalid tab";

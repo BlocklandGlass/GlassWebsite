@@ -28,8 +28,8 @@
 		<tbody>
 			<tr>
 				<td style="width: 50%">
-					<p>
-						<h3>Recent Activity</h3>
+					<div class="tile">
+						<h2>Recent Activity</h2>
 						<?php
 						$notifications = NotificationManager::getFromBLID($userObject->getBLID(), 0, 10); // TODO NotifcationManager::getFromUser(9789, 10);
 
@@ -43,36 +43,15 @@
 							}
 						}
 						?>
-						</p>
+					</div>
 				</td>
 				<td>
-					<p>
-						<h3>My Content</h3>
-						<div class="useraddon" style="text-align:center; background-color: #ccffcc">
+					<div class="tile">
+
+						<h2>My Content</h2>
+						<div class="useraddon shadow-1" style="text-align:center; background-color: #ccffcc">
 							<img style="width: 1.2em;" src="http://blocklandglass.com/img/icons32/inbox_upload.png" alt="New"/> <a href="/addons/upload/upload.php">Upload New Add-On</a>
 						</div>
-            <!--
-						<?php
-						echo "<hr>";
-
-						$builds = BuildManager::getBuildsFromBLID($userObject->getBLID());
-						foreach($builds as $bid) {
-							$bo = BuildManager::getFromId($bid);
-							?>
-							<div class="useraddon">
-								<a href="/builds/"><img style="width: 1.2em;" src="http://blocklandglass.com/img/icons32/bricks.png" /> <span style="font-size: 1.2em; font-weight:bold;"><?php echo $bo->getName(); ?></span></a>
-								<br />
-								<span style="font-size: 0.8em;">
-									<a href="/builds/manage.php?id=<?php echo $bo->getId(); ?>">Manage</a> | <a href="#">Delete</a>
-								</span>
-							</div>
-							<?php
-						}
-						?>
-						<div class="useraddon" style="text-align:center; background-color: #ccffcc">
-							<img style="width: 1.2em;" src="http://blocklandglass.com/img/icons32/add.png" alt="New"/> <a href="/builds/upload.php">Upload New Build</a>
-						</div>
-            -->
 						<?php
 						$addons = AddonManager::getFromBLID($userObject->getBLID(),0,9999);
 
@@ -95,7 +74,7 @@
 						}
 
 						?>
-					</p>
+					</div>
 				</td>
 			</tr>
 		</tbody>

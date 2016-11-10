@@ -10,11 +10,43 @@
    Base styles: opinionated defaults
    ========================================================================== */
 
+@font-face {
+   font-family: Coolvetica;
+   src: url('/css/coolvetica.regular.ttf');
+}
+
+@font-face {
+   font-family: Geneva;
+   src: url('/css/Geneva.ttf');
+}
+
+
 html {
-    color: #222;
+    color: rgba(0,0,0,0.87);
     font-size: 1em;
     line-height: 1.4;
-    font-family: "Century Gothic", "Apple Gothic", "URW Gothic L";
+    font-family: Geneva, sans-serif;
+}
+
+.tile {
+  margin: 5px;
+  padding: 15px;
+  font-size: 0.8em;
+  background-color: #ebebeb;
+  border-radius: 2px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.1);
+}
+
+.tile h1,h2,h3,h4 {
+  margin-top: 5px;
+}
+
+.shadow-1 {
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.1);
+}
+
+.shadow-2 {
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.1);
 }
 
 /*
@@ -102,9 +134,11 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
   margin: 10px;
   padding: 5px;
 
-  font-size: 16pt;
+  font-size: 0.9em;
   border-radius: 5px;
   border: 1px solid #ccc;
+
+  width: 300px !important;
 }
 
 input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover {
@@ -241,7 +275,7 @@ input[type="submit"]:active {
 
 .navcontainer {
   max-height: 64px;
-
+  font-size: 1.1em;
   margin: none;
 
   background-color: #2ecc71;
@@ -250,9 +284,9 @@ input[type="submit"]:active {
   text-align: center;
   color: #fff;
 
-  -webkit-box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.3);
-  -moz-box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.3);
-  box-shadow: inset 0px -1px 7px 0px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.4);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.4);
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.4);
 }
 
 .navcontent {
@@ -286,7 +320,14 @@ input[type="submit"]:active {
 	display: inline-block;
 }
 
+.sidenav {
+  padding: 0;
+  margin: 0;
+  padding-left: 10px;
+}
+
 .sidenav li {
+  font-size: 1em;
   list-style-type: none;
 }
 
@@ -433,11 +474,12 @@ input[type="submit"]:active {
 }
 
 .boardtable {
+  margin-top: 10px;
   width: 100%;
 }
 
 .boardtable tr:hover {
-  background-color: #f6f6f6;
+  background-color: rgba(255,255,255,0.5);
 }
 
 .boardtable td {
@@ -455,6 +497,10 @@ input[type="submit"]:active {
 }
 
 .boardtable td:first-of-type {
+  width: 40px;
+}
+
+.boardtable td:nth-of-type(2) {
   text-align: left;
 }
 
@@ -462,25 +508,20 @@ input[type="submit"]:active {
   background-color: #eee;
 }
 
+.boardheader tr {
+  border-radius: 5px;
+}
+
 .boardheader td {
-  padding: 5px;
-  background-color: #ddd;
+  font-size: 1.2em;
+  padding: 5px 10px 5px 10px;
+  background-color: #fdfdfd;
   font-weight: bold;
   text-align: center !important;
 }
 
-.boardheader:first-of-type td:first-child {
-  border-radius: 10px 0 0 0;
-}
-
-.boardheader:first-of-type td:last-child {
-  border-radius: 0 10px 0 0;
-}
-
-.boardheader:last-of-type td {
-  height: 36px;
-  padding: 0;
-  border-radius: 0 0 10px 10px;
+.boardheader td:nth-of-type(2) {
+  text-align: left !important;
 }
 
 .pagenav {
