@@ -324,7 +324,7 @@ class UserManager {
 			`password` VARCHAR(64) NOT NULL,
 			`email` VARCHAR(64),
 			`salt` VARCHAR(10) NOT NULL,
-			`registration_date` TIMESTAMP DEFAULT '0000-00-00',
+			`registration_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 			`session_last_active` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 			`verified` TINYINT NOT NULL DEFAULT 0,
 			`banned` TINYINT NOT NULL DEFAULT 0,
