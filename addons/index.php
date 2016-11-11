@@ -1,6 +1,7 @@
 <?php
 	require_once dirname(__DIR__) . "/private/class/GroupManager.php";
 	require_once dirname(__DIR__) . "/private/class/UserManager.php";
+	require_once dirname(__DIR__) . "/private/class/AddonManager.php";
 	require_once dirname(__DIR__) . "/private/class/RTBAddonManager.php";
 
 	$_PAGETITLE = "Blockland Glass | Add-Ons";
@@ -12,7 +13,7 @@
 ?>
 <div class="maincontainer">
 	<?php include(realpath(dirname(__DIR__) . "/private/searchbar.php")); ?>
-	<ul class="addonnav">
+	<ul class="addonnav tile" style="margin-bottom: 15px;">
 		<li><a href="/addons/boards.php">Boards</a></li>
 		<li><a href="/addons/rtb/">RTB Archive</a></li>
 		<?php
@@ -36,14 +37,18 @@
 			</tr>
 			<tr>
 				<td style="width:50%; vertical-align:top">
-					<table id="trending" style="width: 100%; text-align:left;">
-						<?php include(realpath(dirname(__DIR__) . "/ajax/getTrendingAddons.php")); ?>
-					</table>
+					<div class="tile">
+						<table id="trending" style="width: 100%; text-align:left;">
+							<?php include(realpath(dirname(__DIR__) . "/ajax/getTrendingAddons.php")); ?>
+						</table>
+					</div>
 				</td>
 				<td style="width:50%; vertical-align:top">
-					<table id="recentUploads" style="width: 100%; text-align:left;">
-						<?php include(realpath(dirname(__DIR__) . "/ajax/getNewAddons.php")); ?>
-					</table>
+					<div class="tile">
+						<table id="recentUploads" style="width: 100%; text-align:left;">
+							<?php include(realpath(dirname(__DIR__) . "/ajax/getNewAddons.php")); ?>
+						</table>
+					</div>
 				</td>
 			</tr>
 		</tbody>

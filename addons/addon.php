@@ -43,7 +43,7 @@
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>
 <script type="text/javascript">
-$(document).ready(function() {
+	$(document).ready(function() {
 		var avgRating = 0<?php echo @round($addonObject->getRating()); ?>;
 
 		for(var i = 0; i < avgRating; i++) {
@@ -99,7 +99,7 @@ $(document).ready(function() {
 </script>
 <div class="maincontainer">
 	<?php
-		echo "<span style=\"font-size: 9pt;\"><a href=\"/addons/\">Add-Ons</a> >> ";
+		echo "<span style=\"font-size: 0.8em; padding-left: 10px\"><a href=\"/addons/\">Add-Ons</a> >> ";
 		echo "<a href=\"/addons/boards.php\">Boards</a> >> ";
 		echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . utf8_encode($boardObject->getName()) . "</a> >> ";
 		echo "<a href=\"#\">" . $addonObject->getName() . "</a></span>";
@@ -110,6 +110,7 @@ $(document).ready(function() {
 			}
 		}
 
+		echo '<div class="tile">';
 		echo "<h2 style=\"margin-bottom: 0px;\">" . $addonObject->getName() . "</h2>";
 
     $authors = $addonObject->getAuthorInfo();
@@ -151,7 +152,7 @@ $(document).ready(function() {
       }
     }
 	?>
-	<div style="margin-top: 15px; margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
+	<div style="margin-top: 15px; margin-bottom: 15px; display: inline-block; width: 100%;">
 		<div class="addoninfoleft">
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/tag.png" />
 			<?php
@@ -188,7 +189,8 @@ $(document).ready(function() {
 			<!-- <a href="review/code.php?id=<?php echo $addonObject->getId() ?>">View source code</a> -->
 		</div>
 	</div>
-	<hr />
+	</div>
+	<div class="tile">
 	<p>
 		<?php
 			$Parsedown = new Parsedown();
@@ -199,7 +201,7 @@ $(document).ready(function() {
 			echo $Parsedown->text($addonObject->getDescription());
 		?>
 	</p>
-	<hr />
+	</div>
 	<div style="text-align: center">
 		<?php
 		$version = $addonObject->getVersion();
@@ -242,11 +244,12 @@ $(document).ready(function() {
 			echo "</div>";
 		}
 	?>
-	<hr />
-	<div class="comments" id="commentSection">
-		<form action="" method="post">
-			<?php include(realpath(dirname(__DIR__) . "/ajax/getComments.php")); ?>
-		</form>
+	<div class="tile">
+		<div class="comments" id="commentSection">
+			<form action="" method="post">
+				<?php include(realpath(dirname(__DIR__) . "/ajax/getComments.php")); ?>
+			</form>
+		</div>
 	</div>
 </div>
 <?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>

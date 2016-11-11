@@ -90,7 +90,7 @@
 	<div class="tile">
 	<table class="boardtable">
 		<tbody>
-			<tr class="boardheader">
+			<tr class="boardheader shadow-1">
 				<td>Name</td>
 				<td>Uploader</td>
 				<td>Rating</td>
@@ -143,14 +143,14 @@
 					} ?>
 					</td>
 					<td>
-						N/A
-						<!--
-						<image src="/img/icons16/draw_star.png" />
-						<image src="/img/icons16/draw_star.png" />
-						<image src="/img/icons16/draw_star.png" />
-						<image src="/img/icons16/draw_star.png" />
-						<image src="/img/icons16/draw_star.png" />
-						-->
+						<?php
+							$rating = $addon->getRating();
+							if($rating == 0) {
+								echo "Unrated";
+							} else {
+								echo $rating;
+							}
+						?>
 					</td>
 					<td><?php echo ($addon->getDownloads("web") + $addon->getDownloads("ingame")); ?></td>
 					</tr><?php
@@ -161,9 +161,6 @@
 				}
 				//TO DO: page number links should also appear at the bottom, probably inside of the grey footer
 			?>
-			<tr class="boardheader">
-				<td colspan="4"></td>
-			</tr>
 		</tbody>
 	</table>
 	</div>

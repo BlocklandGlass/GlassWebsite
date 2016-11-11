@@ -11,47 +11,53 @@
 	include(__DIR__ . "/../../private/header.php");
 	include(__DIR__ . "/../../private/navigationbar.php");
 ?>
-<div class="maincontainer">
+<div class="maincontainer" style="text-align:center">
 	<?php
 		//if(isset($status["message"])) {
 		//	echo $status["message"];
 		//}
 	?>
 	<form action="" method="post" enctype="multipart/form-data">
-		<table class="formtable">
-			<tbody>
-				<tr>
-					<td class="center" colspan="2" id="uploadStatus">
-						<h2><?php echo(utf8_encode($status["message"])); ?></h2>
-					</td>
-				</tr>
-				<tr>
-					<td><b>Name</b><br /><span style="font-size: 0.7em;">This should be different than your add-on's filename</span></td>
-					<td><input type="text" name="addonname" id="addonname"/></td>
-				</tr>
-				<tr>
-					<td style="vertical-align:top"><b>Description</b><br /><span style="font-size: 0.7em;">Summarize how your add-on works</span></td>
-					<td><textarea style="font-size:0.8em;width:400px;height:200px" name="description" /></textarea></td>
-				</tr>
-				<tr>
-					<td style="vertical-align:top"><b>Filename</b><br /><span style="font-size: 0.7em;">Ensure add-on follows BL .zip name convention e.g. <i>Weapon_Gun</i></span></td>
-					<td><input type="text" name="filename" /></td>
-				</tr>
-				<tr>
-					<td>
-						<p><b>File</b></p>
-						<!--<span style="font-size: 0.7em;">You can find your saves in your Blockland folder!</span>
-						<p class="description">You can find your saves in your Blockland folder!</p>-->
-					</td>
-					<td style="vertical-align: middle">
-						<input type="file" name="uploadfile" id="uploadfile">
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="submit" value="Upload File" name="submit"></td>
-				</tr>
-			</tbody>
-		</table>
+		<div style="text-align:center">
+			<h2>Add-On Upload</h2>
+		</div>
+		<div class="tile" style="display: inline-block; width: 66%; margin: auto 0;">
+			<table class="formtable">
+				<tbody>
+					<tr>
+						<td class="center" colspan="2" id="uploadStatus">
+							<i><?php echo(utf8_encode($status["message"])); ?></i>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 30%"><b>Name</b><br /><span style="font-size: 0.7em;">This should be different than your add-on's filename</span></td>
+						<td><input type="text" name="addonname" id="addonname" style="width: 400px" /></td>
+					</tr>
+					<tr>
+						<td style="vertical-align:top"><b>Description</b><br /><span style="font-size: 0.7em;">Summarize how your add-on works</span></td>
+						<td><textarea style="font-size:0.8em;width:400px;height:200px" name="description" /></textarea></td>
+					</tr>
+					<tr>
+						<td style="vertical-align:top"><b>Filename</b><br /><span style="font-size: 0.7em;">Ensure add-on follows BL .zip name convention e.g. <i>Weapon_Gun</i></span></td>
+						<td><input type="text" name="filename" style="width: 400px" /></td>
+					</tr>
+					<tr>
+						<td>
+							<p><b>File</b></p>
+							<!--<span style="font-size: 0.7em;">You can find your saves in your Blockland folder!</span>
+							<p class="description">You can find your saves in your Blockland folder!</p>-->
+						</td>
+						<td style="vertical-align: middle">
+							<input type="file" name="uploadfile" id="uploadfile">
+						</td>
+					</tr>
+					<tr>
+				</tbody>
+			</table>
+		</div>
+		<div style="text-align:center">
+			<input type="submit" value="Upload File" name="submit">
+		</div>
 		<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
   </form>
 </div>

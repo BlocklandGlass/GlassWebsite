@@ -135,31 +135,24 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
   padding: 5px;
 
   font-size: 0.9em;
-  border-radius: 5px;
+  border-radius: 3px;
   border: 1px solid #ccc;
 
-  width: 300px !important;
+  width: 300px;
 }
 
-input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover {
-  background-color: #eee;
+input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, textarea:hover {
+  border: 1px solid #aaf;
 }
 
-input[type="text"]:active, input[type="password"]:active, input[type="email"]:active {
-  background-color: #eee;
-  border: 1px solid #ccf;
-}
-
-.blue {
-}
-
-.blue:hover {
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, textarea:focus  {
+  background-color: #e6e6ff;
 }
 
 input[type="submit"] {
   border-radius: 5px;
   padding: 15px 25px;
-  font-size: 22px;
+  font-size: 1em;
   text-decoration: none;
   margin: 20px;
   color: #fff;
@@ -170,6 +163,10 @@ input[type="submit"] {
 
   background-color: #55acee;
   box-shadow: 0px 5px 0px 0px #3C93D5;
+}
+
+input[type="submit"]:hover {
+  background-color: #6FC6FF;
 }
 
 input[type="submit"]:active {
@@ -234,7 +231,7 @@ input[type="submit"]:active {
 .formtable td {
   /*width: 50%;*/
   padding: 10px;
-  vertical-align: middle;
+  vertical-align: top;
 }
 
 .formtable tr > td:first-of-type {
@@ -482,6 +479,7 @@ input[type="submit"]:active {
 }
 
 .boardtable td {
+  font-size: 1.1em;
   padding: 10px;
 }
 
@@ -524,6 +522,27 @@ input[type="submit"]:active {
   text-align: left !important;
 }
 
+.listTable > thead > tr {
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.1);
+}
+
+.listTable > thead > tr > th {
+  font-size: 1.1em;
+  padding: 5px 10px 5px 10px;
+  background-color: #69dd9a;
+  font-weight: bold;
+  text-align: center !important;
+}
+
+.listTable td {
+  padding: 5px 10px 5px 10px;
+  text-align: center;
+}
+
+.listTable td:first-of-type {
+  text-align: left;
+}
+
 .pagenav {
   float: right;
 }
@@ -546,10 +565,6 @@ input[type="submit"]:active {
   text-decoration: none !important;
   width: 200px;
   margin: 0 auto;
-}
-
-.dlbtn:hover {
-  color: #000 !important;
 }
 
 .btn {

@@ -29,8 +29,15 @@ include(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php"));
 }
 </style>
 <div class="maincontainer">
-  <h3>Success!</h3>
-  Your add-on uploaded successfully. It'll now be carefully reviewed by our moderators and reviewers and hopefully approved!
+  <div class="tile">
+    <h2>Success!</h2>
+    <p>
+      Your add-on uploaded successfully. It'll now be carefully reviewed by our reviewers and hopefully approved.
+    </p>
+    <p>
+      <a href="/addons/">Back to Add-ons</a>
+    </p>
+  </div>
 </div>
 
 <?php include(realpath(dirname(dirname(__DIR__)) . "/private/footer.php")); ?>

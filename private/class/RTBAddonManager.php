@@ -100,6 +100,9 @@ class RTBAddonManager {
     $db = new DatabaseManager();
     $res = $db->query("SELECT * FROM `rtb_addons` WHERE `approved`='0'");
 
+    if($res == false || $res == null)
+      return [];
+
     $ret = array();
     while($obj = $res->fetch_object()) {
       $ret[] = $obj;
