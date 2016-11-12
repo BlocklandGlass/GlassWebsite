@@ -197,6 +197,15 @@ class StatManager {
 		return $ret;
 	}
 
+	public static function getStatistics($aid) {
+		$database = new DatabaseManager();
+		$res = $database->query("SELECT * FROM `addon_stats` WHERE `aid`='" . $aid . "'");
+		if($res == false || $res == null)
+			return new stdClass();
+
+		return $res->fetch_object();
+	}
+
 	public static function endIteration() {
 		$database = new DatabaseManager();
 		$database->query("UPDATE `addon_stats` SET `iterationDownloads`=0");

@@ -1,6 +1,6 @@
 <?php
 require_once dirname(dirname(__DIR__)) . '/private/class/AddonManager.php';
-require_once dirname(dirname(__DIR__)) . '/private/class/BuildManager.php';
+require_once dirname(dirname(__DIR__)) . '/private/class/StatManager.php';
 require_once dirname(dirname(__DIR__)) . '/private/class/AWSFileManager.php';
 // the point here is just to log the download and redirect to AWS
 // I hope TCPClient can follow redirects?
@@ -35,6 +35,7 @@ if($type == "addon_update" || $type == "addon_download") {
   }
 
   $ao = AddonManager::getFromID($id);
+
   /*
   //ideal code? need to review how stats work and are kept
   //(object, type[0=web, 1=ingame, 2=update], increment)
@@ -42,14 +43,7 @@ if($type == "addon_update" || $type == "addon_download") {
   AddonManager::incrementWeeklyDownloads($ao, 1, 1);
   AddonManager::incrementTotalDownloads($ao, 1, 1);
   */
-} else if($type == "build") {
-  $id = $_REQUEST['id'];
-  $head = 'Location: http://' . AWSFileManager::getBucket() . '/build/' . $id;
-  if($debug) {
-    echo $head;
-  } else {
-    header($head);
-  }
+  
 } else if($type == "rtb") {
   $filename = $_REQUEST['fn'];
   $head = 'Location: http://' . AWSFileManager::getBucket() . '/rtb/' . $filename;

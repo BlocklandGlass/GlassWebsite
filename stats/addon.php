@@ -19,6 +19,7 @@
 	$dist = StatUsageManager::getDistribution($addon->getId());
 
 	$downloadData = StatManager::getHourlyDownloads($addon->getId(), 24);
+	$downloadData[date("Y-m-d H:i:s")] = StatManager::getStatistics($addon->getId());
 ?>
 <div class="maincontainer">
 	<div class="tile">
@@ -157,22 +158,22 @@
 					?>,
           datasets: [{
             label: "Downloads",
-            fill: false,
+            fill: true,
             lineTension: 0.1,
-            backgroundColor: "rgba(75,192,192,0.4)",
-            borderColor: "rgba(75,192,192,1)",
+            backgroundColor: "rgba(131, 195, 243, 0.3)",
+            borderColor: "#83c3f3",
             borderCapStyle: 'round',
             borderDash: [],
             borderDashOffset: 0.0,
             borderJoinStyle: 'miter',
-            pointBorderColor: "rgba(75,192,192,1)",
-            pointBackgroundColor: "#fff",
+            pointBorderColor: "#83c3f3",
+            pointBackgroundColor: "#55acee",
             pointBorderWidth: 1,
             pointHoverRadius: 5,
             pointHoverBackgroundColor: "rgba(75,192,192,1)",
             pointHoverBorderColor: "rgba(220,220,220,1)",
             pointHoverBorderWidth: 2,
-            pointRadius: 1,
+            pointRadius: 5,
             pointHitRadius: 10,
             data: <?php
             $res = array();
