@@ -52,10 +52,10 @@ if(is_file(dirname(__FILE__) . '/private/test.json')) {
 		Right now, there's <b><?php
 		echo StatManager::getMasterServerStats()['servers'];
 		?></b> Blockland servers online with <b><?php
-		echo StatManager::getMasterServerStats()['users'];
-		?></b> user(s). Of those, <a href="stats/users.php"><?php
-		echo sizeof(UserLog::getRecentlyActive());
-		?></a> user(s) are running Glass - which equates to <?php
+		echo $ct = StatManager::getMasterServerStats()['users'];
+		?></b> <?php echo ($ct == 1 ? "user" : "users") ?>. Of those, <a href="stats/users.php"><?php
+		echo $ct = sizeof(UserLog::getRecentlyActive());
+		?></a> <?php echo ($ct == 1 ? "user" : "users") ?> are running Glass - which equates to <?php
 		$nonglass = StatManager::getMasterServerStats()['users'];
 		$glass = sizeof(UserLog::getRecentlyActive());
         $percentage = floor(100/$nonglass*$glass);
@@ -63,9 +63,13 @@ if(is_file(dirname(__FILE__) . '/private/test.json')) {
             echo "<b>" . $percentage . "%</b> (how is this happening)";
         else
             echo "<b>" . $percentage . "%</b>";
-		?> of Blockland as of this moment. Glass has <b><?php
-		echo UserLog::getUniqueCount();?></b>
-        active user(s), with a total of <a href="stats/"><?php
+		?>
+		of Blockland as of this moment. Glass has <b>
+		<?php
+		echo $ct = UserLog::getUniqueCount();
+		?>
+		</b>
+        active <?php echo ($ct == 1 ? "user" : "users") ?>, with a total of <a href="stats/"><?php
 		$web = StatManager::getAllAddonDownloads("web");
 		$ingame = StatManager::getAllAddonDownloads("ingame");
 		$updates = StatManager::getAllAddonDownloads("updates");
