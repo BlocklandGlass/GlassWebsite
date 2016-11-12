@@ -81,10 +81,10 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="tile" style="padding-top: 10px; display: inline-block; width: 100%;">
+	<div class="tile" style="padding-top: 10px; display: inline-block; width: calc(100% - 40px)">
 		<b>Downloads</b>
 		<hr />
-  	<canvas id="downloads_chart" style="width:100%; height:200px"></canvas>
+  	<canvas id="downloads_chart" style=""></canvas>
 	</div>
   <script>
   var ctx = document.getElementById("myChart");
