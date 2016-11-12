@@ -70,9 +70,9 @@ if(is_file(dirname(__FILE__) . '/private/test.json')) {
 		?>
 		</b>
         active <?php echo ($ct == 1 ? "user" : "users") ?>, with a total of <a href="stats/"><?php
-		$web = StatManager::getAllAddonDownloads("web");
-		$ingame = StatManager::getAllAddonDownloads("ingame");
-		$updates = StatManager::getAllAddonDownloads("updates");
+		$web = StatManager::getAllAddonDownloads("web")+0;
+		$ingame = StatManager::getAllAddonDownloads("ingame")+0;
+		$updates = StatManager::getAllAddonDownloads("updates")+0;
 		echo $web+$ingame; ?></b></a> downloads and <b><?php echo $updates; ?></b> updates.
 	</p>
 	<br />
