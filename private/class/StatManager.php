@@ -152,6 +152,56 @@ class StatManager {
 		return $sum;
 	}
 
+	 /*
+
+	 addon_stats_hist saves hourly snapshots of download counts
+	 my intention is that, as time passes, these are reduced to daily, weekly,
+	 and eventually monthly
+
+	 theses are meant to be absolute records for later analysis, not differential
+
+	 	*/
+
+	public static function saveHistory() {
+		$database = new DatabaseManager();
+		$res = $database->query("SELECT * FROM `addon_stats`");
+
+		if($res == false || $res == null)
+			return;
+
+		$date = date("Y-m-d H:00:00");
+
+		while($obj = $res->fetch_object()) {
+			$userCount = 0;
+
+			$database->query("INSERT INTO `addon_stats_hist` (`date`,`aid`,`webDownloads`,`ingameDownloads`,`updateDownloads`) VALUES ('" .
+				$date . "','" .
+				$obj->aid . "','" .
+				$obj->webDownloads . "','" .
+				$obj->ingameDownloads . "','" .
+				$obj->updateDownloads . "')");
+
+		}
+	}
+
+	public static function getHourlyDownloads($aid, $hours = 24) {
+		$database = new DatabaseManager();
+		$res = $database->query("SELECT * FROM `addon_stats_hist` WHERE `aid`='" . $aid . "' AND date > DATE_SUB(NOW(), INTERVAL " . $hours . " HOUR)");
+		if($res == false || $res == null)
+			return [];
+
+		$ret = [];
+		while($obj = $res->fetch_object()) {
+			$ret[$obj->date] = $obj;
+		}
+		return $ret;
+	}
+
+	public static function endIteration() {
+		$database = new DatabaseManager();
+		$database->query("UPDATE `addon_stats` SET `iterationDownloads`=0");
+	}
+
 	public static function verifyTable($database) {
 		UserManager::verifyTable($database);
 		AddonManager::verifyTable($database);
@@ -176,7 +226,6 @@ class StatManager {
 			throw new Exception("Failed to create addon stats table: " . $database->error());
 		}
 
-		//includes a lot of foreign keys, not sure if it is a good idea to include them all
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_stats_hist` (
 			`id` INT NOT NULL AUTO_INCREMENT,
 			`date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -185,10 +234,6 @@ class StatManager {
 			`webDownloads` INT NOT NULL DEFAULT 0,
 			`ingameDownloads` INT NOT NULL DEFAULT 0,
 			`updateDownloads` INT NOT NULL DEFAULT 0,
-
-			`commentCount` INT NOT NULL DEFAULT 0,
-
-			`userCount` INT NOT NULL DEFAULT 0,
 			FOREIGN KEY (`aid`)
 				REFERENCES addon_addons(`id`)
 				ON UPDATE CASCADE
