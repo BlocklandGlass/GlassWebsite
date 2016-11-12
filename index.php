@@ -73,7 +73,7 @@ if(is_file(dirname(__FILE__) . '/private/test.json')) {
 		$web = StatManager::getAllAddonDownloads("web");
 		$ingame = StatManager::getAllAddonDownloads("ingame");
 		$updates = StatManager::getAllAddonDownloads("updates");
-		echo $web+$ingame+$updates; ?></b></a> downloads.
+		echo $web+$ingame; ?></b></a> downloads and <b><?php echo $updates; ?></b> updates.
 	</p>
 	<br />
 	<p>
