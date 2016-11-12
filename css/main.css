@@ -808,8 +808,6 @@ input[type="submit"]:active {
   background-color: #eee;
   padding: 5px;
   border-radius: 5px;
-  float: left;
-  width: 100%
 }
 
 .addonnavmod {

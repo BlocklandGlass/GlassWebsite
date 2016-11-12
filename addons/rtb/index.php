@@ -14,12 +14,14 @@
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 ?>
+
 <div class="maincontainer">
   <h1 style="text-align:center"><img src="/img/rtb_logo.gif"><br />Archive</h1>
-  <a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archive</a>
+  <a href="/addons/">Add-Ons</a> >> <a href="#">RTB Archive</a>
+	<div class="tile">
 	<table class="boardtable">
 	<tbody>
-		<tr class="boardheader">
+		<tr class="boardheader shadow-1">
 			<td>Name</td>
 			<td>Files</td>
 		</tr>
@@ -41,6 +43,7 @@
 		</tr>
 		</tbody>
 	</table>
+  </div>
 </div>
 
 <?php include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>
