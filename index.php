@@ -56,3 +56,5 @@ require_once(realpath(dirname(__FILE__) . "/private/class/StatManager.php"));
 </div>
 
 <?php require_once(realpath(dirname(__FILE__) . "/private/footer.php")); ?>
+
+<a href="http://www.beyondsecurity.com/vulnerability-scanner-verification/blocklandglass.com"><img src="https://seal.beyondsecurity.com/verification-images/blocklandglass.com/vulnerability-scanner-2.gif" alt="Website Security Test" border="0" /></a>
