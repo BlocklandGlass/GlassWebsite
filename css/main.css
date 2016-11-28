@@ -662,7 +662,7 @@ input[type="submit"]:active {
 .comments {
   margin: 0 auto;
   padding: 0 15px;
-  background-color: #e8f4f8;
+  /*background-color: #e8f4f8;*/
   border-radius: 10px;
 }
 
