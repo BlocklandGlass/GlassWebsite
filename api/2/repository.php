@@ -38,7 +38,7 @@ foreach($addonIds as $id) {
 
   $addon = new stdClass();
 	$addon->name = substr($obj->getFilename(), 0, strlen($obj->getFilename())-4);
-	$addon->description = str_replace("\r\n", "<br>", $obj->getDescription());
+	//$addon->description = str_replace("\r\n", "<br>", $obj->getDescription());
 
   $chanObj = new stdClass();
   $chanObj->name = "stable";
