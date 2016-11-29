@@ -22,6 +22,7 @@ class ServerTracker {
 
   public static function getActiveServers() {
     $db = new DatabaseManager();
+    ServerTracker::verifyTable($db);
     $res = $db->query("SELECT * FROM `server_tracking` WHERE `lastUpdate` > now() - INTERVAL 10 MINUTE");
     $ret = array();
     while($obj = $res->fetch_object()) {
