@@ -22,7 +22,7 @@
 		echo '<table class="listTable" style="width: 100%">'
 				. '<thead>'
 				. '<tr>'
-				. '<th>Status</th>'
+				. '<th style="width: 30px;"> </th>'
 				. '<th>Username</th>'
 				. '<th>BLID</th>'
 				. '<th>Glass</th>'
@@ -36,8 +36,8 @@
 					$cl->status = "-";
 
 				echo '<tr>';
-				echo '<td>' . $cl->status . '</td>';
-				echo '<td>' . $name . '</td>';
+				echo '<td style="width: 30px; text-align: center">' . $cl->status . '</td>';
+				echo '<td style="text-align: left">' . $name . '</td>';
 				echo '<td>' . $cl->blid . '</td>';
 				echo '<td>' . ($cl->version == "" ? "No" : "Yes") . '</td>';
 				echo '</tr>';
