@@ -13,7 +13,7 @@
 <div class="maincontainer">
 	<?php
 	 foreach($servers as $s) {
-    echo "<div class=\"tile\" style=\"width: 50%; margin: 0 auto\"><h3>" . utf8_encode($s->host) . "'s Server</h3><br />";
+    echo "<div class=\"tile\" style=\"width: 50%; margin: 0 auto; margin-bottom: 10px\"><h3 style=\"padding-bottom: 0; margin-bottom: 0\">" . utf8_encode($s->host) . "'s Server</h3>";
 		echo "" . $s->ip . ":" . $s->port . "<hr />";
 
 		$clients = json_decode($s->clients);
