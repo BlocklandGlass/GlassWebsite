@@ -113,7 +113,9 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 					$obj = new stdClass();
 
 					$obj->name = $dat[0];
-					$obj->blid = $dat[1];
+					$obj->blid = intval($dat[1]);
+					$obj->status = $dat[2];
+					$obj->version = $dat[3];
 
 					$clArray[] = $obj;
 				}
