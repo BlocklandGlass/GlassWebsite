@@ -14,7 +14,9 @@
 	<?php
 	 foreach($servers as $s) {
     echo "<div class=\"tile\" style=\"width: 50%; margin: 0 auto; margin-bottom: 10px\"><h3 style=\"padding-bottom: 0; margin-bottom: 0\">" . utf8_encode($s->host) . "'s Server</h3>";
-		echo "" . $s->ip . ":" . $s->port . "<hr />";
+		$addr = $s->ip . ":" . $s->port;
+
+		echo '<a href="blockland://' . $addr . '">Join (' . $addr . ')</a><hr />';
 
 		$clients = json_decode($s->clients);
 		$str = "";
@@ -44,7 +46,7 @@
 			}
 			echo "</tr>";
 		} else {
-			echo '<tr><td colspan="3" style="text-align:center">No users!</td></tr>';
+			echo '<tr><td colspan="4" style="text-align:center">No users!</td></tr>';
 		}
 		echo '</tbody></table>';
 		echo '</div>';
