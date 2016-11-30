@@ -22,6 +22,7 @@
 		echo '<table class="listTable" style="width: 100%">'
 				. '<thead>'
 				. '<tr>'
+				. '<th>Status</th>'
 				. '<th>Username</th>'
 				. '<th>BLID</th>'
 				. '<th>Glass</th>'
@@ -31,7 +32,11 @@
 			foreach($clients as $cl) {
 				$name = utf8_encode($cl->name);
 
+				if($cl->status == "")
+					$cl->status = "-";
+
 				echo '<tr>';
+				echo '<td>' . $cl->status . '</td>';
 				echo '<td>' . $name . '</td>';
 				echo '<td>' . $cl->blid . '</td>';
 				echo '<td>' . ($cl->version == "" ? "No" : "Yes") . '</td>';
