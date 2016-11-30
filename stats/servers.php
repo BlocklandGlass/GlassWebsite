@@ -27,7 +27,7 @@
 				. '<th>Glass</th>'
 				. '</tr></thead><tbody>';
 
-		if(sizeof($clients) > 0 && $clients[0]->blid >= 0) {
+		if(sizeof($clients) > 0 && $clients[0]->name != "") {
 			foreach($clients as $cl) {
 				$name = utf8_encode($cl->name);
 
