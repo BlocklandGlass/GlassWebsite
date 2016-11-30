@@ -47,28 +47,36 @@ form {
 
 </style>
 <div class="maincontainer">
-	<table class="list">
-		<tbody>
-			<tr>
-				<td>Host</td>
-				<td>IP:Port</td>
-				<td>Users</td>
-			</tr>
-			<?php foreach($servers as $s) {
-		    echo "<tr><td style=\"vertical-align: top\"><b>" . utf8_encode($s->host) . "</b></td><td style=\"vertical-align: top\">" . $s->ip . ":" . $s->port . "</td>";
-				$clients = json_decode($s->clients);
-				$str = "";
-				if((sizeof($clients) - 1) > 0) {
-					foreach($clients as $cl) {
-						$name = utf8_encode($cl->name);
-						$str = $str . $name . " <i>(" . $cl->blid . ")</i><br/>";
-					}
-					echo "<td>$str</td></tr>";
-				} else {
-					//echo "<td style=\"vertical-align: top\"><i>Empty</i></td></tr>";
-					echo "<td></td></tr>";
-				}
-		  } ?>
-		</tbody>
-	</table>
+	<?php
+	 foreach($servers as $s) {
+    echo "<div class=\"tile\" style=\"width: 50%; margin: 0 auto\"><h3>" . utf8_encode($s->host) . "'s Server</h3><br />";
+		echo "" . $s->ip . ":" . $s->port . "<hr />";
+
+		$clients = json_decode($s->clients);
+		$str = "";
+
+		echo '<table class="list" style="width: 100%">'
+				. '<tbody>'
+				. '<tr>'
+				. '<td>Username</td>'
+				. '<td>BLID</td>'
+				. '<td>Glass</td>'
+				. '</tr>';
+
+		if(sizeof($clients) > 0) {
+			foreach($clients as $cl) {
+				$name = utf8_encode($cl->name);
+
+				echo '<tr>';
+				echo '<td>' . $name . '</td>';
+				echo '<td>' . $cl->blid . '</td>';
+				echo '<td>' . ($cl->version == "" ? "No" : "Yes") . '</td>';
+				echo '</tr>';
+			}
+			echo "</tr>";
+		} else {
+			echo '<tr><td colspan="3" style="text-align:center">No users!</td></tr>';
+		}
+		echo '</tbody></table>';
+  } ?>
 </div>
