@@ -4,12 +4,14 @@ class BoardObject {
 	public $name;
 	public $icon;
 	public $description;
+	public $group;
 
 	public function __construct($resource) {
 		$this->id = intval($resource->id);
 		$this->name = $resource->name;
 		$this->icon = $resource->icon;
 		$this->description = $resource->description;
+		$this->group = $resource->group;
 	}
 
 	function getID() {
@@ -26,6 +28,10 @@ class BoardObject {
 
 	function getDescription() {
 		return $this->description;
+	}
+
+	function getGroup() {
+		return $this->group;
 	}
 
 	function getCount() {

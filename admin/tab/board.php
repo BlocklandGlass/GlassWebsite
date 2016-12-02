@@ -7,7 +7,7 @@ require_once(realpath(dirname(__DIR__) . "/../private/class/BoardManager.php"));
 
 if(isset($_POST['name']) && isset($_POST['icon']) && isset($_POST['desc'])) {
   $db = new DatabaseManager();
-  $db->query("INSERT INTO `addon_boards` (`id`, `name`, `icon`, `description`) VALUES (NULL, '" . $db->sanitize($_POST['name']) . "', '" . $db->sanitize($_POST['icon']) . "', '" . $db->sanitize($_POST['desc']) . "');");
+  $db->query("INSERT INTO `addon_boards` (`id`, `group`, `name`, `icon`, `description`) VALUES (NULL, '" . $db->sanitize($_POST['group']) . "', '" . $db->sanitize($_POST['name']) . "', '" . $db->sanitize($_POST['icon']) . "', '" . $db->sanitize($_POST['desc']) . "');");
 }
 
 ?>
@@ -16,15 +16,15 @@ if(isset($_POST['name']) && isset($_POST['icon']) && isset($_POST['desc'])) {
     <tr>
       <th style="width: 50%">Board</th>
       <th style="">Add-Ons</th>
-      <th style="">Options</th>
+      <th style="">Group</th>
     </tr>
     <?php
     $boards = BoardManager::getAllBoards();
     foreach($boards as $board) {
       echo "<tr>";
       echo "<td>" . $board->getName() . "</td>";
-      echo "<td>???</td>";
-      echo "<td>...</td>";
+      echo "<td>" . $board->getCount() . "</td>";
+      echo "<td>" . $board->getGroup() . "</td>";
       echo "</tr>";
     }
     ?>
@@ -36,6 +36,7 @@ if(isset($_POST['name']) && isset($_POST['icon']) && isset($_POST['desc'])) {
   <tbody>
     <tr><td class="center" colspan="2"><h3>Create Board</h3></td></tr>
     <tr><td>Board Name:</td><td><input type="text" name="name" id="name"></td></tr>
+    <tr><td>Group Name:</td><td><input type="text" name="group" id="group"></td></tr>
     <tr><td>Icon:</td><td><input type="text" name="icon" id="icon"></td></tr>
     <tr><td>Description:</td><td><textarea name="desc" id="desc"></textarea></tr>
     <tr><td class="center" colspan="2"><input type="submit"></td></tr>

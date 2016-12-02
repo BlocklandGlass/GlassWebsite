@@ -20,15 +20,26 @@
 				<td>Files</td>
 			</tr>
 			<?php
-			  $boards = BoardManager::getAllBoards();
+				$groups = BoardManager::getBoardGroups();
+				foreach($groups as $group) {
+				  $boards = BoardManager::getGroup($group);
 
-				foreach($boards as $board) {
 					?>
-					<tr>
-						<td><img src="/img/icons32/<?php echo $board->getIcon() ?>.png" /></td>
-						<td><a href="board.php?id=<?php echo($board->getID()); ?>"><?php echo($board->getName()); ?></a></td>
-						<td><?php echo($board->getCount()); ?></td>
-					</tr><?php
+					<tr><td></td></tr>
+					<tr class="boardheader shadow-1">
+						<td colspan="3"><b><?php echo $group; ?></b></td>
+					</tr>
+					<?php
+
+					foreach($boards as $board) {
+						?>
+						<tr>
+							<td><img src="/img/icons32/<?php echo $board->getIcon() ?>.png" /></td>
+							<td><a href="board.php?id=<?php echo($board->getID()); ?>"><?php echo($board->getName()); ?></a></td>
+							<td><?php echo($board->getCount()); ?></td>
+						</tr>
+						<?php
+					}
 				}
 			?>
 		</tbody>
