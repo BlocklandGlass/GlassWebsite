@@ -25,7 +25,7 @@
 				  $boards = BoardManager::getGroup($group);
 
 					?>
-					<tr><td></td></tr>
+					<tr><td style="width:0px"></td></tr>
 					<tr class="boardheader shadow-1">
 						<td colspan="3"><b><?php echo $group; ?></b></td>
 					</tr>
