@@ -18,6 +18,12 @@ if(isset($_REQUEST['id']) & $_REQUEST['id'] != "") {
 $addonObject = AddonManager::getFromID($aid);
 //$screens = ScreenshotManager::getScreenshotsFromAddon($aid); //I dont think this is done
 
+if($addonObject == false) {
+  $ret->status = "error";
+  $ret->error = "Add-On does not exist";
+  die(json_encode($ret, JSON_PRETTY_PRINT));
+}
+
 if(!$addonObject->getApproved()) {
   $ret->status = "error";
   $ret->error = "Add-On not approved";
@@ -27,13 +33,19 @@ if(!$addonObject->getApproved()) {
 
 $ret->aid = $aid;
 $ret->filename = $addonObject->getFilename();
-$ret->boardId = $addonObject->getBoard();
+
+$ret->board_id = $addonObject->getBoard();
 $ret->board = BoardManager::getFromID($addonObject->getBoard())->getName();
+
 $ret->name = $addonObject->getName();
 $ret->description = utf8_encode(htmlspecialchars_decode($addonObject->getDescription()));
+
 $ret->date = date("M jS Y, g:i A", strtotime($addonObject->getUploadDate()));
+
 $ret->downloads = $addonObject->getDownloads("web") + $addonObject->getDownloads("ingame");
 $ret->rating = $addonObject->getRating();
+
+$ret->author = UserManager::getFromBLID($addonObject->getManagerBLID())->getName();
 
 $ret->screenshots = array();
 $screens = ScreenshotManager::getScreenshotsFromAddon($aid);
@@ -58,7 +70,7 @@ if($user == false) {
 
 $author->blid = $addonObject->getManagerBLID();
 $author->name = $user;
-$ret->authors = array($author);
+$ret->contributors = array($author);
 
 $channelId[1] = "stable";
 $channelId[2] = "beta";
