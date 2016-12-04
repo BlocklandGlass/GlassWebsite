@@ -1,29 +1,8 @@
 <?php
 require_once dirname(__DIR__) . "/../../../private/class/AddonManager.php";
+require_once dirname(__DIR__) . "/../../../private/class/BoardManager.php";
 require_once dirname(__DIR__) . "/../../../private/class/UserLog.php";
 require_once dirname(__DIR__) . "/../../../private/class/UserManager.php";
-
-/*
-
-[
-  {
-    type: "recent",
-    uploads: [],
-    updates: [],
-    date: 138247923
-  },{
-    type: "summary",
-    popular: [],
-    statistics: [],
-    date: 138247923
-  },{
-    type: "message",
-    text: "asdf",
-    date: 138247923
-  }
-]
-
-*/
 
 $recent = AddonManager::getRecentAddons();
 $recentUpdates = AddonManager::getRecentUpdates();
