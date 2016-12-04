@@ -21,7 +21,7 @@ foreach($recent as $ao) {
   $o = new stdClass();
   $o->id = $ao->getId();
   $o->name = $ao->getName();
-  $o->board = BoardManager::getFromBoardID($ao->getBoard())->getName();
+  $o->board = BoardManager::getFromBLID($ao->getBoard())->getName();
 
   $un = utf8_encode(UserLog::getCurrentUsername($ao->getManagerBLID()));
   if($un === false) {
