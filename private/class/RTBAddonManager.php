@@ -163,7 +163,7 @@ class RTBAddonManager {
   public static function searchByName($name) {
     $db = new DatabaseManager();
     RTBAddonManager::verifyTable($db);
-    $res = $db->query("SELECT * from `rtb_addons` WHERE `title` LIKE '%" . $db->sanitize($name) . "%'");
+    $res = $db->query("SELECT * from `rtb_addons` WHERE `title` LIKE '%" . $db->sanitize($name) . "%' LIMIT 0, 15");
 
     $ret = [];
     while($obj = $res->fetch_object()) {
