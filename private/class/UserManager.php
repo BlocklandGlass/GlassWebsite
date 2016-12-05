@@ -31,6 +31,26 @@ class UserManager {
 		return $userObject;
 	}
 
+	public static function getFromUsername($username) {
+
+		$database = new DatabaseManager();
+		UserManager::verifyTable($database);
+		$resource = $database->query("SELECT username, blid, banned, admin, verified, email, reset FROM `users` WHERE `username` = '" . $database->sanitize($username) . "' AND `verified` = 1");
+
+		if(!$resource) {
+			throw new Exception("Database error: " . $database->error());
+		}
+
+		if($resource->num_rows == 0) {
+			$userObject = false;
+		} else {
+			$userObject = new UserObject($resource->fetch_object());
+		}
+		$resource->close();
+
+		return $userObject;
+	}
+
 	//includes accounts that have not been activated
 	public static function getAllAccountsFromBLID($blid) {
 
