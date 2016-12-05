@@ -58,6 +58,7 @@ if($searchRTB && $name) {
     $r->title = $result->title;
     $r->filename = $result->filename;
     $r->type = $result->type;
+
     $r->rtb_id = $result->id;
     $r->isRTB = true;
 

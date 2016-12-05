@@ -1,6 +1,7 @@
 <?php
 require_once dirname(__DIR__) . "/../../../private/class/AddonManager.php";
 require_once dirname(__DIR__) . "/../../../private/class/BoardManager.php";
+require_once dirname(__DIR__) . "/../../../private/class/CommentManager.php";
 require_once dirname(__DIR__) . "/../../../private/class/UserLog.php";
 require_once dirname(__DIR__) . "/../../../private/class/ScreenshotManager.php";
 
@@ -70,6 +71,7 @@ if($user == false) {
 
 $author->blid = $addonObject->getManagerBLID();
 $author->name = $user;
+
 $ret->contributors = array($author);
 
 $channelId[1] = "stable";
@@ -82,6 +84,33 @@ $channel->version = $addonObject->getVersion();
 
 $ret->branches[] = $channel;
 
+//================================
+// comments and updates
+//================================
+
+$activity = [];
+
+$start = 0;
+
+$comments = CommentManager::getCommentIDsFromAddon($addonObject->getId(), $start, 15, 1);
+foreach($comments as $comid) {
+  $comment = CommentManager::getFromId($comid);
+
+  $action = new stdClass();
+  $action->type = "comment";
+  $action->date = $comment->getTimeStamp();
+
+  $action->author = utf8_encode(UserLog::getCurrentUsername($comment->getBLID()));
+  $action->authorBlid = $comment->getBlid();
+
+  $text = str_replace("\r\n", "<br>", $comment->getComment());
+  $text = str_replace("\n", "<br>", $text);
+  $action->comment = utf8_encode($text);
+
+  $activity[] = $action;
+}
+
+$ret->activity = $activity;
 
 echo json_encode($ret, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 ?>
