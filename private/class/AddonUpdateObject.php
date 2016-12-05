@@ -22,6 +22,10 @@ class AddonUpdateObject {
 		$this->restart = $row->restart;
   }
 
+	public function getTimeSubmitted() {
+		return $this->submitted;
+	}
+
 	public function getAddon() {
 		return AddonManager::getFromId($this->aid);
 	}

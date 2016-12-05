@@ -98,7 +98,9 @@ foreach($comments as $comid) {
 
   $action = new stdClass();
   $action->type = "comment";
-  $action->date = $comment->getTimeStamp();
+  $action->timestamp = $comment->getTimeStamp();
+
+  $action->date = date("M jS Y, g:i A", strtotime($comment->getTimeStamp()));
 
   $action->author = utf8_encode(UserLog::getCurrentUsername($comment->getBLID()));
   $action->authorBlid = $comment->getBlid();
@@ -109,6 +111,26 @@ foreach($comments as $comid) {
 
   $activity[] = $action;
 }
+
+$updates = AddonManager::getUpdates($addonObject);
+foreach($updates as $update) {
+  $action = new stdClass();
+  $action->type = "update";
+  $action->timestamp = $update->getTimeSubmitted();
+
+  $action->date = date("M jS Y, g:i A", strtotime($action->timestamp));
+
+  $action->version = $update->getVersion();
+
+  $action->changelog = utf8_encode($update->getChangeLog());
+
+  $activity[] = $action;
+}
+
+usort($activity, function($a, $b)
+{
+    return strtotime($a->timestamp) < strtotime($b->timestamp) ? 1 : -1;
+});
 
 $ret->activity = $activity;
 
