@@ -105,6 +105,17 @@ foreach($comments as $comid) {
   $action->author = utf8_encode(UserLog::getCurrentUsername($comment->getBLID()));
   $action->authorBlid = $comment->getBlid();
 
+  $user = UserManager::getFromBlid($comment->getBlid());
+  if($user) {
+    if($user->inGroup("Administrator")) {
+      $action->title = "Administrator";
+    } else if($user->inGroup("Moderator")) {
+      $action->title = "Moderator";
+    } else if($user->inGroup("Reviewer")) {
+      $action->title = "Mod Reviewer";
+    }
+  }
+
   $text = str_replace("\r\n", "<br>", $comment->getComment());
   $text = str_replace("\n", "<br>", $text);
   $action->comment = utf8_encode($text);
