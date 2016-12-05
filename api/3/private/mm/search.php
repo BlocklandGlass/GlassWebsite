@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__DIR__) . "/../../../private/class/RTBAddonManager.php";
 require_once dirname(__DIR__) . "/../../../private/class/AddonManager.php";
 require_once dirname(__DIR__) . "/../../../private/class/UserManager.php";
 
@@ -39,13 +40,28 @@ $ret->results = array();
 foreach($res as $result) {
   $r = new stdClass();
   $addon = AddonManager::getFromId($result);
-  $r->type = "addon";
   $r->title = $addon->getName();
   $r->id = $addon->getId();
   $r->author = UserManager::getFromBLID($addon->getManagerBLID());
   $r->summary = "";
   //$r->description = $addon->getDescription();
   $ret->results[] = $r;
+}
+
+$searchRTB = $_REQUEST['rtb'] ?? false;
+
+if($searchRTB && $name) {
+  $res = RTBAddonManager::searchByName($name);
+  foreach($res as $result) {
+    $r = new stdClass();
+
+    $r->title = $result->title;
+    $r->filename = $result->filename;
+    $r->rtb_id = $result->id;
+    $r->isRTB = true;
+
+    $ret->results[] = $r;
+  }
 }
 
 $ret->status = "success";

@@ -160,6 +160,19 @@ class RTBAddonManager {
     }
   }
 
+  public static function searchByName($name) {
+    $db = new DatabaseManager();
+    RTBAddonManager::verifyTable($db);
+    $res = $db->query("SELECT * from `rtb_addons` WHERE `title` LIKE '%" . $db->sanitize($name) . "%'");
+
+    $ret = [];
+    while($obj = $res->fetch_object()) {
+      $ret[] = $obj;
+    }
+
+    return $ret;
+  }
+
   public static function verifyTable($database) {
     if(!$database->query("CREATE TABLE IF NOT EXISTS `rtb_addons` (
       `id` int(11) NOT NULL,
