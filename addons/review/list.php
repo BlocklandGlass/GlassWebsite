@@ -14,8 +14,8 @@
 ?>
 <div class="maincontainer">
 	<div class="tile">
-		<h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Glass Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/5/2016)</span></h2>
-		<p><i>If you would like to suggest amendments to the following information, contact a Glass Administrator.</i></p>
+		<h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Mod Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/5/2016)</span></h2>
+		<p><i>If you would like to suggest amendments to the following information, contact a Administrator.</i></p>
 		<h3><image style="height: 1.4em" src="/img/icons32/file_save_as.png" /> On the Subject of Filenames</h3>
 		<p>Ensure that the add-on's filename is appropriate to the add-on's function, and follows the standard Blockland add-on filename convention: <i>AddonType_AddonName.zip</i></p>
 		<h3><image style="height: 1.4em" src="/img/icons32/creative_commons.png" /> On the Subject of Ownership</h3>

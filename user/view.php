@@ -33,11 +33,11 @@
 		echo("<h3>" . utf8_encode($userObject->getName()) . "</h3>");
 		echo "<p>";
 		if($userObject->inGroup("Administrator")) {
-			echo("This user is a <span style=\"color: red; font-weight: bold;\">Glass Administrator</span>.");
+			echo("This user is a <span style=\"color: red; font-weight: bold;\">Administrator</span>.");
 		} else if($userObject->inGroup("Moderator")) {
-			echo("This user is a <span style=\"color: orange; font-weight: bold;\">Glass Moderator</span>.");
+			echo("This user is a <span style=\"color: orange; font-weight: bold;\">Moderator</span>.");
 		} else if($userObject->inGroup("Reviewer")) {
-			echo("This user is a <span style=\"color: green; font-weight: bold;\">Glass Reviewer</span>.");
+			echo("This user is a <span style=\"color: green; font-weight: bold;\">Mod Reviewer</span>.");
 		}
 		if(sizeof($history) > 0) echo("<p><b>Last Seen:</b> " . $history[0]->lastseen);
 		echo("<br /><b>BL_ID:</b> " . $userObject->getBLID());
