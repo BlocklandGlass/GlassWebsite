@@ -26,20 +26,55 @@ class RTBAddonManager {
         $lines = explode("\n", $rtbInfo);
         foreach($lines as $l) {
           $words = explode(": ", $l);
-          if(sizeof($words) == 2)
-            $dat->$words[0] = trim($words[1]);
+          if(sizeof($words) == 2) {
+            $key = $words[0];
+            $dat->$key = trim($words[1]);
+          }
         }
+
+        $description = $zip->getFromName("description.txt");
+
+        $lines = explode("\n", $description);
+        for($i = 0; $i < 2; $i++) {
+          $words = explode(": ", $lines[$i]);
+          if(sizeof($words) == 2) {
+            if($words[0] == "Author") {
+              $dat->author = trim($words[1]);
+            }
+          }
+        }
+
+        $desc = join(array_splice($lines, 2), "\n");
+        $desc = str_replace("\r\n", "\n", $desc);
       }
 
+      $res = $db->query("SELECT * FROM `rtb_addons` WHERE `id`=" . $db->sanitize($dat->id));
+      var_dump($res);
       $data[] = $dat;
-      $db->query("INSERT INTO `rtb_addons` (`id`, `icon`, `type`, `title`, `filename`, `glass_id`) VALUES (" .
-      "'" . $db->sanitize($dat->id) . "'," .
-      "'" . $db->sanitize($dat->icon) . "'," .
-      "'" . $db->sanitize($dat->type) . "'," .
-      "'" . $db->sanitize($dat->title) . "'," .
-      "'" . $db->sanitize($dat->filename) . "', '')");
-
+      if($res->num_rows > 0) {
+        $db->query($sql = "UPDATE `rtb_addons` SET " .
+        "`icon`='" . $db->sanitize($dat->icon) . "', " .
+        "`type`='" . $db->sanitize($dat->type) . "', " .
+        "`title`='" . $db->sanitize($dat->title) . "', " .
+        "`filename`='" . $db->sanitize($dat->filename) . "', " .
+        "`author`='" . $db->sanitize($dat->author) . "', " .
+        "`description`='" . $db->sanitize($desc) . "' " .
+        " WHERE `id`='" . $db->sanitize($dat->id) . "'");
+        echo $sql;
+      } else {
+        $db->query($sql = "INSERT INTO `rtb_addons` (`id`, `icon`, `type`, `title`, `filename`, `glass_id`, `author`, `description`) VALUES (" .
+        "'" . $db->sanitize($dat->id) . "'," .
+        "'" . $db->sanitize($dat->icon) . "'," .
+        "'" . $db->sanitize($dat->type) . "'," .
+        "'" . $db->sanitize($dat->title) . "'," .
+        "'" . $db->sanitize($dat->filename) . "'," .
+        "0," .
+        "'" . $db->sanitize($dat->author) . "'," .
+        "'" . $db->sanitize($desc) . "')");
+        echo $sql;
+      }
       echo($db->error());
+      return;
     }
     //var_dump($data);
   }
@@ -181,6 +216,10 @@ class RTBAddonManager {
       `title` text NOT NULL,
       `glass_id` int(11) NOT NULL,
       `filename` text NOT NULL,
+
+      `author` varchar(255) NOT NULL,
+      `description` text NOT NULL,
+
       `approved` INT(1) NULL DEFAULT NULL)")) {
       throw new Exception("Error creating rtb_addons table: " . $database->error());
     }
