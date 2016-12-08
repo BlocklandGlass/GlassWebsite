@@ -5,6 +5,7 @@ require_once dirname(__DIR__) . "/../../../private/class/UserManager.php";
 
 $name = $_REQUEST['name'] ?? false;
 $author = $_REQUEST['author'] ?? false;
+$board = $_REQUEST['board'] ?? false;
 
 $rtb = $_REQUEST['rtb'] ?? false;
 
@@ -22,6 +23,10 @@ if($author) {
       $search['blid'] = $user->getBlid();
     }
   }
+}
+
+if($board) {
+  $search['board'] = $board;
 }
 
 if(sizeof($search) > 0) {

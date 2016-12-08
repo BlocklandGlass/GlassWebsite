@@ -35,12 +35,13 @@ class RTBAddonManager {
         $description = $zip->getFromName("description.txt");
 
         $lines = explode("\n", $description);
-        for($i = 0; $i < 2; $i++) {
-          $words = explode(": ", $lines[$i]);
+        foreach($lines as $l) {
+          $words = explode(": ", $l);
           if(sizeof($words) == 2) {
-            if($words[0] == "Author") {
-              $dat->author = trim($words[1]);
-            }
+            $key = strtolower(trim($words[0]));
+            $dat->$key = trim($words[1]);
+          } else {
+            break;
           }
         }
 
@@ -48,8 +49,12 @@ class RTBAddonManager {
         $desc = str_replace("\r\n", "\n", $desc);
       }
 
+      if(!isset($dat->author)) {
+        echo("\nMissing for " . $dat->id);
+        echo("\n\n" . $description . "\n\n");
+      }
+
       $res = $db->query("SELECT * FROM `rtb_addons` WHERE `id`=" . $db->sanitize($dat->id));
-      var_dump($res);
       $data[] = $dat;
       if($res->num_rows > 0) {
         $db->query($sql = "UPDATE `rtb_addons` SET " .
@@ -60,7 +65,8 @@ class RTBAddonManager {
         "`author`='" . $db->sanitize($dat->author) . "', " .
         "`description`='" . $db->sanitize($desc) . "' " .
         " WHERE `id`='" . $db->sanitize($dat->id) . "'");
-        echo $sql;
+
+        //echo("Updated " . $dat->id . "\n");
       } else {
         $db->query($sql = "INSERT INTO `rtb_addons` (`id`, `icon`, `type`, `title`, `filename`, `glass_id`, `author`, `description`) VALUES (" .
         "'" . $db->sanitize($dat->id) . "'," .
@@ -71,10 +77,10 @@ class RTBAddonManager {
         "0," .
         "'" . $db->sanitize($dat->author) . "'," .
         "'" . $db->sanitize($desc) . "')");
-        echo $sql;
+
+        //echo("Added " . $dat->id . "\n");
       }
       echo($db->error());
-      return;
     }
     //var_dump($data);
   }
