@@ -96,9 +96,9 @@ class RTBAddonManager {
     return $boards;
   }
 
-  public static function getFromType($type) {
+  public static function getFromType($type, $start = 0, $max = 15) {
     $db = new DatabaseManager();
-    $res = $db->query("SELECT `title`,`id` FROM `rtb_addons` WHERE `type`='" . $type . "' ORDER BY `title` ASC");
+    $res = $db->query("SELECT `title`,`id`,`description`,`author`,`glass_id` FROM `rtb_addons` WHERE `type`='" . $type . "' ORDER BY `title` ASC LIMIT " . $db->sanitize($start) . "," . $db->sanitize($max));
 
     $ret = array();
     while($obj = $res->fetch_object()) {
@@ -124,6 +124,15 @@ class RTBAddonManager {
   public static function getCount() {
     $db = new DatabaseManager();
     $res = $db->query("SELECT COUNT(*) FROM `rtb_addons`");
+
+    $obj = $res->fetch_object();
+    $val = "COUNT(*)";
+    return $obj->$val;
+  }
+
+  public static function getTypeCount($name) {
+    $db = new DatabaseManager();
+    $res = $db->query("SELECT COUNT(*) FROM `rtb_addons` WHERE `type`='" . $db->sanitize($name) . "'");
 
     $obj = $res->fetch_object();
     $val = "COUNT(*)";
