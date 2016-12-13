@@ -1,4 +1,5 @@
 <?php
+require_once dirname(dirname(__DIR__)) . '/private/class/RTBAddonManager.php';
 require_once dirname(dirname(__DIR__)) . '/private/class/AddonManager.php';
 require_once dirname(dirname(__DIR__)) . '/private/class/StatManager.php';
 require_once dirname(dirname(__DIR__)) . '/private/class/AWSFileManager.php';
@@ -43,14 +44,19 @@ if($type == "addon_update" || $type == "addon_download") {
   AddonManager::incrementWeeklyDownloads($ao, 1, 1);
   AddonManager::incrementTotalDownloads($ao, 1, 1);
   */
-  
+
 } else if($type == "rtb") {
-  $filename = $_REQUEST['fn'];
-  $head = 'Location: http://' . AWSFileManager::getBucket() . '/rtb/' . $filename;
+  $id = $_REQUEST['rtbId'];
+  $addon = RTBAddonManager::getAddonFromId($id);
+
+  $head = 'Location: http://' . AWSFileManager::getBucket() . '/rtb/' . $addon->filename;
+
   if($debug) {
     echo $head;
   } else {
     header($head);
   }
+
+  RTBAddonManager::incrementDownloads($id, "ingame", 1);
 }
 ?>

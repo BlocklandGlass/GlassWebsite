@@ -223,6 +223,17 @@ class RTBAddonManager {
     return $ret;
   }
 
+  public static function incrementDownloads($id, $type, $amount = 1) {
+    $db = new DatabaseManager();
+    RTBAddonManager::verifyTable($db);
+    if($type == "ingame") {
+      $var = "downloads_ingame";
+    } else {
+      $var = "downloads_web";
+    }
+    $res = $db->query("UPDATE `rtb_addons` SET `{$var}`=({$var}+1) WHERE `id` = '" . $db->sanitize($id) . "'");
+  }
+
   public static function verifyTable($database) {
     if(!$database->query("CREATE TABLE IF NOT EXISTS `rtb_addons` (
       `id` int(11) NOT NULL,
@@ -234,6 +245,9 @@ class RTBAddonManager {
 
       `author` varchar(255) NOT NULL,
       `description` text NOT NULL,
+
+      `downloads_web` int(11) NOT NULL DEFAULT 0,
+      `downloads_ingame` int(11) NOT NULL DEFAULT 0,
 
       `approved` INT(1) NULL DEFAULT NULL)")) {
       throw new Exception("Error creating rtb_addons table: " . $database->error());
