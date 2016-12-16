@@ -1,15 +1,16 @@
 <?php
-if($_POST['token'] ?? false) {
-  if($_POST['token'] == file_get_contents('token.txt')) {
-    session_start();
-    $_SESSION['root'] = true;
-    header('Location: /install/moduleCheck.php');
-  } else {
-    $message = "Incorrect token! A new token has been generated";
+	require dirname(__DIR__) . '/../private/autoload.php';
+  if($_POST['token'] ?? false) {
+    if($_POST['token'] == file_get_contents('token.txt')) {
+      session_start();
+      $_SESSION['root'] = true;
+      header('Location: /install/moduleCheck.php');
+    } else {
+      $message = "Incorrect token! A new token has been generated";
+    }
   }
-}
 
-file_put_contents(dirname(__FILE__) . '/token.txt', uniqid("install_"));
+  file_put_contents(dirname(__FILE__) . '/token.txt', uniqid("install_"));
 ?>
 
 <!doctype html>

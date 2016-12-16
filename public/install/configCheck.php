@@ -1,51 +1,52 @@
 <?php
-use Glass\InstallationManager;
-if(!isset($_SESSION)) {
-  session_start();
-}
+	require dirname(__DIR__) . '/../private/autoload.php';
+  use Glass\InstallationManager;
+  if(!isset($_SESSION)) {
+    session_start();
+  }
 
-$root = $_SESSION['root'] ?? false;
-if(!$root) {
-  header('Location: /install');
-  die();
-}
+  $root = $_SESSION['root'] ?? false;
+  if(!$root) {
+    header('Location: /install');
+    die();
+  }
 
-if($_POST['sub'] ?? false) {
-  $obj = new stdClass();
-  $obj->database = $_POST['mysql_name'] ?? "";
-  $obj->host = $_POST['mysql_host'] ?? "";
-  $obj->username = $_POST['mysql_username'] ?? "";
-  $obj->password = $_POST['mysql_pass'] ?? "";
+  if($_POST['sub'] ?? false) {
+    $obj = new stdClass();
+    $obj->database = $_POST['mysql_name'] ?? "";
+    $obj->host = $_POST['mysql_host'] ?? "";
+    $obj->username = $_POST['mysql_username'] ?? "";
+    $obj->password = $_POST['mysql_pass'] ?? "";
 
-  $obj->aws_access_key_id = $_POST['aws_key'] ?? "";
-  $obj->aws_secret_access_key = $_POST['aws_secret'] ?? "";
-  $obj->aws_bucket = $_POST['aws_bucket'] ?? "";
-  file_put_contents(dirname(__DIR__) . '/private/config.json', json_encode($obj));
-}
+    $obj->aws_access_key_id = $_POST['aws_key'] ?? "";
+    $obj->aws_secret_access_key = $_POST['aws_secret'] ?? "";
+    $obj->aws_bucket = $_POST['aws_bucket'] ?? "";
+    file_put_contents(dirname(__DIR__) . '/private/config.json', json_encode($obj));
+  }
 
-function createDefaultConfig() {
-  $obj = new stdClass();
-  $obj->database = "blocklandGlass";
-  $obj->host = "localhost";
-  $obj->username = "";
-  $obj->password = "";
+  function createDefaultConfig() {
+    $obj = new stdClass();
+    $obj->database = "blocklandGlass";
+    $obj->host = "localhost";
+    $obj->username = "";
+    $obj->password = "";
 
-  $obj->aws_access_key_id = "";
-  $obj->aws_secret_access_key = "";
-  $obj->aws_bucket = "cdn.blocklandglass.com";
-  return $obj;
-}
+    $obj->aws_access_key_id = "";
+    $obj->aws_secret_access_key = "";
+    $obj->aws_bucket = "cdn.blocklandglass.com";
+    return $obj;
+  }
 
-$fileExists = is_file( dirname(__DIR__) . '/private/config.json' );
+  $fileExists = is_file( dirname(__DIR__) . '/private/config.json' );
 
-if($fileExists) {
-  $config = json_decode(file_get_contents( dirname(__DIR__) . '/private/config.json' ));
-  if($config == false || $config == null) {
+  if($fileExists) {
+    $config = json_decode(file_get_contents( dirname(__DIR__) . '/private/config.json' ));
+    if($config == false || $config == null) {
+      $config = createDefaultConfig();
+    }
+  } else {
     $config = createDefaultConfig();
   }
-} else {
-  $config = createDefaultConfig();
-}
 ?>
 <!doctype html>
 <html>

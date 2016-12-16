@@ -1,7 +1,7 @@
 <?php
 	$_PAGETITLE = "Blockland Glass | Update List";
-	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
 	use Glass\AddonManager;
 	use Glass\UserManager;
 
@@ -88,4 +88,4 @@ tbody tr:nth-child(2n) {
 	//TO DO:
 	//add script to bottom of page to prevent refresh on search
 
-	include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>
+	include(realpath(dirname(__DIR__) . "/../../private/footer.php")); ?>

@@ -1,4 +1,5 @@
 <?php
+	require_once dirname(__DIR__) . '/../private/autoload.php';
 	session_start();
 
 	if(!isset($_SESSION['loggedin']) || !$_SESSION['loggedin']) {

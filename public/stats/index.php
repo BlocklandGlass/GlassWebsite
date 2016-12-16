@@ -1,7 +1,9 @@
 <?php
+	require dirname(__DIR__) . '/../private/autoload.php';
 	use Glass\GroupManager;
 	use Glass\UserManager;
 	use Glass\CronStatManager;
+	use Glass\StatManager;
 
 	$_PAGETITLE = "Blockland Glass | Statistics";
 

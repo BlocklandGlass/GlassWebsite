@@ -11,8 +11,8 @@
   use Glass\RTBAddonManager;
 
 	$_PAGETITLE = "Blockland Glass | RTB Archive";
-	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
 ?>
 
 <div class="maincontainer">
@@ -46,4 +46,4 @@
   </div>
 </div>
 
-<?php include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>
+<?php include(realpath(dirname(__DIR__) . "/../../private/footer.php")); ?>

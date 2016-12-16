@@ -11,8 +11,8 @@
   use Glass\RTBAddonManager;
 
 	$_PAGETITLE = "Blockland Glass | RTB Boards";
-	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
 ?>
 <div class="maincontainer">
   <h1 style="text-align:center"><img src="/img/rtb_logo.gif"><br /><?php echo $_GET['name']; ?></h1>
@@ -43,4 +43,4 @@
 	</table>
 </div>
 
-<?php include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>
+<?php include(realpath(dirname(__DIR__) . "/../../private/footer.php")); ?>

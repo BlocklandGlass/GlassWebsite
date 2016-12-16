@@ -9,8 +9,8 @@
 
 
 
-	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
 
   $addon = AddonManager::getFromID($_REQUEST['id']);
   $update = AddonManager::getUpdates($addon)[0];
@@ -186,4 +186,4 @@ function showChanges(id) {
 	//TO DO:
 	//add script to bottom of page to prevent refresh on search
 
-	include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>
+	include(realpath(dirname(__DIR__) . "/../../private/footer.php")); ?>

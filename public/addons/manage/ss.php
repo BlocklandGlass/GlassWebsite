@@ -7,7 +7,7 @@ if(isset($_POST['delete'])) {
   }
 }
 $_screenshotContext = "addon";
-$res = include(realpath(dirname(__DIR__) . "/../private/json/uploadScreenshot.php"));
+$res = include(realpath(dirname(__DIR__) . "/../../private/json/uploadScreenshot.php"));
 
 $screenshots = ScreenshotManager::getScreenshotsFromAddon($_GET['id']);
 foreach($screenshots as $sid) {

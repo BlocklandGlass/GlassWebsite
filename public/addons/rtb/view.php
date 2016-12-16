@@ -1,14 +1,14 @@
 <?php
-	include(realpath(dirname(__DIR__) . "/../private/class/RTBAddonManager.php"));
-	include(realpath(dirname(__DIR__) . "/../private/class/AWSFileManager.php"));
-	include(realpath(dirname(__DIR__) . "/../private/class/AddonManager.php"));
+	use Glass\RTBAddonManager;
+	use Glass\AWSFileManager;
+	use Glass\AddonManager;
 
   $addonData = RTBAddonManager::getAddonFromId($_GET['id']);
 
 	$_PAGETITLE = "Blockland Glass | " . utf8_encode($addonData->title);
 
-	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
 ?>
 <div class="maincontainer">
 	<span style="font-size: 9pt;"><a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archive</a> >> <a href="board.php?name=<?php echo $addonData->type; ?>"><?php echo $addonData->type; ?></a> >> <a href="#"><?php echo htmlspecialchars($addonData->title); ?></a></span>
@@ -44,4 +44,4 @@
 		<p style="text-align:center">This add-on has been imported to <a href="/addons/addon.php?id=<?php echo $addon->getId(); ?>"><?php echo $addon->getName() ?></a></p>
 	<?php } ?>
 </div>
-<?php include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>
+<?php include(realpath(dirname(__DIR__) . "/../../private/footer.php")); ?>

@@ -4,8 +4,8 @@
   use Glass\RTBAddonManager;
 
 	$_PAGETITLE = "Blockland Glass | RTB Reclaim";
-	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
 
   $addonData = RTBAddonManager::getAddonFromId($_GET['id']);
 
@@ -49,4 +49,4 @@ $("#addon").keyup(function() {
   })
 });
 </script>
-<?php include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>
+<?php include(realpath(dirname(__DIR__) . "/../../private/footer.php")); ?>

@@ -1,7 +1,7 @@
 <?php
 	require_once dirname(__DIR__) . '/private/autoload.php';
 	session_start();
-	$loginStatus = include(realpath(dirname(__FILE__) . "/private/json/login.php"));
+	$loginStatus = include(realpath(dirname(__DIR__) . "/private/json/login.php"));
 
 	if(isset($loginStatus['redirect'])) {
 		//I tried to add $_SERVER['SERVER_NAME'] but that doesn't work with localhost
@@ -9,8 +9,8 @@
 		die();
 	}
 	$_PAGETITLE = "Blockland Glass | Log In";
-	include(realpath(dirname(__FILE__) . "/private/header.php"));
-	include(realpath(dirname(__FILE__) . "/private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/private/header.php"));
+	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>
 <div class="maincontainer">
 	<div class="center" id="loginStatus">
@@ -75,5 +75,5 @@ $(document).ready(function () {
 });
 </script>
 <?php
-	include(realpath(dirname(__FILE__) . "/private/footer.php"));
+	include(realpath(dirname(__DIR__) . "/private/footer.php"));
 ?>

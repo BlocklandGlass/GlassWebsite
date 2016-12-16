@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	$status = include(__DIR__ . "/../../private/json/uploadAddon.php");
+	$status = include(__DIR__ . "/../../../private/json/uploadAddon.php");
 
 	if(isset($status['redirect'])) {
 		//echo("REDIRECT: " . $status['redirect']);
@@ -8,8 +8,8 @@
 		die();
 	}
 	$_PAGETITLE = "Blockland Glass | Add-On Upload";
-	include(__DIR__ . "/../../private/header.php");
-	include(__DIR__ . "/../../private/navigationbar.php");
+	include(__DIR__ . "/../../../private/header.php");
+	include(__DIR__ . "/../../../private/navigationbar.php");
 ?>
 <div class="maincontainer" style="text-align:center">
 	<?php
@@ -139,4 +139,4 @@ $(document).ready(function () {
 	});
 });
 </script>
-<?php include(__DIR__ . "/../../private/footer.php"); ?>
+<?php include(__DIR__ . "/../../../private/footer.php"); ?>

@@ -1,6 +1,7 @@
 <?php
-  include(realpath(dirname(__DIR__) . "/../private/class/UserManager.php"));
-  include(realpath(dirname(__DIR__) . "/../private/class/GroupManager.php"));
+	require dirname(__DIR__) . '/../private/autoload.php';
+  use Glass\UserManager;
+  use Glass\GroupManager;
   session_start();
 	$user = UserManager::getCurrent();
 

@@ -1,55 +1,56 @@
 <?php
-use Glass\InstallationManager;
-if(!isset($_SESSION)) {
-  session_start();
-}
-
-$root = $_SESSION['root'] ?? false;
-if(!$root) {
-  header('Location: /install');
-  die();
-}
-
-$config = json_decode(file_get_contents( dirname(__DIR__) . '/private/config.json' ));
-
-$success = true;
-$message = [];
-
-function testMYsql() {
-  global $config, $message, $success;
-  try {
-    $mysqli = @new mysqli($config->host, $config->username, $config->password);
-    if($mysqli->connect_error) {
-      $success = false;
-      $message['mysql'] = 'Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error;
-      return;
-    } else {
-      $message['mysql'] = "Success: " . $mysqli->host_info;
-    }
-  } catch(Exception $e) {
-    $success = false;
-    $message['mysql'] = $e;
-    return;
+	require dirname(__DIR__) . '/../private/autoload.php';
+  use Glass\InstallationManager;
+  if(!isset($_SESSION)) {
+    session_start();
   }
 
-  try {
-    if($mysqli->select_db($config->database)) {
-      $message['mysql_db'] = "Success";
-    } else {
-      if($mysqli->query('CREATE DATABASE IF NOT EXISTS `' . $config->database . '`')) {
-        $message['mysql_db'] = "Success: database created";
+  $root = $_SESSION['root'] ?? false;
+  if(!$root) {
+    header('Location: /install');
+    die();
+  }
+
+  $config = json_decode(file_get_contents( dirname(__DIR__) . '/private/config.json' ));
+
+  $success = true;
+  $message = [];
+
+  function testMysql() {
+    global $config, $message, $success;
+    try {
+      $mysqli = @new mysqli($config->host, $config->username, $config->password);
+      if($mysqli->connect_error) {
+        $success = false;
+        $message['mysql'] = 'Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error;
+        return;
       } else {
-        $message['mysql_db'] = "Failed to create database";
+        $message['mysql'] = "Success: " . $mysqli->host_info;
       }
+    } catch(Exception $e) {
+      $success = false;
+      $message['mysql'] = $e;
+      return;
     }
 
-  } catch(Exception $e) {
-    $success = false;
-    $message['mysql_db'] = $e;
-  }
-}
+    try {
+      if($mysqli->select_db($config->database)) {
+        $message['mysql_db'] = "Success";
+      } else {
+        if($mysqli->query('CREATE DATABASE IF NOT EXISTS `' . $config->database . '`')) {
+          $message['mysql_db'] = "Success: database created";
+        } else {
+          $message['mysql_db'] = "Failed to create database";
+        }
+      }
 
-testMYsql();
+    } catch(Exception $e) {
+      $success = false;
+      $message['mysql_db'] = $e;
+    }
+  }
+
+  testMysql();
 
 ?>
 <!doctype html>

@@ -6,7 +6,7 @@
 
 	//header("Content-Type: application/json");
 	//echo(json_encode(include(realpath(dirname(__DIR__) . "/../private/json/getComments.php"))));
-	include_once (realpath(dirname(__DIR__) . "/../private/class/UserManager.php"));
+	use Glass\UserManager;
 	$response = include(realpath(dirname(__DIR__) . "/../private/json/getPageCommentsWithUsers.php"));
 
 	$user = UserManager::getCurrent();

@@ -1,4 +1,5 @@
 <?php
+	require_once dirname(__DIR__) . '/../private/autoload.php';
 	session_start();
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));

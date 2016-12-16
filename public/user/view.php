@@ -1,4 +1,5 @@
 <?php
+	require_once dirname(__DIR__) . '/../private/autoload.php';
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 	use Glass\UserManager;

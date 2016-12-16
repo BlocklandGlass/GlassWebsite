@@ -1,5 +1,5 @@
 <?php
-$dat = require dirname(__DIR__) . "/../private/json/manageAddon.php";
+$dat = require dirname(__DIR__) . "/../../private/json/manageAddon.php";
 ?>
 <form method="post" action="">
 <table>

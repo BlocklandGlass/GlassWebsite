@@ -1,5 +1,6 @@
 <?php
-use Glass\InstallationManager;
+	require dirname(__DIR__) . '/../private/autoload.php';
+  use Glass\InstallationManager;
 ?>
 <!doctype html>
 <html>
