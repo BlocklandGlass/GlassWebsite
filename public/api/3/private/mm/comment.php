@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__DIR__) . '/../../../../private/autoload.php';
 /*$_GET['aid'] = $_REQUEST['id'];
 $comments = include(dirname(__DIR__) . "/../../../private/json/getPageCommentsWithUsers.php");
 echo json_encode($comments, JSON_PRETTY_PRINT);*/

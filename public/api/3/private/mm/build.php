@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__DIR__) . '/../../../../private/autoload.php';
 use Glass\BuildManager;
 use Glass\ScreenshotManager;
 $bid = $_REQUEST['id'];

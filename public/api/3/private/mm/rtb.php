@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: text/json');
+require_once dirname(__DIR__) . '/../../../../private/autoload.php';
 use Glass\AddonManager;
 use Glass\RTBAddonManager;
 
