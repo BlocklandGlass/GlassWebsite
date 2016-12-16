@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__DIR__) . '/../../private/autoload.php';
 use Glass\AddonManager;
 use Glass\AWSFileManager;
 use Glass\DatabaseManager;

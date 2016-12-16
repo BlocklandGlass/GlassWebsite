@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__DIR__) . '/../../private/autoload.php';
 require_once dirname(__FILE__) . "/private/ClientConnection.php";
 
 header('Content-Type: text/json; charset=ascii');
