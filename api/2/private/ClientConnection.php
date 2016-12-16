@@ -62,7 +62,6 @@ class ClientConnection {
   }
 
   function attemptBlocklandAuth() {
-    return true;
     return BlocklandAuth::checkAuth($this->name, $this->ip, $this->blid);
   }
 
