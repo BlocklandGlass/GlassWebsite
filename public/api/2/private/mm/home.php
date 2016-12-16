@@ -27,7 +27,7 @@ use Glass\UserManager;
 
 $recent = AddonManager::getRecentAddons();
 $recentUpdates = AddonManager::getRecentUpdates();
-$dlg = new stdClass();
+$dlg = new \stdClass();
 $dlg->type = "recent";
 
 $ar = array();
@@ -47,7 +47,7 @@ foreach($recent as $ao) {
   $board[10] = "Bargain Bin";
   $board[11] = "Sounds";
 
-  $o = new stdClass();
+  $o = new \stdClass();
   $o->id = $ao->getId();
   $o->name = $ao->getName();
   $o->board = $board[$ao->getBoard()];
@@ -70,7 +70,7 @@ foreach($recentUpdates as $r) {
   if($ao->getBoard() == 10) // bargain bin
     continue;
 
-  $o = new stdClass();
+  $o = new \stdClass();
   $o->id = $ao->getId();
   $o->name = $ao->getName();
   $o->version = $r->getVersion();
@@ -82,7 +82,7 @@ $dlg->updates = $ar;
 $dlg->date = time();
 
 $res = array($dlg);
-$ret = new stdClass();
+$ret = new \stdClass();
 $ret->status = "success";
 $ret->data = $res;
 

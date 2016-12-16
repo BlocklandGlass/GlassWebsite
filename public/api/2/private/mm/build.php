@@ -6,7 +6,7 @@ $bid = $_REQUEST['id'];
 $buldObject = BuildManager::getFromID($bid);
 //$screens = ScreenshotManager::getScreenshotsFromAddon($aid); //I dont think this is done
 
-$ret = new stdClass();
+$ret = new \stdClass();
 
 $ret->bid = $bid;
 $ret->filename = $info = (new SplFileInfo($buldObject->getFilename()))->getFilename();
@@ -15,7 +15,7 @@ $ret->description = htmlspecialchars_decode($buldObject->getDescription());
 
 $ret->screenshots = array();
 /*foreach($screens as $screen) {
-  $screenshot = new stdClass();
+  $screenshot = new \stdClass();
   $screenshot->id = $screen->getId();
   $screenshot->url = "http://api.blocklandglass.com/files/screenshots/" . $addonObject->getId() . "/" . $i . ".png";
   $screenshot->thumbnail = "http://api.blocklandglass.com/files/screenshots/" . $addonObject->getId() . "/" . $i . "_thumb.png";
@@ -24,7 +24,7 @@ $ret->screenshots = array();
   $ret->screenshots[] = $screenshot;
 }*/
 
-$author = new stdClass();
+$author = new \stdClass();
 //$author->blid = $addonObject->getAuthor()->getBlid();
 //$author->name = $addonObject->getAuthor()->getName();
 $ret->authors = $author;

@@ -33,7 +33,7 @@ class NotificationManager {
 		socket_connect($socket, gethostbyname(NotificationManager::$noteServerHost), NotificationManager::$noteServerPort);
 		socket_strerror(socket_last_error($socket));
 
-		$data = new stdClass();
+		$data = new \stdClass();
 		$data->type = "notification";
 
 		$data->target = $blid;

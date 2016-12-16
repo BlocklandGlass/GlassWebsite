@@ -1,7 +1,7 @@
 <?php
 use Glass\RTBAddonManager;
 
-$ret = new stdClass();
+$ret = new \stdClass();
 $ret->status = "success";
 $ret->boards = RTBAddonManager::getBoards();
 

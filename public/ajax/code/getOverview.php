@@ -7,7 +7,7 @@ header('Content-Type: text/json');
 
 
 //start
-$result = new stdClass();
+$result = new \stdClass();
 $result->status = "undefined";
 
 if(!isset($_REQUEST['id'])) {

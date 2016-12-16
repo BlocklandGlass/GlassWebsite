@@ -1,4 +1,5 @@
 <?php
+return;
 session_start();
 use Glass\UserManager;
 use Glass\AddonFileHandler;

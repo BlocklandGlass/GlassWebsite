@@ -27,7 +27,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
   // this will get added back later
 
 	$con = ClientConnection::loadFromIdentifier($_REQUEST['ident']);
-  $ret = new stdClass();
+  $ret = new \stdClass();
 
 	if(is_object($con)) {
 	  $ret->ident = $con->getIdentifier();
@@ -66,7 +66,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 				$clDatArray = explode("\n", $clients);
 				foreach($clDatArray as $clDat) {
 					$dat = explode("\t", $clDat);
-					$obj = new stdClass();
+					$obj = new \stdClass();
 
 					$obj->name = $dat[0];
 					$obj->blid = intval($dat[1]);
@@ -88,7 +88,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
   }
   echo json_encode($ret, JSON_PRETTY_PRINT);
 } else {
-  $ret = new stdClass();
+  $ret = new \stdClass();
 
   $username = $_REQUEST['username'];
   $blid = $_REQUEST['blid'];
@@ -112,7 +112,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 				$clDatArray = explode("\n", $clients);
 				foreach($clDatArray as $clDat) {
 					$dat = explode("\t", $clDat);
-					$obj = new stdClass();
+					$obj = new \stdClass();
 
 					$obj->name = $dat[0];
 					$obj->blid = intval($dat[1]);

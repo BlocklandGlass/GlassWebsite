@@ -10,7 +10,7 @@ if(is_object($con) && $con->isAuthed()) {
 
     $newAvg = AddonManager::submitRating($aid, $blid, $rating);
 
-    $ret = new stdClass();
+    $ret = new \stdClass();
     $ret->status = "success";
     $ret->rating = $newAvg;
 

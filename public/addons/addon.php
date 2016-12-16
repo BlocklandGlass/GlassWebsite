@@ -6,9 +6,9 @@
 	use Glass\AddonObject;
 	use Glass\CommentManager;
 	use Glass\ScreenshotManager;
+	use Glass\DependencyManager;
 	use Glass\UserManager;
 	use Glass\UserLog;
-//	use Glass\UserHandler;
 	require_once(realpath(dirname(__DIR__) . "/../private/lib/Parsedown.php"));
 
 	//to do: use ajax/json to build data for page

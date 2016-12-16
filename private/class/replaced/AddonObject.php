@@ -94,7 +94,7 @@ class AddonObject {
 	public function getDependancies() {
 		$obj = json_decode($this->dependancies);
 		if($obj == null) {
-			$obj = new stdClass();
+			$obj = new \stdClass();
 			$obj->addons = array();
 		}
 		return $obj;
@@ -252,7 +252,7 @@ class AddonObject {
 			}
 
 			$ad = array();
-			$auth = $ad[] = new stdClass();
+			$auth = $ad[] = new \stdClass();
 			$auth->id = $author->getId();
 			$auth->role = "main";
 			$auth->owner = true;
@@ -288,7 +288,7 @@ class AddonObject {
 			}
 
 			$ad = array();
-			$auth = $ad[] = new stdClass();
+			$auth = $ad[] = new \stdClass();
 			$auth->id = $author->getId();
 			$auth->role = "main";
 			$auth->owner = true;
@@ -514,16 +514,16 @@ class AddonObject {
 		$channelName[2] = "unstable";
 		$channelName[3] = "development";
 
-		$verDat = new stdClass();
+		$verDat = new \stdClass();
 		$verDat->version = $version;
 		$verDat->channel = $channelName[$branch];
 
-		$liveBranch = new stdClass();
+		$liveBranch = new \stdClass();
 		$liveBranch->url = "http://blocklandglass.com/api/support_updater/repo.php";
 		$liveBranch->format = "JSON";
 		$liveBranch->id = $this->getId();
 
-		$backupRepo = new stdClass();
+		$backupRepo = new \stdClass();
 		$backupRepo->url = "http://cdn.blocklandglass.com/repo.txt";
 		$backupRepo->format = "JSON";
 		$backupRepo->id = $this->getId();
@@ -536,7 +536,7 @@ class AddonObject {
 		fclose($file);
 
 		//GLASS FILE DATA
-		$glassData = new stdClass();
+		$glassData = new \stdClass();
 		$glassData->formatVersion = 1;
 		$glassData->id = $this->getId();
 		$glassData->board = $this->getBoard()->getId();
@@ -582,8 +582,8 @@ function Zip($source, $destination) {
         return false;
     }
 
-    $zip = new ZipArchive();
-    if (!$zip->open($destination, ZIPARCHIVE::CREATE)) {
+    $zip = new \ZipArchive();
+    if (!$zip->open($destination, \ZipArchive::CREATE)) {
         return false;
     }
 

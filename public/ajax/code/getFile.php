@@ -8,7 +8,7 @@ header('Content-Type: text/json');
 
 
 //start
-$result = new stdClass();
+$result = new \stdClass();
 $result->status = "undefined";
 
 if(!isset($_REQUEST['id'])) {
@@ -46,7 +46,7 @@ if(!is_file($filePath) || !is_readable($filePath)) {
   die(json_encode($result, JSON_PRETTY_PRINT));
 }
 
-$zip = new ZipArchive();
+$zip = new \ZipArchive();
 $res = $zip->open($filePath);
 if($res === TRUE) {
   $files = array();

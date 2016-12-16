@@ -13,7 +13,7 @@ $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
 socket_connect($socket, gethostbyname('localhost'), 27001);
 socket_strerror(socket_last_error($socket));
 
-$data = new stdClass();
+$data = new \stdClass();
 $data->type = "notification";
 
 $data->target = $blid;

@@ -5,7 +5,7 @@ use Glass\CommentManager;
 use Glass\UserLog;
 use Glass\ScreenshotManager;
 
-$ret = new stdClass();
+$ret = new \stdClass();
 
 if(isset($_REQUEST['id']) & $_REQUEST['id'] != "") {
   $aid = $_REQUEST['id'];
@@ -52,7 +52,7 @@ $ret->screenshots = array();
 $screens = ScreenshotManager::getScreenshotsFromAddon($aid);
 foreach($screens as $sid) {
   $ss = ScreenshotManager::getFromId($sid);
-  $screenshot = new stdClass();
+  $screenshot = new \stdClass();
   $screenshot->id = $ss->getId();
   $screenshot->url = $ss->getUrl();
   $screenshot->thumbnail = $ss->getThumbUrl();
@@ -60,7 +60,7 @@ foreach($screens as $sid) {
   $ret->screenshots[] = $screenshot;
 }
 
-$author = new stdClass();
+$author = new \stdClass();
 
 $user = UserLog::getCurrentUsername($addonObject->getManagerBLID());
 if($user == false) {
@@ -76,7 +76,7 @@ $ret->contributors = array($author);
 
 $channelId[1] = "stable";
 $channelId[2] = "beta";
-$channel = new stdClass();
+$channel = new \stdClass();
 
 $channel->id = 1;
 $channel->name = "stable";
@@ -96,7 +96,7 @@ $comments = CommentManager::getCommentIDsFromAddon($addonObject->getId(), $start
 foreach($comments as $comid) {
   $comment = CommentManager::getFromId($comid);
 
-  $action = new stdClass();
+  $action = new \stdClass();
   $action->type = "comment";
   $action->timestamp = $comment->getTimeStamp();
 
@@ -125,7 +125,7 @@ foreach($comments as $comid) {
 
 $updates = AddonManager::getUpdates($addonObject);
 foreach($updates as $update) {
-  $action = new stdClass();
+  $action = new \stdClass();
   $action->type = "update";
   $action->timestamp = $update->getTimeSubmitted();
 

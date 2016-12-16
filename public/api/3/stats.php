@@ -13,7 +13,7 @@ header('Content-Type: text/json');
 error_reporting(E_ALL);
 if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 	$con = ClientConnection::loadFromIdentifier($_REQUEST['ident']);
-  $ret = new stdClass();
+  $ret = new \stdClass();
   $ret->ident = $con->getIdentifier();
 
   if($con->isAuthed()) {

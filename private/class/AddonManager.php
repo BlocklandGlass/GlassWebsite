@@ -81,7 +81,7 @@ class AddonManager {
 							if(!isset($res)) {
 								if(strpos($line, "<addon:") === 0) {
 									$ad = substr($line, 7, strlen($line)-8);
-									$res = new stdClass();
+									$res = new \stdClass();
 									$res->name = "$ad.zip";
 								}
 							} else {
@@ -92,7 +92,7 @@ class AddonManager {
 								if(!isset($currentChannel)) {
 									if(strpos($line, "<channel:") === 0) {
 										$ch = substr($line, 9, strlen($line)-10);
-										$currentChannel = new stdClass();
+										$currentChannel = new \stdClass();
 										$currentChannel->name = $ch;
 									}
 								} else {
@@ -244,8 +244,8 @@ class AddonManager {
 		var_dump($versionInfo);
 		if($versionInfo !== false) {
 			// information to use for upstream repos
-			$version = new stdClass();
-			$version->stable = new stdClass();
+			$version = new \stdClass();
+			$version->stable = new \stdClass();
 			$version->stable->version = $versionInfo->version;
 			$version->stable->restart = "0.0.0";
 
@@ -258,7 +258,7 @@ class AddonManager {
 			if($url['host'] == "blocklandglass.com" || $url['host'] == "api.blocklandglass.com") {
 				// nothing?
 			} else {
-				$upstream = new stdClass();
+				$upstream = new \stdClass();
 				$upstream->url = $versionInfo->repo->url;
 				if(isset($versionInfo->repo->mod))
 					$upstream->mod = $versionInfo->repo->mod;
@@ -267,15 +267,15 @@ class AddonManager {
 				$version->upstream = $upstream;
 			}
 		} else {
-			$version = new stdClass();
-			$version->stable = new stdClass();
+			$version = new \stdClass();
+			$version->stable = new \stdClass();
 			$version->stable->version = "0.0.0";
 			$version->stable->restart = "0.0.0";
 
-			$repo = new stdClass();
+			$repo = new \stdClass();
 		}
 
-		$authorInfo = new stdClass();
+		$authorInfo = new \stdClass();
 		$authorInfo->blid = $user->getBlid();
 		$authorInfo->main = true;
 		$authorInfo->role = "Manager";
@@ -330,14 +330,14 @@ class AddonManager {
 
 		$manager = AddonManager::getFromId($id)->getManagerBLID();
 
-		$params = new stdClass();
+		$params = new \stdClass();
 		$params->vars = array();
 
-		$user = new stdClass();
+		$user = new \stdClass();
 		$user->type = "user";
 		$user->blid = $approver;
 
-		$addon = new stdClass();
+		$addon = new \stdClass();
 		$addon->type = "addon";
 		$addon->id = $id;
 
@@ -349,7 +349,7 @@ class AddonManager {
 	}
 
 	public static function rejectAddon($id, $reason, $rejecter) {
-		$revInf = new stdClass();
+		$revInf = new \stdClass();
 		$revInf->rejected = true;
 		$revInf->rejectReason = $reason;
 
@@ -360,14 +360,14 @@ class AddonManager {
 
 		$manager = AddonManager::getFromId($id)->getManagerBLID();
 
-		$params = new stdClass();
+		$params = new \stdClass();
 		$params->vars = array();
 
-		$user = new stdClass();
+		$user = new \stdClass();
 		$user->type = "user";
 		$user->blid = $rejecter;
 
-		$addon = new stdClass();
+		$addon = new \stdClass();
 		$addon->type = "addon";
 		$addon->id = $id;
 
@@ -705,8 +705,8 @@ class AddonManager {
 		AddonFileHandler::injectVersionInfo($update->aid, 1, $update->getFile());
 		AWSFileManager::uploadNewAddon($update->aid, 1, $update->getAddon()->getFilename(), $update->getFile());
 
-		$params = new stdClass();
-		$addon = new stdClass();
+		$params = new \stdClass();
+		$addon = new \stdClass();
 		$addon->type = "addon";
 		$addon->id = $update->getAddon()->getId();
 		$params->vars[] = $addon;

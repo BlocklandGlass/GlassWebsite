@@ -1,3 +1,7 @@
+<?php
+require dirname(__FILE__) . '/autoload.php';
+use Glass\UserManager;
+?>
 <div id="navcontainer" class="navcontainer">
 	<div id="navcontent" class="navcontent">
 		<!-- temporary nav -->
@@ -7,7 +11,6 @@
 			<!-- <li><a href="/builds" class="navbtn">Builds</a></li> -->
 			<li><a href="/stats" class="navbtn">Statistics</a></li>
 			<?php
-				use Glass\UserManager;
 				if($user = UserManager::getCurrent()) {
 					if($user->inGroup("Administrator")) {
 						echo '<li><a href="/admin" class="navbtn">Admin</a></li>';

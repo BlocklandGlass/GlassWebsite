@@ -1,12 +1,12 @@
 <?php
 use Glass\TagManager;
 
-$ret = new stdClass();
+$ret = new \stdClass();
 $ret->tags = array();
 $tags = TagManager::getAllTags();
 
 foreach($tags as $tag) {
-  $rettag = new stdClass();
+  $rettag = new \stdClass();
   $rettag->id = $tag->getId();
   $rettag->name = $tag->getName();
   $rettag->icon = $tag->getIcon();

@@ -11,7 +11,7 @@ if(isset($_REQUEST['version'])) {
 	$apiManager->setVersion($_REQUEST['version']);
 }
 
-$ret = new stdClass();
+$ret = new \stdClass();
 $ret->sid = session_id();
 
 $request = @$_GET['request'];
@@ -22,7 +22,7 @@ if($request == "checkauth") {
 		try {
 			if(!$apiManager->isVerified()) {
 				$ret->action = "verify";
-				$ret->actiondata = new stdClass();
+				$ret->actiondata = new \stdClass();
 				$ret->actiondata->name = $apiManager->getSiteAccount()->getUsername();
 				$ret->actiondata->blid = $apiManager->getBlid();
 			} else {

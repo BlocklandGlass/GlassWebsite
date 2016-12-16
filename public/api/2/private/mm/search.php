@@ -9,18 +9,18 @@ if($type == "addon") {
   if($by == "name" || $by == "blid") {
     $res = AddonManager::searchAddons(array($by=>$query));
   } else {
-    $ret = new stdClass();
+    $ret = new \stdClass();
     $ret->status = "error";
     $ret->error = "invalid search type";
     die(json_encode($ret, JSON_PRETTY_PRINT));
   }
 
-  $ret = new stdClass();
+  $ret = new \stdClass();
   $ret->results = array();
   //$ret->count = ?
 
   foreach($res as $result) {
-    $r = new stdClass();
+    $r = new \stdClass();
     $addon = AddonManager::getFromId($result);
     $r->type = "addon";
     $r->title = $addon->getName();

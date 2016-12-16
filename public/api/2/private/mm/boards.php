@@ -1,12 +1,12 @@
 <?php
 use Glass\BoardManager;
 
-$ret = new stdClass();
+$ret = new \stdClass();
 $ret->boards = array();
 $boards = BoardManager::getAllBoards();
 
 foreach($boards as $board) {
-  $retboard = new stdClass();
+  $retboard = new \stdClass();
   $retboard->id = $board->getId();
   $retboard->name = $board->getName();
   $retboard->video = "";

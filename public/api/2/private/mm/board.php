@@ -15,13 +15,13 @@ if(isset($_REQUEST['page'])) {
 }
 
 if($_REQUEST['id'] == "rtb") {
-  $ret = new stdClass();
+  $ret = new \stdClass();
   $ret->rtb = 1;
   $ret->addons = array();
   $addons = RTBAddonManager::getAddons($page);
 
   foreach($addons as $ad) {
-    $ao = new stdClass();
+    $ao = new \stdClass();
     $ao->id = $ad->id;
     $ao->name = $ad->title;
     $ao->author = "RTB";
@@ -44,7 +44,7 @@ if($_REQUEST['id'] == "rtb") {
 $boardObject = BoardManager::getFromID($_REQUEST['id']);
 $addonIds = AddonManager::getFromBoardID($boardObject->getID(), ($page-1)*10, 10);
 
-$ret = new stdClass();
+$ret = new \stdClass();
 $ret->addons = array();
 
 foreach($addonIds as $aid) {
@@ -56,7 +56,7 @@ foreach($addonIds as $aid) {
     $rating = $addon->getRating();
   }
 
-  $retboard = new stdClass();
+  $retboard = new \stdClass();
   $retboard->id = $addon->getId();
   $retboard->name = $addon->getName();
 

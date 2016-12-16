@@ -1,7 +1,7 @@
 <?php
 $returnArray = array();
 
-$retObj = new stdClass();
+$retObj = new \stdClass();
 $retObj->image = "Update";
 $retObj->text = "An update is available!";
 $retObj->datestring = date("g:ia",time());

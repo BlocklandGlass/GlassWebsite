@@ -72,7 +72,7 @@
         <td colspan="2" style="font-size:0.8em">
 					<?php
 			    $file = realpath(dirname(__DIR__) . '/../addons/files/local/' . $addon->getId() . '.zip');
-					$zip = new ZipArchive();
+					$zip = new \ZipArchive();
 			    $res = $zip->open($file);
 					if($res === TRUE) {
 			      for ($i = 0; $i < $zip->numFiles; $i++) {

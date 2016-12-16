@@ -4,7 +4,7 @@ header('Content-Type: text/json');
 $reqIp = $_GET['ip'] ?? false;
 $reqPort = $_GET['port'] ?? false;
 if(!$reqIp || !$reqPort) {
-  $error = new stdClass();
+  $error = new \stdClass();
   $error->status = "error";
   $error->error = "Missing fields";
   die(json_encode($error));
@@ -12,7 +12,7 @@ if(!$reqIp || !$reqPort) {
 
 $servers = ServerTracker::getActiveServers();
 
-$res = new stdClass();
+$res = new \stdClass();
 
 foreach($servers as $s) {
   $host = utf8_encode($s->host);
@@ -34,7 +34,7 @@ foreach($servers as $s) {
   die();
 }
 
-$error = new stdClass();
+$error = new \stdClass();
 $error->status = "error";
 $error->error = "Server not found";
 die(json_encode($error));

@@ -9,7 +9,7 @@ class DatabaseManager {
 
 	function __construct() {
 		if(!is_file(dirname(__FILE__) . "/mysql.json")) {
-			$json = new stdClass();
+			$json = new \stdClass();
 			$json->database = "blocklandglass";
 			$json->username = "user";
 			$json->password = "default";

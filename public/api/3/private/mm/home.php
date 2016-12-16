@@ -12,13 +12,13 @@ $recentUpdates = AddonManager::getRecentUpdates();
  * Recent
  */
 
-$dlg = new stdClass();
+$dlg = new \stdClass();
 $dlg->type = "recent";
 
 $ar = array();
 foreach($recent as $ao) {
 
-  $o = new stdClass();
+  $o = new \stdClass();
   $o->id = $ao->getId();
   $o->name = $ao->getName();
   $o->board = BoardManager::getFromID($ao->getBoard())->getName();
@@ -43,7 +43,7 @@ foreach($recentUpdates as $r) {
   if($ao->getBoard() == 10) // bargain bin
     continue;
 
-  $o = new stdClass();
+  $o = new \stdClass();
   $o->id = $ao->getId();
   $o->name = $ao->getName();
   $o->version = $r->getVersion();
@@ -58,12 +58,12 @@ $dlg->date = time();
  * Message
  */
 
-$msg = new stdClass();
+$msg = new \stdClass();
 $msg->type = "message";
 $msg->message = "Hey look. We can do other things here";
 
 $res = array($dlg, $msg);
-$ret = new stdClass();
+$ret = new \stdClass();
 $ret->status = "success";
 $ret->data = $res;
 

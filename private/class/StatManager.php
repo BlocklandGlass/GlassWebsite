@@ -203,7 +203,7 @@ class StatManager {
 		$database = new DatabaseManager();
 		$res = $database->query("SELECT * FROM `addon_stats` WHERE `aid`='" . $aid . "'");
 		if($res == false || $res == null)
-			return new stdClass();
+			return new \stdClass();
 
 		return $res->fetch_object();
 	}

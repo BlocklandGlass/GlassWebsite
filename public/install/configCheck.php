@@ -12,7 +12,7 @@
   }
 
   if($_POST['sub'] ?? false) {
-    $obj = new stdClass();
+    $obj = new \stdClass();
     $obj->database = $_POST['mysql_name'] ?? "";
     $obj->host = $_POST['mysql_host'] ?? "";
     $obj->username = $_POST['mysql_username'] ?? "";
@@ -25,7 +25,7 @@
   }
 
   function createDefaultConfig() {
-    $obj = new stdClass();
+    $obj = new \stdClass();
     $obj->database = "blocklandGlass";
     $obj->host = "localhost";
     $obj->username = "";

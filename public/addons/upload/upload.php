@@ -1,5 +1,5 @@
 <?php
-	session_start();
+	require dirname(__DIR__) . '/../../private/autoload.php';
 	$status = include(__DIR__ . "/../../../private/json/uploadAddon.php");
 
 	if(isset($status['redirect'])) {

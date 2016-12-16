@@ -6,7 +6,7 @@ header('Content-Type: text/json');
 
 //function definition
 function buildFileTree($fileArray) {
-  $tree = new stdClass();
+  $tree = new \stdClass();
 
   $tree->files = [];
   $tree->dirs = [];
@@ -24,7 +24,7 @@ function buildFileTree($fileArray) {
     $filename = substr($file, strrpos($file, "/")+1);
 
     if(!isset($directories[$dir])) {
-      $directories[$dir] = new stdClass();
+      $directories[$dir] = new \stdClass();
       $directories[$dir]->files = [];
       $directories[$dir]->dirs = [];
       $directories[$dir]->abs = $dir;
@@ -67,7 +67,7 @@ function buildFileTree($fileArray) {
 }
 
 //start
-$result = new stdClass();
+$result = new \stdClass();
 $result->status = "undefined";
 
 if(!isset($_REQUEST['id'])) {
@@ -97,7 +97,7 @@ if(!is_file($filePath) || !is_readable($filePath)) {
   die(json_encode($result, JSON_PRETTY_PRINT));
 }
 
-$zip = new ZipArchive();
+$zip = new \ZipArchive();
 $res = $zip->open($filePath);
 if($res === TRUE) {
   $files = array();

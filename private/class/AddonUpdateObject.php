@@ -74,8 +74,8 @@ class AddonUpdateObject {
 
     $fileOld = realpath(dirname(__DIR__) . '/../addons/files/local/' . $this->aid . '.zip');
 
-    $zipNew = new ZipArchive();
-		$zipOld = new ZipArchive();
+    $zipNew = new \ZipArchive();
+		$zipOld = new \ZipArchive();
     $resNew = $zipNew->open($fileNew);
     $resOld = $zipOld->open($fileOld);
     if($resNew === TRUE && $resOld === TRUE) {

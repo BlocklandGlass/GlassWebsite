@@ -1,4 +1,5 @@
 <?php
+	require dirname(__DIR__) . '/../../private/autoload.php';
 	$_PAGETITLE = "Blockland Glass | Review List";
 
 	include(realpath(dirname(__DIR__) . "/../../private/header.php"));

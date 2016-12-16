@@ -12,17 +12,17 @@ require_once dirname(__FILE__) . '/DatabaseManager.php';
 
 class CronStatManager {
   function compare($stat1, $stat2) { //older, newer
-    $result = new stdClass();
+    $result = new \stdClass();
     $result->duration = strtotime($stat2->time) - strtotime($stat1->time);
 
 
     //Addons
-    $addons = new stdClass();
+    $addons = new \stdClass();
     $addons->count = $stat2->addons->count - $stat1->addons->count;
     $result->addons = $addons;
     $result->addons->cumulative_downloads = array();
     foreach($stat2->addons->cumulative_downloads as $aid=>$downloadDat) {
-      $dow = new stdClass();
+      $dow = new \stdClass();
       if(isset($stat1->addons->cumulative_downloads->$aid)) {
         /*$dow->web = $stat2->addons->cumulative_downloads->$aid->web - $stat1->addons->cumulative_downloads->$aid->web;
         $dow->web = $stat2->addons->cumulative_downloads->$aid->ingame - $stat1->addons->cumulative_downloads->$aid->ingame;
@@ -39,7 +39,7 @@ class CronStatManager {
     //Builds
 
     //Master
-    $result->master = new stdClass();
+    $result->master = new \stdClass();
     $result->master->servers = $stat2->master->servers - $stat1->master->servers;
     $result->master->users = $stat2->master->users - $stat1->master->users;
 
@@ -60,21 +60,21 @@ class CronStatManager {
   }
 
   function collectHourStat($store = false) {
-    $stats = new stdClass();
+    $stats = new \stdClass();
     $stats->time = gmdate("Y-m-d H:00:00", time());
     $stats->duration = "hour";
 
     $database = new DatabaseManager();
 
     //Addons!
-    $addons = new stdClass();
+    $addons = new \stdClass();
     $addonArray = AddonManager::getAll();
     $addons->count = sizeof($addonArray);
     $addons->cumulative_downloads = array();
     $addons->usage = array();
     $addons->usage_total = array();
     foreach($addonArray as $addon) {
-      $downloadData = new stdClass();
+      $downloadData = new \stdClass();
       // TODO we need to go back. I dont want total downloads, I want individual
       //$downloadData->web =
       //$downloadData->ingame =
@@ -98,7 +98,7 @@ class CronStatManager {
     $stats->addons = $addons;
 
     //Builds
-    $builds = new stdClass();
+    $builds = new \stdClass();
     $buildArray = BuildManager::getAll();
     $builds->count = sizeof($buildArray);
     $builds->cumulative_downloads = array();
@@ -110,7 +110,7 @@ class CronStatManager {
 
 
     //Master Server
-    $stats->master = new stdClass();
+    $stats->master = new \stdClass();
     $master = CronStatManager::getMasterServerStats();
     $stats->master->users = $master[0];
     $stats->master->servers = $master[1];

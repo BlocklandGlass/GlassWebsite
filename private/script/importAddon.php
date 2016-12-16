@@ -19,7 +19,7 @@ $resource = $mysql->query("SELECT * FROM `addon_addons` WHERE `id`='" . $aid . "
 $res = $resource->fetch_object();
 
 $authorDat = array();
-$author = new stdClass();
+$author = new \stdClass();
 $author->blid = $res->author;
 $author->main = true;
 $author->role = "";
@@ -32,7 +32,7 @@ $file["stable"] = $res->file_stable;
 $versionData = array();
 foreach($file as $branch=>$fid) {
   if($fid != 0) {
-    $version = new stdClass();
+    $version = new \stdClass();
     $fileRes = $mysql->query("SELECT * FROM `addon_files` WHERE `id`='" . $fid . "'");
 
     $hash = $fileRes->fetch_object()->hash;

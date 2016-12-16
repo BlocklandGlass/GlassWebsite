@@ -1,7 +1,7 @@
 <?php
 use Glass\BoardManager;
 
-$ret = new stdClass();
+$ret = new \stdClass();
 $ret->groups = array();
 
 $groups = BoardManager::getBoardGroups();
@@ -9,12 +9,12 @@ $groups = BoardManager::getBoardGroups();
 foreach($groups as $group) {
   $boards = BoardManager::getGroup($group);
 
-  $groupObj = new stdClass();
+  $groupObj = new \stdClass();
   $groupObj->name = $group;
   $groupObj->boards = array();
 
   foreach($boards as $board) {
-    $retboard = new stdClass();
+    $retboard = new \stdClass();
     $retboard->id = $board->getId();
     $retboard->name = $board->getName();
     $retboard->icon = $board->getIcon();

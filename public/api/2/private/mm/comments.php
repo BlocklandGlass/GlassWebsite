@@ -20,7 +20,7 @@ if(isset($_REQUEST['newcomment'])) {
   }
 }
 
-$res = new stdClass();
+$res = new \stdClass();
 $res->status = "success";
 $ret = array();
 
@@ -30,7 +30,7 @@ $comments = CommentManager::getCommentIDsFromAddon($addonObject->getId(), $start
 foreach($comments as $comid) {
   $comment = CommentManager::getFromId($comid);
 
-  $commento = new stdClass();
+  $commento = new \stdClass();
   $commento->id = $comment->getId();
   $commento->author = utf8_encode(UserLog::getCurrentUsername($comment->getBLID()));
   $commento->authorblid = $comment->getBlid();

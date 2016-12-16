@@ -8,7 +8,7 @@ header('Content-Type: text/json');
 $db = new DatabaseManager();
 
 if(!isset($_GET['mods'])) {
-  $ret = new stdClass();
+  $ret = new \stdClass();
   $ret->status = "error";
   $ret->error = "mods field is blank";
   die(json_encode($ret, JSON_PRETTY_PRINT));
@@ -16,7 +16,7 @@ if(!isset($_GET['mods'])) {
 
 $addonIds = explode("-", $db->sanitize($_GET['mods']));
 
-$repo = new stdClass();
+$repo = new \stdClass();
 
 $repo->name = "Blockland Glass Generated Repo";
 $ao = 'add-ons';
@@ -26,7 +26,7 @@ foreach($addonIds as $id) {
   $obj = AddonManager::getFromId($id);
 
   if(!is_object($obj)) {
-    $addon = new stdClass();
+    $addon = new \stdClass();
     $addon->id = $id;
     $addon->error = "Unable to create object";
     array_push($repo->$ao, $addon);
@@ -36,11 +36,11 @@ foreach($addonIds as $id) {
   $webUrl = "api.blocklandglass.com";
   $cdnUrl = AWSFileManager::getBucket();
 
-  $addon = new stdClass();
+  $addon = new \stdClass();
 	$addon->name = substr($obj->getFilename(), 0, strlen($obj->getFilename())-4);
 	//$addon->description = str_replace("\r\n", "<br>", $obj->getDescription());
 
-  $chanObj = new stdClass();
+  $chanObj = new \stdClass();
   $chanObj->name = "stable";
   $chanObj->version = $obj->getVersion();
   $chanObj->restartRequired = $obj->getRestartVersion();
@@ -58,7 +58,7 @@ foreach($addonIds as $id) {
   $addon->channels[] = $chanObj;
 
   if($obj->hasBeta()) {
-    $chanObj = new stdClass();
+    $chanObj = new \stdClass();
     $chanObj->name = "beta";
     $chanObj->version = $obj->getBetaVersion();
     $chanObj->restartRequired = $obj->getBetaVersion();

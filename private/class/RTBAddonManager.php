@@ -17,10 +17,10 @@ class RTBAddonManager {
 
       //echo($file . "<br />");
 
-      $dat = new stdClass();
+      $dat = new \stdClass();
       $dat->filename = $file;
 
-      $zip = new ZipArchive();
+      $zip = new \ZipArchive();
       $res = $zip->open($dir . '/' . $file);
       if($res === TRUE) {
         $rtbInfo = $zip->getFromName("rtbInfo.txt");

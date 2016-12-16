@@ -32,18 +32,18 @@ if($board) {
 if(sizeof($search) > 0) {
   $res = AddonManager::searchAddons($search);
 } else {
-  $ret = new stdClass();
+  $ret = new \stdClass();
   $ret->status = "error";
   $ret->error = "invalid search type";
   die(json_encode($ret, JSON_PRETTY_PRINT));
 }
 
-$ret = new stdClass();
+$ret = new \stdClass();
 $ret->results = array();
 //$ret->count = ?
 
 foreach($res as $result) {
-  $r = new stdClass();
+  $r = new \stdClass();
   $addon = AddonManager::getFromId($result);
   $r->title = $addon->getName();
   $r->id = $addon->getId();
@@ -58,7 +58,7 @@ $searchRTB = $_REQUEST['rtb'] ?? false;
 if($searchRTB && $name) {
   $res = RTBAddonManager::searchByName($name);
   foreach($res as $result) {
-    $r = new stdClass();
+    $r = new \stdClass();
 
     $r->title = $result->title;
     $r->filename = $result->filename;

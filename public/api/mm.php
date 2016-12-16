@@ -21,7 +21,7 @@ if($request == "boards") {
   }
   foreach($subcat as $subName=>$sub) {
     foreach($sub as $board) {
-      $ro = new stdClass();
+      $ro = new \stdClass();
       $ro->id = $board->getId();
       $ro->image = $board->getImage();
       $ro->name = $board->getName();
@@ -31,7 +31,7 @@ if($request == "boards") {
     }
   }
 
-  $bargainBin = new stdClass();
+  $bargainBin = new \stdClass();
   $bargainBin->id = "-1";
   $bargainBin->special = "1";
   $bargainBin->name = "Bargain Bin";
@@ -40,7 +40,7 @@ if($request == "boards") {
   $bargainBin->files = sizeof(AddonManager::getBargain());
   $ret[] = $bargainBin;
 
-  $bargainBin = new stdClass();
+  $bargainBin = new \stdClass();
   $bargainBin->id = "-2";
   $bargainBin->special = "1";
   $bargainBin->name = "RTB Archive";
@@ -63,7 +63,7 @@ if($request == "submitcomment") {
     	(new NewCommentNotification(array($current->getId(), $addonObject->getId())))->toDatabase();
     }
   } else {
-    $ret = new stdClass();
+    $ret = new \stdClass();
     $ret->status = "error";
     $ret->error = "Must be authed with Glass";
   }
@@ -79,7 +79,7 @@ if($request == "board") {
       foreach(AddonManager::getBargain() as $addon) {
 
         $ratingData = $addon->getRatingData();
-        $ro = new stdClass();
+        $ro = new \stdClass();
         $ro->id = $addon->getId();
         $ro->title = $addon->getName();
         //$ro->rating = $ratingData['average'];
@@ -104,7 +104,7 @@ if($request == "board") {
     $addons = $boardObject->getAddons();
     foreach($addons as $addon) {
       $ratingData = $addon->getRatingData();
-      $ro = new stdClass();
+      $ro = new \stdClass();
       $ro->id = $addon->getId();
       $ro->title = $addon->getName();
       //$ro->rating = $ratingData['average'];
@@ -131,7 +131,7 @@ if($request == "addon") {
   $addonId = $_GET['id'];
   $addonObject = AddonManager::getFromId($addonId);
 
-  $ret = new stdClass();
+  $ret = new \stdClass();
 
   $ret->aid = $addonId;
   $ret->filename = $addonObject->getFilename();
@@ -141,7 +141,7 @@ if($request == "addon") {
 
   $ret->description = htmlspecialchars_decode($addonObject->getDescription());
 
-  $author = new stdClass();
+  $author = new \stdClass();
   $author->blid = $addonObject->getAuthor()->getBlid();
   $author->name = $addonObject->getAuthor()->getName();
   $ret->author = $author;
@@ -151,7 +151,7 @@ if($request == "addon") {
   foreach($depend->addons as $ad) {
     $ao = AddonManager::getFromId($ad);
 
-    $obj = new stdClass();
+    $obj = new \stdClass();
     $obj->name = $ao->getName();
     $obj->id = $ao->getId();
     $obj->filename = $ao->getFilename();
@@ -160,7 +160,7 @@ if($request == "addon") {
   }
 
   for($i = 0; $i < $addonObject->getScreenshotCount(); $i++) {
-    $screenshot = new stdClass();
+    $screenshot = new \stdClass();
     $screenshot->id = $i;
     $screenshot->url = "http://api.blocklandglass.com/files/screenshots/" . $addonObject->getId() . "/" . $i . ".png";
     $screenshot->thumbnail = "http://api.blocklandglass.com/files/screenshots/" . $addonObject->getId() . "/" . $i . "_thumb.png";
@@ -172,7 +172,7 @@ if($request == "addon") {
   for($i = 0; $i < 3; $i++) {
     try {
       $fo = $addonObject->getFile($i+1);
-      $branchDat = new stdClass();
+      $branchDat = new \stdClass();
       $branchDat->id = $i+1;
       $branchDat->file = $fo->getId();
       $branchDat->version = $addonObject->getLatestVersion($i+1);
@@ -200,7 +200,7 @@ if($request == "comments") {
 
   $comments = $addonObject->getCommentsRange($start, $end);
   foreach($comments as $comment) {
-    $commento = new stdClass();
+    $commento = new \stdClass();
     $commento->author = $comment->getAuthor()->getName();
     $commento->authorblid = $comment->getAuthor()->getBlid();
     $text = str_replace("\r\n", "<br>", $comment->getText());

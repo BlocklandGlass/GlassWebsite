@@ -8,7 +8,7 @@ $page = $_REQUEST['page'] ?? 1;
 $pageSize = 15;
 $start = ($page-1)*$pageSize;
 
-$ret = new stdClass();
+$ret = new \stdClass();
 $ret->status = "success";
 $ret->board_name = $name;
 $ret->page = $page;

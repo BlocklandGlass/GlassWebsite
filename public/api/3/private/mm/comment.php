@@ -6,7 +6,7 @@ echo json_encode($comments, JSON_PRETTY_PRINT);*/
 use Glass\AddonManager;
 use Glass\CommentManager;
 
-$res = new stdClass();
+$res = new \stdClass();
 $res->status = "success";
 $aid = $_REQUEST['id'];
 $addonObject = AddonManager::getFromID($aid);
