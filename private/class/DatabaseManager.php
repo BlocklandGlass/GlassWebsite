@@ -1,4 +1,5 @@
 <?php
+namespace Glass;
 
 class DatabaseManager {
 	private $database;

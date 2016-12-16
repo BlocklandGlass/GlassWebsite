@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 class BoardObject {
 	public $id;
 	public $name;

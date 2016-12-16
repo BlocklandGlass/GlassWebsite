@@ -7,7 +7,7 @@
 			<!-- <li><a href="/builds" class="navbtn">Builds</a></li> -->
 			<li><a href="/stats" class="navbtn">Statistics</a></li>
 			<?php
-				require_once dirname(__FILE__) . '/class/UserManager.php';
+				use Glass\UserManager;
 				if($user = UserManager::getCurrent()) {
 					if($user->inGroup("Administrator")) {
 						echo '<li><a href="/admin" class="navbtn">Admin</a></li>';

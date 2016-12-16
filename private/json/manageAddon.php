@@ -13,7 +13,7 @@
 		];
 		return $response;
 	}
-	require_once(realpath(dirname(__DIR__) . "/class/AddonManager.php"));
+	use Glass\AddonManager;
 	$addon = AddonManager::getFromID($_GET['id'] + 0);
 
 	if($addon === false) {
@@ -24,7 +24,7 @@
 	}
 
 	//do we want to do this or just use session info?
-	require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
+	use Glass\UserManager;
 	$user = UserManager::getCurrent();
 
 	if($user === false || $addon->getBLID() !== $user->getBLID()) {
@@ -85,7 +85,7 @@
 			];
 			return $response;
 		}
-		require_once(realpath(dirname(__DIR__) . "/class/ScreenshotManager.php"));
+		use Glass\ScreenshotManager;
 
 		if($_FILES['screenshots']['size'] > ScreenshotManager::$maxFileSize) {
 			$response = [
@@ -95,7 +95,7 @@
 			];
 			return $response;
 		}
-		require_once(realpath(dirname(__DIR__) . "/class/ScreenshotManager.php"));
+		use Glass\ScreenshotManager;
 		ScreenshotManager::uploadScreenshotForAddon($addon, $tempPath);
 		$changed = true;
 	}

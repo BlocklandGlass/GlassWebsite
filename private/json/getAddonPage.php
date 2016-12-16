@@ -3,9 +3,9 @@
 	if(!isset($_GET['id'])) {
 		return false;
 	}
-	require_once(realpath(dirname(__DIR__) . "/class/AddonManager.php"));
-	require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
-	require_once(realpath(dirname(__DIR__) . "/class/DependencyManager.php"));
+	use Glass\AddonManager;
+	use Glass\UserManager;
+	use Glass\DependencyManager;
 
 	$addon = AddonManager::getFromID($_GET['id'] + 0);
 

@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once dirname(__FILE__) . '/DatabaseManager.php';
 require_once dirname(__FILE__) . '/RatingObject.php';
 

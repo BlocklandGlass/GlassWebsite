@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once(realpath(dirname(__FILE__) . "/DatabaseManager.php"));
 class StatUsageManager {
   public static function addEntry($blid, $aid, $hash, $version, $beta = false, $date = null) {

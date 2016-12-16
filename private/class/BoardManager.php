@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once(realpath(dirname(__FILE__) . "/BoardObject.php"));
 
 //it might be possible to put the requirement inline to avoid unnecessary file system calls

@@ -1,9 +1,6 @@
 <?php
-if(!is_file(realpath(dirname(__DIR__) . '/vendor/autoload.php'))) {
-	header('Location: /install/composer.php');
-	die();
-}
-require_once(realpath(dirname(__DIR__) . '/vendor/autoload.php'));
+namespace Glass;
+
 use Aws\S3\S3Client;
 
 //maybe this should end up working like databasemanager

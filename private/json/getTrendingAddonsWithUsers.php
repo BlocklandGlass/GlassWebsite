@@ -1,6 +1,6 @@
 <?php
 	$addons = include(realpath(dirname(__FILE__) . "/getTrendingAddons.php"));
-	require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
+	use Glass\UserManager;
 	$users = [];
 
 	foreach($addons as $addon) {

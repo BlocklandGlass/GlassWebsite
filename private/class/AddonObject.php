@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once(realpath(dirname(__FILE__) . "/DependencyManager.php"));
 require_once(realpath(dirname(__FILE__) . "/StatManager.php"));
 

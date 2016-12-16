@@ -1,6 +1,6 @@
 <?php
 	$comments = include(realpath(dirname(__FILE__) . "/getPageComments.php"));
-	require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
+	use Glass\UserManager;
 	$users = [];
 
 	foreach($comments as $comment) {

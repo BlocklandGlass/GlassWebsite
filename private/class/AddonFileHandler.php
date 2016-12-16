@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once dirname(__FILE__) . '/AddonManager.php';
 require_once dirname(__FILE__) . '/AWSFileManager.php';
 

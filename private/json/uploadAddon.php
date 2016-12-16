@@ -6,8 +6,8 @@
 	if(!isset($_SESSION['csrftoken'])) {
 		$_SESSION['csrftoken'] = mt_rand();
 	}
-	require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
-	require_once(realpath(dirname(__DIR__) . "/class/AddonFileHandler.php"));
+	use Glass\UserManager;
+	use Glass\AddonFileHandler;
 	$user = UserManager::getCurrent();
 
 	if($user === false) {
@@ -45,7 +45,7 @@
 		];
 		return $response;
 	}
-	require_once(realpath(dirname(__DIR__) . "/class/AddonManager.php"));
+	use Glass\AddonManager;
 
 	if($_FILES['uploadfile']['size'] > AddonManager::$maxFileSize) {
 		$response = [

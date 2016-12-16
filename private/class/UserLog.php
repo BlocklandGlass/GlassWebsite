@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once(realpath(dirname(__FILE__) . "/DatabaseManager.php"));
 
 //this should be merged with the UserManager class

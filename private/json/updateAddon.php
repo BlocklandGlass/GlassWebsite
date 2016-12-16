@@ -38,10 +38,10 @@ function codeToMessage($code) {
 		$_SESSION['csrftoken'] = mt_rand();
 	}
 
-	require_once(realpath(dirname(__DIR__) . "/class/AddonManager.php"));
-	require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
-	require_once(realpath(dirname(__DIR__) . "/class/SemVer.php"));
-	require_once(realpath(dirname(__DIR__) . "/class/AddonFileHandler.php"));
+	use Glass\AddonManager;
+	use Glass\UserManager;
+	use Glass\SemVer;
+	use Glass\AddonFileHandler;
 	$user = UserManager::getCurrent();
 
 	if($user === false || !isset($_REQUEST['id'])) {
@@ -93,7 +93,7 @@ function codeToMessage($code) {
 		];
 		return $response;
 	}
-	require_once(realpath(dirname(__DIR__) . "/class/AddonManager.php"));
+	use Glass\AddonManager;
 
 	if($_FILES['uploadfile']['size'] > AddonManager::$maxFileSize) {
 		$response = [

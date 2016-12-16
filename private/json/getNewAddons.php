@@ -1,5 +1,5 @@
 <?php
-	require_once(realpath(dirname(__DIR__) . "/class/AddonManager.php"));
+	use Glass\AddonManager;
 	$addonIDs = AddonManager::getNewAddons(10);
 	$addons = [];
 

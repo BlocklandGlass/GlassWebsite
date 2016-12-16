@@ -1,6 +1,6 @@
 <?php
 	//all the information needed by /addons/boards.php
-	require_once(realpath(dirname(__DIR__) . "/class/BoardManager.php"));
+	use Glass\BoardManager;
 	$boards = BoardManager::getAllBoards();
 
 	//usort($boards, function($a, $b) {

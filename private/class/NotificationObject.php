@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 class NotificationObject {
 	//public fields will automatically be put into json
 	public $user;

@@ -22,7 +22,7 @@
 					"message" => "Cross Site Request Forgery Detected!"
 				];
 			} else {
-				require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
+				use Glass\UserManager;
 
 				if(isset($_POST['redirect'])) {
 					$redirect = $_POST['redirect'];

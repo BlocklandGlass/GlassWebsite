@@ -9,7 +9,7 @@
 		];
 	} else {
 		if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['verify']) && isset($_POST['blid'])) {
-			require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
+			use Glass\UserManager;
 
 			$email = $_POST['email'];
 			$password = $_POST['password'];

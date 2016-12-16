@@ -1,5 +1,5 @@
 <?php
-	require_once(realpath(dirname(__DIR__) . "/class/TagManager.php"));
+	use Glass\TagManager;
 	$tagIDs = TagManager::getAllTags();
 	$tags = [];
 

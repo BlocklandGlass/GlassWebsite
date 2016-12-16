@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once(__DIR__ . "/AWSFileManager.php");
 require_once(__DIR__ . "/StatManager.php");
 

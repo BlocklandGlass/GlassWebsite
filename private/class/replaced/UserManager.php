@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__) . '/class/UserHandler.php';
+use Glass\UserHandler;
 
 class UserManager {
 	private static $classname = "UserHandler";

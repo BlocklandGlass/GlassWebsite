@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 class RatingObject {
 	//these are public because this makes them instantly convertible to json
 	//this is purely a data storage class anyway

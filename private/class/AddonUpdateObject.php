@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
 require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
 require_once(realpath(dirname(__DIR__) . '/lib/class.Diff.php'));

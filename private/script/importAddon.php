@@ -2,9 +2,9 @@
 //a lot of this is just going to use staight up mysql since I dont want
 //to duplicate the old classes
 
-require_once dirname(__DIR__) . '/class/DatabaseManager.php';
-require_once dirname(__DIR__) . '/class/AWSFileManager.php';
-require_once dirname(__DIR__) . '/class/StatManager.php';
+use Glass\DatabaseManager;
+use Glass\AWSFileManager;
+use Glass\StatManager;
 
 $oldDat = json_decode(file_get_contents(dirname(__FILE__) . '/key.json'));
 $dir = $oldDat->dir;

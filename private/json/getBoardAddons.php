@@ -3,7 +3,7 @@
 	if(!isset($_GET['id'])) {
 		return [];
 	}
-	require_once(realpath(dirname(__DIR__) . "/class/BoardManager.php"));
+	use Glass\BoardManager;
 	$aid = $_GET['id'] + 0; //force it to be a number
 
 	//may throw exceptions with bad input, should fix

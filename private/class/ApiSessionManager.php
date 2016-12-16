@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 //direct port, needs works
 require_once dirname(__FILE__) . '/DatabaseManager.php';
 require_once dirname(__FILE__) . '/UserManager.php';

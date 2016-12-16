@@ -2,10 +2,11 @@
 # Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
 private/class/mysql.json
 private/class/key.json
-builds/uploads/*
-private/vendor/
+
 private/test.json
 private/config.json
+
+vendor/
 
 local/*
 

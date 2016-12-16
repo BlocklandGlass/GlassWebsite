@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 //in charge of collecting long term stats, and also compiling/summarizing them
 // so, at the end of the day the last 24 hours are compiled,
 // at the end of the week, the last 7 days,
