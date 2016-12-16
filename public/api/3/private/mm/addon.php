@@ -5,6 +5,7 @@ use Glass\BoardManager;
 use Glass\CommentManager;
 use Glass\UserLog;
 use Glass\ScreenshotManager;
+use Glass\UserManager;
 
 $ret = new \stdClass();
 
