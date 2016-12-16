@@ -38,6 +38,7 @@
 		];
 		return $response;
 	}
+
 	$uploadExt = pathinfo($_FILES['uploadfile']['name'], PATHINFO_EXTENSION);
 
 	if($uploadExt != "zip") {

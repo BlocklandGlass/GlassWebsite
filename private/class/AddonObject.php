@@ -33,25 +33,17 @@ class AddonObject {
 	private $betaVersion;
 
 	public function __construct($resource) {
-		//$this->webDownloads = intval($resource->webDownloads);
-		//$this->ingameDownloads = intval($resource->ingameDownloads);
-		//$this->updateDownloads = intval($resource->updateDownloads);
-		//$this->downloads = $this->webDownloads + $this->ingameDownloads + $this->updateDownloads;
-		//print_r($resource);
+
 		$this->id = intval($resource->id);
 		$this->board = intval($resource->board);
 		$this->blid = intval($resource->blid);
 		$this->name = $resource->name;
 		$this->description = $resource->description;
 		$this->approved = intval($resource->approved);
-		//$this->rating = floatval($resource->rating);
 		$this->version = $resource->version;
-		$this->authorInfo = json_decode($resource->authorInfo);
-		//$this->file = intval($resource->file);
 
 		$this->filename = $resource->filename;
 		$this->deleted = intval($resource->deleted);
-		$this->reviewInfo = json_decode($resource->reviewInfo);
 
 		$this->betaVersion = $resource->betaVersion;
 
@@ -71,6 +63,10 @@ class AddonObject {
 
 	public function getBLID() {
 		return $this->blid;
+	}
+
+	public function getAuthor() {
+		return UserManager::getFromBlid($this->blid);
 	}
 
 	public function getName() {
@@ -130,21 +126,8 @@ class AddonObject {
 		return "0";
 	}
 
-	public function getAuthorInfo() {
-		return $this->authorInfo;
-	}
-
 	public function getManagerBLID() {
-		$authorInfo = $this->getAuthorInfo();
-		if(is_array($authorInfo)) {
-			foreach($authorInfo as $author) {
-				if($author->main) {
-					return $author->blid;
-				}
-			}
-		} else {
-			return false;
-		}
+		return $this->blid;
 	}
 
 	public function getFileName() {
@@ -153,30 +136,6 @@ class AddonObject {
 
 	public function getDeleted() {
 		return $this->deleted;
-	}
-
-	//public function getFile() {
-	//	return $this->file;
-	//}
-    //
-	//public function getDependencies() {
-	//	return $this->dependencies;
-	//}
-    //
-	//public function getWebDownloads() {
-	//	return $this->downloads_web;
-	//}
-    //
-	//public function getIngameDownloads() {
-	//	return $this->downloads_ingame;
-	//}
-    //
-	//public function getUpdateDownloads() {
-	//	return $this->downloads_update;
-	//}
-
-	public function getReviewInfo() {
-		return $this->reviewInfo;
 	}
 
 	public function getDependencies() {

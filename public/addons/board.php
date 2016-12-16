@@ -93,7 +93,7 @@
 		<tbody>
 			<tr class="boardheader shadow-1">
 				<td>Name</td>
-				<td>Uploader</td>
+				<td style="text-align:center !important">Uploader</td>
 				<td>Rating</td>
 				<td>Downloads</td>
 			</tr>
@@ -105,43 +105,8 @@
 				foreach($addonIDs as $aid) {
 					$addon = AddonManager::getFromID($aid); ?>
 					<tr>
-					<td style="width: 33%"><a href="addon.php?id=<?php echo $addon->getID(); ?>"><?php echo $addon->getName(); ?></a></td>
-					<td style="font-size: 11pt"><?php
-					$authors = $addon->getAuthorInfo();
-
-					//This system should probably be rethought
-					if(sizeof($authors) == 1) {
-						//$uo = new UserHandler();
-						//$uo->initFromId($authors[0]->id);
-						$uo = UserManager::getFromBLID($authors[0]->blid);
-						echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . utf8_encode($uo->getName()) . "</a>";
-					} else if(sizeof($authors) == 2) {
-						//$uo = new UserHandler();
-						//$uo->initFromId($authors[0]->id);
-						$uo = UserManager::getFromBLID($authors[0]->blid);
-						$uo2 = new UserHandler();
-						$uo2->initFromId($authors[1]->id);
-						$uo2 = UserManager::getFromBLID($authors[1]->blid);
-						echo "<a href=\"#\">" . $uo->getName() . "</a>";
-						echo " and ";
-						echo "<a href=\"#\">" . $uo2->getName() . "</a>";
-					} else {
-						$count = sizeof($authors);
-						//echo("DATA: ");
-						//print_r($authors);
-
-						foreach($authors as $num=>$author) {
-							//$uo = new UserHandler();
-							//$uo->initFromId($auth->id);
-							$uo = UserManager::getFromBLID($author->blid);
-
-							if($count-$num == 1) {
-								echo "and <a href=\"#\">" . $uo->getName() . "</a>";
-							} else {
-								echo "<a href=\"#\">" . $uo->getName() . "</a>, ";
-							}
-						}
-					} ?>
+					<td style="width: 33%; text-align:left"><a href="addon.php?id=<?php echo $addon->getID(); ?>"><?php echo $addon->getName(); ?></a></td>
+					<td style="font-size: 11pt; text-align:center"><?php echo $addon->getAuthor()->getUsername();	?>
 					</td>
 					<td>
 						<?php

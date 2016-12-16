@@ -115,44 +115,9 @@
 		echo '<div class="tile">';
 		echo "<h2 style=\"margin-bottom: 0px;\">" . $addonObject->getName() . "</h2>";
 
-    $authors = $addonObject->getAuthorInfo();
+    $author = $addonObject->getAuthor();
 
-		echo "Uploaded by ";
-
-    if(sizeof($authors) == 1) {
-      //$uo = new UserHandler();
-      //$uo->initFromId($authors[0]->id);
-      $name = UserLog::getCurrentUsername($authors[0]->blid);
-      echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . utf8_encode($name) . "</a>";
-    } else if(sizeof($authors) == 2) {
-      //we cant use UserHandler here because we may not have accounts for all
-
-      $name1 = UserLog::getCurrentUsername($authors[0]->blid);
-      if($name1 === false) {
-        $name1 = "Blockhead" . $authors[0]->blid;
-      }
-      $name2 = UserLog::getCurrentUsername($authors[1]->blid);
-      if($name2 === false) {
-        $name2 = "Blockhead" . $authors[1]->blid;
-      }
-      echo "<a href=\"/user/view.php?blid=" . $authors[0]->blid . "\">" . utf8_encode($name1) . "</a>";
-      echo " and ";
-      echo "<a href=\"/user/view.php?blid=" . $authors[1]->blid . "\">" . utf8_encode($name2) . "</a>";
-    } else {
-      var_dump($authors);
-      $count = sizeof($authors);
-      foreach($authors as $num=>$author) {
-        //$uo = new UserHandler();
-        //$uo->initFromId($auth->id);
-        $uo = UserManager::getFromBLID($author->blid);
-
-        if($count-$num == 1) {
-          echo "and <a href=\"#\">" . utf8_encode($uo->getName()) . "</a>";
-        } else {
-          echo "<a href=\"#\">" . utf8_encode($uo->getName()) . "</a>, ";
-        }
-      }
-    }
+		echo "Uploaded by " . $author->getUsername();
 	?>
 	<div style="margin-top: 15px; margin-bottom: 15px; display: inline-block; width: 100%;">
 		<div class="addoninfoleft">

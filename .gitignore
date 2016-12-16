@@ -6,6 +6,8 @@ private/class/key.json
 private/test.json
 private/config.json
 
+filebin/*/*
+
 vendor/
 
 local/*

@@ -7,6 +7,8 @@ require_once(realpath(dirname(__FILE__) . '/AddonUpdateObject.php'));
 require_once(realpath(dirname(__FILE__) . '/AddonFileHandler.php'));
 require_once(realpath(dirname(__FILE__) . '/NotificationManager.php'));
 
+use Glass\AWSFileManager;
+
 //this should be the only class to interact with table `addon_addons`
 class AddonManager {
 	private static $indexCacheTime = 3600;
@@ -21,135 +23,6 @@ class AddonManager {
 	public static $SORTDOWNLOADDESC = 3;
 	public static $SORTRATINGASC = 4; //aka bad ratings first I think
 	public static $SORTRATINGDESC = 5;
-
-	public static function checkUpstreamRepos() {
-		$channelId[1] = "stable";
-		$channelId[2] = "unstable";
-		$channelId[3] = "development";
-
-		// TODO rewrite, yet again, to work w/ beta system
-
-		$addons = AddonManager::getAll();
-		foreach($addons as $addon) {
-			$versionInfo = $addon->getVersionInfo();
-			if(isset($versionInfo->upstream)) {
-				$upstream = $versionInfo->upstream;
-				echo $addon->getId() . "\n";
-				$url = $upstream->url;
-				if(isset($upstream->mod)) {
-					$url .= "?mods=" . $upstream->mod;
-				}
-
-				if(strpos($url, "http") !== 0) {
-					$url = "http://" . $url;
-				}
-
-				$opts = array(
-				  'http'=>array(
-				    'method'=>"GET",
-				    'header'=>"Accept-language: en\r\n" .
-				              "User-Agent: Torque/1.3\r\n"
-				  )
-				);
-
-				$context = stream_context_create($opts);
-				$response = file_get_contents($url, false, $context);
-
-				if($response !== false) {
-					if(($res = json_decode($response)) !== null) {
-						$a = "add-ons";
-						foreach($res->$a as $ad) {
-							if($ad->name == $addon->getFilename()) {
-								foreach($ad->channels as $channel=>$info) {
-									if(in_array($channel, $upstream->branch)) {
-										$localBranchId = array_search($channel, $upstream->branch);
-										echo "remote [$channel]:" . $info->version . "\n";
-										echo "local [$localBranchId]:" . $addon->getBranchInfo($localBranchId)->version . "\n";
-										if($info->version !== $addon->getBranchInfo($localBranchId)->version) {
-											AddonManager::doUpstreamUpdate($addon->getId(), $localBranchId, $info->file, $info->version);
-										}
-									}
-								}
-							}
-						}
-					} else {
-						echo($response);
-						$lines = explode("\n", $response);
-						//basically we're going to construct a fake json response
-						foreach($lines as $line) {
-							$line = trim($line);
-							if(!isset($res)) {
-								if(strpos($line, "<addon:") === 0) {
-									$ad = substr($line, 7, strlen($line)-8);
-									$res = new \stdClass();
-									$res->name = "$ad.zip";
-								}
-							} else {
-								if(strpos($line, "</addon>") === 0) {
-									break;
-								}
-
-								if(!isset($currentChannel)) {
-									if(strpos($line, "<channel:") === 0) {
-										$ch = substr($line, 9, strlen($line)-10);
-										$currentChannel = new \stdClass();
-										$currentChannel->name = $ch;
-									}
-								} else {
-									if(strpos($line, "</channel>") === 0) {
-										$res->channels[$currentChannel->name] = $currentChannel;
-										unset($currentChannel);
-									}
-
-									if(strpos($line, "<version:") === 0) {
-										$ch = substr($line, 9, strlen($line)-10);
-										$currentChannel->version = $ch;
-									}
-
-									if(strpos($line, "<file:") === 0) {
-										$file = substr($line, 6, strlen($line)-7);
-										$currentChannel->file = $file;
-									}
-								}
-							}
-						}
-
-						if(isset($res)) {
-							foreach($res->channels as $channel=>$info) {
-								$arr = (array) $upstream->branch;
-								if(in_array($channel, $arr)) {
-									$localBranchId = array_search($channel, $arr);
-									echo "remote [$channel]:" . $info->version . "\n";
-									echo "local [$localBranchId]:" . $addon->getBranchInfo($localBranchId)->version . "\n";
-									//if($info->version !== $addon->getBranchInfo($localBranchId)->version) {
-										AddonManager::doUpstreamUpdate($addon->getId(), $localBranchId, $info->file, $info->version);
-									//}
-								}
-							}
-						}
-					}
-				} else {
-
-				}
-			}
-		}
-	}
-
-	public static function doUpstreamUpdate($aid, $branchId, $file, $version) {
-		$dir = dirname(__DIR__) . "/../addons/upload/files/";
-		$addonObject = AddonManager::getFromID($aid);
-
-		if(strpos($file, "http") !== 0) {
-			$file = "http://" . $file;
-		}
-
-		$filename = "upstream_{$branchId}_" . $addonObject->getFilename();
-		$filepath = $dir . $filename;
-		file_put_contents($filepath, fopen($file, 'r'));
-		echo "\n\nDownloaded $file to $filepath\n\n";
-
-		AddonManager::submitUpdate($addonObject, $version, realpath($filepath), "Imported from upstream.", true);
-	}
 
 	public static function submitUpdate($addon, $version, $file, $changelog, $restart) {
 		if(!is_object($addon)) {
@@ -210,13 +83,16 @@ class AddonManager {
 		copy($file, dirname(__DIR__) . '/../addons/files/local/' . $addon->getId() . '_beta.zip');
 	}
 
-	public static function uploadNewAddon($user, $name, $type, $file, $filename, $description) {
+	public static function uploadNewAddon($user, $boardId, $name, $file, $filename, $description, $summary, $version) {
 		$database = new DatabaseManager();
 		AddonManager::verifyTable($database);
 
+		//================================
+    // Validation
+    //================================
+
 		$rsc = $database->query("SELECT * FROM `addon_addons` WHERE `name` = '" . $database->sanitize($name) . "' AND `approved` != '-1' LIMIT 1");
 
-		//I think we should enforce a unique file name, but not a unique addon name
 		if($rsc->num_rows > 0) {
 			$response = [
 				"message" => "An add-on by this name already exists!"
@@ -236,66 +112,22 @@ class AddonManager {
 		}
 		$rsc->close();
 
+		//================================
+    // Insertion
+    //================================
 
-		$bid = 1; // TODO Specify branch in upload
-
-		//generate blank version data
-		$versionInfo = AddonFileHandler::getVersionInfo($file);
-		var_dump($versionInfo);
-		if($versionInfo !== false) {
-			// information to use for upstream repos
-			$version = new \stdClass();
-			$version->stable = new \stdClass();
-			$version->stable->version = $versionInfo->version;
-			$version->stable->restart = "0.0.0";
-
-			$url = parse_url($versionInfo->repo->url);
-
-			if(!isset($url['host'])) {
-				$url['host'] = $versionInfo->repo->url;
-			}
-
-			if($url['host'] == "blocklandglass.com" || $url['host'] == "api.blocklandglass.com") {
-				// nothing?
-			} else {
-				$upstream = new \stdClass();
-				$upstream->url = $versionInfo->repo->url;
-				if(isset($versionInfo->repo->mod))
-					$upstream->mod = $versionInfo->repo->mod;
-				$upstream->branch = array();
-				$upstream->branch[$bid] = $versionInfo->channel;
-				$version->upstream = $upstream;
-			}
-		} else {
-			$version = new \stdClass();
-			$version->stable = new \stdClass();
-			$version->stable->version = "0.0.0";
-			$version->stable->restart = "0.0.0";
-
-			$repo = new \stdClass();
-		}
-
-		$authorInfo = new \stdClass();
-		$authorInfo->blid = $user->getBlid();
-		$authorInfo->main = true;
-		$authorInfo->role = "Manager";
-		$authorArray = [$authorInfo];
-
-		// NOTE boards will be decided by reviewers now, they just seem to confuse and anger people
-		$res = $database->query("INSERT INTO `addon_addons` (`id`, `board`, `blid`, `name`, `filename`, `description`, `version`, `authorInfo`, `reviewInfo`, `deleted`, `approved`, `uploadDate`, `type`) VALUES " .
-		"(NULL," .
-		"NULL," .
+		$res = $database->query("INSERT INTO `addon_addons` (`board`, `blid`, `name`, `filename`, `description`, `summary`, `version`, `deleted`, `approved`, `uploadDate`) VALUES " .
+		"(" .
+		"'" . $boardId . "'," .
 		"'" . $database->sanitize($user->getBlid()) . "'," .
 		"'" . $database->sanitize($name) . "'," .
 		"'" . $database->sanitize($filename) . "'," .
 		"'" . $database->sanitize($description) . "'," .
-		"'0.0.0'," .
-		"'" . $database->sanitize(json_encode($authorArray)) . "'," .
-		"'{}'," .
+		"'" . $database->sanitize($summary) . "'," .
+		"'" . $database->sanitize($version) . "'," .
 		"'0'," .
 		"'0'," .
-		"CURRENT_TIMESTAMP," .
-		"'" . $database->sanitize($type) . "');");
+		"CURRENT_TIMESTAMP);");
 		if(!$res) {
 			$response = [
 				"message" => "Database error encountered: " . $database->error()
@@ -308,15 +140,10 @@ class AddonManager {
 		AddonFileHandler::injectGlassFile($id, $file);
 		AddonFileHandler::injectVersionInfo($id, 1, $file);
 
-		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
-		AWSFileManager::uploadNewAddon($id, 1, $filename, $file);
-		require_once(realpath(dirname(__FILE__) . '/StatManager.php'));
+		AWSFileManager::uploadNewAddon($id, $filename, $file);
 
-		if(!is_dir(dirname(__DIR__) . '/../addons/files/local')) {
-			mkdir(dirname(__DIR__) . '/../addons/files/local');
-		}
 
-		copy($file, dirname(__DIR__) . '/../addons/files/local/' . $id . '.zip');
+		rename($file, dirname(dirname(__DIR__)) . '/filebin/aws_sync/' . $id);
 
 		$response = [
 			"redirect" => "/addons/upload/success.php?id=" . $id

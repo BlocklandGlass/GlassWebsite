@@ -1,6 +1,9 @@
 <?php
 	require dirname(__DIR__) . '/../../private/autoload.php';
-	$status = include(__DIR__ . "/../../../private/json/uploadAddon.php");
+	use Glass\BoardManager;
+	use Glass\UploadManager;
+
+	$status =	UploadManager::getStatus($_REQUEST, $_FILES['uploadfile']);
 
 	if(isset($status['redirect'])) {
 		//echo("REDIRECT: " . $status['redirect']);
@@ -10,6 +13,20 @@
 	$_PAGETITLE = "Blockland Glass | Add-On Upload";
 	include(__DIR__ . "/../../../private/header.php");
 	include(__DIR__ . "/../../../private/navigationbar.php");
+
+	$message = "";
+
+	if(isset($status['message'])) {
+		$message .= "<h3>{$status['message']}</h3>";
+	}
+
+	if(isset($status['problems'])) {
+		$message .= "<div style=\"text-align:left\"><ul>";
+		foreach($status['problems'] as $problem) {
+			$message .= "<li>$problem</li>";
+		}
+		$message .= "</ul></div>";
+	}
 ?>
 <div class="maincontainer" style="text-align:center">
 	<?php
@@ -18,28 +35,58 @@
 		//}
 	?>
 	<form action="" method="post" enctype="multipart/form-data">
-		<div style="text-align:center">
+		<div class="tile" style="display: inline-block; margin: 10px 0; width: 590px; text-align:left">
 			<h2>Add-On Upload</h2>
+			<p>
+				Blockland Glass provides easy add-on browsing for our users, ensuring safety and usability. We ask that you, the developer, only upload age-appropriate and safe content. All add-ons are reviewed before becoming publically available.
+			</p>
+			<p>
+				<b>Do not upload content that you did not make. Period.</b>
+			</p>
 		</div>
-		<div class="tile" style="display: inline-block; width: 66%; margin: auto 0;">
+		<br />
+		<div class="tile" style="display: inline-block; margin: auto 0; width: 590px; text-align:center">
 			<table class="formtable">
 				<tbody>
 					<tr>
-						<td class="center" colspan="2" id="uploadStatus">
-							<i><?php echo(utf8_encode($status["message"])); ?></i>
+						<td colspan="2">
+							<?php echo(utf8_encode($message)); ?>
 						</td>
 					</tr>
 					<tr>
-						<td style="width: 30%"><b>Name</b><br /><span style="font-size: 0.7em;">This should be different than your add-on's filename</span></td>
-						<td><input type="text" name="addonname" id="addonname" style="width: 400px" /></td>
+						<td><b>Name</b></td>
+						<td><input type="text" name="addonname" id="addonname" style="width: 400px" placeholder="Give your add-on a title" value="<?php echo $_REQUEST['addonname'] ?? ""; ?>"/></td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top"><b>Description</b><br /><span style="font-size: 0.7em;">Summarize how your add-on works</span></td>
-						<td><textarea style="font-size:0.8em;width:400px;height:200px" name="description" /></textarea></td>
+						<td><b>Summary</b></td>
+						<td><input type="text" name="summary" id="summary" style="width: 400px" placeholder="A short one-liner description" value="<?php echo $_REQUEST['summary'] ?? ""; ?>"/></td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top"><b>Filename</b><br /><span style="font-size: 0.7em;">Ensure add-on follows BL .zip name convention e.g. <i>Weapon_Gun</i></span></td>
-						<td><input type="text" name="filename" style="width: 400px" /></td>
+						<td><b>Board</b></td>
+						<td style="text-align:left">
+							<select name="board"  value="<?php echo $_REQUEST['board'] ?? ""; ?>">
+								<?php
+									$boards = BoardManager::getAllBoards();
+									foreach($boards as $board) {
+										$boardName = htmlspecialchars($board->getName());
+										$boardId = $board->getId();
+										echo "<option value=\"$boardId\">$boardName</option>";
+									}
+								?>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td style="vertical-align:top"><b>Description</b></td>
+						<td><textarea style="font-size:0.8em;width:400px;height:200px" name="description" placeholder="How does it work? Markdown is supported."/><?php echo $_REQUEST['description'] ?? ""; ?></textarea></td>
+					</tr>
+					<tr>
+						<td style="vertical-align:top"><b>Filename</b></td>
+						<td><input type="text" name="filename" style="width: 400px" placeholder="Client_MySuperCoolAddon"  value="<?php echo $_REQUEST['filename'] ?? ""; ?>"/></td>
+					</tr>
+					<tr>
+						<td style="vertical-align:top"><b>Current Version</b></td>
+						<td><input type="text" name="version" style="width: 400px" placeholder="Probably 1.0.0"  value="<?php echo $_REQUEST['version'] ?? "1.0.0"; ?>"/></td>
 					</tr>
 					<tr>
 						<td>
@@ -47,7 +94,7 @@
 							<!--<span style="font-size: 0.7em;">You can find your saves in your Blockland folder!</span>
 							<p class="description">You can find your saves in your Blockland folder!</p>-->
 						</td>
-						<td style="vertical-align: middle">
+						<td style="vertical-align: middle; text-align:left">
 							<input type="file" name="uploadfile" id="uploadfile">
 						</td>
 					</tr>
@@ -69,6 +116,7 @@
 	<img src="/img/loading.gif" />
 </div>
 <script type="text/javascript">
+
 $(document).on('dragenter', function (e) { e.stopPropagation(); e.preventDefault(); });
 $(document).on('dragover', function (e) { e.stopPropagation(); e.preventDefault(); });
 $(document).on('drop', function (e) { e.stopPropagation(); e.preventDefault(); });
@@ -88,10 +136,6 @@ $(document).ready(function () {
 	$("#uploadfile").on("change", function (event) {
 		var file = event.target.files[0];
 
-		if($("#addonname").val() == "") {
-			$("#addonname").val(file.name.replace(/\.[^/.]+$/, ""));
-		}
-
 		if($("#filename").val() == "") {
 			$("#filename").val(file.name);
 		}
@@ -99,7 +143,6 @@ $(document).ready(function () {
 		//using a javascript .zip library to pull the description.txt contents might be overkill
 	});
 	$("#uploadForm").submit(function (event) {
-		console.log("upload form?");
 		event.stopPropagation();
 		event.preventDefault();
 		$("#uploadStatus").html("<p><img src=\"/img/loading.gif\" /></p>");

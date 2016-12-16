@@ -47,16 +47,10 @@
         <td><pre style="font-size: .5em"><?php echo $addon->getVersion(); ?></pre></td>
       </tr>
       <tr>
-        <td style="padding: 10px;"><b>Authors</b></td>
+        <td style="padding: 10px;"><b>Author</b></td>
         <td>
         <?php
-        foreach($addon->getAuthorInfo() as $author) {
-          $name = UserLog::getCurrentUsername($author->blid);
-          if($name == false) {
-            $name = "Blockhead" . $author->blid;
-          }
-          echo "$name - <i>" . $author->role . "</i><br />";
-        }
+        echo $addon->getAuthor()->getUsername();
         ?>
         </td>
       </tr>
@@ -96,13 +90,19 @@
 				<tr>
 					<td style="vertical-align:top; width: 50%; background-color: #CCFFCC; padding: 10px; border-top-left-radius: 10px;">
 				    <b>Approve to board:</b><br/>
-						<select name="board" value="none">
-				    	<option value="" disabled selected>Choose One</option>
+						<select name="board" value="A">
+				    	<option value="" disabled >Choose One</option>
 				    	<option value="" disabled></option>
 							<?php
 								$boards = BoardManager::getAllBoards();
 								foreach($boards as $board) {
-									echo '<option value="' . $board->getId() . '">' . $board->getName() . '</option>';
+									if($board->getId() == $addon->getBoard) {
+										$selected = true;
+									} else {
+										$selected = false;
+									}
+
+									echo '<option value="' . $board->getId() . '"' . ($selected ? ' selected' : '') .'>' . $board->getName() . '</option>';
 								}
 							?>
 						</select>

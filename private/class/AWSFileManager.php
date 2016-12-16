@@ -42,7 +42,7 @@ class AWSFileManager {
 		));
 	}
 
-	public static function uploadNewAddon($aid, $branchid, $name, $tempFile) {
+	public static function uploadNewAddon($aid, $name, $tempFile) {
 		$keyData = AWSFileManager::getCredentials();
 
 		$client = S3Client::factory(array(
@@ -54,11 +54,13 @@ class AWSFileManager {
 
 		$result = $client->putObject(array(
 			"Bucket" => $keyData->aws_bucket,
-			"Key" => "addons/" . $aid . "_" . $branchid,
+			"Key" => "addons/" . $aid,
 			"SourceFile" => $tempFile,
 			"ACL" => 'public-read',
 			"ContentDisposition" => "attachment; filename=\"" . urlencode($name) . "\""
 		));
+
+		return $result;
 	}
 
 	//to do: screenshots should now be bundled together with the builds/addons folders probably
