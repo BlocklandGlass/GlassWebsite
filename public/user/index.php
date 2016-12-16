@@ -5,8 +5,8 @@
 		header("Location: /login.php");
 		die();
 	}
-	include(realpath(dirname(__DIR__) . "/private/header.php"));
-	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 	use Glass\UserManager;
 	use Glass\AddonManager;
 	use Glass\BuildManager;
@@ -81,4 +81,4 @@
 	</table>
 </div>
 
-<?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>
+<?php include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>

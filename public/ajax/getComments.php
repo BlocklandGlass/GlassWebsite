@@ -5,9 +5,9 @@
 	//or if I want to send an html table like this
 
 	//header("Content-Type: application/json");
-	//echo(json_encode(include(realpath(dirname(__DIR__) . "/private/json/getComments.php"))));
-	include_once (realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
-	$response = include(realpath(dirname(__DIR__) . "/private/json/getPageCommentsWithUsers.php"));
+	//echo(json_encode(include(realpath(dirname(__DIR__) . "/../private/json/getComments.php"))));
+	include_once (realpath(dirname(__DIR__) . "/../private/class/UserManager.php"));
+	$response = include(realpath(dirname(__DIR__) . "/../private/json/getPageCommentsWithUsers.php"));
 
 	$user = UserManager::getCurrent();
 

@@ -13,7 +13,7 @@ class NotificationManager {
 
 	public static function createNotification($user, $text, $params) {
 		if(isset($param) && !is_object($param)) {
-			throw new Exception("Object expected form \$param");
+			throw new \Exception("Object expected form \$param");
 		}
 
 		if(is_object($user)) {
@@ -57,7 +57,7 @@ class NotificationManager {
 			$resource = $database->query("SELECT * FROM `user_notifications` WHERE id='" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
+				throw new \Exception("Database error: " . $database->error());
 			}
 
 			if($resource->num_rows == 0) {
@@ -80,7 +80,7 @@ class NotificationManager {
 			LIMIT " . $database->sanitize($offset) . ", " . $database->sanitize($limit));
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$userNotes = [];
 
@@ -107,7 +107,7 @@ class NotificationManager {
 				ON UPDATE CASCADE
 				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error creating table: " . $database->error());
+			throw new \Exception("Error creating table: " . $database->error());
 		}
 	}
 }

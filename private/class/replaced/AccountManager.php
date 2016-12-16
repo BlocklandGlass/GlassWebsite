@@ -131,7 +131,7 @@ class AccountManager {
 				"redirect" => "/login.php"
 			];
 		} else {
-			throw new Exception("Error adding new user into databse: " . $database->error());
+			throw new \Exception("Error adding new user into databse: " . $database->error());
 		}
 	}
 
@@ -158,7 +158,7 @@ class AccountManager {
 		$resource = $database->query($query);
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		if($resource->num_rows === 0) {
@@ -205,7 +205,7 @@ class AccountManager {
 			banned TINYINT NOT NULL DEFAULT 0,
 			admin TINYINT NOT NULL DEFAULT 0,
 			KEY (blid))")) {
-			throw new Exception("Error creating users table: " . $database->error());
+			throw new \Exception("Error creating users table: " . $database->error());
 		}
 	}
 }

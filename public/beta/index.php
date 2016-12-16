@@ -1,6 +1,6 @@
 <?php
-require_once(realpath(dirname(__DIR__) . "/private/header.php"));
-require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+require_once(realpath(dirname(__DIR__) . "/../private/header.php"));
+require_once(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 use Glass\UserManager;
 use Glass\GroupManager;
 use Glass\UserLog;
@@ -101,4 +101,4 @@ form {
   </table>
 </div>
 
-<?php require_once(realpath(dirname(__DIR__) . "/private/footer.php")); ?>
+<?php require_once(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>

@@ -42,7 +42,7 @@ class BoardManager {
 		$resource = $database->query("SELECT * FROM `addon_boards` ORDER BY `name` ASC");
 
 		if(!$resource) {
-			throw new Exception("Error getting data from database: " . $database->error());
+			throw new \Exception("Error getting data from database: " . $database->error());
 		}
 		$boardData = array();
 
@@ -94,7 +94,7 @@ class BoardManager {
 			`icon` VARCHAR(24) NOT NULL,
 			`description` VARCHAR(255),
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error attempting to create addon_boards table: " . $database->error());
+			throw new \Exception("Error attempting to create addon_boards table: " . $database->error());
 		}
 	}
 }

@@ -157,7 +157,7 @@ class CronStatManager {
         PRIMARY KEY (`id`),
         UNIQUE KEY `id` (`id`)
       )")) {
-      throw new Exception("Error creating users table: " . $database->error());
+      throw new \Exception("Error creating users table: " . $database->error());
     }
   }
 

@@ -1,7 +1,7 @@
 <?php
-	require_once(realpath(dirname(__DIR__) . "/private/lib/Parsedown.php"));
+	require_once(realpath(dirname(__DIR__) . "/../private/lib/Parsedown.php"));
 
-	$response = include(realpath(dirname(__DIR__) . "/private/json/searchAddonsWithUsers.php"));
+	$response = include(realpath(dirname(__DIR__) . "/../private/json/searchAddonsWithUsers.php"));
 	$addons = $response['addons'];
 	echo("<h2>Search Results</h2>"); //to do: more informative header here
 
@@ -33,7 +33,7 @@
 	//this page is designed to be requested by ajax or the in-game client
 
 //	use Glass\DatabaseManager;
-//	require_once(realpath(dirname(__DIR__) . "/private/lib/Parsedown.php"));
+//	require_once(realpath(dirname(__DIR__) . "/../private/lib/Parsedown.php"));
 //
 //	if(!isset($_POST['query'])) {
 //		echo("Invalid search");

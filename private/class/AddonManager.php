@@ -385,7 +385,7 @@ class AddonManager {
 			$resource = $database->query("SELECT * FROM `addon_addons` WHERE `id` = '" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
+				throw new \Exception("Database error: " . $database->error());
 			}
 
 			if($resource->num_rows == 0) {
@@ -468,7 +468,7 @@ class AddonManager {
 		$resource = $database->query($query);
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$searchAddons = [];
 
@@ -557,7 +557,7 @@ class AddonManager {
 		$resource = $database->query("SELECT COUNT(*) FROM `addon_addons` WHERE board='" . $boardID . "'  AND deleted=0");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$count = $resource->fetch_row()[0];
 		$resource->close();
@@ -611,7 +611,7 @@ class AddonManager {
 		$resource = $database->query("SELECT * FROM `addon_addons` WHERE `deleted`=0 AND `approved`=1 ORDER BY `uploadDate` DESC LIMIT " . $database->sanitize($count));
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$newestAddonIDs = [];
 
@@ -657,7 +657,7 @@ class AddonManager {
 		$resource = $database->query("SELECT * FROM `addon_updates` WHERE `aid`='" . $database->sanitize($addon->getId()) . "' ORDER BY `submitted` DESC");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$updates = [];
 
@@ -675,7 +675,7 @@ class AddonManager {
 		$resource = $database->query("SELECT * FROM `addon_updates` WHERE `approved` IS NULL ORDER BY `submitted` DESC");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$updates = [];
 
@@ -693,7 +693,7 @@ class AddonManager {
 
 		$id = $update->getId();
 		if($update->status !== null) {
-			throw new Exception("Attempted to approve already approved update");
+			throw new \Exception("Attempted to approve already approved update");
 		}
 
 		$update->status = true;
@@ -799,7 +799,7 @@ class AddonManager {
 				ON UPDATE CASCADE
 				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("Failed to create table addon_addons: " . $database->error());
+			throw new \Exception("Failed to create table addon_addons: " . $database->error());
 		}
 
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_updates` (
@@ -818,7 +818,7 @@ class AddonManager {
 				ON DELETE CASCADE,
 		  PRIMARY KEY (`id`),
 		  UNIQUE KEY `id` (`id`))")) {
-			throw new Exception("Failed to create table addon_updates: " . $database->error());
+			throw new \Exception("Failed to create table addon_updates: " . $database->error());
 		}
 
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_ratings` (
@@ -829,7 +829,7 @@ class AddonManager {
 				REFERENCES addon_addons(`id`)
 				ON UPDATE CASCADE
 				ON DELETE CASCADE)")) {
-			throw new Exception("Failed to create table addon_updates: " . $database->error());
+			throw new \Exception("Failed to create table addon_updates: " . $database->error());
 		}
 	}
 }

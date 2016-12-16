@@ -102,7 +102,7 @@ class AddonObject {
 
 	public function getLatestVersion($branch) {
 		if(!$this->isInit()) {
-			throw new Exception('AddonObject not init');
+			throw new \Exception('AddonObject not init');
 			return;
 		}
 
@@ -144,7 +144,7 @@ class AddonObject {
 
 	public function getLatestBranch() {
 		if(!$this->isInit()) {
-			throw new Exception('AddonObject not init');
+			throw new \Exception('AddonObject not init');
 			return;
 		}
 
@@ -164,7 +164,7 @@ class AddonObject {
 
 	public function getBranches() {
 		if(!$this->isInit()) {
-			throw new Exception('AddonObject not init');
+			throw new \Exception('AddonObject not init');
 			return;
 		}
 		$ret = array();
@@ -189,7 +189,7 @@ class AddonObject {
 
 	public function getRatingData() {
 		if(!$this->isInit()) {
-			throw new Exception('AddonObject not init');
+			throw new \Exception('AddonObject not init');
 			return;
 		}
 
@@ -198,7 +198,7 @@ class AddonObject {
 
 	public function getFile($branch) {
 		if(!$this->isInit()) {
-			throw new Exception('AddonObject not init');
+			throw new \Exception('AddonObject not init');
 			return;
 		}
 
@@ -212,7 +212,7 @@ class AddonObject {
 
 	public function getFileId($branch) {
 		if(!$this->isInit()) {
-			throw new Exception('AddonObject not init');
+			throw new \Exception('AddonObject not init');
 			return;
 		}
 
@@ -221,7 +221,7 @@ class AddonObject {
 
 	public function getId() {
 		if(!$this->isInit()) {
-			throw new Exception('AddonObject not init');
+			throw new \Exception('AddonObject not init');
 			return;
 		}
 
@@ -230,7 +230,7 @@ class AddonObject {
 
 	public function getName() {
 		if(!$this->isInit()) {
-			throw new Exception('AddonObject not init');
+			throw new \Exception('AddonObject not init');
 			return;
 		}
 
@@ -239,7 +239,7 @@ class AddonObject {
 
 	public function getAuthor() {
 		if(!$this->isInit()) {
-			throw new Exception('AddonObject not init');
+			throw new \Exception('AddonObject not init');
 			return;
 		}
 
@@ -273,7 +273,7 @@ class AddonObject {
 
 	public function getAuthors() {
 		if(!$this->isInit()) {
-			throw new Exception('AddonObject not init');
+			throw new \Exception('AddonObject not init');
 			return;
 		}
 
@@ -303,7 +303,7 @@ class AddonObject {
 
 	public function getFilename() {
 		if(!$this->isInit()) {
-			throw new Exception('AddonObject not init');
+			throw new \Exception('AddonObject not init');
 			return;
 		}
 
@@ -312,7 +312,7 @@ class AddonObject {
 
 	public function isBargain() {
 		if(!$this->isInit()) {
-			throw new Exception('AddonObject not init');
+			throw new \Exception('AddonObject not init');
 			return;
 		}
 
@@ -321,7 +321,7 @@ class AddonObject {
 
 	public function isDangerous() {
 		if(!$this->isInit()) {
-			throw new Exception('AddonObject not init');
+			throw new \Exception('AddonObject not init');
 			return;
 		}
 
@@ -341,7 +341,7 @@ class AddonObject {
 
 	public function getDownloads($branch = 0) {
 		if(!$this->isInit()) {
-			throw new Exception('AddonObject not init');
+			throw new \Exception('AddonObject not init');
 			return;
 		}
 
@@ -350,7 +350,7 @@ class AddonObject {
 		} else if($branch <= 3) {
 			return $this->downloads[$branch-1];
 		} else {
-			throw new Exception("Invalid Index");
+			throw new \Exception("Invalid Index");
 		}
 	}
 
@@ -375,7 +375,7 @@ class AddonObject {
 
 	public function removeScreenshot($id) {
 		if($id >= $this->getScreenshotCount()) {
-			throw new Exception("Invalid Screenshot");
+			throw new \Exception("Invalid Screenshot");
 		}
 		$dirName = dirname(__DIR__) . '/files/screenshots/' . $this->getId() . '/';
 		for($i = ($id+1); $i < $this->getScreenshotCount(); $i++) {

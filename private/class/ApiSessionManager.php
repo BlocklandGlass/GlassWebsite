@@ -76,7 +76,7 @@ class ApiSessionManager {
 			$db = new DatabaseManager();
 			$result = $db->query("SELECT * FROM `users` WHERE blid=" . $this->blid);
 			if(!is_object($result) || $result->num_rows == 0) {
-				throw new Exception("Account doesn't exist! (" . $this->blid . ")");
+				throw new \Exception("Account doesn't exist! (" . $this->blid . ")");
 				//return false;
 			} else {
 				$obj = $result->fetch_object();
@@ -121,7 +121,7 @@ class ApiSessionManager {
 			} else if(strpos($result, "ERROR") === 0) {
 				return false;
 			} else {
-				throw new Exception("invalid auth response");
+				throw new \Exception("invalid auth response");
 			}
 		} else {
 			return true;

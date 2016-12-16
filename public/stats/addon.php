@@ -6,8 +6,8 @@
 
 	$_PAGETITLE = "Blockland Glass | Add-On Stats";
 
-	include(realpath(dirname(__DIR__) . "/private/header.php"));
-	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 
 	$user = UserManager::getCurrent();
 

@@ -1,4 +1,5 @@
 <?php
+	require dirname(__DIR__) . '/../private/autoload.php';
 	session_start();
 	$status = include(__DIR__ . "/../private/json/updateAddon.php");
 

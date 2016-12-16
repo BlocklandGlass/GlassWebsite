@@ -1,11 +1,12 @@
 <?php
+	require dirname(__DIR__) . '/../private/autoload.php';
 	use Glass\BoardManager;
 	use Glass\AddonManager;
 	use Glass\AddonObject;
 	use Glass\UserManager;
 	use Glass\UserLog;
 //	use Glass\UserHandler;
-	require_once(realpath(dirname(__DIR__) . "/private/lib/Parsedown.php"));
+	require_once(realpath(dirname(__DIR__) . "/../private/lib/Parsedown.php"));
 
 	//to do: use ajax/json to build data for page
 	//this php file should just format the data nicely
@@ -30,8 +31,8 @@
 
 	$_PAGETITLE = "Blockland Glass | " . $addonObject->getName();
 
-	include(realpath(dirname(__DIR__) . "/private/header.php"));
-	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 ?>
 <div class="maincontainer">
 	<?php
@@ -129,4 +130,4 @@
   </table>
 	<hr />
 </div>
-<?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>
+<?php include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>

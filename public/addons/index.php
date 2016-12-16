@@ -1,4 +1,5 @@
 <?php
+	require dirname(__DIR__) . '/../private/autoload.php';
 	use Glass\GroupManager;
 	use Glass\UserManager;
 	use Glass\AddonManager;
@@ -6,13 +7,13 @@
 
 	$_PAGETITLE = "Blockland Glass | Add-Ons";
 
-	include(realpath(dirname(__DIR__) . "/private/header.php"));
-	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 
 	$user = UserManager::getCurrent();
 ?>
 <div class="maincontainer">
-	<?php include(realpath(dirname(__DIR__) . "/private/searchbar.php")); ?>
+	<?php include(realpath(dirname(__DIR__) . "/../private/searchbar.php")); ?>
 	<ul class="addonnav tile" style="margin-bottom: 15px;">
 		<li><a href="/addons/boards.php">Boards</a></li>
 		<li><a href="/addons/rtb/">RTB Archive</a></li>
@@ -54,4 +55,4 @@
 		</tbody>
 	</table>
 </div>
-<?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>
+<?php include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>

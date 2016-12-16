@@ -9,6 +9,7 @@
 
 	require_once(realpath(dirname(__DIR__) . "/private/header.php"));
 	require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+
 	use Glass\UserLog;
 	use Glass\StatManager;
 
@@ -83,4 +84,4 @@
 	</p>
 </div>
 
-<?php require_once(realpath(dirname(__FILE__) . "/private/footer.php")); ?>
+<?php require_once(realpath(dirname(__DIR__) . "/private/footer.php")); ?>

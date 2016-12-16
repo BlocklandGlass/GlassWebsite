@@ -19,7 +19,7 @@ class RatingManager {
 			$resource = $database->query("SELECT * FROM `addon_ratings` WHERE `id` = '" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
+				throw new \Exception("Database error: " . $database->error());
 			}
 
 			if($resource->num_rows == 0) {
@@ -38,7 +38,7 @@ class RatingManager {
 		$resource = $database->query("SELECT * FROM `addon_ratings` WHERE `blid` = '" . $database->sanitize($blid) . "'");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$userRatings = [];
 
@@ -57,7 +57,7 @@ class RatingManager {
 		$resource = $database->query("SELECT * FROM `addon_ratings` WHERE `aid` = '" . $database->sanitize($aid) . "'");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$addonRatings = [];
 
@@ -89,7 +89,7 @@ class RatingManager {
 				ON UPDATE CASCADE
 				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("Unable to create table addon_ratings: " . $database->error());
+			throw new \Exception("Unable to create table addon_ratings: " . $database->error());
 		}
 	}
 }

@@ -1,19 +1,20 @@
 <?php
+	require dirname(__DIR__) . '/../private/autoload.php';
 	session_start();
 
 	//info is an array that either has the property "redirect" set, or has the following
 	//	message - string
 	//	addon - AddonObject
 	//	user - UserObject
-	$info = include(realpath(dirname(__DIR__) . "/private/json/manageAddon.php"));
+	$info = include(realpath(dirname(__DIR__) . "/../private/json/manageAddon.php"));
 
 	if(isset($info['redirect'])) {
 		header("Location: " . $info['redirect']);
 		die();
 	}
 	$_PAGETITLE = "Blockland Glass | Manage Add-On";
-	include(realpath(dirname(__DIR__) . "/private/header.php"));
-	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 
 	if(!isset($_GET['tab']) || $_GET['tab'] == "") {
 		$_GET['tab'] = "desc";
@@ -273,5 +274,5 @@ td:first-child {
 //});
 </script>
 <?php
-	include(realpath(dirname(__DIR__) . "/private/footer.php"));
+	include(realpath(dirname(__DIR__) . "/../private/footer.php"));
 ?>

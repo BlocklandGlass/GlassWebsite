@@ -252,7 +252,7 @@ class RTBAddonManager {
       `downloads_ingame` int(11) NOT NULL DEFAULT 0,
 
       `approved` INT(1) NULL DEFAULT NULL)")) {
-      throw new Exception("Error creating rtb_addons table: " . $database->error());
+      throw new \Exception("Error creating rtb_addons table: " . $database->error());
     }
   }
 }

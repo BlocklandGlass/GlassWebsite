@@ -5,8 +5,8 @@
 
 	$_PAGETITLE = "Blockland Glass | Current Servers";
 
-	include(realpath(dirname(__DIR__) . "/private/header.php"));
-	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 
 	$servers = ServerTracker::getActiveServers();
 ?>

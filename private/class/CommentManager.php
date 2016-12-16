@@ -27,7 +27,7 @@ class CommentManager {
 			$resource = $database->query("SELECT * FROM `addon_comments` WHERE `id` = '" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
+				throw new \Exception("Database error: " . $database->error());
 			}
 
 			if($resource->num_rows == 0) {
@@ -62,7 +62,7 @@ class CommentManager {
 		$resource = $database->query($baseQuery . $sortQuery . $extQuery);
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$userComments = [];
 
@@ -101,7 +101,7 @@ class CommentManager {
 		$resource = $database->query($query);
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$addonComments = [];
 
@@ -132,7 +132,7 @@ class CommentManager {
 				ON UPDATE CASCADE
 				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("Unable to create table addon_comments: " . $database->error());
+			throw new \Exception("Unable to create table addon_comments: " . $database->error());
 		}
 	}
 }

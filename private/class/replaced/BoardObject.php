@@ -17,7 +17,7 @@ class BoardObject {
 			$this->name = $obj->name;
 			$this->subCategory = $obj->subcategory;
 		} else {
-			throw new Exception('Invalid board id');
+			throw new \Exception('Invalid board id');
 		}
 	}
 

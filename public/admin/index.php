@@ -1,12 +1,12 @@
 <?php
-  include(realpath(dirname(__DIR__) . "/private/class/UserManager.php"));
-  include(realpath(dirname(__DIR__) . "/private/class/GroupManager.php"));
+  include(realpath(dirname(__DIR__) . "/../private/class/UserManager.php"));
+  include(realpath(dirname(__DIR__) . "/../private/class/GroupManager.php"));
   session_start();
 	$user = UserManager::getCurrent();
 
 	$_PAGETITLE = "Blockland Glass | Control Panel";
-	include(realpath(dirname(__DIR__) . "/private/header.php"));
-	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 
   if(!GroupManager::getFromName("Administrator")) {
     GroupManager::createDefaultGroups();
@@ -40,5 +40,5 @@
 	</div>
 </div>
 <?php
-	include(realpath(dirname(__DIR__) . "/private/footer.php"));
+	include(realpath(dirname(__DIR__) . "/../private/footer.php"));
 ?>

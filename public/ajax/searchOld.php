@@ -2,7 +2,7 @@
 	//this page is designed to be requested by ajax or the in-game client
 
 	use Glass\DatabaseManager;
-	require_once(realpath(dirname(__DIR__) . "/private/lib/Parsedown.php"));
+	require_once(realpath(dirname(__DIR__) . "/../private/lib/Parsedown.php"));
 
 	if(!isset($_POST['query'])) {
 		echo("Invalid search");

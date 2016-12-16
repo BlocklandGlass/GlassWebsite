@@ -1,6 +1,6 @@
 <tbody>
 <?php
-	$response = include(realpath(dirname(__DIR__) . "/private/json/getNewAddonsWithUsers.php"));
+	$response = include(realpath(dirname(__DIR__) . "/../private/json/getNewAddonsWithUsers.php"));
 	$addons = $response['addons'];
 	$users = $response['users'];
 

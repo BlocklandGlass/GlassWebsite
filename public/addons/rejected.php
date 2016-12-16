@@ -1,8 +1,9 @@
 <?php
-    $_PAGETITLE = "Blockland Glass | " . utf8_encode($addonObject->getName());
+	require dirname(__DIR__) . '/../private/autoload.php';
+  $_PAGETITLE = "Blockland Glass | " . utf8_encode($addonObject->getName());
 
-	include(realpath(dirname(__DIR__) . "/private/header.php"));
-	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 ?>
 <div class="maincontainer">
 	<?php
@@ -16,5 +17,5 @@
   </div>
 </div>
 <?php
-	include(realpath(dirname(__DIR__) . "/private/footer.php"));
+	include(realpath(dirname(__DIR__) . "/../private/footer.php"));
 ?>

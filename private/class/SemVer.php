@@ -50,7 +50,7 @@ class SemVer {
 
     if($hasBuildData && $hasPrerelease) {
       if(strpos($str, "+") < strpos($str, "-")) {
-        throw new Exception("Build text must come after prerelease text");
+        throw new \Exception("Build text must come after prerelease text");
       }
     }
 
@@ -95,16 +95,16 @@ class SemVer {
     $parts = explode(".", $str);
 
     if(sizeof($parts) > 3) {
-      throw new Exception("Too many fields in version string. Three expected");
+      throw new \Exception("Too many fields in version string. Three expected");
     }
 
     foreach($parts as $part) {
       if(!is_numeric($part)) {
-        throw new Exception("Version string not numeric");
+        throw new \Exception("Version string not numeric");
       }
 
       if($part < 0) {
-        throw new Exception("Version string cannot be negative");
+        throw new \Exception("Version string cannot be negative");
       }
     }
 
@@ -125,7 +125,7 @@ class SemVer {
 
     if(!is_numeric($greek)) {
       if(!in_array(strtolower($greek), SemVer::$greek)) {
-        throw new Exception("Invalid prerelease. Expected Alpha, Beta, or RC");
+        throw new \Exception("Invalid prerelease. Expected Alpha, Beta, or RC");
       } else {
         array_shift($parts);
         $this->prereleaseGreek = $greek;
@@ -135,16 +135,16 @@ class SemVer {
     }
 
     if(sizeof($parts) > 3) {
-      throw new Exception("Too many fields in prerelease string. Three expected");
+      throw new \Exception("Too many fields in prerelease string. Three expected");
     }
 
     foreach($parts as $part) {
       if(!is_numeric($part)) {
-        throw new Exception("Prerelease string not numeric");
+        throw new \Exception("Prerelease string not numeric");
       }
 
       if($part < 0) {
-        throw new Exception("Prerelease string cannot be negative");
+        throw new \Exception("Prerelease string cannot be negative");
       }
     }
 

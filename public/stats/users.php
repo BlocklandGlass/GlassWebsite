@@ -6,8 +6,8 @@
 
 	$_PAGETITLE = "Blockland Glass | Current Users";
 
-	include(realpath(dirname(__DIR__) . "/private/header.php"));
-	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 
 	$users = UserLog::getRecentlyActive();
 ?>

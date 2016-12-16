@@ -59,7 +59,7 @@ class StatUsageManager {
         REFERENCES addon_addons(`id`)
         ON UPDATE CASCADE
         ON DELETE CASCADE)")) {
-      throw new Exception("Failed to create table stats_usage: " . $database->error());
+      throw new \Exception("Failed to create table stats_usage: " . $database->error());
     }
   }
 

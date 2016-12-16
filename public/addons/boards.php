@@ -1,14 +1,15 @@
 <?php
+	require dirname(__DIR__) . '/../private/autoload.php';
 	use Glass\BoardManager;
 
 	$_PAGETITLE = "Blockland Glass | Boards";
 
-	include(realpath(dirname(__DIR__) . "/private/header.php"));
-	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+	include(realpath(dirname(__DIR__) . "/../private/header.php"));
+	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 ?>
 
 <div class="maincontainer">
-  <?php include(realpath(dirname(__DIR__) . "/private/searchbar.php")); ?>
+  <?php include(realpath(dirname(__DIR__) . "/../private/searchbar.php")); ?>
   <h1 style="text-align:center">Boards</h1>
   <a href="/addons/">Add-Ons</a> >> <a href="#">Boards</a>
 	<div class="tile">
@@ -47,4 +48,4 @@
 	</div>
 </div>
 
-<?php include(realpath(dirname(__DIR__) . "/private/footer.php")); ?>
+<?php include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>

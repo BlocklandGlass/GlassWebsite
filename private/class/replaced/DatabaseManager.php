@@ -37,7 +37,7 @@ class DatabaseManager {
 
 			$this->mysqli = new mysqli("localhost", $this->username, $this->password, $this->database);
 			if($this->mysqli->connect_error) {
-				throw new Exception("Unable to connect to database: " .  $this->mysqli->connect_error);
+				throw new \Exception("Unable to connect to database: " .  $this->mysqli->connect_error);
 			}
 		}
 	}

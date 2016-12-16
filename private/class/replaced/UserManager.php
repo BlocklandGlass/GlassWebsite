@@ -28,7 +28,7 @@ class UserManager {
 
 	public static function getCurrent() {
 		if(!isset($_SESSION)) {
-			throw new Exception("No Session!");
+			throw new \Exception("No Session!");
 		}
 
 		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {

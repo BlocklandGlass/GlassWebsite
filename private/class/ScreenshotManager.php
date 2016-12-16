@@ -25,7 +25,7 @@ class ScreenshotManager {
 			$resource = $database->query("SELECT * FROM `screenshots` WHERE `id` = '" . $database->sanitize($id) . "' LIMIT 1");
 
 			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
+				throw new \Exception("Database error: " . $database->error());
 			}
 
 			if($resource->num_rows == 0) {
@@ -46,7 +46,7 @@ class ScreenshotManager {
 		$resource = $database->query("SELECT * FROM `screenshots` WHERE `blid` = '" . $database->sanitize($id) . "'");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$userScreenshots = [];
 
@@ -65,7 +65,7 @@ class ScreenshotManager {
 		$resource = $database->query("SELECT `sid` FROM `build_screenshotmap` WHERE `bid` = '" . $database->sanitize($id) . "'");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$buildScreenshots = [];
 
@@ -83,7 +83,7 @@ class ScreenshotManager {
 		$resource = $database->query("SELECT `sid` FROM `addon_screenshotmap` WHERE `aid` = '" . $database->sanitize($id) . "'");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$addonScreenshots = [];
 
@@ -106,7 +106,7 @@ class ScreenshotManager {
 		if(!$database->query("INSERT INTO `screenshots` (`blid`, `x`, `y`) VALUES ('" .
 			$database->sanitize($blid) . "'," .
 			"'" . $width . "','" . $height . "')")) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		$sid = $database->fetchMysqli()->insert_id;
@@ -125,7 +125,7 @@ class ScreenshotManager {
 			`aid` = '" . $database->sanitize($bid) . "' LIMIT 1");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		if($resource->num_rows > 0 ) {
@@ -137,7 +137,7 @@ class ScreenshotManager {
 		if(!$database->query("INSERT INTO `addon_screenshotmap` (sid, aid) VALUES ('" .
 			$database->sanitize($sid) . "', '" .
 			$database->sanitize($bid) . "')")) {
-			throw new Exception("Failed to create new build screenshot entry: " . $database->error());
+			throw new \Exception("Failed to create new build screenshot entry: " . $database->error());
 		}
 		return true;
 	}
@@ -163,7 +163,7 @@ class ScreenshotManager {
 		ScreenshotManager::verifyTable($database);
 		if(!$database->query("INSERT INTO `screenshots` (`blid`) VALUES ('" .
 			$database->sanitize($blid) . "')")) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$sid = $database->fetchMysqli()->insert_id;
 		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
@@ -184,7 +184,7 @@ class ScreenshotManager {
 			`primary` = 1 LIMIT 1");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		if($resource->num_rows > 0 ) {
@@ -204,7 +204,7 @@ class ScreenshotManager {
 			`primary` = 1 LIMIT 1");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		if($resource->num_rows == 0 ) {
@@ -226,7 +226,7 @@ class ScreenshotManager {
 			`bid` = '" . $database->sanitize($bid) . "' LIMIT 1");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		if($resource->num_rows > 0 ) {
@@ -238,7 +238,7 @@ class ScreenshotManager {
 		if(!$database->query("INSERT INTO `build_screenshotmap` (sid, bid) VALUES ('" .
 			$database->sanitize($sid) . "', '" .
 			$database->sanitize($bid) . "')")) {
-			throw new Exception("Failed to create new build screenshot entry: " . $database->error());
+			throw new \Exception("Failed to create new build screenshot entry: " . $database->error());
 		}
 		return true;
 	}
@@ -250,13 +250,13 @@ class ScreenshotManager {
 		ScreenshotManager::verifyTable($database);
 		if(!$database->query("UPDATE `build_screenshotmap` SET `primary` = '0' WHERE
 			`bid` = '" . $database->sanitize($bid) . "'")) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		if(!$database->query("UPDATE `build_screenshotmap` SET `primary` = '1' WHERE
 			`bid` = '" . $database->sanitize($bid) . "' AND
 			`sid` = '" . $database->sanitize($sid) . "'")) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		return true;
 	}
@@ -317,7 +317,7 @@ class ScreenshotManager {
 				ON DELETE CASCADE,
 			KEY (`name`),
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error creating screenshots table: " . $database->error());
+			throw new \Exception("Error creating screenshots table: " . $database->error());
 		}
 
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `build_screenshotmap` (
@@ -334,7 +334,7 @@ class ScreenshotManager {
 				ON UPDATE CASCADE
 				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error creating build_screenshotmap table: " . $database->error());
+			throw new \Exception("Error creating build_screenshotmap table: " . $database->error());
 		}
 
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_screenshotmap` (
@@ -350,7 +350,7 @@ class ScreenshotManager {
 				ON UPDATE CASCADE
 				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error creating addon_screenshotmap table: " . $database->error());
+			throw new \Exception("Error creating addon_screenshotmap table: " . $database->error());
 		}
 	}
 }
