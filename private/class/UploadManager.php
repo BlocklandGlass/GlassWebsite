@@ -108,7 +108,7 @@ class UploadManager {
       ];
     }
 
-    $tempPath = $_FILES['uploadfile']['tmp_name'];
+    $tempPath = $file['tmp_name'];
     $newPath = dirname(dirname(__DIR__)) . '/filebin/upload/' . $user->getBlid() . '.' . time() . '.zip';
 
     move_uploaded_file($tempPath, $newPath);
@@ -134,6 +134,44 @@ class UploadManager {
     //================================
 
     return AddonManager::uploadNewAddon($user, $boardId, $name, $newPath, $filename, $description, $summary, $version);
+  }
+
+  public static function handleAJAXScreenshot($aid, $file) {
+    $res = new \stdClass();
+
+    $addon = AddonManager::getFromID($aid);
+    if(!$addon) {
+      $res->status = "error";
+      $res->error = "Add-On not found!";
+    }
+    if(empty($file['name'])) {
+      $res->status = "error";
+      $res->error = "No file was uploaded!";
+      return $res;
+    }
+
+    $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+    if($ext != "png" && $ext != "jpg" && $ext != "jpeg") {
+      $res->status = "failed";
+  		$res->message = "Only png and jpeg files are allowed";
+      return $res;
+  	}
+
+    $tempPath = $file['tmp_name'];
+    $newPath = dirname(dirname(__DIR__)) . '/filebin/upload/' . $addon->getId() . '.screenshot.' . time() . '.' . $ext;
+
+    move_uploaded_file($tempPath, $newPath);
+    chmod($newPath, 0777);
+
+    try {
+      ScreenshotManager::uploadScreenshotForAddon($addon, $ext, $newPath);
+      $res->status = "success";
+      return $res;
+    } catch(\Exception $e) {
+      $res->status = "error";
+      $res->error = $e->getMessage();
+      return $res;
+    }
   }
 }
 
