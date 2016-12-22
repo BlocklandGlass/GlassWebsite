@@ -17,8 +17,8 @@ if(isset($_POST['action']) && is_object($userObject)) {
     header('Location: list.php');
   } else if($_POST['action'] == "Download") {
     $addonObject = AddonManager::getFromId($_POST['aid']);
-    
-    header('Location: http://' . AWSFileManager::getBucket() . '/addons/' . $addonObject->getManagerBlid() . "_" . $addonObject->getFileName());
+
+    header('Location: http://blocklandglass.com/addons/upload/files/' . $addonObject->getManagerBlid() . "_" . $addonObject->getFileName());
   }
 }
 ?>
