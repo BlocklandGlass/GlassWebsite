@@ -18,10 +18,7 @@ if(isset($_POST['action']) && is_object($userObject)) {
   } else if($_POST['action'] == "Download") {
     $addonObject = AddonManager::getFromId($_POST['aid']);
     
-    header('Content-Type: application/zip');
-    header('Content-Disposition: attachment; filename="' . $addonObject->getFileName() . '"');
-    
-    readfile("https://blocklandglass.com/addons/upload/files/" . $addonObject->getManagerBlid() . "_" . $addonObject->getFileName());
+    header('Location: http://' . AWSFileManager::getBucket() . '/addons/' . $addonObject->getManagerBlid() . "_" . $addonObject->getFileName());
   }
 }
 ?>
