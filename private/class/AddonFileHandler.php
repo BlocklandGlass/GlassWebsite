@@ -64,6 +64,7 @@ class AddonFileHandler {
   }
 
   public static function validateColorset($file) {
+    $executable = false;
     $colors = false;
     $desc = false;
 
@@ -75,6 +76,10 @@ class AddonFileHandler {
       for ($i = 0; $i < $zip->numFiles; $i++) {
         $filename = $zip->getNameIndex($i);
         $filename = strtolower($filename);
+
+        if($filename == "server.cs" || $filename == "client.cs") {
+          $executable = true;
+        }
 
         if($filename == "colorset.txt") {
           $colors = true;
@@ -88,7 +93,7 @@ class AddonFileHandler {
       return false;
     }
 
-    return ($colors && $desc);
+    return ($colors && $desc && !$executable);
   }
 
   public static function injectGlassFile($aid, $file) { //ideally, we create the addonObject and then do all the file work?

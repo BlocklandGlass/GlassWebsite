@@ -26,7 +26,7 @@
 				. '<tr>'
 				. '<th style="width: 30px;"> </th>'
 				. '<th>Username</th>'
-				. '<th>BLID</th>'
+				. '<th>BL_ID</th>'
 				. '<th>Glass</th>'
 				. '</tr></thead><tbody>';
 

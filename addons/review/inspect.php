@@ -113,11 +113,16 @@
 					</td>
 				</tr>
 				<tr>
-					<td style="background-color: #CCFFCC; text-align: center; border-bottom-left-radius: 10px;">
+					<td style="background-color: #CCFFCC; text-align: center;">
 						<input type="submit" name="action" value="Approve" />
 					</td>
-					<td style="background-color: #FFCCCC; text-align: center; border-bottom-right-radius: 10px;">
+					<td style="background-color: #FFCCCC; text-align: center;">
 						<input type="submit" name="action" value="Reject" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" style="background-color: #eee; text-align: center; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+						<input type="submit" name="action" value="Download" />
 					</td>
 				</tr>
 			</tbody>
