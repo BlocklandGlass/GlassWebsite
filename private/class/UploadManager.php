@@ -111,6 +111,10 @@ class UploadManager {
     $tempPath = $file['tmp_name'];
     $newPath = dirname(dirname(__DIR__)) . '/filebin/upload/' . $user->getBlid() . '.' . time() . '.zip';
 
+    if(!file_exists(dirname($newPath))) {
+      mkdir(dirname($newPath), 0777, true);
+    }
+
     move_uploaded_file($tempPath, $newPath);
     chmod($newPath, 0777);
 
@@ -140,10 +144,12 @@ class UploadManager {
     $res = new \stdClass();
 
     $addon = AddonManager::getFromID($aid);
-    if(!$addon) {
+    if($addon === false) {
       $res->status = "error";
       $res->error = "Add-On not found!";
+      return $res;
     }
+
     if(empty($file['name'])) {
       $res->status = "error";
       $res->error = "No file was uploaded!";
@@ -169,7 +175,7 @@ class UploadManager {
       return $res;
     } catch(\Exception $e) {
       $res->status = "error";
-      $res->error = $e->getMessage();
+      $res->error = "Exception: " . $e->getMessage();
       return $res;
     }
   }

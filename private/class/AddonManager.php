@@ -612,7 +612,7 @@ class AddonManager {
 			`filename` TEXT NOT NULL,
 			`description` TEXT NOT NULL,
 			`version` TEXT NOT NULL,
-			`authorInfo` TEXT NOT NULL,
+
 			`reviewInfo` TEXT NOT NULL,
 			`repositoryInfo` TEXT NULL DEFAULT NULL,
 			`deleted` TINYINT NOT NULL DEFAULT 0,
@@ -621,6 +621,8 @@ class AddonManager {
 			`rating` int(11) NOT NULL DEFAULT 0,
 			`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			`type` TEXT NOT NULL,
+
+			`summary` VARCHAR(255) NOT NULL,
 			FOREIGN KEY (`board`)
 				REFERENCES addon_boards(`id`)
 				ON UPDATE CASCADE

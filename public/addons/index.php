@@ -30,7 +30,7 @@
 		<tbody>
 			<tr>
 				<td style="text-align:center;">
-					<h3>Popular Add-Ons</h3>
+					<h3>Weekly Downloads</h3>
 				</td>
 				<td style="text-align:center;">
 					<h3>Recent Uploads</h3>

@@ -42,6 +42,14 @@
 						<?php
 					}
 				}
+
+				if(sizeof($groups) == 0) {
+					?>
+					<tr>
+						<td colspan="3">No Boards - Likely an error?</td>
+					</tr>
+					<?php
+				}
 			?>
 		</tbody>
 	</table>

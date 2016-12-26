@@ -3,7 +3,7 @@
 	use Glass\BoardManager;
 	use Glass\UploadManager;
 
-	$status =	UploadManager::getStatus($_REQUEST, $_FILES['uploadfile']);
+	$status =	UploadManager::getStatus($_REQUEST, $_FILES['uploadfile'] ?? null);
 
 	if(isset($status['redirect'])) {
 		//echo("REDIRECT: " . $status['redirect']);
