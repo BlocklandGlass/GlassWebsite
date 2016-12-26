@@ -51,7 +51,7 @@ class CronStatManager {
   function getEntry($time, $duration) {
     $database = new DatabaseManager();
     $res = $database->query("SELECT * FROM `cron_statistics` WHERE `duration`='" . $database->sanitize($duration) . "' AND `time`='" . $database->sanitize($time) . "'");
-    if($res->num_rows == 0) {
+    if($res === false || $res->num_rows == 0) {
       return false;
     } else {
       $obj = json_decode($res->fetch_object()->data);

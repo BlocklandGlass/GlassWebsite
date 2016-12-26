@@ -1,15 +1,15 @@
 <?php
 	require_once dirname(__DIR__) . '/private/autoload.php';
 	session_start();
-	$registerStatus = include(realpath(dirname(__FILE__) . "/private/json/register.php"));
+	$registerStatus = include realpath(dirname(__DIR__) . "/private/json/register.php");
 
 	if(isset($registerStatus['redirect'])) {
 		header("Location: " . $registerStatus['redirect']);
 		die();
 	}
 	$_PAGETITLE = "Blockland Glass | Register";
-	include(realpath(dirname(__FILE__) . "/private/header.php"));
-	include(realpath(dirname(__FILE__) . "/private/navigationbar.php"));
+	include realpath(dirname(__DIR__) . "/private/header.php");
+	include realpath(dirname(__DIR__) . "/private/navigationbar.php");
 ?>
 <div class="maincontainer">
 	<div class="center" id="registerStatus" style="display: none;">
@@ -67,5 +67,5 @@ $(document).ready(function () {
 });
 </script>
 <?php
-	include(realpath(dirname(__FILE__) . "/private/footer.php"));
+	include(realpath(dirname(__DIR__) . "/private/footer.php"));
 ?>

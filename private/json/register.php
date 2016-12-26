@@ -1,4 +1,6 @@
 <?php
+	use Glass\UserManager;
+
 	if(!isset($_SESSION)) {
 		session_start();
 	}
@@ -9,8 +11,6 @@
 		];
 	} else {
 		if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['verify']) && isset($_POST['blid'])) {
-			use Glass\UserManager;
-
 			$email = $_POST['email'];
 			$password = $_POST['password'];
 			$password_check = $_POST['verify'];
