@@ -157,6 +157,10 @@ class AddonObject {
 	public function getURL() {
 		return $this->url;
 	}
+
+	public function getScreenshots() {
+		return ScreenshotManager::getScreenshotsFromAddon($this->id);
+	}
 }
 
 ?>

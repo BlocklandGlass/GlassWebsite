@@ -3,6 +3,19 @@ $(function(){
     $("#screenshot").click();
   });
 
+  $(".image-preview").click(function() {
+    var id = $(this).attr('ssid');
+    $("#image-viewer").show();
+    $("#image-view").attr('src', 'http://cdn-test.blocklandglass.com/screenshots/' + id);
+  });
+
+  $("#image-viewer").click(function(evt) {
+    console.log(evt);
+    if(evt.target == this || evt.target.id == 'image-view') {
+      $(this).hide();
+    }
+  })
+
   // To prevent Browsers from opening the file when its dragged and dropped on to the page
   $(document).on('drop dragover', function (e) {
         e.preventDefault();
@@ -24,7 +37,7 @@ $(function(){
       if(!file.type.match('image.*')) {
           $("#drop-box").html("<p> Images only. Select another file</p>");
           error = 1;
-        }else if(file.size > 1048576){
+        } else if(file.size > 1048576){
           $("#drop-box").html("<p> Too large Payload. Select another file</p>");
           error = 1;
         }else{
@@ -59,20 +72,22 @@ $(function(){
           return;
         }
 
-        if(xhr.status !== 200 || res !== "success") {
+        if(xhr.status !== 200 || res.status !== "success") {
           $("#drop-box").html("<p>Unable to upload file: <b>" + res.error + "</b></p>");
           //error
           return;
         }
 
-        alert('we did it!');
+        //display
+        $('#continue').removeClass('red');
+        $('#continue').addClass('green');
+        $('#continue').html('Continue');
+        $('#previews').append('<div class="tile image-preview"><img src="http://cdn-test.blocklandglass.com/screenshots/thumb/' + res.id + '"></div>');
 
         //good to go
         $("#drop-box").html("<p><b>Uploaded!</b> Want to upload another?</p>");
 
-        //display...
-
-        $("#screenshot").show();
+        //reset input,
 
       };
     }

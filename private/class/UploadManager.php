@@ -170,8 +170,14 @@ class UploadManager {
     chmod($newPath, 0777);
 
     try {
-      ScreenshotManager::uploadScreenshotForAddon($addon, $ext, $newPath);
-      $res->status = "success";
+      $id = ScreenshotManager::uploadScreenshotForAddon($addon, $ext, $newPath);
+      if($id !== false) {
+        $res->status = "success";
+        $res->id = $id;
+      } else {
+        $res->status = "failed";
+        $res->error = "Screenshot upload failed";
+      }
       return $res;
     } catch(\Exception $e) {
       $res->status = "error";

@@ -115,12 +115,15 @@ class ScreenshotManager {
 		}
 		$resource->close();
 
-		if(!$database->query("INSERT INTO `addon_screenshotmap` (sid, aid) VALUES ('" .
+		$res = $database->query("INSERT INTO `addon_screenshotmap` (sid, aid) VALUES ('" .
 			$database->sanitize($sid) . "', '" .
-			$database->sanitize($bid) . "')")) {
+			$database->sanitize($bid) . "')");
+
+		if($res === false) {
 			throw new \Exception("Failed to create new add-on screenshot entry: " . $database->error());
 		}
-		return true;
+
+		return $sid;
 	}
 
 	public static function deleteScreenshot($sid) {
