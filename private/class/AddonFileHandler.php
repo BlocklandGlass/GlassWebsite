@@ -234,4 +234,20 @@ class AddonFileHandler {
 
     return ($executable && $desc);
   }
+
+  public static function getColorset($file) {
+    $zip = new \ZipArchive();
+    $res = $zip->open($file);
+    if($res === TRUE) {
+      $idx = $zip->locateName("colorset.txt", \ZipArchive::FL_NOCASE);
+      if($idx !== false) {
+        $text = $zip->getFromIndex($idx);
+        if($text !== false) {
+          return $text;
+        }
+      }
+    }
+
+    return false;
+  }
 }

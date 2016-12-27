@@ -163,6 +163,73 @@ class ScreenshotManager {
 		return $tempThumb;
 	}
 
+	public static function generateColorsetImageFromFile($file, $target) {
+		$text = file_get_contents($file);
+		return ScreenshotManager::generateColorsetImage($text, $target);
+	}
+
+	public static function generateColorsetImage($text, $target) {
+		$text = str_replace("\r", '', $text);
+		$lines = explode("\n", $text);
+
+		$categories = array();
+		$colorArrays = array();
+		$currentColorArray = array();
+		$longest = 0;
+
+		foreach($lines as $line) {
+			if(strlen(trim($line)) === 0)
+				continue;
+
+			$line = trim($line);
+
+			if(strpos($line, "DIV:") === 0) {
+				$categories[] = substr($line, 4);
+
+				if(sizeof($currentColorArray) > $longest)
+					$longest = sizeof($currentColorArray);
+
+				$colorArrays[] = $currentColorArray;
+				$currentColorArray = array();
+			} else {
+				$words = explode(' ', $line);
+
+				//convert float to int
+				foreach($words as $i=>$word) {
+					if(strpos($word, ".") !== false) {
+						$words[$i] = $word*255;
+					}
+				}
+
+				$currentColorArray[] = $words;
+			}
+		}
+
+		$size = 16;
+
+		$im = imagecreate(sizeof($colorArrays)*$size, $longest*$size);
+		imageantialias($im, false);
+
+		foreach($colorArrays as $col=>$colors) {
+			foreach($colors as $row=>$color) {
+				$r = $color[0];
+				$g = $color[1];
+				$b = $color[2];
+				$a = 127-($color[3]/2);
+
+				$x1 = $col*$size;
+				$y1 = $row*$size;
+				$x2 = $x1 + $size;
+				$y2 = $y1 + $size;
+
+				$c = imagecolorallocatealpha($im, $r, $g, $b, $a);
+				imagefilledrectangle($im, $x1, $y1, $x2, $y2, $c);
+			}
+		}
+
+		imagepng($im, $target);
+	}
+
 	public static function verifyTable($database) {
 		require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
 		require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));

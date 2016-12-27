@@ -10,7 +10,8 @@ filebin/*/*
 
 vendor/
 
-local/*
+local
+public/local
 
 composer.phar
 composer.lock

@@ -137,16 +137,34 @@ class AddonManager {
 
 		$id = $database->fetchMysqli()->insert_id;
 
+		$addon = AddonManager::getFromId($id);
+
 		AddonFileHandler::injectGlassFile($id, $file);
 		AddonFileHandler::injectVersionInfo($id, 1, $file);
 
 		AWSFileManager::uploadNewAddon($id, $filename, $file);
 
+		$colorset = AddonFileHandler::getColorset($file);
+		if($colorset !== false) {
+			$newPath = dirname(dirname(__DIR__)) . '/filebin/temp/colorset.' . $id . '.png';
+			if(!file_exists(dirname($newPath))) {
+	      mkdir(dirname($newPath), 0777, true);
+	    }
+			ScreenshotManager::generateColorsetImage($colorset, $newPath);
+			ScreenshotManager::uploadScreenshotForAddon($addon, "png", $newPath);
+			//unlink($newPath);
+		}
 
-		rename($file, dirname(dirname(__DIR__)) . '/filebin/aws_sync/' . $id);
+		$newPath = dirname(dirname(__DIR__)) . '/filebin/aws_sync/' . $id;
+
+		if(!file_exists(dirname($newPath))) {
+      mkdir(dirname($newPath), 0777, true);
+    }
+
+		rename($file, $newPath);
 
 		$response = [
-			"redirect" => "/addons/upload/success.php?id=" . $id
+			"redirect" => "/addons/upload/screenshots.php?id=" . $id
 		];
 		return $response;
 	}
