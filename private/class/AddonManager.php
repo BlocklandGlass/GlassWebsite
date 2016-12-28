@@ -257,11 +257,11 @@ class AddonManager {
 		//Caching this seems difficult and can cause issues with stale data easily
 		//oh well whatever
 		if(!isset($search['offset'])) {
-			$search['offset'] = 0;
+			$search['offset'] = false;
 		}
 
 		if(!isset($search['limit'])) {
-			$search['limit'] = 10;
+			$search['limit'] = false;
 		}
 
 		if(!isset($search['sort'])) {
@@ -274,18 +274,38 @@ class AddonManager {
 		AddonManager::verifyTable($database);
 		$query = "SELECT * FROM `addon_addons` WHERE ";
 
+		$queries = array();
+
 		if(isset($search['name'])) {
-			$query .= "`name` LIKE '%" . $database->sanitize($search['name']) . "%' AND ";
+			$queries[] = "`name` LIKE '%" . $database->sanitize($search['name']) . "%'";
 		}
 
 		if(isset($search['blid'])) {
-			$query .= "`blid` = '" . $database->sanitize($search['blid']) . "' AND ";
+			$queries[] = "`blid` = '" . $database->sanitize($search['blid']) . "'";
 		}
 
 		if(isset($search['board'])) {
-			$query .= "`board` = '" . $database->sanitize($search['board']) . "' AND ";
+			$queries[] = "`board` = '" . $database->sanitize($search['board']) . "'";
 		}
-		$query .= "`deleted` = 0 AND `approved` = 1 ORDER BY ";
+
+		$deleted = $search['deleted'] ?? 0;
+		if($deleted !== false) { //false approved means it doesnt matter
+			 $queries[] = "`deleted` = '" . $database->sanitize($deleted) .  "'";
+		}
+
+		$approved = $search['approved'] ?? 1;
+		if($approved !== false) { //false approved means it doesnt matter
+			 $queries[] = "`approved` = '" . $database->sanitize($approved) .  "'";
+		}
+
+		foreach($queries as $idx=>$q) {
+			$query .= $q;
+			if($idx < sizeof($queries)-1) {
+				$query .= ' AND ';
+			}
+		}
+
+		$query .= "ORDER BY ";
 
 		switch($search['sort']) {
 			case AddonManager::$SORTNAMEASC:
@@ -309,7 +329,10 @@ class AddonManager {
 			default:
 				$query .= "`name` ASC ";
 		}
-		$query .= "LIMIT " . $database->sanitize(intval($search['offset'])) . ", " . $database->sanitize(intval($search['limit']));
+
+		if($search['offset'] !== false && $search['limit'] !== false) {
+			$query .= "LIMIT " . $database->sanitize(intval($search['offset'])) . ", " . $database->sanitize(intval($search['limit']));
+		}
 		$resource = $database->query($query);
 
 		if(!$resource) {
@@ -364,12 +387,14 @@ class AddonManager {
 	//this function should probably take a blid or aid instead of an object
 	//should probably switch from Author to BLID for consistency
 	//this should also probably just use searchAddons(0
-	public static function getFromBLID($blid, $offset = 0, $limit = 10) {
-		return AddonManager::searchAddons([
-			"blid" => $blid,
-			"offset" => $offset,
-			"limit" => $limit
-		]);
+	public static function getFromBLID($blid, $param) {
+		if($param !== null && !is_array($param)) {
+			throw new \Exception("Using old AddonManager::getFromBlid!");
+		}
+
+		$arr = $param ?? array();
+		$search = array_merge($arr, ["blid"=>$blid]);
+		return AddonManager::searchAddons($search);
 	}
 
 	//from a caching perspective, I already have each board cached, so I would like to avoid duplicate data
@@ -599,6 +624,24 @@ class AddonManager {
 		echo($db->error());
 
 		return $avg;
+	}
+
+	public static function deleteAddon($addon) {
+		if(!is_object($addon)) {
+			$addon = AddonManager::getFromId($addon);
+		}
+
+		if($addon === false) {
+			return false;
+		}
+
+		$db = new DatabaseManager();
+		$res = $db->query("UPDATE `addon_addons` SET `deleted`=1 WHERE `id`='" . $db->sanitize($addon->getId()) . "'");
+		if($db->error() == null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public static function verifyTable($database) {

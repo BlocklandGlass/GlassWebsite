@@ -63,7 +63,11 @@ class StatManager {
 
 		$db = new DatabaseManager();
 		$res = $db->query("SELECT `$sql` FROM `addon_stats` WHERE `aid`=" . $db->sanitize($id));
-		$sum = $res->fetch_object()->$sql;
+		if($res->num_rows > 0) {
+			$sum = $res->fetch_object()->$sql;
+		} else {
+			$sum = 0;
+		}
 
 		return $sum;
 	}
