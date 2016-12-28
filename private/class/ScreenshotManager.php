@@ -208,7 +208,9 @@ class ScreenshotManager {
 		$size = 16;
 
 		$im = imagecreate(sizeof($colorArrays)*$size, $longest*$size);
-		imageantialias($im, false);
+		if(function_exists('imageantialias')) {
+			imageantialias($im, false);
+		}
 
 		foreach($colorArrays as $col=>$colors) {
 			foreach($colors as $row=>$color) {
