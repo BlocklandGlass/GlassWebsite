@@ -414,7 +414,7 @@ class AddonManager {
 		$ret = array();
 
 		$db = new DatabaseManager();
-		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE `approved`='0'");
+		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE `approved`='0' AND deleted='0'");
 		while($obj = $res->fetch_object()) {
 			$ret[$obj->id] = AddonManager::getFromId($obj->id);
 		}

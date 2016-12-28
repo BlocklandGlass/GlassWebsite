@@ -10,9 +10,7 @@
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 	use Glass\UserManager;
 	use Glass\AddonManager;
-	use Glass\BuildManager;
-	use Glass\BuildObject;
-	use Glass\BoardObject;
+	use Glass\BoardManager;
 	use Glass\NotificationManager;
 	use Glass\NotificationObject;
 	$userObject = UserManager::getCurrent();
@@ -60,7 +58,7 @@
 				<td colspan="2">
 					<div class="tile">
 
-						<h3 style="width: 50%; display:inline-block; float:left;">Your Content</h3>
+						<h2 style="width: 50%; display:inline-block; float:left;">Your Content</h3>
 						<a class="btn green" href="/addons/upload/upload.php" style="font-size: 1em; float:right; margin: 0; margin-bottom: 20px; padding: 10px 15px;">
 							<img style="width: 1em;" src="http://blocklandglass.com/img/icons32/inbox_upload.png" alt="New"/> Upload New Add-On
 						</a>
@@ -77,11 +75,39 @@
 							<tbody>
 
 							<?php
-								$addons = AddonManager::getFromBLID($userObject->getBLID(),["approved"=>false, "deleted"=>false]);
+								$aids = AddonManager::getFromBLID($userObject->getBLID(),["approved"=>false, "deleted"=>false]);
+								foreach($aids as $aid) {
+									$addons[] = AddonManager::getFromId($aid);
+								}
 
-								foreach($addons as $aid) {
-									$ao = AddonManager::getFromId($aid);
-									$board = $ao->getBoard();
+								usort($addons, function($a, $b) {
+									if($a->getDeleted()) {
+										$statA = 1;
+									} else if($a->getApproved()) {
+										$statA = 2;
+									} else {
+										$statA = 3;
+									}
+
+									if($b->getDeleted()) {
+										$statB = 1;
+									} else if($b->getApproved()) {
+										$statB = 2;
+									} else {
+										$statB = 3;
+									}
+
+									if($statA > $statB) {
+										return -1;
+									} else if($statA < $statB) {
+										return 1;
+									}
+
+									return strtotime($b->getUploadDate())-strtotime($a->getUploadDate());
+								});
+
+								foreach($addons as $ao) {
+									$board = BoardManager::getFromId($ao->getBoard());
 									echo '<tr>';
 									if(!$ao->getApproved()) {
 										echo '<td><img style="width: 1.2em;" src="http://blocklandglass.com/img/icons32/hourglass.png" alt="Under Review"/></td>';
