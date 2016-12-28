@@ -18,14 +18,53 @@
 		$testEnvironment = true;
 	}
 ?>
+<script>
 
+var imageIndex = 0;
+function nextImage() {
+	var images = $('.home-slideshow');
+	var curImage = $(images[imageIndex]);
+
+	imageIndex++;
+	if(imageIndex >= images.length) {
+		imageIndex = 0;
+	}
+
+	var nextImage = $(images[imageIndex]);
+
+	curImage.css('z-index', '90');
+	nextImage.css('z-index', '91');
+
+	nextImage.css('left', '100%');
+	nextImage.show();
+	nextImage.animate({'left': '0%'}, 500);
+	setTimeout(function() {
+		curImage.hide();
+	}, 600);
+}
+
+setInterval(nextImage, 5000);
+</script>
 <div class="bigheadcontainer">
-	<!-- <h1>Blockland Glass</h1> -->
-	<image style="margin: 10px 0px 5px 0px; max-width: 100%" src="/img/logoWhite.png" />
-	<h2 style="font-weight: normal">A service for the community, by the community</h2>
-	<a href="dl.php" class="btn blue"><b>Download</b></a><br />
-	<!-- <a href="builds" class="btn green" style="width: 150px">Builds</a> -->
-	<a href="addons" class="btn yellow" style="width: 150px">Add-Ons</a><br /><br />
+	<div class="home-slideshow">
+		<img src="/img/home/IcePalace.jpg" />
+	</div>
+	<div class="home-slideshow" style="display:none">
+		<img src="/img/home/GlassElevators.jpg" />
+	</div>
+	<div class="home-slideshow" style="display:none">
+		<img src="/img/home/Parthenon.jpg" />
+	</div>
+
+	<div class="home-head">
+		<div style="padding-top: 50px;">
+			<image style="margin: 10px 0px 5px 0px; max-width: 100%" src="/img/logoWhite.png" />
+			<h2 style="font-weight: normal">A service for the community, by the community</h2>
+			<a href="dl.php" class="btn blue"><b>Download</b></a><br />
+			<!-- <a href="builds" class="btn green" style="width: 150px">Builds</a> -->
+			<a href="addons" class="btn yellow" style="width: 150px">Add-Ons</a><br /><br />
+		</div>
+	</div>
 </div>
 <div class="maincontainer">
 	<?php
