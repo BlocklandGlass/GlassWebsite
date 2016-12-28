@@ -65,6 +65,7 @@ class StatUsageManager {
 
   public static function getDistribution($aid) {
     $db = new DatabaseManager();
+    StatUsageManager::verifyTable($db);
     $res = $db->query("SELECT * FROM `stats_usage` WHERE `aid`='" . $db->sanitize($aid) ."' AND `reported` > now() - INTERVAL 30 DAY");
 
     $ret = array();

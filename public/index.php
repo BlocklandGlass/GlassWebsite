@@ -37,7 +37,7 @@ function nextImage() {
 
 	nextImage.css('left', '100%');
 	nextImage.show();
-	nextImage.animate({'left': '0%'}, 500);
+	nextImage.animate({'left': '0%'}, 700);
 	setTimeout(function() {
 		curImage.hide();
 	}, 600);
