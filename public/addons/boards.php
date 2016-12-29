@@ -10,49 +10,44 @@
 
 <div class="maincontainer">
   <?php include(realpath(dirname(__DIR__) . "/../private/searchbar.php")); ?>
-  <h1 style="text-align:center">Boards</h1>
-  <a href="/addons/">Add-Ons</a> >> <a href="#">Boards</a>
+  <div style="margin-left: 20px;">
+		<a href="/addons/">Add-Ons</a> >> <a href="#">Boards</a>
+	</div>
 	<div class="tile">
-	<table class="boardtable">
-		<tbody>
-			<tr class="boardheader shadow-1">
-				<td></td>
-				<td>Name</td>
-				<td>Files</td>
-			</tr>
-			<?php
-				$groups = BoardManager::getBoardGroups();
-				foreach($groups as $group) {
-				  $boards = BoardManager::getGroup($group);
+		<?php
+			$groups = BoardManager::getBoardGroups();
+			foreach($groups as $group) {
+				echo '<table class="boardtable" style="margin-bottom: 15px;">';
+				echo '<tbody>';
+			  $boards = BoardManager::getGroup($group);
 
-					?>
-					<tr><td style="width:0px"></td></tr>
-					<tr class="boardheader shadow-1">
-						<td colspan="3"><b><?php echo $group; ?></b></td>
-					</tr>
-					<?php
+				?>
+				<tr class="boardheader shadow-1" style="position: relative !important;">
+					<td colspan="3"><b><?php echo $group; ?></b></td>
+				</tr>
+				<?php
 
-					foreach($boards as $board) {
-						?>
-						<tr>
-							<td><img src="/img/icons32/<?php echo $board->getIcon() ?>.png" /></td>
-							<td><a href="board.php?id=<?php echo($board->getID()); ?>"><?php echo($board->getName()); ?></a></td>
-							<td><?php echo($board->getCount()); ?></td>
-						</tr>
-						<?php
-					}
-				}
-
-				if(sizeof($groups) == 0) {
+				foreach($boards as $board) {
 					?>
 					<tr>
-						<td colspan="3">No Boards - Likely an error?</td>
+						<td><img src="/img/icons32/<?php echo $board->getIcon() ?>.png" /></td>
+						<td><a href="board.php?id=<?php echo($board->getID()); ?>"><?php echo($board->getName()); ?></a></td>
+						<td><?php echo($board->getCount()); ?></td>
 					</tr>
 					<?php
 				}
-			?>
-		</tbody>
-	</table>
+
+				echo '</tbody></table>';
+			}
+
+			if(sizeof($groups) == 0) {
+				?>
+				<tr>
+					<td colspan="3">No Boards - Likely an error?</td>
+				</tr>
+				<?php
+			}
+		?>
 	</div>
 </div>
 

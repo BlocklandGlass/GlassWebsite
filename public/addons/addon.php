@@ -46,7 +46,7 @@
 ?>
 <script type="text/javascript">
 	$(document).ready(function() {
-		var avgRating = 0<?php echo @round($addonObject->getRating()); ?>;
+		var avgRating = "<?php echo round($addonObject->getRating()) + 0; ?>";
 
 		for(var i = 0; i < avgRating; i++) {
 			$('#star' + (i+1)).attr("src","/img/icons32/star.png");
@@ -56,36 +56,21 @@
 			$('#star' + (i+2)).attr("src","/img/icons32/draw_star.png");
 		}
 
-		<?php if(UserManager::getCurrent()) { ?>
-		$('.star').hover(function(){
-			var starNum = $(this).attr('id').slice(4,5);
-			for(var i = 0; i < starNum; i++) {
-				$('#star' + (i+1)).attr("src","/img/icons32/star.png");
-			}
+		var loggedIn = "<?php echo (UserManager::getCurrent() !== false ? 1 : 0); ?>";
+		if(loggedIn) {
+			$('.star').hover(function(){
+				var starNum = $(this).attr('id').slice(4,5);
+				for(var i = 0; i < starNum; i++) {
+					$('#star' + (i+1)).attr("src","/img/icons32/star.png");
+				}
 
-			for(var i = starNum-1; i < 5; i++) {
-				$('#star' + (i+2)).attr("src","/img/icons32/draw_star.png");
-			}
-		},function(){
-
-		});
+				for(var i = starNum-1; i < 5; i++) {
+					$('#star' + (i+2)).attr("src","/img/icons32/draw_star.png");
+				}
+			});
 
 
-		$('#stars').mouseleave(function(){
-			var starNum = avgRating;
-			for(var i = 0; i < starNum; i++) {
-				$('#star' + (i+1)).attr("src","/img/icons32/star.png");
-			}
-
-			for(var i = starNum-1; i < 5; i++) {
-				$('#star' + (i+2)).attr("src","/img/icons32/draw_star.png");
-			}
-		});
-
-		$('.star').click(function() {
-			var starNum = $(this).attr('id').slice(4,5);
-			$.post("/ajax/submitRating.php", {"rating": starNum, "aid": <?php echo $_GET['id']; ?>}, function(data, status) {
-				avgRating = data;
+			$('#stars').mouseleave(function(){
 				var starNum = avgRating;
 				for(var i = 0; i < starNum; i++) {
 					$('#star' + (i+1)).attr("src","/img/icons32/star.png");
@@ -95,8 +80,25 @@
 					$('#star' + (i+2)).attr("src","/img/icons32/draw_star.png");
 				}
 			});
-		});
-		<?php } ?>
+
+			$('.star').click(function() {
+				var starNum = $(this).attr('id').slice(4,5);
+
+				var aid = "<?php echo intval($_GET['id'] ?? 0); ?>";
+
+				$.post("/ajax/submitRating.php", {"rating": starNum, "aid": aid}, function(data, status) {
+					var avgRating = data;
+					var starNum = avgRating;
+					for(var i = 0; i < starNum; i++) {
+						$('#star' + (i+1)).attr("src","/img/icons32/star.png");
+					}
+
+					for(var i = starNum-1; i < 5; i++) {
+						$('#star' + (i+2)).attr("src","/img/icons32/draw_star.png");
+					}
+				});
+			});
+		}
 	});
 </script>
 <div class="maincontainer">
@@ -104,7 +106,7 @@
 		echo "<span style=\"font-size: 0.8em; padding-left: 10px\"><a href=\"/addons/\">Add-Ons</a> >> ";
 		echo "<a href=\"/addons/boards.php\">Boards</a> >> ";
 		echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . utf8_encode($boardObject->getName()) . "</a> >> ";
-		echo "<a href=\"#\">" . $addonObject->getName() . "</a></span>";
+		echo "<a href=\"#\">" . htmlspecialchars($addonObject->getName()) . "</a></span>";
 
 		if($current = UserManager::getCurrent()) {
 			if($current->inGroup("Moderator")) {
@@ -113,22 +115,22 @@
 		}
 
 		echo '<div class="tile">';
-		echo "<h2 style=\"margin-bottom: 0px;\">" . $addonObject->getName() . "</h2>";
+		echo "<h2 style=\"margin-bottom: 0px;\">" . htmlspecialchars($addonObject->getName()) . "</h2>";
 
     $author = $addonObject->getAuthor();
 
-		echo "Uploaded by " . $author->getUsername();
+		echo "Uploaded by " . htmlspecialchars($author->getUsername());
 	?>
 	<div style="margin-top: 15px; margin-bottom: 15px; display: inline-block; width: 100%;">
 		<div class="addoninfoleft">
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/tag.png" />
 			<?php
-			echo utf8_encode($boardObject->getName());
+				echo htmlspecialchars($boardObject->getName());
 			?>
 			<br />
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/folder_vertical_zipper.png" />
 			<?php
-			echo $addonObject->getFilename();
+				echo $addonObject->getFilename();
 			?>
 			<br />
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/time.png" />
@@ -149,8 +151,7 @@
 			?>
 			 <image style="height:1.5em" src="http://blocklandglass.com/img/icons32/inbox_download.png" /><br />
 			<br />
-			<!-- add this back when it's finished -->
-			<!-- <a href="review/code.php?id=<?php echo $addonObject->getId() ?>">View source code</a> -->
+			<?php /*<a href="review/code.php?id=<?php echo $addonObject->getId() ?>">View source code</a> */?>
 		</div>
 	</div>
 	</div>
