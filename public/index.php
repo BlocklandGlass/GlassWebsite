@@ -40,7 +40,7 @@ function nextImage() {
 	nextImage.animate({'left': '0%'}, 700);
 	setTimeout(function() {
 		curImage.hide();
-	}, 600);
+	}, 750);
 }
 
 setInterval(nextImage, 5000);

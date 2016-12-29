@@ -57,6 +57,8 @@ class StatManager {
 			$sql = "ingameDownloads";
 		} else if($type == "update" || $type == "updates") {
 			$sql = "updateDownloads";
+		} else if($type == "iteration") {
+			$sql = "iterationDownloads";
 		} else {
 			$sql = "webDownloads";
 		}

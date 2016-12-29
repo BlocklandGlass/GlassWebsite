@@ -46,9 +46,8 @@
 				</td>
 				<td style="width:50%; vertical-align:top">
 					<div class="tile">
-						<table id="recentUploads" style="width: 100%; text-align:left;">
 							<?php include(realpath(dirname(__DIR__) . "/ajax/getNewAddons.php")); ?>
-						</table>
+
 					</div>
 				</td>
 			</tr>

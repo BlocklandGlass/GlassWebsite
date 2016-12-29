@@ -1,5 +1,6 @@
 <tbody>
 <?php
+	use Glass\BoardManager;
 	$response = include(realpath(dirname(__DIR__) . "/../private/json/getTrendingAddonsWithUsers.php"));
 	$addons = $response['addons'];
 	$users = $response['users'];
@@ -9,49 +10,30 @@
 
 		$med = false;
 		if($index == 0) {
-			$col = "ffeb7f";
+			$col = "#ffeb7f";
 			$med = true;
 		} else if($index == 1) {
-			$col = "cfcfcf";
+			$col = "#cfcfcf";
 			$med = true;
 		} else if($index == 2) {
-			$col = "d7985a";
+			$col = "#d7985a";
 			$med = true;
-		} else if(floor($index/2) == $index/2) {
-			$col = "e3e3e3";
 		} else {
-			$col = "ededed";
+			$col = "none";
 		}
 		?>
-		<tr style="background-color:#<?php echo $col;?>; border-radius: 15px; padding: 5px; margin:5px; display:block;<?php echo $med ? "box-shadow: 1px 2px 3px #888888;" : "" ?> ">
+		<tr style="background-color:<?php echo $col;?>; border-radius: 15px; padding: 5px; margin:5px; display:block;<?php echo $med ? "box-shadow: 1px 2px 3px #888888;" : "" ?> ">
 			<td style="padding: 10px; width: 20px;font-family: Impact, HelveticaNeue-CondensedBold, Helvetica Neue; font-size:1.5em"><?php echo $index+1; ?></td>
 			<td style="line-height: 1em;"><a href="/addons/addon.php?id=<?php echo $addon->id ?>"><?php echo utf8_encode($addon->getName()) ?></a> in
 				<a href="/addons/board.php?id=<?php echo $addon->getBoard() ?>">
         <?php
-        // work around because boardmanager::getfromid decides to hang if you're not logged into the site
-        $board[1] = "Client Mods";
-        $board[2] = "Server Mods";
-        $board[3] = "Bricks";
-        $board[4] = "Cosmetics";
-        $board[5] = "Gamemodes";
-        $board[6] = "Tools";
-        $board[7] = "Weapons";
-        $board[8] = "Colorsets";
-        $board[9] = "Vehicles";
-        $board[10] = "Bargain Bin";
-        $board[11] = "Sounds";
-
-        echo $board[$addon->board];
-        ?></a><br />
+        	echo BoardManager::getFromId($addon->getBoard())->getName();
+        ?></a> with <?php
+					echo $addon->getDownloads('iteration');
+				?> downloads<br />
 				<span style="font-weight: bold; font-size: .6em"><?php echo date("M jS Y, g:i A", strtotime($addon->uploadDate)) ?></span></td>
 		</tr>
 		<?php
-		/*echo("<tr>");
-		echo("<td style=\"padding: 10px; width: 20px;\">" . ($index+1) . ".</td>");
-		echo("<td><a href=\"/addons/addon.php?id=" . $addon->id . "\">" . utf8_encode($addon->name) . "</a>");
-		echo(" by <a href=\"/user/view.php?blid=" . $user->blid . "\">" . utf8_encode($user->username) . "</a></td>");
-		echo("<td style=\"padding: 10px;\">" . $addon->getTotalDownloads() . "</td>"); //to do: send data along
-		echo("</tr>");*/
 	}
 ?>
 </tbody>
