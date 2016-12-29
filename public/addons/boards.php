@@ -30,9 +30,9 @@
 				foreach($boards as $board) {
 					?>
 					<tr>
-						<td><img src="/img/icons32/<?php echo $board->getIcon() ?>.png" /></td>
+						<td style="width: 40px"><img src="/img/icons32/<?php echo $board->getIcon() ?>.png" /></td>
 						<td><a href="board.php?id=<?php echo($board->getID()); ?>"><?php echo($board->getName()); ?></a></td>
-						<td><?php echo($board->getCount()); ?></td>
+						<td style="width: 15%"><?php echo($board->getCount()); ?></td>
 					</tr>
 					<?php
 				}
