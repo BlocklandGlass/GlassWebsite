@@ -28,8 +28,10 @@
 <div class="maincontainer">
 	<?php include(realpath(dirname(__DIR__) . "/../private/searchbar.php")); ?>
 	<h1 style="text-align:center"><?php echo $boardObject->getName(); ?></h1>
-	<a href="/addons">Add-Ons</a> >> <a href="/addons/boards.php">Boards</a> >> <a href="#"><?php echo $boardObject->getName() ?></a>
-	<div class="pagenav">
+	<div style="margin-left: 20px; display: inline-block;">
+		<a href="/addons">Add-Ons</a> >> <a href="/addons/boards.php">Boards</a> >> <a href="#"><?php echo $boardObject->getName() ?></a>
+	</div>
+	<div class="pagenav" style="margin-right: 20px;">
 <?php
 	if(isset($_GET['page'])) {
 		//easy way to force an integer
