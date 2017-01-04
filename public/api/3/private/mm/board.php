@@ -26,7 +26,6 @@ if($_REQUEST['id'] == "rtb") {
     $ao->id = $ad->id;
     $ao->name = $ad->title;
     $ao->author = "RTB";
-    $ao->ratings = "0";
     $ao->downloads = "N/A";
 
     $ret->addons[] = $ao;
@@ -51,12 +50,6 @@ $ret->addons = array();
 foreach($addonIds as $aid) {
   $addon = AddonManager::getFromID($aid);
 
-  if($addon->getRating() == null) {
-    $rating = 0;
-  } else {
-    $rating = $addon->getRating();
-  }
-
   $retboard = new \stdClass();
   $retboard->id = $addon->getId();
   $retboard->name = $addon->getName();
@@ -74,7 +67,6 @@ foreach($addonIds as $aid) {
   }
 
   $retboard->author = $user;
-  $retboard->rating = $rating;
   $retboard->downloads = $addon->getDownloads("web") + $addon->getDownloads("ingame");
   $ret->addons[] = $retboard;
 }

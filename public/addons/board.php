@@ -96,7 +96,6 @@
 			<tr class="boardheader shadow-1">
 				<td>Name</td>
 				<td style="text-align:center !important">Uploader</td>
-				<td>Rating</td>
 				<td>Downloads</td>
 			</tr>
 			<?php
@@ -110,22 +109,12 @@
 					<td style="width: 33%; text-align:left"><a href="addon.php?id=<?php echo $addon->getID(); ?>"><?php echo $addon->getName(); ?></a></td>
 					<td style="font-size: 11pt; text-align:center"><?php echo $addon->getAuthor()->getUsername();	?>
 					</td>
-					<td>
-						<?php
-							$rating = $addon->getRating();
-							if($rating == 0) {
-								echo "Unrated";
-							} else {
-								echo $rating;
-							}
-						?>
-					</td>
 					<td><?php echo ($addon->getDownloads("web") + $addon->getDownloads("ingame")); ?></td>
 					</tr><?php
 				}
 
 				if(sizeof($addonIDs) == 0) {
-					echo '<tr><td colspan="4">No Add-Ons!</td></tr>';
+					echo '<tr><td colspan="3">No Add-Ons!</td></tr>';
 				}
 				//TO DO: page number links should also appear at the bottom, probably inside of the grey footer
 			?>

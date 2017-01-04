@@ -78,11 +78,10 @@ if($request == "board") {
     if($boardId == -1) {
       foreach(AddonManager::getBargain() as $addon) {
 
-        $ratingData = $addon->getRatingData();
         $ro = new \stdClass();
         $ro->id = $addon->getId();
         $ro->title = $addon->getName();
-        //$ro->rating = $ratingData['average'];
+        
         $ro->author = $addon->getAuthor()->getName();
 
         $fo = $addon->getFile($addon->getLatestBranch());

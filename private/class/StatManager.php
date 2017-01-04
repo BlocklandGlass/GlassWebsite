@@ -225,7 +225,6 @@ class StatManager {
 
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_stats` (
 			`aid` INT NOT NULL,
-			`rating` FLOAT,
 
 			`totalDownloads` INT NOT NULL DEFAULT 0,
 

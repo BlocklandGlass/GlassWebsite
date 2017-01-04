@@ -16,7 +16,6 @@ class AddonObject {
 	public $description;
 	//public $downloads;
 	public $approved;
-	public $rating;
 	public $version;
 	public $authorInfo;
 	//public $file;
@@ -46,8 +45,6 @@ class AddonObject {
 		$this->deleted = intval($resource->deleted);
 
 		$this->betaVersion = $resource->betaVersion;
-
-		$this->rating = $resource->rating;
 
 		$this->uploadDate = $resource->uploadDate;
 		$this->url = "https://s3.amazonaws.com/" . urlencode(AWSFileManager::getBucket()) . "/addons/" . $this->id;
@@ -81,10 +78,6 @@ class AddonObject {
 		return $this->approved == 1;
 	}
 
-	public function getRating() {
-		return $this->rating;
-	}
-
 	public function isRejected() {
 		return $this->approved == -1;
 	}
@@ -104,11 +97,7 @@ class AddonObject {
 	public function getBetaVersion() {
 		return $this->betaVersion;
 	}
-
-	//public function getRating() {
-	//	return $this->rating;
-	//}
-
+	
 	public function getVersion() {
 		if($this->version == "")
 			$this->version = "0.0.0";

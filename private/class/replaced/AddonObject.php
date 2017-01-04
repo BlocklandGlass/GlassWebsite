@@ -28,7 +28,6 @@ class AddonObject {
 
 	private $description;
 
-	private $ratingData;
 	private $updaterData;
 	private $approvalData;
 
@@ -75,7 +74,6 @@ class AddonObject {
 		$this->authorDat = $obj->author;
 
 		$this->description = $obj->description;
-		$this->ratingData = $obj->ratingInfo;
 
 		$this->updaterData = $obj->updaterInfo;
 		$this->approvalData = $obj->approvalInfo;
@@ -185,15 +183,6 @@ class AddonObject {
 
 	public function isDeleted() {
 		return $this->deleted;
-	}
-
-	public function getRatingData() {
-		if(!$this->isInit()) {
-			throw new \Exception('AddonObject not init');
-			return;
-		}
-
-		return json_decode($this->ratingData);
 	}
 
 	public function getFile($branch) {

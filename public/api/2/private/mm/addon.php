@@ -33,7 +33,7 @@ $ret->name = $addonObject->getName();
 $ret->description = utf8_encode(htmlspecialchars_decode($addonObject->getDescription()));
 $ret->date = date("M jS Y, g:i A", strtotime($addonObject->getUploadDate()));
 $ret->downloads = $addonObject->getDownloads("web") + $addonObject->getDownloads("ingame");
-$ret->rating = $addonObject->getRating();
+$ret->rating = 0;
 
 $ret->screenshots = array();
 $screens = ScreenshotManager::getScreenshotsFromAddon($aid);

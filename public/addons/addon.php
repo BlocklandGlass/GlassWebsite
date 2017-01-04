@@ -44,63 +44,6 @@
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 ?>
-<script type="text/javascript">
-	$(document).ready(function() {
-		var avgRating = "<?php echo round($addonObject->getRating()) + 0; ?>";
-
-		for(var i = 0; i < avgRating; i++) {
-			$('#star' + (i+1)).attr("src","/img/icons32/star.png");
-		}
-
-		for(var i = avgRating-1; i < 5; i++) {
-			$('#star' + (i+2)).attr("src","/img/icons32/draw_star.png");
-		}
-
-		var loggedIn = "<?php echo (UserManager::getCurrent() !== false ? 1 : 0); ?>";
-		if(loggedIn) {
-			$('.star').hover(function(){
-				var starNum = $(this).attr('id').slice(4,5);
-				for(var i = 0; i < starNum; i++) {
-					$('#star' + (i+1)).attr("src","/img/icons32/star.png");
-				}
-
-				for(var i = starNum-1; i < 5; i++) {
-					$('#star' + (i+2)).attr("src","/img/icons32/draw_star.png");
-				}
-			});
-
-
-			$('#stars').mouseleave(function(){
-				var starNum = avgRating;
-				for(var i = 0; i < starNum; i++) {
-					$('#star' + (i+1)).attr("src","/img/icons32/star.png");
-				}
-
-				for(var i = starNum-1; i < 5; i++) {
-					$('#star' + (i+2)).attr("src","/img/icons32/draw_star.png");
-				}
-			});
-
-			$('.star').click(function() {
-				var starNum = $(this).attr('id').slice(4,5);
-
-				var aid = "<?php echo intval($_GET['id'] ?? 0); ?>";
-
-				$.post("/ajax/submitRating.php", {"rating": starNum, "aid": aid}, function(data, status) {
-					var avgRating = data;
-					var starNum = avgRating;
-					for(var i = 0; i < starNum; i++) {
-						$('#star' + (i+1)).attr("src","/img/icons32/star.png");
-					}
-
-					for(var i = starNum-1; i < 5; i++) {
-						$('#star' + (i+2)).attr("src","/img/icons32/draw_star.png");
-					}
-				});
-			});
-		}
-	});
-</script>
 <div class="maincontainer">
 	<?php
 		echo "<span style=\"font-size: 0.8em; padding-left: 10px\"><a href=\"/addons/\">Add-Ons</a> >> ";
@@ -136,14 +79,6 @@
 			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/time.png" />
 			<?php echo date("M jS Y, g:i A", strtotime($addonObject->getUploadDate())); ?>
 			<br />
-			<br />
-			<div id="stars" style="cursor:pointer;">
-				<image style="height:1.2em" class="star" id="star1" src="/img/icons32/draw_star.png" />
-				<image style="height:1.2em" class="star" id="star2" src="/img/icons32/draw_star.png" />
-				<image style="height:1.2em" class="star" id="star3" src="/img/icons32/draw_star.png" />
-				<image style="height:1.2em" class="star" id="star4" src="/img/icons32/draw_star.png" />
-				<image style="height:1.2em" class="star" id="star5" src="/img/icons32/draw_star.png" />
-			</div>
 		</div>
 		<div class="addoninforight">
 			<?php
