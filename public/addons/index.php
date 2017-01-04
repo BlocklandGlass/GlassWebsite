@@ -39,9 +39,7 @@
 			<tr>
 				<td style="width:50%; vertical-align:top">
 					<div class="tile">
-						<table id="trending" style="width: 100%; text-align:left;">
-							<?php include(realpath(dirname(__DIR__) . "/ajax/getTrendingAddons.php")); ?>
-						</table>
+						<?php include(realpath(dirname(__DIR__) . "/ajax/getTrendingAddons.php")); ?>
 					</div>
 				</td>
 				<td style="width:50%; vertical-align:top">

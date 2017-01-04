@@ -1,39 +1,54 @@
-<tbody>
-<?php
-	use Glass\BoardManager;
-	$response = include(realpath(dirname(__DIR__) . "/../private/json/getTrendingAddonsWithUsers.php"));
-	$addons = $response['addons'];
-	$users = $response['users'];
-
-	foreach($addons as $index=>$addon) {
-		$user = $users[$addon->blid];
-
-		$med = false;
-		if($index == 0) {
-			$col = "#ffeb7f";
-			$med = true;
-		} else if($index == 1) {
-			$col = "#cfcfcf";
-			$med = true;
-		} else if($index == 2) {
-			$col = "#d7985a";
-			$med = true;
-		} else {
-			$col = "none";
-		}
-		?>
-		<tr style="background-color:<?php echo $col;?>; border-radius: 15px; padding: 5px; margin:5px; display:block;<?php echo $med ? "box-shadow: 1px 2px 3px #888888;" : "" ?> ">
-			<td style="padding: 10px; width: 20px;font-family: Impact, HelveticaNeue-CondensedBold, Helvetica Neue; font-size:1.5em"><?php echo $index+1; ?></td>
-			<td style="line-height: 1em;"><a href="/addons/addon.php?id=<?php echo $addon->id ?>"><?php echo utf8_encode($addon->getName()) ?></a> in
-				<a href="/addons/board.php?id=<?php echo $addon->getBoard() ?>">
-        <?php
-        	echo BoardManager::getFromId($addon->getBoard())->getName();
-        ?></a> with <?php
-					echo $addon->getDownloads('iteration');
-				?> downloads<br />
-				<span style="font-weight: bold; font-size: .6em"><?php echo date("M jS Y, g:i A", strtotime($addon->uploadDate)) ?></span></td>
+<table class="listTable" style="width: 100%; text-align:left;">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Add-On</th>
+			<th>Author</th>
+			<th>Downloads</th>
 		</tr>
-		<?php
-	}
-?>
-</tbody>
+	</thead>
+	<tbody>
+	<?php
+		use Glass\BoardManager;
+		$response = include(realpath(dirname(__DIR__) . "/../private/json/getTrendingAddonsWithUsers.php"));
+		$addons = $response['addons'];
+		$users = $response['users'];
+
+		$ct = 0;
+
+		foreach($addons as $index=>$addon) {
+			$user = $users[$addon->blid];
+
+			if($addon->getDownloads("iteration") == 0) {
+				break;
+			}
+			$ct++;
+			?>
+			<tr>
+				<td style="padding: 10px; width: 20px;font-family: Impact, HelveticaNeue-CondensedBold, Helvetica Neue; font-size:1.5em"><?php echo $index+1; ?></td>
+				<td style="line-height: 1em;"><a href="/addons/addon.php?id=<?php echo $addon->id ?>"><?php echo utf8_encode($addon->getName()) ?></a> in
+					<a href="/addons/board.php?id=<?php echo $addon->getBoard() ?>">
+	        <?php
+	        	echo BoardManager::getFromId($addon->getBoard())->getName();
+					?>
+	      </td>
+				<td>
+					<?php
+						echo $addon->getAuthor()->getUsername();
+					?>
+				</td>
+				<td style="font-weight: bold;">
+					<?php
+						echo $addon->getDownloads("iteration");
+					?>
+				</td>
+			</tr>
+			<?php
+		}
+
+		if($ct == 0) {
+			echo '<tr><td colspan="4" style="text-align:center; padding: 15px">No downloads this week :(</td></tr>';
+		}
+	?>
+	</tbody>
+</table>
