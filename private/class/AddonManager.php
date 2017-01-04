@@ -594,6 +594,37 @@ class AddonManager {
 		}
 	}
 
+	public static function getLocalFile($addon) {
+		if(!is_object($addon)) {
+			$addon = AddonManager::getFromId($addon);
+		}
+
+		if($addon === false) {
+			return false;
+		}
+
+		$file = dirname(__DIR__) . '/../filebin/aws_sync/' . $addon->getId();
+
+		if(!is_dir(dirname($file))) {
+			mkdir(dirname($file), 0777, true);
+		}
+
+		if(!is_file($file)) {
+			$path = realpath(dirname($file));
+
+			$fh = fopen($path . '/' . $addon->getId(), 'w');
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, "http://" . AWSFileManager::getBucket() . "/addons/" . $addon->getId());
+			curl_setopt($ch, CURLOPT_FILE, $fh);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // this will follow redirects
+			curl_exec($ch);
+			curl_close($ch);
+			fclose($fh);
+		}
+
+		return realpath($file);
+	}
+
 	public static function verifyTable($database) {
 		/*TO DO:
 			- screenshots

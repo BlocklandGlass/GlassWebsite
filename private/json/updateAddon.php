@@ -93,7 +93,6 @@ function codeToMessage($code) {
 		];
 		return $response;
 	}
-	use Glass\AddonManager;
 
 	if($_FILES['uploadfile']['size'] > AddonManager::$maxFileSize) {
 		$response = [
@@ -130,10 +129,10 @@ function codeToMessage($code) {
 			];
 			return $response;
 		}
-		$filename = "update_" . $addonObject->getId() . ".zip";
-		$tempLocation = dirname(dirname(__DIR__)) . "/addons/upload/files/" . $filename;
-		if(!is_dir(dirname(dirname(__DIR__)) . "/addons/upload/files/")) {
-			mkdir(dirname(dirname(__DIR__)) . "/addons/upload/files/");
+		$filename = "update." . $addonObject->getId() . "." . time() . ".zip";
+		$tempLocation = dirname(dirname(__DIR__)) . "/filebin/upload/" . $filename;
+		if(!is_dir(dirname($tempLocation))) {
+			mkdir(dirname($tempLocation));
 		}
 
 		//to do: aws stuff instead of this
@@ -146,6 +145,11 @@ function codeToMessage($code) {
 				"version" => $addonObject->getVersion()
 			];
 		}
+	} else {
+		$response = [
+			"message"=> "Invalid version",
+			"version" => $addonObject->getVersion()
+		];
 	}
 
 	if(isset($_POST['changelog'])) {
@@ -155,18 +159,7 @@ function codeToMessage($code) {
 	}
 
 	if(isset($uploadVersion)) {
-		//repeated but slightly different path from above?
-		$tempLocation = realpath(dirname(__DIR__) . "/../addons/upload/files/" . $filename);
-		if(!$betaUpload) {
-			$res = AddonManager::submitUpdate($addonObject, $uploadVersion, $tempLocation, $uploadChangelog, $_REQUEST['restart']);
-			return $res;
-		} else {
-			return $res = AddonManager::uploadBetaAddon($addonObject, $uploadVersion, $tempLocation, $_REQUEST['restart']);
-		}
-		$response = [
-			"redirect" => "/addons/review/update.php?id=" . $addonObject->getId(),
-		];
-		return $response;
+		return AddonManager::submitUpdate($addonObject, $uploadVersion, $tempLocation, $uploadChangelog, $_REQUEST['restart']);
 	}
 	return $response;
 ?>

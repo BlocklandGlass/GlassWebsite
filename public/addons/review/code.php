@@ -213,7 +213,7 @@ function loadFile(file) {
         console.log("loaded file " + file)
         renderFile(data);
       } else {
-        alert("uh oh");
+        alert(data.error);
         $('.maincontainer').css("background-color", "rgba(150, 0, 0, 0.5)");
       }
     }

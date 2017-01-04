@@ -29,148 +29,78 @@
   //$diffData = $update->getDiff();
 ?>
 <style>
-table {
-	width: 100%
+.monospace {
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size: 0.9em;
 }
-
 td {
-	vertical-align: top;
-	font-size: 1em;
-}
-
-.diff {
-  width: 100%;
-  border: 1px solid rgba(245,245,245, 0.2);
-}
-
-.diff td {
-  padding-left: 2px;
-  width: 50%;
-  font-size: 0.8em;
-  vertical-align : top;
-  white-space    : pre;
-  white-space    : pre-wrap;
-  font-family    : monospace;
-	text-align: left;
-}
-
-.diff td:first-child {
-  border-right: 1px solid rgba(140, 140, 140, 0.5);
-}
-
-.diffDeleted {
-  cursor: default;
-  border: 1px solid rgb(255,192,192);
-  background: rgba(255,224,224,0.4);
-}
-
-.diffInserted {
-  cursor: default;
-  border: 1px solid rgb(192,255,192);
-  background: rgba(224,255,224,0.4);
-}
-
-.diffBlank {
-  cursor: default;
-  /*border: 1px solid rgb(240, 240, 240);*/
-}
-
-.diffUnmodified {
-  cursor: default;
-  /*background: rgba(250,250,250,0.4);*/
-}
-
-.diffUnmodified span {
-  display: inline-block;
-  width:100%;
-}
-
-.scroll {
-	display: block;
-	height: 300px;
-	overflow-y: scroll;
-	background-color: #eee;
-	border: 1px solid #bbb;
 	padding: 5px;
-	margin: 5px;
 }
-
-.source {
-	display: none;
-	height: 0;
-	background-color: #333;
-	padding: 10px;
-	color: #fff;
-}
-
 </style>
-<script type="text/javascript">
-var tog = [];
-function showChanges(id) {
-	if(!tog[id]) {
-		document.getElementById("source" + id).style.display = "block";
-		document.getElementById("source" + id).style.height = "auto";
-		tog[id] = true;
-	} else {
-		document.getElementById("source" + id).style.display = "none";
-		document.getElementById("source" + id).style.height = "0";
-		tog[id] = false;
-	}
-}
-</script>
-<!-- <div id="fileCompare" class="overlay">
-
-
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-	<br />
-
-  <div class="overlay-content">
-    <table class="file-compare">
-			<tr><td colspan="2"><?php //foreach($diffData['changes'] as $file=>$table) { echo $file . "<br />" . $table . "<hr />";} ?></td></tr>
-		</table>
-  </div>
-
-</div> -->
 <div class="maincontainer">
-  <h2><?php echo $addon->getName(); ?></h2>
-  <p><span style="font-weight:bold;padding: 2px; border: 1px solid rgb(192,192,255); background: rgb(224,224,255); border-radius: 2px;">v<?php echo $addon->getVersion();?></span> -> <span style="font-weight:bold;padding: 2px; border: 1px solid rgb(192,255,192); background: rgb(224,255,224); border-radius: 2px;">v<?php echo $update->getVersion();?></span></p>
-  <hr />
-  <table>
-    <tbody>
-      <tr>
-        <td style="padding: 10px;"><b>Change-Log</b></td>
-        <td><?php echo $update->getChangeLog(); ?></td>
-      </tr>
-      <tr>
-        <td style="padding: 10px;"><b>Removed Files</b></td>
-        <td class="scroll"><?php //foreach($diffData['removed'] as $file) { echo $file . '<br />';} ?></td>
-      </tr>
-      <tr>
-        <td style="padding: 10px;"><b>New Files</b></td>
-        <td class="scroll"><?php //foreach($diffData['added'] as $file) { echo $file . '<br />';} ?></td>
-      </tr>
-		</tbody>
-	</table>
-	<table>
-		<tbody>
-      <tr>
-        <td style="padding: 10px;"><b>Changed Files</b></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td colspan="2" style="font-size:0.7em">
-					<?php
-					$idx = 0;
-					/*foreach($diffData['changes'] as $file=>$table) {
-						echo $file . " <button onclick=\"javascript:showChanges($idx);\">View Changes</button>";
-						echo "<br /><div class=\"source\" id=\"source$idx\">" . $table . "</div>";
-						$idx++;
-					}*/
-					?>
-				</td>
-      </tr>
-    </tbody>
-  </table>
+	<div class="tile">
+	  <h2><?php echo $addon->getName(); ?></h2>
+	  <p>
+			<span style="font-weight:bold;padding: 2px; border: 1px solid rgb(192,192,255); background: rgb(224,224,255); border-radius: 2px;">v<?php echo $addon->getVersion();?></span> -> <span style="font-weight:bold;padding: 2px; border: 1px solid rgb(192,255,192); background: rgb(224,255,224); border-radius: 2px;">v<?php echo $update->getVersion();?></span>
+		</p>
+	  <hr />
+	  <table style="width: 100%">
+	    <tbody>
+	      <tr>
+	        <td style="padding: 10px"><b>Change-Log</b></td>
+	        <td style="width: 80%">
+						<div style="width: 90%; padding: 5px; margin: 0; font-size: 0.9em; background-color: rgba(255,255,255,0.8); max-height: 300px; y-overflow:scroll;" disabled="1"><?php
+						$cl = $update->getChangeLog() ?? "";
+						if(strlen(trim($cl)) == 0) {
+							echo 'No Change-Log';
+						} else {
+							echo htmlspecialchars($cl);
+						}
+						?></div>
+					</td>
+	      </tr>
+	      <tr>
+	        <td style="padding-left: 10px; vertical-align: top"><b>New Files</b></td>
+	        <td style="color: green" class="monospace">
+						<?php
+							$new = $update->getNewFiles();
+							if(isset($new['status']) && $new['status'] == "error") {
+								echo "Error opening ZipArchive(s):<br>New File: " . $new['new'] . "<br>Old File: " . $new['old'];
+							} else {
+								foreach($new as $newFile) {
+									echo '+ ' . $newFile . '<br />';
+								}
+							}
+						?>
+					</td>
+	      </tr>
+	      <tr>
+					<td style="padding-left: 10px; vertical-align: top"><b>Removed Files Files</b></td>
+	        <td style="color: red" class="monospace">
+						<?php
+							$new = $update->getRemovedFiles();
+							if(isset($new['status']) && $new['status'] == "error") {
+								echo "Error opening ZipArchive(s):<br>New File: " . $new['new'] . "<br>Old File: " . $new['old'];
+							} else {
+								foreach($new as $newFile) {
+									echo '- ' . $newFile . '<br />';
+								}
+							}
+						?>
+					</td>
+	      </tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="tile">
+		<p>
+			Work-in-progress code viewer: <a href="code.php?id=<?php echo $addon->getId() ?>">Code Viewer</a>
+		</p>
+		<hr />
+		<b>Changed Files</b>
+		<br />
+		WIP
+	</div>
   <form action="approveUpdate.php" method="post">
 		<input type="hidden" name="aid" value="<?php echo $addon->getId() ?>" />
 		<?php if($owner) { ?>

@@ -1,4 +1,5 @@
 <?php
+require dirname(__DIR__) . '/../../private/autoload.php';
 
 //requirements
 use Glass\AddonManager;
@@ -39,7 +40,7 @@ if($addon === false) {
   die(json_encode($result, JSON_PRETTY_PRINT));
 }
 
-$filePath = dirname(__DIR__) . '/../addons/files/local/' . $addon->getId() . '.zip';
+$filePath = AddonManager::getLocalFile($id);
 if(!is_file($filePath) || !is_readable($filePath)) {
   $result->status = "error";
   $result->error = "Failed to find readable zip";

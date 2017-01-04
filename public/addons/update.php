@@ -1,7 +1,7 @@
 <?php
 	require dirname(__DIR__) . '/../private/autoload.php';
 	session_start();
-	$status = include(__DIR__ . "/../private/json/updateAddon.php");
+	$status = include dirname(__DIR__) . "/../private/json/updateAddon.php";
 
 	if(isset($status['redirect'])) {
 		//echo("REDIRECT: " . $status['redirect']);
@@ -9,82 +9,62 @@
 		die();
 	}
 	$_PAGETITLE = "Blockland Glass | Add-On Update";
-	include(__DIR__ . "/../private/header.php");
-	include(__DIR__ . "/../private/navigationbar.php");
+	include dirname(__DIR__) . "/../private/header.php";
+	include dirname(__DIR__) . "/../private/navigationbar.php";
 ?>
-<div class="maincontainer">
-	<?php
-		//if(isset($status["message"])) {
-		//	echo $status["message"];
-		//}
-	?>
+<div class="maincontainer" style="text-align:center">
 	<form action="update.php?id=<?php echo $_REQUEST['id'] ?>" method="post" enctype="multipart/form-data">
-		<table class="formtable">
-			<tbody>
-<!--				<tr>
-					<td colspan="2"><h2>Upload (step 1 of 2)</h2></td>
-				</tr> -->
-				<tr>
-					<td class="center" colspan="2" id="uploadStatus">
-						<h2><?php echo(utf8_encode($status["message"])); ?></h2>
-					</td>
-				</tr>
-				<tr>
-					<td>
-            <b>Version</b><br />
-            <span style="font-size: 0.7em;"><a href="http://semver.org" target="_blank">SemVer</a> naming convention</span>
-          </td>
-					<td><input type="text" name="addonversion" id="addonversion" value="<?php echo $status['version']; ?>"/></td>
-				</tr>
-				<tr>
-					<td>
-            <b>Change Log</b><br />
-            <span style="font-size: 0.7em;"><a href="https://bitbucket.org/Greek2me/support_updater#rst-header-formatting" target="_blank">TML</a> mark-up</span>
-          </td>
-					<td><textarea style="font-size:0.8em;" rows="5" name="changelog" /></textarea></td>
-				</tr>
-				<tr>
-					<td>
-						<p><b>File</b></p>
-						<!--<span style="font-size: 0.7em;">You can find your saves in your Blockland folder!</span>-->
-						<!--<p class="description">You can find your saves in your Blockland folder!</p>-->
-					</td>
-					<td style="vertical-align: middle">
-						<input type="file" name="uploadfile" id="uploadfile">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p><b>Restart Required</b></p>
-						<!--<span style="font-size: 0.7em;">You can find your saves in your Blockland folder!</span>-->
-						<!--<p class="description">You can find your saves in your Blockland folder!</p>-->
-					</td>
-					<td style="vertical-align: middle">
-						<input type="checkbox" name="restart">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p><b>Beta</b></p>
-						<!--<span style="font-size: 0.7em;">You can find your saves in your Blockland folder!</span>-->
-						<!--<p class="description">You can find your saves in your Blockland folder!</p>-->
-					</td>
-					<td style="vertical-align: middle">
-						<input type="checkbox" name="beta">
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="submit" value="Upload File" name="submit"></td>
-				</tr>
-			</tbody>
-		</table>
-		<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
-  </form>
+		<div class="tile" style="display: inline-block; margin: auto 0; width: 590px; text-align:center">
+			<table class="formtable">
+				<tbody>
+					<tr>
+						<td colspan="2">
+							<h2><?php echo(utf8_encode($status["message"])); ?></h2>
+						</td>
+					</tr>
+					<tr>
+						<td>
+	            <b>Version</b><br />
+	            <span style="font-size: 0.7em;"><a href="http://semver.org" target="_blank">SemVer</a> naming convention</span>
+	          </td>
+						<td><input type="text" name="addonversion" id="addonversion" value="<?php echo $status['version']; ?>"/></td>
+					</tr>
+					<tr>
+						<td>
+	            <b>Change-Log</b><br />
+	            <span style="font-size: 0.7em;"><a href="https://bitbucket.org/Greek2me/support_updater#rst-header-formatting" target="_blank">TML</a> mark-up</span>
+	          </td>
+						<td><textarea style="font-size:0.8em;" rows="5" name="changelog" /></textarea></td>
+					</tr>
+					<tr>
+						<td>
+							<p>
+								<b>File</b>
+							</p>
+						</td>
+						<td style="vertical-align: middle">
+							<input type="file" name="uploadfile" id="uploadfile">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>
+								<b>Restart Required</b>
+							</p>
+						</td>
+						<td style="vertical-align: middle; text-align:left">
+							<input type="checkbox" name="restart">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="Upload File" name="submit"></td>
+					</tr>
+				</tbody>
+			</table>
+			<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
+		</div>
+	</form>
 </div>
-<form class="hidden" action="/addons/manage.php" method="post" id="redirectToManageForm">
-	<input type="hidden" name="init" value="1">
-	<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
-</form>
 <div class="hidden" id="preloadImage">
 	<img src="/img/loading.gif" />
 </div>
@@ -159,4 +139,4 @@ $(document).ready(function () {
 	});
 });
 </script>
-<?php include(__DIR__ . "/../private/footer.php"); ?>
+<?php include dirname(__DIR__) . "/../private/footer.php"; ?>

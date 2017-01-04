@@ -1,4 +1,5 @@
 <?php
+require dirname(__DIR__) . '/../../private/autoload.php';
 //requirements
 use Glass\AddonManager;
 header('Content-Type: text/json');
