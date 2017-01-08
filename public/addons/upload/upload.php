@@ -43,6 +43,9 @@
 			<p>
 				<b>Do not upload content that you did not make. Period.</b>
 			</p>
+			<p>
+				<a href="https://daringfireball.net/projects/markdown/syntax">Markdown</a> is supported for descriptions. Glass uses the <a href="http://semver.org">SemVer</a> versioning system
+			</p>
 		</div>
 		<br />
 		<div class="tile" style="display: inline-block; margin: auto 0; width: 590px; text-align:center">
