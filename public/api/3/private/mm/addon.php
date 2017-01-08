@@ -33,7 +33,7 @@ if(!$addonObject->getApproved()) {
   die(json_encode($ret, JSON_PRETTY_PRINT));
 }
 
-if(!$addonObject->getDeleted()) {
+if($addonObject->getDeleted()) {
   $ret->status = "deleted";
   $ret->error = "Add-On deleted";
   die(json_encode($ret, JSON_PRETTY_PRINT));
