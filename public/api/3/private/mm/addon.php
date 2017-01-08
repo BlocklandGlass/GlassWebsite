@@ -14,7 +14,7 @@ if(isset($_REQUEST['id']) & $_REQUEST['id'] != "") {
   $ret->status = "success";
 } else {
   $ret->status = "error";
-  $ret->error = "Add-On not found!";
+  $ret->error = "Missing Parameters!";
   die(json_encode($ret, JSON_PRETTY_PRINT));
 }
 
@@ -22,14 +22,20 @@ $addonObject = AddonManager::getFromID($aid);
 //$screens = ScreenshotManager::getScreenshotsFromAddon($aid); //I dont think this is done
 
 if($addonObject == false) {
-  $ret->status = "error";
+  $ret->status = "notfound";
   $ret->error = "Add-On does not exist";
   die(json_encode($ret, JSON_PRETTY_PRINT));
 }
 
 if(!$addonObject->getApproved()) {
-  $ret->status = "error";
+  $ret->status = "notapproved";
   $ret->error = "Add-On not approved";
+  die(json_encode($ret, JSON_PRETTY_PRINT));
+}
+
+if(!$addonObject->getDeleted()) {
+  $ret->status = "deleted";
+  $ret->error = "Add-On deleted";
   die(json_encode($ret, JSON_PRETTY_PRINT));
 }
 
