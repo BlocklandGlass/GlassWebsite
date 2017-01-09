@@ -1,5 +1,8 @@
 <?php
+require dirname(__DIR__) . '/../../../private/autoload.php';
+
 require_once dirname(__FILE__) . "/BlocklandAuth.php";
+
 use Glass\UserManager;
 use Glass\UserLog;
 
@@ -89,7 +92,7 @@ class ClientConnection {
   function setAuthed($bool) {
     $this->blAuthed = $bool;
     if($bool) {
-      UserLog::addEntry($this->blid, $this->name);
+      \Glass\UserLog::addEntry($this->blid, $this->name);
     }
   }
 

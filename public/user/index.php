@@ -37,7 +37,7 @@
 				</td>
 
 				<td style="width: 50%">
-					<div class="tile" style="height: 250px;">
+					<div class="tile" style="height: 250px; overflow:hidden;">
 						<h2>Recent Activity</h2>
 						<?php
 						$notifications = NotificationManager::getFromBLID($userObject->getBLID(), 0, 10); // TODO NotifcationManager::getFromUser(9789, 10);

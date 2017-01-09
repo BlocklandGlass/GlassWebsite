@@ -2,6 +2,9 @@
 require_once dirname(__DIR__) . '/../../private/autoload.php';
 require_once dirname(__FILE__) . "/private/ClientConnection.php";
 
+use Glass\UserLog;
+use Glass\UserManager;
+
 header('Content-Type: text/json; charset=ascii');
 
 if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {

@@ -1,4 +1,6 @@
 <?php
+require dirname(__DIR__) . '/../../private/autoload.php';
+
 use Glass\AddonManager;
 use Glass\StatManager;
 use Glass\AWSFileManager;
@@ -27,7 +29,7 @@ if($type == "addon_update" || $type == "addon_download") {
   }
 
 
-  $head = 'Location: http://' . AWSFileManager::getBucket() . '/addons/' . $id . '_' . $branch;
+  $head = 'Location: http://' . AWSFileManager::getBucket() . '/addons/' . $id ;
   if($debug) {
     echo $head;
   } else {
@@ -43,7 +45,7 @@ if($type == "addon_update" || $type == "addon_download") {
   AddonManager::incrementWeeklyDownloads($ao, 1, 1);
   AddonManager::incrementTotalDownloads($ao, 1, 1);
   */
-  
+
 } else if($type == "rtb") {
   $filename = $_REQUEST['fn'];
   $head = 'Location: http://' . AWSFileManager::getBucket() . '/rtb/' . $filename;

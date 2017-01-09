@@ -1,10 +1,14 @@
 <?php
+require dirname(__DIR__) . '/../../private/autoload.php';
 require_once dirname(__FILE__) . "/private/ClientConnection.php";
+
+use Glass\UserLog;
+use Glass\UserManager;
 
 header('Content-Type: text/json; charset=ascii');
 
 if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
-	$con = ClientConnection::loadFromIdentifier($_REQUEST['ident']);
+	$con = \ClientConnection::loadFromIdentifier($_REQUEST['ident']);
   $ret = new \stdClass();
   if(!is_object($con)) {
     $ret->status = "fail";

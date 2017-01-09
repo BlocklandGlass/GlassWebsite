@@ -1,5 +1,6 @@
 <?php
-require_once dirname(__DIR__) . '/../../private/autoload.php';
+require dirname(__DIR__) . '/../../private/autoload.php';
+
 require_once dirname(__FILE__) . "/private/ClientConnection.php";
 require_once dirname(__FILE__) . "/private/BlocklandAuth.php";
 use Glass\ServerTracker;

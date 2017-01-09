@@ -19,7 +19,6 @@
 
   $oldList = [];
   $oldBoards = BoardManager::getGroup("");
-  $oldBoards = BoardManager::getAllBoards();
   foreach($oldBoards as $board) {
     $addons = AddonManager::getFromBoardId($board->getId(), false, false);
     $oldList = array_merge($oldList, $addons);
@@ -36,6 +35,10 @@
       td {
         text-align: center;
       }
+
+			tr:nth-child(2n) > td {
+				background-color: #cecece;
+			}
     </style>
   </head>
   <body>
@@ -56,7 +59,7 @@
             $old = AddonManager::getFromId($old);
             echo '<tr>';
             echo '<td><input type="checkbox" name="addon_' . $old->getId() . '"/></td>';
-            echo '<td>' . $old->getName() . '</td>';
+            echo '<td><a href="/addons/addon.php?id=' . $old->getId() . '">' . $old->getName() . '</td>';
             echo '<td>' . BoardManager::getFromId($old->getBoard())->getName() . '</td>';
             echo '</tr>';
           }

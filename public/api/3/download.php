@@ -29,7 +29,7 @@ if($type == "addon_update" || $type == "addon_download") {
   }
 
 
-  $head = 'Location: http://' . AWSFileManager::getBucket() . '/addons/' . $id . '_' . $branch;
+  $head = 'Location: http://' . AWSFileManager::getBucket() . '/addons/' . $id;
   if($debug) {
     echo $head;
   } else {

@@ -1,4 +1,6 @@
 <?php
+require dirname(__DIR__) . '/../../private/autoload.php';
+
 require_once dirname(__FILE__) . "/private/ClientConnection.php";
 require_once dirname(__FILE__) . "/private/BlocklandAuth.php";
 use Glass\ServerTracker;
@@ -26,7 +28,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
   // on the old site, this was used to keep the "currently active" list
   // this will get added back later
 
-	$con = ClientConnection::loadFromIdentifier($_REQUEST['ident']);
+	$con = \ClientConnection::loadFromIdentifier($_REQUEST['ident']);
   $ret = new \stdClass();
 
 	if(is_object($con)) {
@@ -94,7 +96,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
   $blid = $_REQUEST['blid'];
   $ip = $_SERVER['REMOTE_ADDR'];
 
-	$con = new ClientConnection(array($blid, $username, $ip));
+	$con = new \ClientConnection(array($blid, $username, $ip));
 	$con->setServer($isServer);
 
   $blAuth = $con->attemptBlocklandAuth();

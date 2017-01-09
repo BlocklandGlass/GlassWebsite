@@ -1,7 +1,7 @@
 <?php
 	require_once dirname(__DIR__) . '/private/autoload.php';
-	require_once(realpath(dirname(__FILE__) . "/private/header.php"));
-	require_once(realpath(dirname(__FILE__) . "/private/navigationbar.php"));
+	require_once(realpath(dirname(__DIR__) . "/private/header.php"));
+	require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 	use Glass\AddonManager;
 ?>
 <div class="maincontainer">
@@ -23,4 +23,4 @@
   </div>
 </div>
 
-<?php require_once(realpath(dirname(__FILE__) . "/private/footer.php")); ?>
+<?php require_once(realpath(dirname(__DIR__) . "/private/footer.php")); ?>

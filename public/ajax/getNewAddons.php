@@ -40,7 +40,7 @@
 						} else if($since < 3600*48) {
 							$time = "Yesterday at " . date("g:i A", strtotime($addon->uploadDate));
 						} else {
-							$time = date("M jS Y, g:i A", strtotime($addon->uploadDate));
+							$time = date("M jS Y", strtotime($addon->uploadDate));
 						}
 						echo $time; ?>
 				</td>

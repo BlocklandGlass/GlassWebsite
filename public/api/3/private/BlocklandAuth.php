@@ -1,4 +1,6 @@
 <?php
+require dirname(__DIR__) . '/../../../private/autoload.php';
+
 class BlocklandAuth {
   public static function checkAuth($username, $ip, $blid) {
     $res = BlocklandAuth::auth($username, $ip);

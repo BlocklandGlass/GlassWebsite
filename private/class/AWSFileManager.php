@@ -96,6 +96,16 @@ class AWSFileManager {
 		return $key;
 	}
 
+	public static function getClient() {
+		$keyData = json_decode(file_get_contents(dirname(__DIR__) . "/config.json"));
+		return S3Client::factory(array(
+	    "credentials" => array(
+	      "key" => $keyData->aws_access_key_id,
+	      "secret" => $keyData->aws_secret_access_key
+	    )
+	  ));
+	}
+
 	public static function getBucket() {
 		$keyData = AWSFileManager::getCredentials();
 		return $keyData->aws_bucket;

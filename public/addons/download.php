@@ -14,7 +14,7 @@
       $bid = 1;
     }
     //echo 'Location: http://' . AWSFileManager::getBucket() . '/addons/' . $id . "_" . $bid;
-    header('Location: http://' . AWSFileManager::getBucket() . '/addons/' . $id . "_" . $bid);
+    header('Location: http://' . AWSFileManager::getBucket() . '/addons/' . $id);
   } else {
     header('Status: 404');
     header('Location: /error.php');

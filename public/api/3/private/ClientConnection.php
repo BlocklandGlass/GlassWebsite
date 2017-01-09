@@ -1,5 +1,8 @@
 <?php
+require dirname(__DIR__) . '/../../../private/autoload.php';
+
 require_once dirname(__FILE__) . "/BlocklandAuth.php";
+
 use Glass\UserManager;
 use Glass\UserLog;
 
