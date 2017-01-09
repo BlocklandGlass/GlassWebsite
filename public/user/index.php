@@ -29,7 +29,10 @@
 				<td>
 					<div class="tile" style="height: 250px;">
 						<h2>Hey there, <b><?php echo htmlspecialchars(UserManager::getCurrent()->getUsername()); ?></b></h2>
-						Maybe some user activity? Last Blockland sign-in? Previous usernames?
+						<p>
+							<b>Blockland Activity</b>
+							<br />
+							Coming Soon
 					</div>
 				</td>
 

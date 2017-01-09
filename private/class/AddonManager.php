@@ -241,6 +241,13 @@ class AddonManager {
 		return $addonObject;
 	}
 
+	public static function moveBoard($aid, $bid) {
+		$db = new DatabaseManager();
+		AddonManager::verifyTable($db);
+
+		$db->query("UPDATE `addon_addons` SET `board`='" . $db->sanitize($bid) . "' WHERE `id`='" . $db->sanitize($aid) . "'");
+	}
+
 	/**
 	 *  $search - contains a number of optional parameters in an array
 	 *  	$name - (STRING) string to search for in addon name
