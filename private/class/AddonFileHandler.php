@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once dirname(__FILE__) . '/AddonManager.php';
 require_once dirname(__FILE__) . '/AWSFileManager.php';
 
@@ -11,7 +13,7 @@ class AddonFileHandler {
 
     $fullFile = realpath($file);
 
-    $zip = new ZipArchive();
+    $zip = new \ZipArchive();
     $res = $zip->open($fullFile);
     if($res === TRUE) {
       for ($i = 0; $i < $zip->numFiles; $i++) {
@@ -41,7 +43,7 @@ class AddonFileHandler {
 
     $fullFile = realpath($file);
 
-    $zip = new ZipArchive();
+    $zip = new \ZipArchive();
     $res = $zip->open($fullFile);
     if($res === TRUE) {
       for ($i = 0; $i < $zip->numFiles; $i++) {
@@ -70,7 +72,7 @@ class AddonFileHandler {
 
     $fullFile = realpath($file);
 
-    $zip = new ZipArchive();
+    $zip = new \ZipArchive();
     $res = $zip->open($fullFile);
     if($res === TRUE) {
       for ($i = 0; $i < $zip->numFiles; $i++) {
@@ -110,13 +112,13 @@ class AddonFileHandler {
 
     $addonObject = AddonManager::getFromID($aid);
 
-    $glassData = new stdClass();
+    $glassData = new \stdClass();
     $glassData->formatVersion = 2;
     $glassData->id = $addonObject->getId();
     $glassData->title = $addonObject->getName();
     $glassData->filename = $addonObject->getFilename();
 
-    $workingDir = dirname(dirname(__DIR__)) . "/addons/upload/files/";
+    $workingDir = dirname(dirname(__DIR__)) . "/public/addons/upload/files/";
     $tempFile = $workingDir . "temp/" . $addonObject->getId() . "glass.json";
 
     if(!is_dir($workingDir . "temp")) {
@@ -128,7 +130,7 @@ class AddonFileHandler {
       return false;
     }
 
-    $zip = new ZipArchive;
+    $zip = new \ZipArchive;
     $res = $zip->open($file);
     if($res === TRUE) {
       $zip->addFile($tempFile, 'glass.json');
@@ -151,16 +153,16 @@ class AddonFileHandler {
       $v = $addonObject->getBetaVersion();
     }
 
-    $versionData = new stdClass();
+    $versionData = new \stdClass();
     $versionData->version = $v;
     $versionData->channel = $branchName[$branchId];
 
-    $mainRepo = new stdClass();
+    $mainRepo = new \stdClass();
     $mainRepo->url = "http://api.blocklandglass.com/api/2/repository.php";
     $mainRepo->format = "JSON";
     $mainRepo->id = $aid;
 
-    $backupRepo = new stdClass();
+    $backupRepo = new \stdClass();
     $backupRepo->url = "http://" . AWSFileManager::getBucket() . "/repository.txt";
     $backupRepo->format = "JSON";
     $backupRepo->id = $aid;
@@ -170,7 +172,7 @@ class AddonFileHandler {
 
 
 
-    $workingDir = dirname(dirname(__DIR__)) . "/addons/upload/files/";
+    $workingDir = dirname(dirname(__DIR__)) . "/public/addons/upload/files/";
     $tempFile = $workingDir . "temp/" . $addonObject->getId() . "version.json";
 
     if(!is_dir($workingDir . "temp")) {
@@ -182,7 +184,7 @@ class AddonFileHandler {
       return false;
     }
 
-    $zip = new ZipArchive;
+    $zip = new \ZipArchive;
     $res = $zip->open($file);
     if($res === TRUE) {
       $zip->addFile($tempFile, 'version.json');
@@ -194,21 +196,21 @@ class AddonFileHandler {
   }
 
   public static function getVersionInfo($file) {
-    $zip = new ZipArchive();
+    $zip = new \ZipArchive();
     $res = $zip->open($file);
     if($res === TRUE) {
       if(($json = $zip->getFromName("version.json")) !== false) {
         $obj = json_decode($json);
 
-        $ret = new stdClass();
+        $ret = new \stdClass();
 
         $ret->repo = $obj->repositories[0];
         $ret->channel = $obj->channel;
         $ret->version = $obj->version;
         return $ret;
       } else if(($tml = $zip->getFromName("version.txt")) !== false) {
-        $ret = new stdClass();
-        $ret->repo = new stdClass();
+        $ret = new \stdClass();
+        $ret->repo = new \stdClass();
         $lines = explode("\n", $tml);
         foreach($lines as $line) {
           $field = explode("\t", trim($line));
@@ -236,5 +238,21 @@ class AddonFileHandler {
     }
 
     return ($executable && $desc);
+  }
+
+  public static function getColorset($file) {
+    $zip = new \ZipArchive();
+    $res = $zip->open($file);
+    if($res === TRUE) {
+      $idx = $zip->locateName("colorset.txt", \ZipArchive::FL_NOCASE);
+      if($idx !== false) {
+        $text = $zip->getFromIndex($idx);
+        if($text !== false) {
+          return $text;
+        }
+      }
+    }
+
+    return false;
   }
 }

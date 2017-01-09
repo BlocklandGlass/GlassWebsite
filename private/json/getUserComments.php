@@ -2,7 +2,7 @@
 	if(!isset($_GET['blid'])) {
 		return [];
 	}
-	require_once(realpath(dirname(__DIR__) . "/class/CommentManager.php"));
+	use Glass\CommentManager;
 	$blid = $_GET['blid'] + 0; //force it to be a number
 	$commentIDs = CommentManager::getCommentsFromBLID($blid);
 	$comments = [];
@@ -17,7 +17,7 @@
 
 	return $comments;
 
-//	require_once(realpath(dirname(__DIR__) . "/private/class/DatabaseManager.php"));
+//	use Glass\DatabaseManager;
 //	$database = new DatabaseManager();
 //
 //	//the "and `verified` = 1 can be deleted if we decide to force blid database entries to be unique
@@ -32,7 +32,7 @@
 //			echo("There are no comments here yet.");
 //			echo("</td></tr>");
 //		} else {
-//			require_once(realpath(dirname(__DIR__) . "/private/class/UserHandler.php"));
+//			use Glass\UserHandler;
 //
 //			while($row = $result->fetch_object()) {
 //				$user = UserManager::getFromId($row->uid);

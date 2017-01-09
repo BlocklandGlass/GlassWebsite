@@ -5,11 +5,11 @@
 		];
 		return $response;
 	}
-	require_once(realpath(dirname(__DIR__) . "/class/BuildManager.php"));
-	require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
-	require_once(realpath(dirname(__DIR__) . "/class/ScreenshotManager.php"));
-//	require_once(realpath(dirname(__DIR__) . "/class/TagManager.php"));
-//	require_once(realpath(dirname(__DIR__) . "/class/DependencyManager.php"));
+	use Glass\BuildManager;
+	use Glass\UserManager;
+	use Glass\ScreenshotManager;
+//	use Glass\TagManager;
+//	use Glass\DependencyManager;
 
 	$build = BuildManager::getFromID($_GET['id'] + 0);
 

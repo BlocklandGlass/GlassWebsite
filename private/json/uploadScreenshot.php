@@ -8,7 +8,7 @@
 	if(!isset($_SESSION['csrftoken'])) {
 		$_SESSION['csrftoken'] = mt_rand();
 	}
-	require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
+	use Glass\UserManager;
 	$user = UserManager::getCurrent();
 
 	if($user === false) {
@@ -55,7 +55,7 @@
 		];
 		return $response;
 	}
-	require_once(realpath(dirname(__DIR__) . "/class/ScreenshotManager.php"));
+	use Glass\ScreenshotManager;
 
 	if($_FILES['uploadfile']['size'] > ScreenshotManager::$maxFileSize) {
 		$response = [

@@ -1,4 +1,7 @@
 <?php
+	require_once dirname(__DIR__) . '/autoload.php';
+	use Glass\UserManager;
+
 	if(!isset($_SESSION)) {
 		session_start();
 	}
@@ -9,8 +12,6 @@
 		];
 	} else {
 		if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['verify']) && isset($_POST['blid'])) {
-			require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
-
 			$email = $_POST['email'];
 			$password = $_POST['password'];
 			$password_check = $_POST['verify'];

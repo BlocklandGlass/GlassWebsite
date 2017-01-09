@@ -21,7 +21,7 @@ class BoardManager {
 		$res = $db->query("SELECT `id` FROM `addon_boards`");
 
 		if(!$res) {
-			throw new Exception("Error getting data from database: " . $db->error());
+			throw new \Exception("Error getting data from database: " . $db->error());
 		}
 
 		while($obj = $res->fetch_object()) {

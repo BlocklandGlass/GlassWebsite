@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 
 class ServerTracker {
@@ -38,7 +40,7 @@ class ServerTracker {
     `host` text NOT NULL,
     `clients` text NOT NULL,
     `lastUpdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)")) {
-			throw new Exception("Failed to create table server_tracking: " . $database->error());
+			throw new \Exception("Failed to create table server_tracking: " . $database->error());
 		}
   }
 }

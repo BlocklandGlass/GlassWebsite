@@ -1,5 +1,5 @@
 <?php
-	require_once(realpath(dirname(__DIR__) . "/class/AddonManager.php"));
+	use Glass\AddonManager;
 	$searchArray = [];
 
 	if(isset($_POST['query'])) {

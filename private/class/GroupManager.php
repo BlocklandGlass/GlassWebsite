@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
 require_once(realpath(dirname(__FILE__) . '/GroupObject.php'));
@@ -18,7 +20,7 @@ class GroupManager {
 			$resource = $database->query("SELECT * FROM `group_groups` WHERE `id` = '" . $database->sanitize($id) . "' LIMIT 1");
 
 			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
+				throw new \Exception("Database error: " . $database->error());
 			}
 
 			if($resource->num_rows == 0) {
@@ -42,7 +44,7 @@ class GroupManager {
 			$resource = $database->query("SELECT * FROM `group_groups` WHERE `name` = '" . $database->sanitize($name) . "' LIMIT 1");
 
 			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
+				throw new \Exception("Database error: " . $database->error());
 			}
 
 			if($resource->num_rows == 0) {
@@ -63,7 +65,7 @@ class GroupManager {
 		$resource = $database->query("SELECT * FROM `group_usermap` WHERE `blid` = '" . $database->sanitize($id) . "'");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$userGroups = [];
 
@@ -82,7 +84,7 @@ class GroupManager {
 		$resource = $database->query("SELECT * FROM `group_usermap` WHERE `gid` = '" . $database->sanitize($id) . "'");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$groupUsers = [];
 
@@ -101,7 +103,7 @@ class GroupManager {
 		$resource = $database->query("SELECT COUNT(*) FROM `group_usermap` WHERE `gid` = '" . $database->sanitize($id) . "'");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$count = $resource->fetch_row()[0];
 		$resource->close();
@@ -115,7 +117,7 @@ class GroupManager {
 		$resource = $database->query("SELECT * FROM `group_usermap` WHERE `gid` = '" . $database->sanitize($id) . "'");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		$members = array();
@@ -143,7 +145,7 @@ class GroupManager {
 		$resource = $database->query("SELECT 1 FROM `group_groups` where `name` = '" . $database->sanitize($name) . "' LIMIT 1");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		if($resource->num_rows > 0 ) {
@@ -158,16 +160,16 @@ class GroupManager {
 			$database->sanitize($description) . "', '" .
 			$database->sanitize($color) . "', '" .
 			$database->sanitize($icon) . "')")) {
-			throw new Exception("Failed to create new group: " . $database->error());
+			throw new \Exception("Failed to create new group: " . $database->error());
 		}
 		$group = GroupManager::getFromID($database->fetchMysqli()->insert_id);
 
 		if($group === false) {
-			throw new Exception("Newly generated group not found!");
+			throw new \Exception("Newly generated group not found!");
 		}
 
 		if($database->query("INSERT INTO `group_usermap` (`gid`, `blid`, `administrator`), ('" . $database->sanitize($group->getId()) . "', '" . $database->sanitize($user->getBLID()) . "', '1')")) {
-			throw new Exception("Failed to add leader to new group");
+			throw new \Exception("Failed to add leader to new group");
 		}
 		return true;
 	}
@@ -197,7 +199,7 @@ class GroupManager {
 		$resource = $database->query("SELECT 1 FROM `group_usermap` WHERE `blid` = '" . $database->sanitize($user->getBLID()) . "' AND `gid` = '" . $database->sanitize($group->getID()) . "' LIMIT 1");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		if($resource->num_rows > 0) {
@@ -207,7 +209,7 @@ class GroupManager {
 		$resource->close();
 
 		if(!$database->query("INSERT INTO `group_usermap` (`blid`, `gid`) VALUES ('" . $database->sanitize($user->getBLID()) . "', '" . $database->sanitize($group->getID()) . "')")) {
-			throw new Exception("Error adding new usermap entry: " . $database->error());
+			throw new \Exception("Error adding new usermap entry: " . $database->error());
 		}
 
 		return true;
@@ -238,7 +240,7 @@ class GroupManager {
 		$resource = $database->query("SELECT 1 FROM `group_usermap` WHERE `blid` = '" . $database->sanitize($user->getBLID()) . "' AND `gid` = '" . $database->sanitize($group->getID()) . "' LIMIT 1");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		if($resource->num_rows == 0) {
@@ -248,7 +250,7 @@ class GroupManager {
 		$resource->close();
 
 		if(!$database->query("DELETE FROM `group_usermap` WHERE `blid` = '" . $database->sanitize($user->getBLID()) . "' `gid` = '" . $database->sanitize($group->getID()) . "'")) {
-			throw new Exception("Error removing usermap entry: " . $database->error());
+			throw new \Exception("Error removing usermap entry: " . $database->error());
 		}
 		$resource->close();
 		return true;
@@ -275,7 +277,7 @@ class GroupManager {
 				ON UPDATE CASCADE
 				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error creating group table: " . $database->error());
+			throw new \Exception("Error creating group table: " . $database->error());
 		}
 
 		//this table might not need a primary key
@@ -293,7 +295,7 @@ class GroupManager {
 				ON UPDATE CASCADE
 				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error creating group usermap table: " . $database->error());
+			throw new \Exception("Error creating group usermap table: " . $database->error());
 		}
 	}
 }

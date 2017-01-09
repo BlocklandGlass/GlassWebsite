@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__) . '/class/DatabaseManager.php';
+use Glass\DatabaseManager;
 return;
 $db = new DatabaseManager();
 

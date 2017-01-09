@@ -1,9 +1,13 @@
 <?php
+namespace Glass;
+
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 require_once(realpath(dirname(__FILE__) . '/AddonObject.php'));
 require_once(realpath(dirname(__FILE__) . '/AddonUpdateObject.php'));
 require_once(realpath(dirname(__FILE__) . '/AddonFileHandler.php'));
 require_once(realpath(dirname(__FILE__) . '/NotificationManager.php'));
+
+use Glass\AWSFileManager;
 
 //this should be the only class to interact with table `addon_addons`
 class AddonManager {
@@ -17,137 +21,6 @@ class AddonManager {
 	public static $SORTNAMEDESC = 1;
 	public static $SORTDOWNLOADASC = 2;
 	public static $SORTDOWNLOADDESC = 3;
-	public static $SORTRATINGASC = 4; //aka bad ratings first I think
-	public static $SORTRATINGDESC = 5;
-
-	public static function checkUpstreamRepos() {
-		$channelId[1] = "stable";
-		$channelId[2] = "unstable";
-		$channelId[3] = "development";
-
-		// TODO rewrite, yet again, to work w/ beta system
-
-		$addons = AddonManager::getAll();
-		foreach($addons as $addon) {
-			$versionInfo = $addon->getVersionInfo();
-			if(isset($versionInfo->upstream)) {
-				$upstream = $versionInfo->upstream;
-				echo $addon->getId() . "\n";
-				$url = $upstream->url;
-				if(isset($upstream->mod)) {
-					$url .= "?mods=" . $upstream->mod;
-				}
-
-				if(strpos($url, "http") !== 0) {
-					$url = "http://" . $url;
-				}
-
-				$opts = array(
-				  'http'=>array(
-				    'method'=>"GET",
-				    'header'=>"Accept-language: en\r\n" .
-				              "User-Agent: Torque/1.3\r\n"
-				  )
-				);
-
-				$context = stream_context_create($opts);
-				$response = file_get_contents($url, false, $context);
-
-				if($response !== false) {
-					if(($res = json_decode($response)) !== null) {
-						$a = "add-ons";
-						foreach($res->$a as $ad) {
-							if($ad->name == $addon->getFilename()) {
-								foreach($ad->channels as $channel=>$info) {
-									if(in_array($channel, $upstream->branch)) {
-										$localBranchId = array_search($channel, $upstream->branch);
-										echo "remote [$channel]:" . $info->version . "\n";
-										echo "local [$localBranchId]:" . $addon->getBranchInfo($localBranchId)->version . "\n";
-										if($info->version !== $addon->getBranchInfo($localBranchId)->version) {
-											AddonManager::doUpstreamUpdate($addon->getId(), $localBranchId, $info->file, $info->version);
-										}
-									}
-								}
-							}
-						}
-					} else {
-						echo($response);
-						$lines = explode("\n", $response);
-						//basically we're going to construct a fake json response
-						foreach($lines as $line) {
-							$line = trim($line);
-							if(!isset($res)) {
-								if(strpos($line, "<addon:") === 0) {
-									$ad = substr($line, 7, strlen($line)-8);
-									$res = new stdClass();
-									$res->name = "$ad.zip";
-								}
-							} else {
-								if(strpos($line, "</addon>") === 0) {
-									break;
-								}
-
-								if(!isset($currentChannel)) {
-									if(strpos($line, "<channel:") === 0) {
-										$ch = substr($line, 9, strlen($line)-10);
-										$currentChannel = new stdClass();
-										$currentChannel->name = $ch;
-									}
-								} else {
-									if(strpos($line, "</channel>") === 0) {
-										$res->channels[$currentChannel->name] = $currentChannel;
-										unset($currentChannel);
-									}
-
-									if(strpos($line, "<version:") === 0) {
-										$ch = substr($line, 9, strlen($line)-10);
-										$currentChannel->version = $ch;
-									}
-
-									if(strpos($line, "<file:") === 0) {
-										$file = substr($line, 6, strlen($line)-7);
-										$currentChannel->file = $file;
-									}
-								}
-							}
-						}
-
-						if(isset($res)) {
-							foreach($res->channels as $channel=>$info) {
-								$arr = (array) $upstream->branch;
-								if(in_array($channel, $arr)) {
-									$localBranchId = array_search($channel, $arr);
-									echo "remote [$channel]:" . $info->version . "\n";
-									echo "local [$localBranchId]:" . $addon->getBranchInfo($localBranchId)->version . "\n";
-									//if($info->version !== $addon->getBranchInfo($localBranchId)->version) {
-										AddonManager::doUpstreamUpdate($addon->getId(), $localBranchId, $info->file, $info->version);
-									//}
-								}
-							}
-						}
-					}
-				} else {
-
-				}
-			}
-		}
-	}
-
-	public static function doUpstreamUpdate($aid, $branchId, $file, $version) {
-		$dir = dirname(__DIR__) . "/../addons/upload/files/";
-		$addonObject = AddonManager::getFromID($aid);
-
-		if(strpos($file, "http") !== 0) {
-			$file = "http://" . $file;
-		}
-
-		$filename = "upstream_{$branchId}_" . $addonObject->getFilename();
-		$filepath = $dir . $filename;
-		file_put_contents($filepath, fopen($file, 'r'));
-		echo "\n\nDownloaded $file to $filepath\n\n";
-
-		AddonManager::submitUpdate($addonObject, $version, realpath($filepath), "Imported from upstream.", true);
-	}
 
 	public static function submitUpdate($addon, $version, $file, $changelog, $restart) {
 		if(!is_object($addon)) {
@@ -208,13 +81,16 @@ class AddonManager {
 		copy($file, dirname(__DIR__) . '/../addons/files/local/' . $addon->getId() . '_beta.zip');
 	}
 
-	public static function uploadNewAddon($user, $name, $type, $file, $filename, $description) {
+	public static function uploadNewAddon($user, $boardId, $name, $file, $filename, $description, $summary, $version) {
 		$database = new DatabaseManager();
 		AddonManager::verifyTable($database);
 
+		//================================
+    // Validation
+    //================================
+
 		$rsc = $database->query("SELECT * FROM `addon_addons` WHERE `name` = '" . $database->sanitize($name) . "' AND `approved` != '-1' LIMIT 1");
 
-		//I think we should enforce a unique file name, but not a unique addon name
 		if($rsc->num_rows > 0) {
 			$response = [
 				"message" => "An add-on by this name already exists!"
@@ -234,66 +110,22 @@ class AddonManager {
 		}
 		$rsc->close();
 
+		//================================
+    // Insertion
+    //================================
 
-		$bid = 1; // TODO Specify branch in upload
-
-		//generate blank version data
-		$versionInfo = AddonFileHandler::getVersionInfo($file);
-		var_dump($versionInfo);
-		if($versionInfo !== false) {
-			// information to use for upstream repos
-			$version = new stdClass();
-			$version->stable = new stdClass();
-			$version->stable->version = $versionInfo->version;
-			$version->stable->restart = "0.0.0";
-
-			$url = parse_url($versionInfo->repo->url);
-
-			if(!isset($url['host'])) {
-				$url['host'] = $versionInfo->repo->url;
-			}
-
-			if($url['host'] == "blocklandglass.com" || $url['host'] == "api.blocklandglass.com") {
-				// nothing?
-			} else {
-				$upstream = new stdClass();
-				$upstream->url = $versionInfo->repo->url;
-				if(isset($versionInfo->repo->mod))
-					$upstream->mod = $versionInfo->repo->mod;
-				$upstream->branch = array();
-				$upstream->branch[$bid] = $versionInfo->channel;
-				$version->upstream = $upstream;
-			}
-		} else {
-			$version = new stdClass();
-			$version->stable = new stdClass();
-			$version->stable->version = "0.0.0";
-			$version->stable->restart = "0.0.0";
-
-			$repo = new stdClass();
-		}
-
-		$authorInfo = new stdClass();
-		$authorInfo->blid = $user->getBlid();
-		$authorInfo->main = true;
-		$authorInfo->role = "Manager";
-		$authorArray = [$authorInfo];
-
-		// NOTE boards will be decided by reviewers now, they just seem to confuse and anger people
-		$res = $database->query("INSERT INTO `addon_addons` (`id`, `board`, `blid`, `name`, `filename`, `description`, `version`, `authorInfo`, `reviewInfo`, `deleted`, `approved`, `uploadDate`, `type`) VALUES " .
-		"(NULL," .
-		"NULL," .
+		$res = $database->query("INSERT INTO `addon_addons` (`board`, `blid`, `name`, `filename`, `description`, `summary`, `version`, `deleted`, `approved`, `uploadDate`) VALUES " .
+		"(" .
+		"'" . $boardId . "'," .
 		"'" . $database->sanitize($user->getBlid()) . "'," .
 		"'" . $database->sanitize($name) . "'," .
 		"'" . $database->sanitize($filename) . "'," .
 		"'" . $database->sanitize($description) . "'," .
-		"'0.0.0'," .
-		"'" . $database->sanitize(json_encode($authorArray)) . "'," .
-		"'{}'," .
+		"'" . $database->sanitize($summary) . "'," .
+		"'" . $database->sanitize($version) . "'," .
 		"'0'," .
 		"'0'," .
-		"CURRENT_TIMESTAMP," .
-		"'" . $database->sanitize($type) . "');");
+		"CURRENT_TIMESTAMP);");
 		if(!$res) {
 			$response = [
 				"message" => "Database error encountered: " . $database->error()
@@ -303,21 +135,34 @@ class AddonManager {
 
 		$id = $database->fetchMysqli()->insert_id;
 
+		$addon = AddonManager::getFromId($id);
+
 		AddonFileHandler::injectGlassFile($id, $file);
 		AddonFileHandler::injectVersionInfo($id, 1, $file);
 
-		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
-		AWSFileManager::uploadNewAddon($id, 1, $filename, $file);
-		require_once(realpath(dirname(__FILE__) . '/StatManager.php'));
+		AWSFileManager::uploadNewAddon($id, $filename, $file);
 
-		if(!is_dir(dirname(__DIR__) . '/../addons/files/local')) {
-			mkdir(dirname(__DIR__) . '/../addons/files/local');
+		$colorset = AddonFileHandler::getColorset($file);
+		if($colorset !== false) {
+			$newPath = dirname(dirname(__DIR__)) . '/filebin/temp/colorset.' . $id . '.png';
+			if(!file_exists(dirname($newPath))) {
+	      mkdir(dirname($newPath), 0777, true);
+	    }
+			ScreenshotManager::generateColorsetImage($colorset, $newPath);
+			ScreenshotManager::uploadScreenshotForAddon($addon, "png", $newPath);
+			//unlink($newPath);
 		}
 
-		copy($file, dirname(__DIR__) . '/../addons/files/local/' . $id . '.zip');
+		$newPath = dirname(dirname(__DIR__)) . '/filebin/aws_sync/' . $id;
+
+		if(!file_exists(dirname($newPath))) {
+      mkdir(dirname($newPath), 0777, true);
+    }
+
+		rename($file, $newPath);
 
 		$response = [
-			"redirect" => "/addons/upload/success.php?id=" . $id
+			"redirect" => "/addons/upload/screenshots.php?id=" . $id
 		];
 		return $response;
 	}
@@ -328,14 +173,14 @@ class AddonManager {
 
 		$manager = AddonManager::getFromId($id)->getManagerBLID();
 
-		$params = new stdClass();
+		$params = new \stdClass();
 		$params->vars = array();
 
-		$user = new stdClass();
+		$user = new \stdClass();
 		$user->type = "user";
 		$user->blid = $approver;
 
-		$addon = new stdClass();
+		$addon = new \stdClass();
 		$addon->type = "addon";
 		$addon->id = $id;
 
@@ -347,7 +192,7 @@ class AddonManager {
 	}
 
 	public static function rejectAddon($id, $reason, $rejecter) {
-		$revInf = new stdClass();
+		$revInf = new \stdClass();
 		$revInf->rejected = true;
 		$revInf->rejectReason = $reason;
 
@@ -358,14 +203,14 @@ class AddonManager {
 
 		$manager = AddonManager::getFromId($id)->getManagerBLID();
 
-		$params = new stdClass();
+		$params = new \stdClass();
 		$params->vars = array();
 
-		$user = new stdClass();
+		$user = new \stdClass();
 		$user->type = "user";
 		$user->blid = $rejecter;
 
-		$addon = new stdClass();
+		$addon = new \stdClass();
 		$addon->type = "addon";
 		$addon->id = $id;
 
@@ -383,7 +228,7 @@ class AddonManager {
 			$resource = $database->query("SELECT * FROM `addon_addons` WHERE `id` = '" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
+				throw new \Exception("Database error: " . $database->error());
 			}
 
 			if($resource->num_rows == 0) {
@@ -394,6 +239,13 @@ class AddonManager {
 			$resource->close();
 		}
 		return $addonObject;
+	}
+
+	public static function moveBoard($aid, $bid) {
+		$db = new DatabaseManager();
+		AddonManager::verifyTable($db);
+
+		$db->query("UPDATE `addon_addons` SET `board`='" . $db->sanitize($bid) . "' WHERE `id`='" . $db->sanitize($aid) . "'");
 	}
 
 	/**
@@ -410,11 +262,11 @@ class AddonManager {
 		//Caching this seems difficult and can cause issues with stale data easily
 		//oh well whatever
 		if(!isset($search['offset'])) {
-			$search['offset'] = 0;
+			$search['offset'] = false;
 		}
 
 		if(!isset($search['limit'])) {
-			$search['limit'] = 10;
+			$search['limit'] = false;
 		}
 
 		if(!isset($search['sort'])) {
@@ -427,18 +279,38 @@ class AddonManager {
 		AddonManager::verifyTable($database);
 		$query = "SELECT * FROM `addon_addons` WHERE ";
 
+		$queries = array();
+
 		if(isset($search['name'])) {
-			$query .= "`name` LIKE '%" . $database->sanitize($search['name']) . "%' AND ";
+			$queries[] = "`name` LIKE '%" . $database->sanitize($search['name']) . "%'";
 		}
 
 		if(isset($search['blid'])) {
-			$query .= "`blid` = '" . $database->sanitize($search['blid']) . "' AND ";
+			$queries[] = "`blid` = '" . $database->sanitize($search['blid']) . "'";
 		}
 
 		if(isset($search['board'])) {
-			$query .= "`board` = '" . $database->sanitize($search['board']) . "' AND ";
+			$queries[] = "`board` = '" . $database->sanitize($search['board']) . "'";
 		}
-		$query .= "`deleted` = 0 AND `approved` = 1 ORDER BY ";
+
+		$deleted = $search['deleted'] ?? 0;
+		if($deleted !== false) { //false approved means it doesnt matter
+			 $queries[] = "`deleted` = '" . $database->sanitize($deleted) .  "'";
+		}
+
+		$approved = $search['approved'] ?? 1;
+		if($approved !== false) { //false approved means it doesnt matter
+			 $queries[] = "`approved` = '" . $database->sanitize($approved) .  "'";
+		}
+
+		foreach($queries as $idx=>$q) {
+			$query .= $q;
+			if($idx < sizeof($queries)-1) {
+				$query .= ' AND ';
+			}
+		}
+
+		$query .= "ORDER BY ";
 
 		switch($search['sort']) {
 			case AddonManager::$SORTNAMEASC:
@@ -453,20 +325,17 @@ class AddonManager {
 			case AddonManager::$SORTDOWNLOADSDESC:
 				$query .= "(`downloads_web` + `downloads_ingame` + `downloads_update`) DESC ";
 				break;
-			case AddonManager::$SORTRATINGASC:
-				$query .= "-rating DESC "; //this forces NULL values to be last
-				break;
-			case AddonManager::$SORTRATINGDESC:
-				$query .= "`rating` ASC ";
-				break;
 			default:
 				$query .= "`name` ASC ";
 		}
-		$query .= "LIMIT " . $database->sanitize(intval($search['offset'])) . ", " . $database->sanitize(intval($search['limit']));
+
+		if($search['offset'] !== false && $search['limit'] !== false) {
+			$query .= "LIMIT " . $database->sanitize(intval($search['offset'])) . ", " . $database->sanitize(intval($search['limit']));
+		}
 		$resource = $database->query($query);
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$searchAddons = [];
 
@@ -517,12 +386,14 @@ class AddonManager {
 	//this function should probably take a blid or aid instead of an object
 	//should probably switch from Author to BLID for consistency
 	//this should also probably just use searchAddons(0
-	public static function getFromBLID($blid, $offset = 0, $limit = 10) {
-		return AddonManager::searchAddons([
-			"blid" => $blid,
-			"offset" => $offset,
-			"limit" => $limit
-		]);
+	public static function getFromBLID($blid, $param) {
+		if($param !== null && !is_array($param)) {
+			throw new \Exception("Using old AddonManager::getFromBlid!");
+		}
+
+		$arr = $param ?? array();
+		$search = array_merge($arr, ["blid"=>$blid]);
+		return AddonManager::searchAddons($search);
 	}
 
 	//from a caching perspective, I already have each board cached, so I would like to avoid duplicate data
@@ -542,7 +413,7 @@ class AddonManager {
 		$ret = array();
 
 		$db = new DatabaseManager();
-		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE `approved`='0'");
+		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE `approved`='0' AND deleted='0'");
 		while($obj = $res->fetch_object()) {
 			$ret[$obj->id] = AddonManager::getFromId($obj->id);
 		}
@@ -555,7 +426,7 @@ class AddonManager {
 		$resource = $database->query("SELECT COUNT(*) FROM `addon_addons` WHERE board='" . $boardID . "'  AND deleted=0");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$count = $resource->fetch_row()[0];
 		$resource->close();
@@ -609,7 +480,7 @@ class AddonManager {
 		$resource = $database->query("SELECT * FROM `addon_addons` WHERE `deleted`=0 AND `approved`=1 ORDER BY `uploadDate` DESC LIMIT " . $database->sanitize($count));
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$newestAddonIDs = [];
 
@@ -655,7 +526,7 @@ class AddonManager {
 		$resource = $database->query("SELECT * FROM `addon_updates` WHERE `aid`='" . $database->sanitize($addon->getId()) . "' ORDER BY `submitted` DESC");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$updates = [];
 
@@ -673,7 +544,7 @@ class AddonManager {
 		$resource = $database->query("SELECT * FROM `addon_updates` WHERE `approved` IS NULL ORDER BY `submitted` DESC");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$updates = [];
 
@@ -691,7 +562,7 @@ class AddonManager {
 
 		$id = $update->getId();
 		if($update->status !== null) {
-			throw new Exception("Attempted to approve already approved update");
+			throw new \Exception("Attempted to approve already approved update");
 		}
 
 		$update->status = true;
@@ -703,8 +574,8 @@ class AddonManager {
 		AddonFileHandler::injectVersionInfo($update->aid, 1, $update->getFile());
 		AWSFileManager::uploadNewAddon($update->aid, 1, $update->getAddon()->getFilename(), $update->getFile());
 
-		$params = new stdClass();
-		$addon = new stdClass();
+		$params = new \stdClass();
+		$addon = new \stdClass();
 		$addon->type = "addon";
 		$addon->id = $update->getAddon()->getId();
 		$params->vars[] = $addon;
@@ -712,46 +583,53 @@ class AddonManager {
 		@unlink($update->getFile());
 	}
 
-	public static function submitRating($aid, $blid, $rating) {
-		if($rating < 1) {
-			$rating = 1;
+	public static function deleteAddon($addon) {
+		if(!is_object($addon)) {
+			$addon = AddonManager::getFromId($addon);
 		}
 
-		if($rating > 5) {
-			$rating = 5;
+		if($addon === false) {
+			return false;
 		}
-
-		$rating = ceil($rating);
 
 		$db = new DatabaseManager();
-		AddonManager::verifyTable($db);
+		$res = $db->query("UPDATE `addon_addons` SET `deleted`=1 WHERE `id`='" . $db->sanitize($addon->getId()) . "'");
+		if($db->error() == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-
-    $res = $db->query($sq = "SELECT COUNT(*) FROM `addon_ratings` WHERE `blid`='" . $db->sanitize($blid) . "' AND `aid`='" . $db->sanitize($aid) . "'");
-    $ret = $res->fetch_row();
-    if(!isset($ret[0]) || $ret[0] == 0) {
-      $res = $db->query($sq = "INSERT INTO `addon_ratings` (`blid`, `aid`, `rating`) VALUES (
-      '" . $db->sanitize($blid) . "',
-      '" . $db->sanitize($aid) . "',
-      '" . $db->sanitize($rating) . "')");
-    } else {
-      $db->update("addon_ratings", ["blid"=>$blid, "aid"=>$aid], ["rating"=>$rating]);
-    }
-
-		//recalculate total
-		$res = $db->query("SELECT * FROM `addon_ratings` WHERE `aid`='" . $db->sanitize($aid) . "'");
-		$ratings = array();
-		while($obj = $res->fetch_object()) {
-			$ratings[] = $obj->rating;
+	public static function getLocalFile($addon) {
+		if(!is_object($addon)) {
+			$addon = AddonManager::getFromId($addon);
 		}
 
-		$avg = array_sum($ratings)/sizeof($ratings);
+		if($addon === false) {
+			return false;
+		}
 
-		$db->update("addon_addons", ["id"=>$aid], ["rating"=>$avg]);
+		$file = dirname(__DIR__) . '/../filebin/aws_sync/' . $addon->getId();
 
-		echo($db->error());
+		if(!is_dir(dirname($file))) {
+			mkdir(dirname($file), 0777, true);
+		}
 
-		return $avg;
+		if(!is_file($file)) {
+			$path = realpath(dirname($file));
+
+			$fh = fopen($path . '/' . $addon->getId(), 'w');
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, "http://" . AWSFileManager::getBucket() . "/addons/" . $addon->getId());
+			curl_setopt($ch, CURLOPT_FILE, $fh);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // this will follow redirects
+			curl_exec($ch);
+			curl_close($ch);
+			fclose($fh);
+		}
+
+		return realpath($file);
 	}
 
 	public static function verifyTable($database) {
@@ -783,21 +661,22 @@ class AddonManager {
 			`filename` TEXT NOT NULL,
 			`description` TEXT NOT NULL,
 			`version` TEXT NOT NULL,
-			`authorInfo` TEXT NOT NULL,
+
 			`reviewInfo` TEXT NOT NULL,
 			`repositoryInfo` TEXT NULL DEFAULT NULL,
 			`deleted` TINYINT NOT NULL DEFAULT 0,
 			`approved` TINYINT NOT NULL DEFAULT 0,
 			`betaVersion` TEXT DEFAULT NULL,
-			`rating` int(11) NOT NULL DEFAULT 0,
 			`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			`type` TEXT NOT NULL,
+
+			`summary` VARCHAR(255) NOT NULL,
 			FOREIGN KEY (`board`)
 				REFERENCES addon_boards(`id`)
 				ON UPDATE CASCADE
 				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("Failed to create table addon_addons: " . $database->error());
+			throw new \Exception("Failed to create table addon_addons: " . $database->error());
 		}
 
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_updates` (
@@ -816,18 +695,7 @@ class AddonManager {
 				ON DELETE CASCADE,
 		  PRIMARY KEY (`id`),
 		  UNIQUE KEY `id` (`id`))")) {
-			throw new Exception("Failed to create table addon_updates: " . $database->error());
-		}
-
-		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_ratings` (
-		  `aid` int(11) NOT NULL,
-			`blid` int(11) NOT NULL,
-			`rating` int(11) NOT NULL,
-			FOREIGN KEY (`aid`)
-				REFERENCES addon_addons(`id`)
-				ON UPDATE CASCADE
-				ON DELETE CASCADE)")) {
-			throw new Exception("Failed to create table addon_updates: " . $database->error());
+			throw new \Exception("Failed to create table addon_updates: " . $database->error());
 		}
 	}
 }

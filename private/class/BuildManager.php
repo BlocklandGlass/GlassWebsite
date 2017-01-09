@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 require_once(realpath(dirname(__FILE__) . '/BuildObject.php'));
 
@@ -44,7 +46,7 @@ class BuildManager {
 			$resource = $database->query("SELECT * FROM `build_builds` WHERE `id` = '" . $database->sanitize($id) . "' LIMIT 1");
 
 			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
+				throw new \Exception("Database error: " . $database->error());
 			}
 
 			if($resource->num_rows == 0) {
@@ -64,7 +66,7 @@ class BuildManager {
 		$resource = $database->query("SELECT * FROM `build_builds` WHERE `blid` = '" . $database->sanitize($id) . "'");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$userBuilds = [];
 
@@ -87,7 +89,7 @@ class BuildManager {
 //			$resource = $database->query("SELECT * FROM `build_builds` WHERE `filename` = '" . $database->sanitize($name) . "'");
 //
 //			if(!$resource) {
-//				throw new Exception("Database error: " . $database->error());
+//				throw new \Exception("Database error: " . $database->error());
 //			}
 //
 //			if($resource->num_rows == 0) {
@@ -176,7 +178,7 @@ class BuildManager {
 			$database->sanitize($fileName) . "', '" .
 			$database->sanitize($check['brickcount']) . "', '" .
 			$database->sanitize($description) . "')")) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$id = $database->fetchMysqli()->insert_id;
 
@@ -358,7 +360,7 @@ class BuildManager {
 
 			if(!$database->query("UPDATE `build_builds` SET `name` = '" .
 				$database->sanitize($buildname) . "'")) {
-				throw new Exception("Database error: " . $database->error());
+				throw new \Exception("Database error: " . $database->error());
 			}
 			$build->name = $buildname;
 			$changed = true;
@@ -387,7 +389,7 @@ class BuildManager {
         //
 		//	if(!$database->query("UPDATE `build_builds` SET `filename` = '" .
 		//		$database->sanitize($filename) . "'")) {
-		//		throw new Exception("Database error: " . $database->error());
+		//		throw new \Exception("Database error: " . $database->error());
 		//	}
 		//	$build->filename = $filename;
 		//	apc_store('buildObject_' . $build->id, $build, BuildManager::$objectCacheTime);
@@ -400,7 +402,7 @@ class BuildManager {
 
 			if(!$database->query("UPDATE `build_builds` SET `description` = '" .
 				$database->sanitize($description) . "'")) {
-				throw new Exception("Database error: " . $database->error());
+				throw new \Exception("Database error: " . $database->error());
 			}
 			$build->description = $description;
 			$changed = true;
@@ -440,7 +442,7 @@ class BuildManager {
 				ON DELETE CASCADE,
 			KEY (`name`),
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error creating builds table: " . $database->error());
+			throw new \Exception("Error creating builds table: " . $database->error());
 		}
 
 		//to do: probably should move this to another class, maybe make dependencyManager more general
@@ -457,7 +459,7 @@ class BuildManager {
 				ON UPDATE CASCADE
 				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("unable to create build dependency table: " . $database->error());
+			throw new \Exception("unable to create build dependency table: " . $database->error());
 		}
 	}
 }

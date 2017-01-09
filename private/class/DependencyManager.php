@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 require_once(realpath(dirname(__FILE__) . '/DependencyObject.php'));
 require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
@@ -19,7 +21,7 @@ class DependencyManager {
 			$resource = $database->query("SELECT * FROM `addon_dependencies` WHERE `id` = '" . $database->sanitize($id) . "' LIMIT 1");
 
 			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
+				throw new \Exception("Database error: " . $database->error());
 			}
 
 			if($resource->num_rows == 0) {
@@ -41,7 +43,7 @@ class DependencyManager {
 		$resource = $database->query("SELECT * FROM `addon_dependencies` WHERE `target` = '" . $database->sanitize($id) . "'");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$addonDeps = [];
 
@@ -73,7 +75,7 @@ class DependencyManager {
 		$resource = $database->query("SELECT * FROM `addon_dependencies` WHERE `target` = '" . $database->sanitize($target->getID()) . "' AND `requirement` = '" . $database->sanitize($required->getID()) . "' LIMIT 0,1");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		if($resource->num_rows > 0) {
@@ -83,7 +85,7 @@ class DependencyManager {
 		$resource->close();
 
 		if(!$database->query("INSERT INTO `addon_dependencies` (target, requirement) VALUES ('" . $database->sanitize($target->getID()) . "', '" . $database->sanitize($required->getID()) . "')")) {
-			throw new Exception("Error adding new dependency entry: " . $database->error());
+			throw new \Exception("Error adding new dependency entry: " . $database->error());
 		}
 	}
 
@@ -107,7 +109,7 @@ class DependencyManager {
 		$resource = $database->query("SELECT `id` FROM `addon_dependencies` WHERE `target` = '" . $database->sanitize($target->getID()) . "' AND `requirement` = '" . $database->sanitize($required->getID()) . "' LIMIT 1");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		if($resource->num_rows == 0) {
@@ -119,7 +121,7 @@ class DependencyManager {
 
 		//if(!$database->query("DELETE FROM `addon_dependencies` WHERE `target` = '" . $database->sanitize($target->getID()) . "' AND `requirement` = '" . $database->sanitize($required->getID()) . "'")) {
 		if(!$database->query("DELETE FROM `addon_dependencies` WHERE `id` = '" . $database->sanitize($id) . "'")) {
-			throw new Exception("Error removing dependency entry: " . $database->error());
+			throw new \Exception("Error removing dependency entry: " . $database->error());
 		}
 	}
 
@@ -140,7 +142,7 @@ class DependencyManager {
 				ON UPDATE CASCADE
 				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error creating dependency table: " . $database->error());
+			throw new \Exception("Error creating dependency table: " . $database->error());
 		}
 	}
 }

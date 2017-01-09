@@ -1,4 +1,5 @@
 <?php
+	require dirname(__DIR__) . '/autoload.php';
 	if(!isset($_SESSION)) {
 		session_start();
 	}
@@ -6,8 +7,8 @@
 	if(!isset($_SESSION['csrftoken'])) {
 		$_SESSION['csrftoken'] = mt_rand();
 	}
-	require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
-	require_once(realpath(dirname(__DIR__) . "/class/AddonFileHandler.php"));
+	use Glass\UserManager;
+	use Glass\AddonFileHandler;
 	$user = UserManager::getCurrent();
 
 	if($user === false) {
@@ -37,6 +38,7 @@
 		];
 		return $response;
 	}
+
 	$uploadExt = pathinfo($_FILES['uploadfile']['name'], PATHINFO_EXTENSION);
 
 	if($uploadExt != "zip") {
@@ -45,7 +47,7 @@
 		];
 		return $response;
 	}
-	require_once(realpath(dirname(__DIR__) . "/class/AddonManager.php"));
+	use Glass\AddonManager;
 
 	if($_FILES['uploadfile']['size'] > AddonManager::$maxFileSize) {
 		$response = [
@@ -77,16 +79,18 @@
 	}
 
 	//if(isset($_GET['t']) && $_GET['t'] != "") {
-  $filename = $user->getBlid() . "_" . $uploadFileName;
-  $tempLocation = dirname(dirname(__DIR__)) . "/addons/upload/files/" . $filename;
-  if(!is_dir(dirname(dirname(__DIR__)) . "/addons/upload/files/")) {
-    mkdir(dirname(dirname(__DIR__)) . "/addons/upload/files/");
+  $filename = $user->getBlid() . "_" . time() . ".zip";
+  $tempLocation = dirname(dirname(__DIR__)) . "/public/addons/upload/files/" . $filename;
+	echo $tempLocation;
+  if(!is_dir(dirname(dirname(__DIR__)) . "/public/addons/upload/files/")) {
+    mkdir(dirname(dirname(__DIR__)) . "/public/addons/upload/files/");
   }
 
   //to do: aws stuff instead of this
   move_uploaded_file($tempPath, $tempLocation);
   chmod($tempLocation, 0777);
 
+	$type = "";
   /*
   $type = $_GET['t'];
 
@@ -110,8 +114,6 @@
     ];
     return $response;
   } else {
-    //repeated but slightly different path from above?
-    $tempLocation = realpath(dirname(__DIR__) . "/../addons/upload/files/" . $filename);
     $response = AddonManager::uploadNewAddon($user, $uploadAddonName, $type, $tempLocation, $uploadFileName, $uploadDescription, $type);
     return $response;
   }

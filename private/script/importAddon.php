@@ -2,9 +2,9 @@
 //a lot of this is just going to use staight up mysql since I dont want
 //to duplicate the old classes
 
-require_once dirname(__DIR__) . '/class/DatabaseManager.php';
-require_once dirname(__DIR__) . '/class/AWSFileManager.php';
-require_once dirname(__DIR__) . '/class/StatManager.php';
+use Glass\DatabaseManager;
+use Glass\AWSFileManager;
+use Glass\StatManager;
 
 $oldDat = json_decode(file_get_contents(dirname(__FILE__) . '/key.json'));
 $dir = $oldDat->dir;
@@ -19,7 +19,7 @@ $resource = $mysql->query("SELECT * FROM `addon_addons` WHERE `id`='" . $aid . "
 $res = $resource->fetch_object();
 
 $authorDat = array();
-$author = new stdClass();
+$author = new \stdClass();
 $author->blid = $res->author;
 $author->main = true;
 $author->role = "";
@@ -32,7 +32,7 @@ $file["stable"] = $res->file_stable;
 $versionData = array();
 foreach($file as $branch=>$fid) {
   if($fid != 0) {
-    $version = new stdClass();
+    $version = new \stdClass();
     $fileRes = $mysql->query("SELECT * FROM `addon_files` WHERE `id`='" . $fid . "'");
 
     $hash = $fileRes->fetch_object()->hash;

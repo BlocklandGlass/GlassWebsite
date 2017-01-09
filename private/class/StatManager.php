@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 require_once(realpath(dirname(__FILE__) . '/StatObject.php'));
 require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
@@ -37,7 +39,7 @@ class StatManager {
 		$resource = $database->query("SELECT `totalDownloads` FROM `addon_stats` WHERE `aid` = '" . $database->sanitize($id) . "'");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		if($resource->num_rows == 0) {
@@ -55,13 +57,19 @@ class StatManager {
 			$sql = "ingameDownloads";
 		} else if($type == "update" || $type == "updates") {
 			$sql = "updateDownloads";
+		} else if($type == "iteration") {
+			$sql = "iterationDownloads";
 		} else {
 			$sql = "webDownloads";
 		}
 
 		$db = new DatabaseManager();
 		$res = $db->query("SELECT `$sql` FROM `addon_stats` WHERE `aid`=" . $db->sanitize($id));
-		$sum = $res->fetch_object()->$sql;
+		if($res->num_rows > 0) {
+			$sum = $res->fetch_object()->$sql;
+		} else {
+			$sum = 0;
+		}
 
 		return $sum;
 	}
@@ -92,7 +100,7 @@ class StatManager {
 			`iterationDownloads` = (`iterationDownloads` + 1),
 			`$sql` = (`$sql` + 1)
 			WHERE `aid` = '" . $addon->getID() . "'")) {
-			throw new Exception("failed to register new download: " . $database->error());
+			throw new \Exception("failed to register new download: " . $database->error());
 		}
 		return true;
 	}
@@ -106,7 +114,7 @@ class StatManager {
 			ORDER BY `iterationDownloads` DESC LIMIT " . $database->sanitize($count));
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		$addons = [];
@@ -131,7 +139,7 @@ class StatManager {
 
 		if(!$database->query("INSERT INTO `addon_stats` (`aid`) VALUES ('" .
 			$database->sanitize($aid) . "')")) {
-			throw new Exception("Database Error: " . $database->error());
+			throw new \Exception("Database Error: " . $database->error());
 		}
 	}
 
@@ -201,7 +209,7 @@ class StatManager {
 		$database = new DatabaseManager();
 		$res = $database->query("SELECT * FROM `addon_stats` WHERE `aid`='" . $aid . "'");
 		if($res == false || $res == null)
-			return new stdClass();
+			return new \stdClass();
 
 		return $res->fetch_object();
 	}
@@ -217,7 +225,6 @@ class StatManager {
 
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_stats` (
 			`aid` INT NOT NULL,
-			`rating` FLOAT,
 
 			`totalDownloads` INT NOT NULL DEFAULT 0,
 
@@ -232,7 +239,7 @@ class StatManager {
 				REFERENCES addon_addons(`id`)
 				ON UPDATE CASCADE
 				ON DELETE CASCADE)")) {
-			throw new Exception("Failed to create addon stats table: " . $database->error());
+			throw new \Exception("Failed to create addon stats table: " . $database->error());
 		}
 
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_stats_hist` (
@@ -248,7 +255,7 @@ class StatManager {
 				ON UPDATE CASCADE
 				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("Failed to create addon stat history table: " . $database->error());
+			throw new \Exception("Failed to create addon stat history table: " . $database->error());
 		}
 	}
 }

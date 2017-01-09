@@ -23,8 +23,8 @@
 }
 </style>
 <?php
-require_once dirname(__DIR__) . '/class/AddonManager.php';
-require_once dirname(__DIR__) . '/class/AddonUpdateObject.php';
+use Glass\AddonManager;
+use Glass\AddonUpdateObject;
 
 $up = AddonManager::getUpdates(AddonManager::getFromId(4));
 $up = $up[0];

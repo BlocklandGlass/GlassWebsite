@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 //require_once(realpath(dirname(__FILE__) . '/UserHandler.php'));
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 require_once(realpath(dirname(__FILE__) . '/UserObject.php'));
@@ -18,7 +20,27 @@ class UserManager {
 		$resource = $database->query("SELECT username, blid, banned, admin, verified, email, reset FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "' AND `verified` = 1");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
+		}
+
+		if($resource->num_rows == 0) {
+			$userObject = false;
+		} else {
+			$userObject = new UserObject($resource->fetch_object());
+		}
+		$resource->close();
+
+		return $userObject;
+	}
+
+	public static function getFromUsername($username) {
+
+		$database = new DatabaseManager();
+		UserManager::verifyTable($database);
+		$resource = $database->query("SELECT username, blid, banned, admin, verified, email, reset FROM `users` WHERE `username` = '" . $database->sanitize($username) . "' AND `verified` = 1");
+
+		if(!$resource) {
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		if($resource->num_rows == 0) {
@@ -39,7 +61,7 @@ class UserManager {
 		$resource = $database->query("SELECT username, blid, banned, admin, verified, email FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "'");
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$userObject = [];
 
@@ -187,7 +209,7 @@ class UserManager {
 				"redirect" => "/login.php"
 			];
 		} else {
-			throw new Exception("Error adding new user into database: " . $database->error());
+			throw new \Exception("Error adding new user into database: " . $database->error());
 		}
 	}
 
@@ -216,7 +238,7 @@ class UserManager {
 		$resource = $database->query($query);
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 
 		if($resource->num_rows === 0) {
@@ -311,7 +333,7 @@ class UserManager {
 
 			mail($user->getEmail(), $subject, $message, $headers, '-fnoreply@blocklandglass.com');
 		} else {
-			throw new Exception("No E-Mail Address");
+			throw new \Exception("No E-Mail Address");
 		}
 	}
 
@@ -333,7 +355,7 @@ class UserManager {
 			`profile` TEXT,
 			KEY (`blid`),
 			UNIQUE KEY (`email`))")) {
-			throw new Exception("Error creating users table: " . $database->error());
+			throw new \Exception("Error creating users table: " . $database->error());
 		}
 	}
 }

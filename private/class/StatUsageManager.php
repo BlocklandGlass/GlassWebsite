@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once(realpath(dirname(__FILE__) . "/DatabaseManager.php"));
 class StatUsageManager {
   public static function addEntry($blid, $aid, $hash, $version, $beta = false, $date = null) {
@@ -57,12 +59,13 @@ class StatUsageManager {
         REFERENCES addon_addons(`id`)
         ON UPDATE CASCADE
         ON DELETE CASCADE)")) {
-      throw new Exception("Failed to create table stats_usage: " . $database->error());
+      throw new \Exception("Failed to create table stats_usage: " . $database->error());
     }
   }
 
   public static function getDistribution($aid) {
     $db = new DatabaseManager();
+    StatUsageManager::verifyTable($db);
     $res = $db->query("SELECT * FROM `stats_usage` WHERE `aid`='" . $db->sanitize($aid) ."' AND `reported` > now() - INTERVAL 30 DAY");
 
     $ret = array();

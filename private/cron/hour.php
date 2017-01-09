@@ -1,11 +1,11 @@
 <?php
 header('Content-Type: text/json');
-require_once dirname(__DIR__) . '/class/CronStatManager.php';
+use Glass\CronStatManager;
 $csm = new CronStatManager();
 $csm->collectHourStat(true);
 
-require_once dirname(__DIR__) . '/class/StatManager.php';
+use Glass\StatManager;
 StatManager::saveHistory();
-//require_once dirname(__DIR__) . '/class/AddonManager.php';
+//use Glass\AddonManager;
 //AddonManager::checkUpstreamRepos();
 ?>

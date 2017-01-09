@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once(realpath(dirname(__FILE__) . "/DependencyManager.php"));
 require_once(realpath(dirname(__FILE__) . "/StatManager.php"));
 
@@ -14,7 +16,6 @@ class AddonObject {
 	public $description;
 	//public $downloads;
 	public $approved;
-	public $rating;
 	public $version;
 	public $authorInfo;
 	//public $file;
@@ -31,29 +32,19 @@ class AddonObject {
 	private $betaVersion;
 
 	public function __construct($resource) {
-		//$this->webDownloads = intval($resource->webDownloads);
-		//$this->ingameDownloads = intval($resource->ingameDownloads);
-		//$this->updateDownloads = intval($resource->updateDownloads);
-		//$this->downloads = $this->webDownloads + $this->ingameDownloads + $this->updateDownloads;
-		//print_r($resource);
+
 		$this->id = intval($resource->id);
 		$this->board = intval($resource->board);
 		$this->blid = intval($resource->blid);
 		$this->name = $resource->name;
 		$this->description = $resource->description;
 		$this->approved = intval($resource->approved);
-		//$this->rating = floatval($resource->rating);
 		$this->version = $resource->version;
-		$this->authorInfo = json_decode($resource->authorInfo);
-		//$this->file = intval($resource->file);
 
 		$this->filename = $resource->filename;
 		$this->deleted = intval($resource->deleted);
-		$this->reviewInfo = json_decode($resource->reviewInfo);
 
 		$this->betaVersion = $resource->betaVersion;
-
-		$this->rating = $resource->rating;
 
 		$this->uploadDate = $resource->uploadDate;
 		$this->url = "https://s3.amazonaws.com/" . urlencode(AWSFileManager::getBucket()) . "/addons/" . $this->id;
@@ -71,6 +62,10 @@ class AddonObject {
 		return $this->blid;
 	}
 
+	public function getAuthor() {
+		return UserManager::getFromBlid($this->blid);
+	}
+
 	public function getName() {
 		return $this->name;
 	}
@@ -81,10 +76,6 @@ class AddonObject {
 
 	public function getApproved() {
 		return $this->approved == 1;
-	}
-
-	public function getRating() {
-		return $this->rating;
 	}
 
 	public function isRejected() {
@@ -106,11 +97,7 @@ class AddonObject {
 	public function getBetaVersion() {
 		return $this->betaVersion;
 	}
-
-	//public function getRating() {
-	//	return $this->rating;
-	//}
-
+	
 	public function getVersion() {
 		if($this->version == "")
 			$this->version = "0.0.0";
@@ -128,21 +115,8 @@ class AddonObject {
 		return "0";
 	}
 
-	public function getAuthorInfo() {
-		return $this->authorInfo;
-	}
-
 	public function getManagerBLID() {
-		$authorInfo = $this->getAuthorInfo();
-		if(is_array($authorInfo)) {
-			foreach($authorInfo as $author) {
-				if($author->main) {
-					return $author->blid;
-				}
-			}
-		} else {
-			return false;
-		}
+		return $this->blid;
 	}
 
 	public function getFileName() {
@@ -151,30 +125,6 @@ class AddonObject {
 
 	public function getDeleted() {
 		return $this->deleted;
-	}
-
-	//public function getFile() {
-	//	return $this->file;
-	//}
-    //
-	//public function getDependencies() {
-	//	return $this->dependencies;
-	//}
-    //
-	//public function getWebDownloads() {
-	//	return $this->downloads_web;
-	//}
-    //
-	//public function getIngameDownloads() {
-	//	return $this->downloads_ingame;
-	//}
-    //
-	//public function getUpdateDownloads() {
-	//	return $this->downloads_update;
-	//}
-
-	public function getReviewInfo() {
-		return $this->reviewInfo;
 	}
 
 	public function getDependencies() {
@@ -195,6 +145,10 @@ class AddonObject {
 
 	public function getURL() {
 		return $this->url;
+	}
+
+	public function getScreenshots() {
+		return ScreenshotManager::getScreenshotsFromAddon($this->id);
 	}
 }
 

@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__) . '/class/UserHandler.php';
+use Glass\UserHandler;
 
 class UserManager {
 	private static $classname = "UserHandler";
@@ -28,7 +28,7 @@ class UserManager {
 
 	public static function getCurrent() {
 		if(!isset($_SESSION)) {
-			throw new Exception("No Session!");
+			throw new \Exception("No Session!");
 		}
 
 		if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {

@@ -1,5 +1,6 @@
 <?php
-require_once(realpath(dirname(__FILE__) . "/DatabaseManager.php"));
+namespace Glass;
+use Glass\DatabaseManager;
 
 //this should be merged with the UserManager class
 class UserLog {
@@ -111,7 +112,7 @@ class UserLog {
       `lastseen` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       `username` varchar(64) NOT NULL
       )")) {
-			throw new Exception("Error creating users table: " . $database->error());
+			throw new \Exception("Error creating users table: " . $database->error());
 		}
 	}
 }

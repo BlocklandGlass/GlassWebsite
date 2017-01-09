@@ -1,4 +1,6 @@
 <?php
+	require_once dirname(__DIR__) . '/autoload.php';
+	use Glass\UserManager;
 	if(!isset($_SESSION)) {
 		session_start();
 	}
@@ -22,8 +24,6 @@
 					"message" => "Cross Site Request Forgery Detected!"
 				];
 			} else {
-				require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
-
 				if(isset($_POST['redirect'])) {
 					$redirect = $_POST['redirect'];
 					$response = UserManager::login($username, $password, $redirect);

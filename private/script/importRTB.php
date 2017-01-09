@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__) . '/class/RTBAddonManager.php';
+use Glass\RTBAddonManager;
 
 RTBAddonManager::doImport();
 ?>

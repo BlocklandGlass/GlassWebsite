@@ -32,7 +32,6 @@ CREATE TABLE IF NOT EXISTS `addon_addons` (
   `screenshots` int(11) NOT NULL DEFAULT '0',
   `approvalInfo` text NOT NULL,
   `updaterInfo` text NOT NULL,
-  `ratingInfo` text NOT NULL,
   `dependancies` text NOT NULL,
   `bargain` tinyint(1) NOT NULL DEFAULT '0',
   `danger` tinyint(1) NOT NULL DEFAULT '0',

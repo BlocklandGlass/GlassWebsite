@@ -1,6 +1,6 @@
 <?php
 require_once(dirname(__FILE__).'/DatabaseManager.php');
-//require_once(dirname(__DIR__).'/class/UserGroupData.php');
+//use Glass\UserGroupData;
 
 class UserHandler {
 	private $initialized = false;
@@ -24,7 +24,7 @@ class UserHandler {
 			//$this->groupData = new UserGroupData($obj->groups);
 			return true;
 		} else {
-			throw new Exception("blid not registered");
+			throw new \Exception("blid not registered");
 				return false;
 		}
 	}
@@ -42,7 +42,7 @@ class UserHandler {
 			//$this->groupData = new UserGroupData($obj->groups);
 			return true;
 		} else {
-			throw new Exception("blid not registered");
+			throw new \Exception("blid not registered");
 			return false;
 		}
 	}

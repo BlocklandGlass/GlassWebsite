@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once dirname(__FILE__) . '/DatabaseManager.php';
 
 class RTBAddonManager {
@@ -15,10 +17,10 @@ class RTBAddonManager {
 
       //echo($file . "<br />");
 
-      $dat = new stdClass();
+      $dat = new \stdClass();
       $dat->filename = $file;
 
-      $zip = new ZipArchive();
+      $zip = new \ZipArchive();
       $res = $zip->open($dir . '/' . $file);
       if($res === TRUE) {
         $rtbInfo = $zip->getFromName("rtbInfo.txt");
@@ -26,19 +28,60 @@ class RTBAddonManager {
         $lines = explode("\n", $rtbInfo);
         foreach($lines as $l) {
           $words = explode(": ", $l);
-          if(sizeof($words) == 2)
-            $dat->$words[0] = trim($words[1]);
+          if(sizeof($words) == 2) {
+            $key = $words[0];
+            $dat->$key = trim($words[1]);
+          }
         }
+
+        $description = $zip->getFromName("description.txt");
+
+        $lines = explode("\n", $description);
+        foreach($lines as $l) {
+          $words = explode(": ", $l);
+          if(sizeof($words) == 2) {
+            $key = strtolower(trim($words[0]));
+            $dat->$key = trim($words[1]);
+          } else {
+            break;
+          }
+        }
+
+        $desc = join(array_splice($lines, 2), "\n");
+        $desc = str_replace("\r\n", "\n", $desc);
       }
 
-      $data[] = $dat;
-      $db->query("INSERT INTO `rtb_addons` (`id`, `icon`, `type`, `title`, `filename`, `glass_id`) VALUES (" .
-      "'" . $db->sanitize($dat->id) . "'," .
-      "'" . $db->sanitize($dat->icon) . "'," .
-      "'" . $db->sanitize($dat->type) . "'," .
-      "'" . $db->sanitize($dat->title) . "'," .
-      "'" . $db->sanitize($dat->filename) . "', '')");
+      if(!isset($dat->author)) {
+        echo("\nMissing for " . $dat->id);
+        echo("\n\n" . $description . "\n\n");
+      }
 
+      $res = $db->query("SELECT * FROM `rtb_addons` WHERE `id`=" . $db->sanitize($dat->id));
+      $data[] = $dat;
+      if($res->num_rows > 0) {
+        $db->query($sql = "UPDATE `rtb_addons` SET " .
+        "`icon`='" . $db->sanitize($dat->icon) . "', " .
+        "`type`='" . $db->sanitize($dat->type) . "', " .
+        "`title`='" . $db->sanitize($dat->title) . "', " .
+        "`filename`='" . $db->sanitize($dat->filename) . "', " .
+        "`author`='" . $db->sanitize($dat->author) . "', " .
+        "`description`='" . $db->sanitize($desc) . "' " .
+        " WHERE `id`='" . $db->sanitize($dat->id) . "'");
+
+        //echo("Updated " . $dat->id . "\n");
+      } else {
+        $db->query($sql = "INSERT INTO `rtb_addons` (`id`, `icon`, `type`, `title`, `filename`, `glass_id`, `author`, `description`) VALUES (" .
+        "'" . $db->sanitize($dat->id) . "'," .
+        "'" . $db->sanitize($dat->icon) . "'," .
+        "'" . $db->sanitize($dat->type) . "'," .
+        "'" . $db->sanitize($dat->title) . "'," .
+        "'" . $db->sanitize($dat->filename) . "'," .
+        "0," .
+        "'" . $db->sanitize($dat->author) . "'," .
+        "'" . $db->sanitize($desc) . "')");
+
+        //echo("Added " . $dat->id . "\n");
+      }
       echo($db->error());
     }
     //var_dump($data);
@@ -55,9 +98,9 @@ class RTBAddonManager {
     return $boards;
   }
 
-  public static function getFromType($type) {
+  public static function getFromType($type, $start = 0, $max = 15) {
     $db = new DatabaseManager();
-    $res = $db->query("SELECT `title`,`id` FROM `rtb_addons` WHERE `type`='" . $type . "' ORDER BY `title` ASC");
+    $res = $db->query("SELECT `title`,`id`,`description`,`author`,`glass_id` FROM `rtb_addons` WHERE `type`='" . $type . "' ORDER BY `title` ASC LIMIT " . $db->sanitize($start) . "," . $db->sanitize($max));
 
     $ret = array();
     while($obj = $res->fetch_object()) {
@@ -83,6 +126,15 @@ class RTBAddonManager {
   public static function getCount() {
     $db = new DatabaseManager();
     $res = $db->query("SELECT COUNT(*) FROM `rtb_addons`");
+
+    $obj = $res->fetch_object();
+    $val = "COUNT(*)";
+    return $obj->$val;
+  }
+
+  public static function getTypeCount($name) {
+    $db = new DatabaseManager();
+    $res = $db->query("SELECT COUNT(*) FROM `rtb_addons` WHERE `type`='" . $db->sanitize($name) . "'");
 
     $obj = $res->fetch_object();
     $val = "COUNT(*)";
@@ -160,6 +212,30 @@ class RTBAddonManager {
     }
   }
 
+  public static function searchByName($name) {
+    $db = new DatabaseManager();
+    RTBAddonManager::verifyTable($db);
+    $res = $db->query("SELECT * from `rtb_addons` WHERE `title` LIKE '%" . $db->sanitize($name) . "%' LIMIT 0, 15");
+
+    $ret = [];
+    while($obj = $res->fetch_object()) {
+      $ret[] = $obj;
+    }
+
+    return $ret;
+  }
+
+  public static function incrementDownloads($id, $type, $amount = 1) {
+    $db = new DatabaseManager();
+    RTBAddonManager::verifyTable($db);
+    if($type == "ingame") {
+      $var = "downloads_ingame";
+    } else {
+      $var = "downloads_web";
+    }
+    $res = $db->query("UPDATE `rtb_addons` SET `{$var}`=({$var}+1) WHERE `id` = '" . $db->sanitize($id) . "'");
+  }
+
   public static function verifyTable($database) {
     if(!$database->query("CREATE TABLE IF NOT EXISTS `rtb_addons` (
       `id` int(11) NOT NULL,
@@ -168,8 +244,15 @@ class RTBAddonManager {
       `title` text NOT NULL,
       `glass_id` int(11) NOT NULL,
       `filename` text NOT NULL,
+
+      `author` varchar(255) NOT NULL,
+      `description` text NOT NULL,
+
+      `downloads_web` int(11) NOT NULL DEFAULT 0,
+      `downloads_ingame` int(11) NOT NULL DEFAULT 0,
+
       `approved` INT(1) NULL DEFAULT NULL)")) {
-      throw new Exception("Error creating rtb_addons table: " . $database->error());
+      throw new \Exception("Error creating rtb_addons table: " . $database->error());
     }
   }
 }

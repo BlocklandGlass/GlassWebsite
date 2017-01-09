@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once dirname(__FILE__) . '/NotificationManager.php';
 class ForumTracker {
   private static $boards = [1, 28, 29, 9, 34];

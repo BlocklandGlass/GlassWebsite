@@ -1,6 +1,6 @@
 <?php
-	require_once(realpath(dirname(__DIR__) . "/class/AddonManager.php"));
-	require_once(realpath(dirname(__DIR__) . "/class/StatManager.php"));
+	use Glass\AddonManager;
+	use Glass\StatManager;
 	$addonIDs = StatManager::getTrendingAddons(10);
 	$addons = [];
 

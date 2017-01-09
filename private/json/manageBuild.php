@@ -13,7 +13,7 @@
 		];
 		return $response;
 	}
-	require_once(realpath(dirname(__DIR__) . "/class/BuildManager.php"));
+	use Glass\BuildManager;
 	$build = BuildManager::getFromID($_GET['id'] + 0);
 
 	if($build === false) {
@@ -24,7 +24,7 @@
 	}
 
 	//do we want to do this or just use session info?
-	require_once(realpath(dirname(__DIR__) . "/class/UserManager.php"));
+	use Glass\UserManager;
 	$user = UserManager::getCurrent();
 
 	if($user === false || $build->getBLID() !== $user->getBLID()) {
@@ -95,7 +95,7 @@
 			];
 			return $response;
 		}
-		require_once(realpath(dirname(__DIR__) . "/class/ScreenshotManager.php"));
+		use Glass\ScreenshotManager;
 
 		if($_FILES['screenshots']['size'] > ScreenshotManager::$maxFileSize) {
 			$response = [
@@ -105,7 +105,7 @@
 			];
 			return $response;
 		}
-		require_once(realpath(dirname(__DIR__) . "/class/ScreenshotManager.php"));
+		use Glass\ScreenshotManager;
 		ScreenshotManager::uploadScreenshotForBuild($build, $uploadExt, $tempPath);
 		$changed = true;
 	}

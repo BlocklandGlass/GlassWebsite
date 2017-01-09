@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
 
@@ -11,7 +13,7 @@ class NotificationManager {
 
 	public static function createNotification($user, $text, $params) {
 		if(isset($param) && !is_object($param)) {
-			throw new Exception("Object expected form \$param");
+			throw new \Exception("Object expected form \$param");
 		}
 
 		if(is_object($user)) {
@@ -31,7 +33,7 @@ class NotificationManager {
 		socket_connect($socket, gethostbyname(NotificationManager::$noteServerHost), NotificationManager::$noteServerPort);
 		socket_strerror(socket_last_error($socket));
 
-		$data = new stdClass();
+		$data = new \stdClass();
 		$data->type = "notification";
 
 		$data->target = $blid;
@@ -55,7 +57,7 @@ class NotificationManager {
 			$resource = $database->query("SELECT * FROM `user_notifications` WHERE id='" . $database->sanitize($id) . "'");
 
 			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
+				throw new \Exception("Database error: " . $database->error());
 			}
 
 			if($resource->num_rows == 0) {
@@ -78,7 +80,7 @@ class NotificationManager {
 			LIMIT " . $database->sanitize($offset) . ", " . $database->sanitize($limit));
 
 		if(!$resource) {
-			throw new Exception("Database error: " . $database->error());
+			throw new \Exception("Database error: " . $database->error());
 		}
 		$userNotes = [];
 
@@ -105,7 +107,7 @@ class NotificationManager {
 				ON UPDATE CASCADE
 				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
-			throw new Exception("Error creating table: " . $database->error());
+			throw new \Exception("Error creating table: " . $database->error());
 		}
 	}
 }

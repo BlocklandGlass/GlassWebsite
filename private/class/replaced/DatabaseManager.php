@@ -9,7 +9,7 @@ class DatabaseManager {
 
 	function __construct() {
 		if(!is_file(dirname(__FILE__) . "/mysql.json")) {
-			$json = new stdClass();
+			$json = new \stdClass();
 			$json->database = "blocklandglass";
 			$json->username = "user";
 			$json->password = "default";
@@ -37,7 +37,7 @@ class DatabaseManager {
 
 			$this->mysqli = new mysqli("localhost", $this->username, $this->password, $this->database);
 			if($this->mysqli->connect_error) {
-				throw new Exception("Unable to connect to database: " .  $this->mysqli->connect_error);
+				throw new \Exception("Unable to connect to database: " .  $this->mysqli->connect_error);
 			}
 		}
 	}

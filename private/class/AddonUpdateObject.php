@@ -1,4 +1,6 @@
 <?php
+namespace Glass;
+
 require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
 require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
 require_once(realpath(dirname(__DIR__) . '/lib/class.Diff.php'));
@@ -21,6 +23,10 @@ class AddonUpdateObject {
 		$this->file = $row->tempfile;
 		$this->restart = $row->restart;
   }
+
+	public function getTimeSubmitted() {
+		return $this->submitted;
+	}
 
 	public function getAddon() {
 		return AddonManager::getFromId($this->aid);
@@ -50,6 +56,69 @@ class AddonUpdateObject {
 		return $this->restart;
 	}
 
+	public function getNewFiles() {
+		$fileNew = $this->getFile();
+    $fileOld = AddonManager::getLocalFile($this->aid);
+
+		$zipNew = new \ZipArchive();
+		$zipOld = new \ZipArchive();
+    $resNew = $zipNew->open($fileNew);
+    $resOld = $zipOld->open($fileOld);
+
+    if($resNew === TRUE && $resOld === TRUE) {
+			$newFiles = array();
+      for ($i = 0; $i < $zipNew->numFiles; $i++) {
+        $newFiles[] = $zipNew->getNameIndex($i);
+      }
+
+			$oldFiles = [];
+      for ($i = 0; $i < $zipOld->numFiles; $i++) {
+        $oldFiles[] = $zipOld->getNameIndex($i);
+      }
+
+			$added = array_diff($newFiles, $oldFiles);
+			return $added;
+    } else {
+      return [
+				"status" => "error",
+				"new" => $resNew,
+				"old" => $resOld
+			];
+    }
+	}
+
+	public function getRemovedFiles() {
+		$fileNew = $this->getFile();
+    $fileOld = AddonManager::getLocalFile($this->aid);
+
+		$zipNew = new \ZipArchive();
+		$zipOld = new \ZipArchive();
+    $resNew = $zipNew->open($fileNew);
+    $resOld = $zipOld->open($fileOld);
+
+    if($resNew === TRUE && $resOld === TRUE) {
+			$newFiles = array();
+      for ($i = 0; $i < $zipNew->numFiles; $i++) {
+        $newFiles[] = $zipNew->getNameIndex($i);
+      }
+
+			$oldFiles = [];
+      for ($i = 0; $i < $zipOld->numFiles; $i++) {
+        $oldFiles[] = $zipOld->getNameIndex($i);
+      }
+
+			$removed = array_diff($oldFiles, $newFiles);
+			$removed = array_diff($removed, ['glass.json', 'version.json']);
+			return $removed;
+    } else {
+      return [
+				"status" => "error",
+				"new" => $resNew,
+				"old" => $resOld
+			];
+    }
+	}
+
 	public function getDiff() {
     $fileNew = realpath($this->getFile());
     $fileOld = dirname(__DIR__) . '/../addons/files/local/' . $this->aid . '.zip';
@@ -68,8 +137,8 @@ class AddonUpdateObject {
 
     $fileOld = realpath(dirname(__DIR__) . '/../addons/files/local/' . $this->aid . '.zip');
 
-    $zipNew = new ZipArchive();
-		$zipOld = new ZipArchive();
+    $zipNew = new \ZipArchive();
+		$zipOld = new \ZipArchive();
     $resNew = $zipNew->open($fileNew);
     $resOld = $zipOld->open($fileOld);
     if($resNew === TRUE && $resOld === TRUE) {

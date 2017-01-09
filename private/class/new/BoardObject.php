@@ -55,7 +55,7 @@ class BoardObject {
 			$resource = $database->query("SELECT COUNT(*) FROM `addon_addons` WHERE board='" . $database->sanitize($this->id) . "'  AND deleted=0");
 
 			if(!$resource) {
-				throw new Exception("Database error: " . $database->error());
+				throw new \Exception("Database error: " . $database->error());
 			}
 			$this->numberOfAddons = $resource->fetch_row()[0];
 			$resource->close();
@@ -89,7 +89,7 @@ class BoardObject {
 			updaterInfo TEXT NOT NULL,
 			approvalInfo TEXT NOT NULL,
 			PRIMARY KEY (id))")) {
-			throw new Exception("Failed to create table addon_addons: " . $database->error());
+			throw new \Exception("Failed to create table addon_addons: " . $database->error());
 		}
 	}
 }
