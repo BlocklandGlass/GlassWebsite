@@ -1,4 +1,5 @@
 <?php
+return;
 use Glass\GroupManager;
 
 $group = GroupManager::getFromName("Beta");
