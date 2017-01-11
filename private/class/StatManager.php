@@ -110,7 +110,7 @@ class StatManager {
 
 		$database = new DatabaseManager();
 		StatManager::verifyTable($database);
-		$resource = $database->query("SELECT `aid` FROM `addon_stats`
+		$resource = $database->query("SELECT `aid` FROM `addon_stats` WHERE `aid` != 11 AND `aid` != 193
 			ORDER BY `iterationDownloads` DESC LIMIT " . $database->sanitize($count));
 
 		if(!$resource) {
