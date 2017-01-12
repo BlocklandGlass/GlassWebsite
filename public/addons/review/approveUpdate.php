@@ -1,7 +1,7 @@
 <?php
 	require dirname(__DIR__) . '/../../private/autoload.php';
   use Glass\AddonManager;
-  var_dump($_POST);
+  use Glass\UserManager;
 
   $addon = AddonManager::getFromID($_POST['aid']);
   $userObject = UserManager::getCurrent();
