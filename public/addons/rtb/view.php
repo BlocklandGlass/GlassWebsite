@@ -1,4 +1,6 @@
 <?php
+	require dirname(__DIR__) . '/../../private/autoload.php';
+
 	use Glass\RTBAddonManager;
 	use Glass\AWSFileManager;
 	use Glass\AddonManager;

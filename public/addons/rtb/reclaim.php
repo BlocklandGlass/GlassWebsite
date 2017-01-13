@@ -1,4 +1,5 @@
 <?php
+	require dirname(__DIR__) . '/../../private/autoload.php';
 	use Glass\AddonManager;
 	use Glass\UserManager;
   use Glass\RTBAddonManager;
