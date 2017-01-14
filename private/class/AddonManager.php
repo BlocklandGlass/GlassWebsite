@@ -572,7 +572,7 @@ class AddonManager {
 
 		AddonFileHandler::injectGlassFile($update->aid, $update->getFile());
 		AddonFileHandler::injectVersionInfo($update->aid, 1, $update->getFile());
-		AWSFileManager::uploadNewAddon($update->aid, 1, $update->getAddon()->getFilename(), $update->getFile());
+		AWSFileManager::uploadNewAddon($update->aid, $update->getAddon()->getFilename(), $update->getFile());
 
 		$params = new \stdClass();
 		$addon = new \stdClass();
