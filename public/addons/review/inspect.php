@@ -122,7 +122,7 @@
 				</tr>
 				<tr>
 					<td colspan="2" style="background-color: #eee; text-align: center; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
-						<input type="submit" name="action" value="Download" />
+						<a style="btn blue" href="download.php?file=aws_sync/<?php echo $addon->getId() ?>.zip">Download</a>
 					</td>
 				</tr>
 			</tbody>

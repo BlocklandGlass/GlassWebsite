@@ -71,7 +71,7 @@ $author = new \stdClass();
 
 $user = UserLog::getCurrentUsername($addonObject->getManagerBLID());
 if($user == false) {
-  $user = UserManager::getFromBlid($addonObject->getManagerBLID())->getUsername();
+  $user = utf8_encode(UserManager::getFromBlid($addonObject->getManagerBLID())->getUsername());
 } else {
   $user = utf8_encode($user);
 }
