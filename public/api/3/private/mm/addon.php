@@ -53,7 +53,7 @@ $ret->date = date("M jS Y, g:i A", strtotime($addonObject->getUploadDate()));
 
 $ret->downloads = $addonObject->getDownloads("web") + $addonObject->getDownloads("ingame");
 
-$ret->author = UserManager::getFromBLID($addonObject->getManagerBLID())->getName();
+$ret->author = utf8_encode(UserManager::getFromBLID($addonObject->getManagerBLID())->getName());
 
 $ret->screenshots = array();
 $screens = ScreenshotManager::getScreenshotsFromAddon($aid);
