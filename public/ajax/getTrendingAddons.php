@@ -34,7 +34,7 @@
 	      </td>
 				<td>
 					<?php
-						echo $addon->getAuthor()->getUsername();
+						echo htmlspecialchars(utf8_encode($addon->getAuthor()->getUsername()));
 					?>
 				</td>
 				<td style="font-weight: bold;">

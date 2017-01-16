@@ -44,8 +44,7 @@
 				</td>
 				<td style="width:50%; vertical-align:top">
 					<div class="tile">
-							<?php include(realpath(dirname(__DIR__) . "/ajax/getNewAddons.php")); ?>
-
+						<?php include(realpath(dirname(__DIR__) . "/ajax/getNewAddons.php")); ?>
 					</div>
 				</td>
 			</tr>

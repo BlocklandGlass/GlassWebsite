@@ -45,7 +45,7 @@
 						echo $time; ?>
 				</td>
 				<td style="font-size: .8em">
-					<?php echo htmlspecialchars($user->getUsername()); ?>
+					<?php echo htmlspecialchars(utf8_encode($user->getUsername())); ?>
 				</td>
 			</tr>
 			<?php
