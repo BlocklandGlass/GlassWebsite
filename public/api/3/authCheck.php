@@ -7,6 +7,15 @@ use Glass\UserManager;
 
 header('Content-Type: text/json; charset=ascii');
 
+$ip = $_REQUEST['ip'] ?? false;
+$country_code = "N/A";
+$country_name = "N/A";
+if($ip) {
+	$loc = geoip_record_by_name($ip);
+	$country_code = $loc["country_code"] ?? "N/A";
+	$country_name = $loc["country_name"] ?? "N/A";
+}
+
 if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 	$con = ClientConnection::loadFromIdentifier($_REQUEST['ident']);
   $ret = new \stdClass();
@@ -29,6 +38,9 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 
 		$ret->admin = false;
 		$ret->mod = false;
+
+		$ret->geoip_country_name = $country_name;
+		$ret->geoip_country_code = $country_code;
 
 		$user = UserManager::getFromBLID($ret->blid);
 		if($user !== false) {
