@@ -8,9 +8,12 @@ use Glass\UserManager;
 header('Content-Type: text/json; charset=ascii');
 
 $ip = $_REQUEST['ip'] ?? false;
-$country_code = "N/A";
-$country_name = "N/A";
+$country_code = "No IP";
+$country_name = "No IP";
 if($ip) {
+	if($pos = strrpos($ip, ":")) {
+		$ip = substr($ip, $pos+1);
+	}
 	$loc = geoip_record_by_name($ip);
 	$country_code = $loc["country_code"] ?? "N/A";
 	$country_name = $loc["country_name"] ?? "N/A";
