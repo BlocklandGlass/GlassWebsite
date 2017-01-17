@@ -67,7 +67,7 @@ $news = NewsManager::getNews(0, 10);
 foreach($news as $newsObj) {
   $msg = new \stdClass();
   $msg->type = "message";
-  $msg->message = $newsObj->text;
+  $msg->message = utf8_encode($newsObj->text);
   $msg->date = $newsObj->date;
   $res[] = $msg;
 }
