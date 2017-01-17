@@ -6,7 +6,7 @@ $(function(){
   $(".image-preview").click(function() {
     var id = $(this).attr('ssid');
     $("#image-viewer").show();
-    $("#image-view").attr('src', 'http://cdn-test.blocklandglass.com/screenshots/' + id);
+    $("#image-view").attr('src', 'http://cdn.blocklandglass.com/screenshots/' + id);
   });
 
   $("#image-viewer").click(function(evt) {
@@ -82,7 +82,7 @@ $(function(){
         $('#continue').removeClass('red');
         $('#continue').addClass('green');
         $('#continue').html('Continue');
-        $('#previews').append('<div class="tile image-preview"><img src="http://cdn-test.blocklandglass.com/screenshots/thumb/' + res.id + '"></div>');
+        $('#previews').append('<div class="tile image-preview"><img src="http://cdn.blocklandglass.com/screenshots/thumb/' + res.id + '"></div>');
 
         //good to go
         $("#drop-box").html("<p><b>Uploaded!</b> Want to upload another?</p>");
