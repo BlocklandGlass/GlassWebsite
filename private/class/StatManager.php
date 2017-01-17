@@ -172,6 +172,7 @@ class StatManager {
 
 	public static function saveHistory() {
 		$database = new DatabaseManager();
+		StatManager::verifyTable($database);
 		$res = $database->query("SELECT * FROM `addon_stats`");
 
 		if($res == false || $res == null)
@@ -215,6 +216,9 @@ class StatManager {
 	}
 
 	public static function endIteration() {
+		$post = StatManager::createNewsPost();
+		NewsManager::publishNews($post);
+
 		$database = new DatabaseManager();
 		$database->query("UPDATE `addon_stats` SET `iterationDownloads`=0");
 	}
@@ -226,7 +230,7 @@ class StatManager {
 		}
 
 		$msg  = "<font:verdana bold:13>Weekly Top Picks<br><br>";
-		$msg .= "<font:verdana:13>We had a total of <font:verdana bold:13>$totalDownloads<font:verdana:13> downloads. Below are our top add-ons of the week!";
+		$msg .= "<font:verdana:13>We had a total of <font:verdana bold:13>$totalDownloads<font:verdana:13> downloads this week. Below are our top add-ons of the week!";
 		$msg .= "<br><br>";
 
 		$ct = 0;

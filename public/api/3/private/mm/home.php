@@ -5,6 +5,7 @@ use Glass\BoardManager;
 use Glass\UserLog;
 use Glass\UserManager;
 use Glass\StatManager;
+use Glass\NewsManager;
 
 $recent = AddonManager::getRecentAddons();
 $recentUpdates = AddonManager::getRecentUpdates();
@@ -60,11 +61,17 @@ $dlg->date = time();
  * Message
  */
 
-$msg = new \stdClass();
-$msg->type = "message";
-$msg->message = StatManager::createNewsPost();
+$res = array($dlg);
 
-$res = array($dlg, $msg);
+$news = NewsManager::getNews(0, 10);
+foreach($news as $newsObj) {
+  $msg = new \stdClass();
+  $msg->type = "message";
+  $msg->message = $newsObj->text;
+  $msg->date = $newsObj->date;
+  $res[] = $msg;
+}
+
 $ret = new \stdClass();
 $ret->status = "success";
 $ret->data = $res;
