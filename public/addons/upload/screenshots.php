@@ -176,7 +176,7 @@
       foreach($screenshots as $sid) {
         ?>
         <div class="tile image-preview" ssid="<?php echo $sid; ?>">
-          <img src="http://cdn-test.blocklandglass.com/screenshots/thumb/<?php echo $sid ?>"/>
+          <img src="http://cdn.blocklandglass.com/screenshots/thumb/<?php echo $sid ?>"/>
         </div>
         <?php
       }
