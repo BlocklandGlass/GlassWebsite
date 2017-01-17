@@ -61,7 +61,7 @@ $dlg->date = time();
 
 $msg = new \stdClass();
 $msg->type = "message";
-$msg->message = "Hey look. We can do other things here";
+$msg->message = "<font:verdana bold:13>Weekly Top Picks";
 
 $res = array($dlg, $msg);
 $ret = new \stdClass();

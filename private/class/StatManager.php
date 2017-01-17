@@ -219,6 +219,10 @@ class StatManager {
 		$database->query("UPDATE `addon_stats` SET `iterationDownloads`=0");
 	}
 
+	public static function createNewsPost() {
+		
+	}
+
 	public static function verifyTable($database) {
 		UserManager::verifyTable($database);
 		AddonManager::verifyTable($database);
