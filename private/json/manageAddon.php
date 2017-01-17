@@ -1,4 +1,8 @@
 <?php
+	use Glass\UserManager;
+	use Glass\AddonManager;
+	use Glass\ScreenshotManager;
+
 	if(!isset($_SESSION)) {
 		session_start();
 	}
@@ -13,7 +17,6 @@
 		];
 		return $response;
 	}
-	use Glass\AddonManager;
 	$addon = AddonManager::getFromID($_GET['id'] + 0);
 
 	if($addon === false) {
@@ -24,7 +27,6 @@
 	}
 
 	//do we want to do this or just use session info?
-	use Glass\UserManager;
 	$user = UserManager::getCurrent();
 
 	if($user === false || $addon->getBLID() !== $user->getBLID()) {
@@ -85,7 +87,6 @@
 			];
 			return $response;
 		}
-		use Glass\ScreenshotManager;
 
 		if($_FILES['screenshots']['size'] > ScreenshotManager::$maxFileSize) {
 			$response = [
@@ -95,7 +96,6 @@
 			];
 			return $response;
 		}
-		use Glass\ScreenshotManager;
 		ScreenshotManager::uploadScreenshotForAddon($addon, $tempPath);
 		$changed = true;
 	}

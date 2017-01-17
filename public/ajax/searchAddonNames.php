@@ -1,30 +1,31 @@
 <?php
-use Glass\DatabaseManager;
+  require_once dirname(__DIR__) . '/../private/autoload.php';
+  use Glass\DatabaseManager;
 
-if(!isset($_REQUEST['query'])) {
-  $query = "";
-} else {
-  $query = $_REQUEST['query'];
-}
+  if(!isset($_REQUEST['query'])) {
+    $query = "";
+  } else {
+    $query = $_REQUEST['query'];
+  }
 
-if($query == "") {
-  die("[]");
-}
+  if($query == "") {
+    die("[]");
+  }
 
 
-$db = new DatabaseManager();
+  $db = new DatabaseManager();
 
-$sql = "";
-if(isset($_REQUEST['owner'])) {
-  $sql = " AND `blid`='" . $db->sanitize($_REQUEST['owner']) .  "' ";
-}
+  $sql = "";
+  if(isset($_REQUEST['owner'])) {
+    $sql = " AND `blid`='" . $db->sanitize($_REQUEST['owner']) .  "' ";
+  }
 
-$res = $db->query("SELECT `id`,`name` FROM `addon_addons` WHERE `name` LIKE '" . $db->sanitize($query) . "%' AND `approved`=1 AND `deleted`=0 $sql");
+  $res = $db->query("SELECT `id`,`name` FROM `addon_addons` WHERE `name` LIKE '" . $db->sanitize($query) . "%' AND `approved`=1 AND `deleted`=0 $sql");
 
-$ret = array();
-while($obj = $res->fetch_object()) {
-  $ret[] = $obj;
-}
+  $ret = array();
+  while($obj = $res->fetch_object()) {
+    $ret[] = $obj;
+  }
 
-echo json_encode($ret, JSON_PRETTY_PRINT);
+  echo json_encode($ret, JSON_PRETTY_PRINT);
 ?>

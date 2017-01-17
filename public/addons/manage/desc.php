@@ -2,7 +2,7 @@
 $dat = require dirname(__DIR__) . "/../../private/json/manageAddon.php";
 ?>
 <form method="post" action="">
-<table>
+<table class="formtable">
   <tbody>
     <tr>
       <td><b>Title</b></td>

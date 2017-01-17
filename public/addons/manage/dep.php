@@ -9,6 +9,9 @@ button {
 </style>
 
 <?php
+use Glass\DependencyManager;
+use Glass\AddonManager;
+
 if(isset($_REQUEST['action'])) {
   if($_REQUEST['action'] == "add") {
     DependencyManager::addDependencyByID($_GET['id'], $_REQUEST['aid']);
