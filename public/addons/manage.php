@@ -31,7 +31,8 @@
 	<div class="tile" style="width: 200px; float: left;">
 		<ul class="sidenav">
 			<li><a href="?id=<?php echo $_GET['id'] ?>&tab=desc">Description</a></li>
-			<li><a href="?id=<?php echo $_GET['id'] ?>&tab=ss">Screenshots</a></li>
+			<!-- <li><a href="?id=<?php echo $_GET['id'] ?>&tab=ss">Screenshots</a></li> -->
+			<li><a href="/addons/upload/screenshots.php?id=<?php echo $_GET['id'] ?>">Screenshots</a></li>
 			<li><a href="?id=<?php echo $_GET['id'] ?>&tab=dep">Dependencies</a></li>
 		</ul>
 		<br />
