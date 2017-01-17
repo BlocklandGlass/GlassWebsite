@@ -220,7 +220,28 @@ class StatManager {
 	}
 
 	public static function createNewsPost() {
-		
+		$totalDownloads = 0;
+		foreach(AddonManager::getAll() as $addon) {
+			$totalDownloads += $addon->getDownloads('iteration');
+		}
+
+		$msg  = "<font:verdana bold:13>Weekly Top Picks<br><br>";
+		$msg .= "<font:verdana:13>We had a total of <font:verdana bold:13>$totalDownloads<font:verdana:13> downloads. Below are our top add-ons of the week!";
+		$msg .= "<br><br>";
+
+		$ct = 0;
+		$top = StatManager::getTrendingAddons();
+		foreach($top as $aid) {
+			$ct++;
+			$addon = AddonManager::getFromId($aid);
+			if($addon->getDownloads('iteration') == 0)
+				break;
+			$msg .= "$ct. <font:verdana bold:13>" . $addon->getName() . "<font:verdana:13> by <font:verdana bold:13>" . $addon->getAuthor()->getName() . "<font:verdana:13> with " . $addon->getDownloads('iteration') . " downloads<br>";
+		}
+
+		$msg .= "<br><br>- GlassBot";
+
+		return $msg;
 	}
 
 	public static function verifyTable($database) {

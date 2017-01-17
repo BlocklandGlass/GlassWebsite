@@ -4,6 +4,7 @@ use Glass\AddonManager;
 use Glass\BoardManager;
 use Glass\UserLog;
 use Glass\UserManager;
+use Glass\StatManager;
 
 $recent = AddonManager::getRecentAddons();
 $recentUpdates = AddonManager::getRecentUpdates();
@@ -61,7 +62,7 @@ $dlg->date = time();
 
 $msg = new \stdClass();
 $msg->type = "message";
-$msg->message = "<font:verdana bold:13>Weekly Top Picks";
+$msg->message = StatManager::createNewsPost();
 
 $res = array($dlg, $msg);
 $ret = new \stdClass();
