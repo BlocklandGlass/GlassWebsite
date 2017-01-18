@@ -68,7 +68,6 @@ $(function(){
         } catch (e) {
           $("#drop-box").html("<p>Server sent invalid response!</p>");
           console.log(xhr.response);
-          //server had invalid response
           return;
         }
 

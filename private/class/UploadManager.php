@@ -159,7 +159,7 @@ class UploadManager {
     $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
     if($ext != "png" && $ext != "jpg" && $ext != "jpeg") {
       $res->status = "failed";
-  		$res->message = "Only png and jpeg files are allowed";
+  		$res->error = "Illegal extention "$ext". Only png and jpeg files are allowed";
       return $res;
   	}
 
