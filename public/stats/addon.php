@@ -72,7 +72,7 @@
 						$wordB = explode(" ", $keyB);
 						$verA = new SemVer($wordA[0]);
 						$verB = new SemVer($wordB[0]);
-						return $verA->compare($verB);
+						return -($verA->compare($verB));
 					});
 
 					foreach($downloadsByVersion as $ver=>$count) {
