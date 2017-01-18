@@ -62,23 +62,16 @@ class AddonManager {
 		);
 	}
 
-	public static function uploadBetaAddon($addon, $version, $file) {
-		if(!is_object($addon)) {
-			$addon = AddonManager::getFromID($addon);
-		}
-
-		// TODO check sequential version
-
+	public static function cancelUpdate($id) {
 		$db = new DatabaseManager();
-		$db->query("UPDATE `addon_addons` SET `betaVersion`='" . $db->sanitize($version) . "' WHERE `id`='" . $db->sanitize($addon->getId()) . "'");
+		$id = $db->sanitize($id);
+		$db->query("DELETE FROM `addon_updates` WHERE `id`='$id'");
+	}
 
-		$addon = AddonManager::getFromID($addon->getId());
-
-		AddonFileHandler::injectGlassFile($addon->getId(), $file);
-		AddonFileHandler::injectVersionInfo($addon->getId(), 2, $file);
-		AWSFileManager::uploadNewAddon($addon->getId(), 2, $addon->getFilename(), $file);
-
-		copy($file, dirname(__DIR__) . '/../addons/files/local/' . $addon->getId() . '_beta.zip');
+	public static function rejectUpdate($id) {
+		$db = new DatabaseManager();
+		$id = $db->sanitize($id);
+		$db->query("UPDATE `addon_updates` SET `approved`=b'0' WHERE `id`='$id'");
 	}
 
 	public static function uploadNewAddon($user, $boardId, $name, $file, $filename, $description, $summary, $version) {

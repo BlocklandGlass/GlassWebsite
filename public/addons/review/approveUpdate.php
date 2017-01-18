@@ -31,7 +31,9 @@
         }
         header('Location: updates.php');
       } else if($_POST['action'] == "Reject") {
-        // reject
+				$update = AddonManager::getUpdates($addon)[0];
+				AddonManager::rejectUpdate($update->getId());
+        header('Location: updates.php');
       }
     }
   }

@@ -134,6 +134,7 @@ class AddonFileHandler {
     $res = $zip->open($file);
     if($res === TRUE) {
       $zip->addFile($tempFile, 'glass.json');
+      $zip->addFromString('namecheck.txt', substr($addonObject->getFilename(), 0, -4));
       $zip->close();
       unlink($tempFile);
     } else {
@@ -169,9 +170,6 @@ class AddonFileHandler {
 
     $versionData->repositories = [$mainRepo, $backupRepo];
 
-
-
-
     $workingDir = dirname(dirname(__DIR__)) . "/public/addons/upload/files/";
     $tempFile = $workingDir . "temp/" . $addonObject->getId() . "version.json";
 
@@ -188,7 +186,11 @@ class AddonFileHandler {
     $res = $zip->open($file);
     if($res === TRUE) {
       $zip->addFile($tempFile, 'version.json');
+      $zip->deleteName("version.txt");
+      $zip->deleteName("rtbInfo.txt");
+
       $zip->close();
+
       unlink($tempFile);
     } else {
       return false;

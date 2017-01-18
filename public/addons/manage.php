@@ -38,6 +38,7 @@
 		<br />
 		<ul class="sidenav">
 			<li><a href="https://blocklandglass.com/addons/update.php?id=<?php echo $_GET['id'] ?>">Update</a></li>
+			<li><a href="?id=<?php echo $_GET['id'] ?>&tab=repo">Repository</a></li>
 		</ul>
 		<br />
 		<ul class="sidenav">
