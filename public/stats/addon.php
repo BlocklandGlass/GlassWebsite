@@ -68,8 +68,8 @@
 					}
 
 					uksort($downloadsByVersion, function($keyA, $keyB) {
-						$wordA = split($keyA, " ");
-						$wordB = split($keyB, " ");
+						$wordA = explode(" ", $keyA);
+						$wordB = explode(" ", $keyB);
 						$verA = new SemVer($wordA[0]);
 						$verB = new SemVer($wordB[0]);
 						return $verA->compare($verB);
