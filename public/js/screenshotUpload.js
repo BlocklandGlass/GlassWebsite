@@ -72,9 +72,11 @@ $(function(){
           return;
         }
 
-        if(xhr.status !== 200 || res.status !== "success") {
-          $("#drop-box").html("<p>Unable to upload file: <b>" + res.error + "</b></p>");
-          //error
+        if(xhr.status !== 200) {
+          $("#drop-box").html("<p>Unable to upload file<br />Status " + xhr.status + "</p>");
+          return;
+        } else if(res.status !== "success") {
+          $("#drop-box").html("<p>Unable to upload file<br />" + res.status + " <b>" + res.error + "</b></p>");
           return;
         }
 
