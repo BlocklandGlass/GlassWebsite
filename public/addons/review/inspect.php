@@ -97,6 +97,7 @@
 								$boards = BoardManager::getAllBoards();
 								foreach($boards as $board) {
 									if($board->getId() == $addon->getBoard()) {
+										echo 'selected!';
 										$selected = true;
 									} else {
 										$selected = false;

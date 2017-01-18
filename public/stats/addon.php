@@ -3,10 +3,12 @@
 	use Glass\AddonManager;
 	use Glass\GroupManager;
 	use Glass\UserManager;
-	
+
 	use Glass\CronStatManager;
 	use Glass\StatUsageManager;
 	use Glass\StatManager;
+
+	use Glass\SemVer;
 
 	$_PAGETITLE = "Blockland Glass | Add-On Stats";
 
@@ -50,35 +52,33 @@
 						$vals = array(0);
 					}
 
-					if($addon->hasBeta()) {
-						$ret[] = $addon->getBetaVersion() . " (beta)";
-						if(isset($dist[$addon->getBetaVersion()]) && $addon->getBetaVersion() != null) {
-							$vals[] = $dist[$addon->getBetaVersion()];
-						} else {
-							$vals[] = 0;
-						}
-					}
-
 					foreach($dist as $ver=>$count) {
 						if($ver == $addon->getVersion()) {
 							continue;
-						}
-
-						if($addon->hasBeta()) {
-							if($addon->getBetaVersion() == $ver) {
-								continue;
-							}
 						}
 
 						$ret[] = $ver;
 						$vals[] = $count;
 					}
 
+
+					$downloadsByVersion = array();
 					foreach($ret as $i=>$ver) {
+						$downloadsByVersion[$ver] = $vals[$i];
+					}
+
+					uksort($downloadsByVersion, function($keyA, $keyB) {
+						$wordA = split($keyA, " ");
+						$wordB = split($keyB, " ");
+						$verA = new SemVer($wordA[0]);
+						$verB = new SemVer($wordB[0]);
+						return $verA->compare($verB);
+					});
+
+					foreach($downloadsByVersion as $ver=>$count) {
 						echo "<tr>";
 						echo "<td>" . $ver . "</td>";
-						//echo "<td>" . "date" . "</td>";
-						echo "<td>" . $vals[$i] . "</td>";
+						echo "<td>" . $count . "</td>";
 						echo "</tr>";
 					}
 				?>
