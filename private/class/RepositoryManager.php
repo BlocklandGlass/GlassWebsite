@@ -35,6 +35,19 @@ class RepositoryManager {
     }
   }
 
+  public static function removeRepositoryFromAddon($addon) {
+    if(!is_object($addon)) {
+      $addon = AddonManager::getFromId($addon);
+    }
+
+    $db = new DatabaseManager();
+    RepositoryManager::verifyTable($db);
+
+    $aid = $db->sanitize($addon->getId());
+
+    $db->query("DELETE FROM `addon_repositories` WHERE `aid`='$aid'");
+  }
+
   public static function getRepository($addon) {
     if(!is_object($addon)) {
       $addon = AddonManager::getFromId($addon);

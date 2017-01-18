@@ -25,6 +25,12 @@
       break;
 
     case "delete":
+      $addon   = $_POST['aid'] ?? false;
+      RepositoryManager::removeRepositoryFromAddon($addon);
+      $ret = [
+        "status" => "Deleted"
+      ];
+      die(json_encode($ret));
       break;
 
     default:
