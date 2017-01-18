@@ -119,13 +119,14 @@ class RepositoryManager {
     } else {
       try {
         $repoObj = RepositoryChecker::getRepository($repoInfo->url, $repoInfo->type);
-        $channel = $repoInfo->channel;
+        $repoCache[$repoInfo->url] = $repoObj;
       } catch(\Exception $e) {
         return ["status" => "error",
                 "error"  => "Error reading repo: " . $e->getMessage()];
       }
     }
 
+    $channel = $repoInfo->channel;
     $addons = $repoObj->addons;
 
     foreach($addons as $ao) {
