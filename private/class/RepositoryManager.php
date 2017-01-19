@@ -114,12 +114,12 @@ class RepositoryManager {
     $name = substr($addon->getFilename(), 0, -4);
     $repoInfo = RepositoryManager::getRepository($addon);
 
-    if($repoCache[$repoInfo->url] ?? false) {
-      $repoObj = $repoCache[$repoInfo->url];
+    if(RepositoryManager::$repoCache[$repoInfo->url] ?? false) {
+      $repoObj = RepositoryManager::$repoCache[$repoInfo->url];
     } else {
       try {
         $repoObj = RepositoryChecker::getRepository($repoInfo->url, $repoInfo->type);
-        $repoCache[$repoInfo->url] = $repoObj;
+        RepositoryManager::$repoCache[$repoInfo->url] = $repoObj;
       } catch(\Exception $e) {
         return ["status" => "error",
                 "error"  => "Error reading repo: " . $e->getMessage()];
