@@ -30,7 +30,6 @@ class TML {
       $idx++;
 
       if($escaped) {
-        $tml .= "escaped";
         $tml .= $char;
         $char = "\\" . $char;
         $escaped = false;
@@ -38,7 +37,6 @@ class TML {
       }
 
       if($char == "\\") {
-        $tml .= "escape";
         $escaped = true;
         continue;
       }
@@ -79,7 +77,7 @@ class TML {
         case "-":
         case "+":
         case "*":
-          if($lastChar == " ") {
+          if(trim($lastChar) == "") {
             $tml .= "<lmargin:20>";
             $tml .= "<bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_black>";
           } else {
