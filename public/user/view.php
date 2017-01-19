@@ -40,7 +40,7 @@
 			}
 
 			$history = UserLog::getHistory($blid);
-			if($hassAccount) {
+			if($hasAccount) {
 				$name = htmlspecialchars(utf8_encode($userObject->getName()));
 			} else {
 				$name = htmlspecialchars(utf8_encode($userLog));
