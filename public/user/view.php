@@ -46,20 +46,23 @@
 
 			echo "<h2>$name</h2>";
 			echo "<p>";
-			$title = false;
-			if($userObject->inGroup("Administrator")) {
-				$title = "Administrator";
-				$color = "red";
-			} else if($userObject->inGroup("Moderator")) {
-				$title = "Moderator";
-				$color = "orange";
-			} else if($userObject->inGroup("Reviewer")) {
-				$title = "Reviewer";
-				$color = "green";
-			}
 
-			if($title) {
-				echo "This user is a <span style=\"color: $color; font-weight: bold;\">$title</span>.";
+			if($hasAccount) {
+				$title = false;
+				if($userObject->inGroup("Administrator")) {
+					$title = "Administrator";
+					$color = "red";
+				} else if($userObject->inGroup("Moderator")) {
+					$title = "Moderator";
+					$color = "orange";
+				} else if($userObject->inGroup("Reviewer")) {
+					$title = "Reviewer";
+					$color = "green";
+				}
+
+				if($title) {
+					echo "This user is a <span style=\"color: $color; font-weight: bold;\">$title</span>.";
+				}
 			}
 
 			$lastseen = UserLog::getLastSeen($blid);
