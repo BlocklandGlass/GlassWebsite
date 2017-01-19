@@ -27,7 +27,7 @@ class UserLog {
 
 	public static function getHistory($blid) {
 		$db = new DatabaseManager();
-	  $res = $db->query("SELECT * FROM `user_log` WHERE `blid`='" . $db->sanitize($blid) . "' ORDER BY `lastseen` DESC");
+	  $res = $db->query("SELECT * FROM `user_log_changes` WHERE `blid`='" . $db->sanitize($blid) . "' ORDER BY `date` DESC");
 		$ret = array();
 		while($obj = $res->fetch_object()) {
 			$ret[] = $obj;
@@ -39,17 +39,16 @@ class UserLog {
     $db = new DatabaseManager();
     UserLog::verifyTable($db);
 
-    $resouce = $db->query("SELECT * FROM `user_log` WHERE `blid`='" . $db->sanitize($blid) . "' ORDER BY `lastseen` DESC LIMIT 0, 1");
+    $resouce = $db->query("SELECT * FROM `user_log` WHERE `blid`='" . $db->sanitize($blid) . "'");
 
     if($resouce->num_rows > 0) {
       $result = $resouce->fetch_object();
       return $result->username;
     } else {
-      return false; //aka, user not verified
+      return false;
     }
   }
-
-  //$ip - check against auth.blockland.us. if blank, ignore
+	
   public static function addEntry($blid, $username, $ip = null) {
     if($ip != null) {
       if(!UserLog::isRemoteVerified($blid, $username, $ip)) {
