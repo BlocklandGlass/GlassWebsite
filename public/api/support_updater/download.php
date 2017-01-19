@@ -1,4 +1,5 @@
 <?php
+require dirname(__DIR__) . '/../../private/autoload.php';
 use Glass\DatabaseManager;
 $db = new DatabaseManager();
 $aid = $db->sanitize($_GET['id']);

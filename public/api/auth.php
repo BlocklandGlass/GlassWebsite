@@ -1,4 +1,6 @@
 <?php
+require dirname(__DIR__) . '/../private/autoload.php';
+
 use Glass\ApiSessionManager;
 header('Content-Type: text/json');
 if(isset($_REQUEST['sid'])) {
