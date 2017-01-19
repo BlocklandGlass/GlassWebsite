@@ -43,7 +43,7 @@ class TML {
         continue;
       }
 
-      if($char == "_" && ($lastChar == "_" || trim($lastChar) == "")) {
+      if($char == "_") {
         $emphasisCt++;
         continue;
       }
