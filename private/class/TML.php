@@ -71,15 +71,16 @@ class TML {
 
       switch($char) {
         case "\n":
-          $tml .= "<br>";
+          $tml .= "<br><lmargin:0>";
           break;
 
         case "-":
         case "+":
         case "*":
           if(trim($lastChar) == "") {
-            $tml .= "<lmargin:20>";
+            $tml .= "<lmargin:10>";
             $tml .= "<bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_black>";
+            $tml .= "<lmargin:26>";
           } else {
             $tml .= $char;
           }
