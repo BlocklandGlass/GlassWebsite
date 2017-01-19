@@ -4,41 +4,67 @@
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 	use Glass\UserManager;
 	use Glass\UserLog;
-	$failed = false;
 
-	if(isset($_GET['blid'])) {
+	$blid = $_GET['blid'] ?? false;
+
+	if($blid) {
 		try {
-			$userObject = UserManager::getFromBLID($_GET['blid']);
+			$userObject = UserManager::getFromBLID($blid);
+			if($userObject) {
+				$hasAccount = true;
+			} else {
+				$hasAccount = false;
+			}
 		} catch (Exception $e) {
-			$failed = true;
+			$hasAccount = false;
 		}
-	} else {
+	}
+
+	$userLog = UserLog::getCurrentUsername($blid);
+	if(!$userLog && !$hasAccount) {
 		$failed = true;
+	} else {
+		$failed = false;
 	}
 ?>
 <div class="maincontainer">
 	<div class="tile">
 		<?php
 			if($failed) {
-				$msg  = "<h3>Uh-Oh</h3>";
-				$msg .= "<p>Whoever you're looking for either never existed or deleted their account.</p>";
+				$msg  = "<h2>Uh-Oh</h2>";
+				$msg .= "<p>We've never seen that user before. Sorry!</p>";
 				die($msg);
 				return;
 			}
 
 			$history = UserLog::getHistory($userObject->getBLID());
-
-			echo "<h3>" . htmlspecialchars(utf8_encode($userObject->getName())) . "</h3>";
-			echo "<p>";
-			if($userObject->inGroup("Administrator")) {
-				echo("This user is a <span style=\"color: red; font-weight: bold;\">Administrator</span>.");
-			} else if($userObject->inGroup("Moderator")) {
-				echo("This user is a <span style=\"color: orange; font-weight: bold;\">Moderator</span>.");
-			} else if($userObject->inGroup("Reviewer")) {
-				echo("This user is a <span style=\"color: green; font-weight: bold;\">Mod Reviewer</span>.");
+			if($userObject) {
+				$name = htmlspecialchars(utf8_encode($userObject->getName()));
+			} else {
+				$name = htmlspecialchars(utf8_encode($userLog));
 			}
-			if(sizeof($history) > 0) echo("<p><b>Last Seen:</b> " . $history[0]->lastseen);
-			echo("<br /><b>BL_ID:</b> " . $userObject->getBLID());
+
+			echo "<h2>$name</h2>";
+			echo "<p>";
+			$title = false;
+			if($userObject->inGroup("Administrator")) {
+				$title = "Administrator";
+				$color = "red";
+			} else if($userObject->inGroup("Moderator")) {
+				$title = "Moderator";
+				$color = "orange";
+			} else if($userObject->inGroup("Reviewer")) {
+				$title = "Reviewer";
+				$color = "green";
+			}
+
+			if($title) {
+				echo "This user is a <span style=\"color: $color; font-weight: bold;\">$title</span>.";
+			}
+
+			$lastseen = UserLog::getLastSeen($blid);
+			echo "<p><b>Last Seen:</b> $lastseen";
+			echo "<br /><b>BL_ID:</b> $blid";
 			echo "</p>";
 			//echo("<a href=\"/addons/search.php?blid=" . htmlspecialchars($userObject->getBLID()) . "\"><b>Find Add-Ons by this user</b></a>");
 			?>

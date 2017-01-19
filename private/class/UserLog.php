@@ -39,7 +39,7 @@ class UserLog {
     $db = new DatabaseManager();
     UserLog::verifyTable($db);
 
-    $resouce = $db->query("SELECT * FROM `user_log` WHERE `blid`='" . $db->sanitize($blid) . "'");
+    $resouce = $db->query("SELECT `username` FROM `user_log` WHERE `blid`='" . $db->sanitize($blid) . "'");
 
     if($resouce->num_rows > 0) {
       $result = $resouce->fetch_object();
@@ -48,7 +48,21 @@ class UserLog {
       return false;
     }
   }
-	
+
+	public static function getLastSeen($blid) {
+		$db = new DatabaseManager();
+		UserLog::verifyTable($db);
+
+		$resouce = $db->query("SELECT `lastseen` FROM `user_log` WHERE `blid`='" . $db->sanitize($blid) . "'");
+
+		if($resouce->num_rows > 0) {
+			$result = $resouce->fetch_object();
+			return $result->lastseen;
+		} else {
+			return false;
+		}
+	}
+
   public static function addEntry($blid, $username, $ip = null) {
     if($ip != null) {
       if(!UserLog::isRemoteVerified($blid, $username, $ip)) {
