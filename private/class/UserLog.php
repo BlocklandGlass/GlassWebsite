@@ -103,10 +103,14 @@ class UserLog {
 
 		$res = $db->query("SELECT distinct(blid) FROM `user_log`");
 
+		echo $db->error();
+
 		$blids = [];
 		while($obj = $res->fetch_object()) {
 			$blids[] = $obj->blid;
 		}
+
+		echo(sizeof($blids) . " distinct blid's\n\n");
 
 		foreach($blids as $blid) {
 			$blid = $db->sanitize($blid);
@@ -114,9 +118,11 @@ class UserLog {
 			$obj = $result->fetch_object();
 			$lastseen = $obj->lastseen;
 			$db->query("DELETE FROM `user_log` WHERE `blid`='$blid' AND `lastseen` != '$lastseen'");
+			echo $db->error();
 		}
 
 		$db->query("ALTER TABLE `user_log` ADD UNIQUE (blid)");
+		echo $db->error();
 	}
 
 	private static function verifyTable($database) {
