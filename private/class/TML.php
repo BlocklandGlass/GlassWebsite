@@ -79,8 +79,12 @@ class TML {
         case "-":
         case "+":
         case "*":
-          $tml .= "<lmargin:20>";
-          $tml .= "<bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_black>";
+          if($lastChar == " ") {
+            $tml .= "<lmargin:20>";
+            $tml .= "<bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_black>";
+          } else {
+            $tml .= $char;
+          }
           break;
 
         default:
