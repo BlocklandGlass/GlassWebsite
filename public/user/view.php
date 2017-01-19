@@ -7,6 +7,8 @@
 
 	$blid = $_GET['blid'] ?? false;
 
+	$hasAccount = true;
+
 	if($blid) {
 		try {
 			$userObject = UserManager::getFromBLID($blid);
@@ -37,8 +39,8 @@
 				return;
 			}
 
-			$history = UserLog::getHistory($userObject->getBLID());
-			if($userObject) {
+			$history = UserLog::getHistory($blid);
+			if($hassAccount) {
 				$name = htmlspecialchars(utf8_encode($userObject->getName()));
 			} else {
 				$name = htmlspecialchars(utf8_encode($userLog));
