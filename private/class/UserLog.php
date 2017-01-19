@@ -97,6 +97,28 @@ class UserLog {
 		}
   }
 
+	public function alterDatabase() {
+    $db = new DatabaseManager();
+    UserLog::verifyTable($db);
+
+		$res = $db->query("SELECT distinct(blid) FROM `user_log`");
+
+		$blids = [];
+		while($obj = $res->fetch_object()) {
+			$blids[] = $obj->blid;
+		}
+
+		foreach($blids as $blid) {
+			$blid = $db->sanitize($blid);
+			$result = $db->query("SELECT * FROM `user_log` WHERE `blid`='$blid' ORDER BY `lastseen` DESC");
+			$obj = $result->fetch_object();
+			$lastseen = $obj->lastseen;
+			$db->query("DELETE FROM `user_log` WHERE `blid`='$blid' AND `lastseen` != '$lastseen'");
+		}
+
+		$db->query("ALTER TABLE `user_log` ADD UNIQUE (blid)");
+	}
+
 	private static function verifyTable($database) {
 		//log of all users seen
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `user_log` (
