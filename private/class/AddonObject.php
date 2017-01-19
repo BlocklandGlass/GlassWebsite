@@ -153,7 +153,7 @@ class AddonObject {
 	}
 
 	public function getDescriptionTML() {
-		TML::format($this->description);
+		return TML::format($this->description);
 	}
 }
 
