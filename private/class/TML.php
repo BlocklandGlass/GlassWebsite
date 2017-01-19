@@ -71,7 +71,10 @@ class TML {
 
       switch($char) {
         case "\n":
-          $tml .= "<br><lmargin:0>";
+          $tml .= "<br>";
+          if($lastChar == "\n") {
+            $tml .= "<lmargin:0>";
+          }
           break;
 
         case "-":
