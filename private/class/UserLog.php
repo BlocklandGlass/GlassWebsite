@@ -73,7 +73,7 @@ class UserLog {
 		} else {
 
 			$obj = $resource->fetch_object();
-      $db->query("UPDATE `user_log` SET `lastseen` = CURRENT_TIMESTAMP WHERE `blid`='$_blid' AND `username`='$_username'");
+      $db->query("UPDATE `user_log` SET `lastseen` = CURRENT_TIMESTAMP, `username`='$_username' WHERE `blid`='$_blid'");
 
 			if($obj->username != $username) {
 				$db->query("INSERT INTO `user_log_changes` (`blid`, `username`) VALUES ('$_blid', '$_username')");
