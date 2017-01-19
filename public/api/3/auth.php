@@ -64,27 +64,38 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 			$con->setAuthed(true);
 			if($isServer) {
 				$clients = stripcslashes($_REQUEST['clients']);
-				$clArray = array();
-				$clDatArray = explode("\n", $clients);
-				foreach($clDatArray as $clDat) {
-					$dat = explode("\t", $clDat);
-					$obj = new \stdClass();
 
-					$obj->name = $dat[0];
-					$obj->blid = intval($dat[1]);
-					$obj->status = $dat[2];
-					$obj->version = $dat[3];
+				if(strlen(trim($clients)) > 0) {
+					$clArray = array();
+					$clDatArray = explode("\n", $clients);
+					foreach($clDatArray as $clDat) {
+						$dat = explode("\t", $clDat);
+						$obj = new \stdClass();
 
-					$clArray[] = $obj;
+						if(sizeof($dat) == 1)
+							continue;
+
+						$obj->name = $dat[0];
+						$obj->blid = intval($dat[1]);
+						$obj->status = $dat[2];
+						$obj->version = $dat[3];
+
+						$ip = $dat[4] ?? false;
+						if($ip) {
+							UserLog::addEntry($dat[1], $dat[0], $ip);
+						}
+
+						$clArray[] = $obj;
+					}
+					$ret->cl = $clArray;
+
+					$username = $_REQUEST['username'];
+					$blid     = $_REQUEST['blid'];
+				  $port 		= $_REQUEST['port'];
+				  $ip   		= $_SERVER['REMOTE_ADDR'];
+
+					ServerTracker::updateRecord($ip, $port, $username, $clArray);
 				}
-				$ret->cl = $clArray;
-
-				$username = $_REQUEST['username'];
-			  $blid = $_REQUEST['blid'];
-			  $port = $_REQUEST['port'];
-			  $ip = $_SERVER['REMOTE_ADDR'];
-
-				ServerTracker::updateRecord($ip, $port, $username, $clArray);
 			}
     }
   }

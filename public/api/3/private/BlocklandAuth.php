@@ -22,14 +22,18 @@ class BlocklandAuth {
   }
 }
 
-function BlocklandAuthenticate($username) {
+function BlocklandAuthenticate($username, $ip = false) {
+  if($ip === false) {
+    $ip = $_SERVER['REMOTE_ADDR'];
+  }
+
 	$username = mb_convert_encoding(urldecode($username), "ISO-8859-1");
 	$username = str_replace("%", "%25", $username);
 	$encodeChars = array(" ", "@", "$", "&", "?", "=", "+", ":", ",", "/");
 	$encodeValues = array("%20", "%40", "%24", "%26", "%3F", "%3D", "%2B", "3A","%2C", "%2F");
 	$username = str_replace($encodeChars, $encodeValues, $username);
 
-	$postData = "NAME=${username}&IP=${_SERVER['REMOTE_ADDR']}";
+	$postData = "NAME=${username}&IP=${ip}";
 
 	$opts = array('http' => array('method' => 'POST', 'header' => "Connection: keep-alive\r\nUser-Agent: Blockland-r1986\r\nContent-type: application/x-www-form-urlencoded\r\nContent-Length: ". strlen($postData) . "\r\n", 'content' => $postData));
 
