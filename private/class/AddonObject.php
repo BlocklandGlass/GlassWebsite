@@ -3,6 +3,7 @@ namespace Glass;
 
 require_once(realpath(dirname(__FILE__) . "/DependencyManager.php"));
 require_once(realpath(dirname(__FILE__) . "/StatManager.php"));
+require_once(realpath(dirname(__FILE__) . "/TML.php"));
 
 //this should be the only class to interact with `addon_files` ?
 //Actually it should probably be a purely data class to follow suit with others
