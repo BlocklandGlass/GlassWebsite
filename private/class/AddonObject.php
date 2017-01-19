@@ -97,7 +97,7 @@ class AddonObject {
 	public function getBetaVersion() {
 		return $this->betaVersion;
 	}
-	
+
 	public function getVersion() {
 		if($this->version == "")
 			$this->version = "0.0.0";
@@ -149,6 +149,10 @@ class AddonObject {
 
 	public function getScreenshots() {
 		return ScreenshotManager::getScreenshotsFromAddon($this->id);
+	}
+
+	public function getDescriptionTML() {
+		TML::format($this->description);
 	}
 }
 
