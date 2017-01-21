@@ -240,10 +240,10 @@ class StatManager {
 			$addon = AddonManager::getFromId($aid);
 			if($addon->getDownloads('iteration') == 0)
 				break;
-			$msg .= "$ct. <font:verdana bold:13>" . $addon->getName() . "<font:verdana:13> by <font:verdana bold:13>" . $addon->getAuthor()->getName() . "<font:verdana:13> with " . $addon->getDownloads('iteration') . " downloads<br>";
+			$msg .= "$ct. <font:verdana:13><a:glass://aid-" . $addon->getID() . ">" . $addon->getName() . "</a> by <font:verdana bold:13>" . $addon->getAuthor()->getName() . "<font:verdana:13> with " . $addon->getDownloads('iteration') . " downloads<br>";
 		}
 
-		$msg .= "<br><br>- GlassBot";
+		$msg .= "<br><br><font:verdana bold:13>- <color:9b59b6>GlassBot";
 
 		return $msg;
 	}
