@@ -245,7 +245,7 @@ class StatManager {
 
 		$msg .= "<br><br><font:verdana bold:13>- <color:9b59b6>GlassBot";
 
-		return $msg;
+		return utf8_encode($msg);
 	}
 
 	public static function verifyTable($database) {
