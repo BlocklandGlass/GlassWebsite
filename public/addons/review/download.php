@@ -8,7 +8,7 @@ $file = $_REQUEST['file'] ?? "";
 $fp = fopen(dirname(__DIR__) . "/../../filebin/" . $file, 'r');
 if(!$fp) {
   $result->status = "error";
-  $result->error = "Failed to open resource";
+  $result->error = "Failed to open resource " . (dirname(__DIR__) . "/../../filebin/" . $file);
   die(json_encode($result, JSON_PRETTY_PRINT));
 }
 
