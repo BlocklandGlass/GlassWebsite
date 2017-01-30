@@ -575,7 +575,16 @@ class AddonManager {
 		$addon->id = $update->getAddon()->getId();
 		$params->vars[] = $addon;
 		NotificationManager::createNotification($manager, 'Your update to $1 was approved', $params);
+
+		$filepath = dirname(__DIR__) . '/../filebin/aws_sync/' . $update->getAddon()->getId();
+
+		if(!is_dir(dirname($filepath))) {
+			mkdir(dirname($filepath), 0777, true);
+		}
+
+		copy($update->getFile(), $filepath);
 		@unlink($update->getFile());
+
 	}
 
 	public static function deleteAddon($addon) {
