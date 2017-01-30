@@ -192,7 +192,9 @@ class AddonManager {
 		var_dump($revInf);
 
 		$database = new DatabaseManager();
-		$database->query("UPDATE `addon_addons` SET `approved`='-1', `reviewInfo`='" . $database->sanitize(json_encode($revInf)) . "' WHERE `id`='" . $database->sanitize($id) . "'");
+		//$database->query("UPDATE `addon_addons` SET `approved`='-1', `reviewInfo`='" . $database->sanitize(json_encode($revInf)) . "' WHERE `id`='" . $database->sanitize($id) . "'");
+		$database->query("UPDATE `addon_addons` SET `approved`='-1' WHERE `id`='" . $database->sanitize($id) . "'");
+
 
 		$manager = AddonManager::getFromId($id)->getManagerBLID();
 
