@@ -5,6 +5,13 @@ use Glass\AddonManager;
 
 $file = $_REQUEST['file'] ?? "";
 
+if(strpos($file, "..") !== false) {
+  $result->status = "error";
+  $result->error = "Illegal path: " . $file);
+  die(json_encode($result, JSON_PRETTY_PRINT));
+}
+
+
 $fp = fopen(dirname(__DIR__) . "/../../filebin/" . $file, 'r');
 if(!$fp) {
   $result->status = "error";

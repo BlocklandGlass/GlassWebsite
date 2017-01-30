@@ -40,6 +40,12 @@ class AddonUpdateObject {
 		return $this->file;
 	}
 
+	public function getFileBin() {
+		$idx = strpos(realpath($this->file), "filebin/");
+		$bin = substr($this->file, $idx+8);
+		return $bin;
+	}
+
 	public function getVersion() {
 		return $this->version;
 	}

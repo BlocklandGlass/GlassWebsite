@@ -101,6 +101,11 @@ td {
 		<br />
 		WIP
 	</div>
+	<div class="tile">
+		<p>
+			<a class="btn blue" href="download.php?file=<?php echo $update->getFileBin() ?>">Download</a>
+		</p>
+	</div>
   <form action="approveUpdate.php" method="post">
 		<input type="hidden" name="aid" value="<?php echo $addon->getId() ?>" />
 		<?php if($owner) { ?>
