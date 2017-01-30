@@ -23,9 +23,9 @@ if($type == "addon_update" || $type == "addon_download") {
   }
 
   if($type == "addon_update") {
-    StatManager::downloadAddonID($id, "update");
+    StatManager::downloadAddonID($id, "update", $_SERVER['REMOTE_ADDR']);
   } else {
-    StatManager::downloadAddonID($id, "ingame");
+    StatManager::downloadAddonID($id, "ingame", $_SERVER['REMOTE_ADDR']);
   }
 
 

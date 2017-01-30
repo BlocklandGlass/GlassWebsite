@@ -74,18 +74,24 @@ class StatManager {
 		return $sum;
 	}
 
-	public static function downloadAddonID($aid, $context = "web") {
+	public static function downloadAddonID($aid, $context = "web", $ip = false) {
 		$addon = AddonManager::getFromID($aid);
 
 		if(!$addon) {
 			return false;
 		}
-		return StatManager::downloadAddon($addon, $context);
+		return StatManager::downloadAddon($addon, $context, $ip);
 	}
 
-	public static function downloadAddon($addon, $context = "web") {
+	public static function downloadAddon($addon, $context = "web", $ip = false) {
 		$database = new DatabaseManager();
 		StatManager::verifyTable($database);
+
+		if($ip !== false) {
+			if(!StatManager::canDoIncrement($ip, $addon->getId(), $context)) {
+				return true;
+			}
+		}
 
 		if($context == "web") {
 			$sql = "webDownloads";
@@ -103,6 +109,23 @@ class StatManager {
 			throw new \Exception("failed to register new download: " . $database->error());
 		}
 		return true;
+	}
+
+	public static function canDoIncrement($ip, $aid, $type) {
+		$db = new DatabaseManager();
+		StatManager::verifyTable($db);
+
+		$aid  = $db->sanitize($aid );
+		$ip   = $db->sanitize($ip  );
+		$type = $db->sanitize($type);
+
+		$res = $db->query("SELECT * FROM `addon_download_cache` WHERE `aid`='$aid' AND `ip`='$ip' AND `type`='$type'");
+		if($res->num_rows > 0) {
+			return false;
+		} else {
+			$db->query("INSERT INTO `addon_download_cache` (aid, ip, type) VALUES ('$aid', '$ip', '$type')");
+			return true;
+		}
 	}
 
 	public static function getTrendingAddons($count = 10) {
@@ -221,6 +244,7 @@ class StatManager {
 
 		$database = new DatabaseManager();
 		$database->query("UPDATE `addon_stats` SET `iterationDownloads`=0");
+		$database->query("DELETE FROM `addon_download_cache`");
 	}
 
 	public static function createNewsPost() {
@@ -285,6 +309,19 @@ class StatManager {
 				ON DELETE CASCADE,
 			PRIMARY KEY (`id`))")) {
 			throw new \Exception("Failed to create addon stat history table: " . $database->error());
+		}
+
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_download_cache` (
+			`aid`  INT NOT NULL,
+			`ip`   TEXT NOT NULL,
+			`type` VARCHAR(16) NOT NULL,
+			`date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+			FOREIGN KEY (`aid`)
+				REFERENCES addon_addons(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE)")) {
+			throw new \Exception("Failed to create addon download cache table: " . $database->error());
 		}
 	}
 }
