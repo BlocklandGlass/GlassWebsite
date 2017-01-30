@@ -31,7 +31,7 @@ if(isset($contentTypes[$ext])) {
 } else {
   if(!ctype_print($contents)) {
     header('Content-Type: application/ocelot-stream');
-    header('Content-Disposition: attachment; filename=' . substr($file, strrpos($file, "/")+1));
+    header('Content-Disposition: attachment; filename=' . substr($file, strrpos($file, "/")+1) . '.zip');
   }
   echo($contents);
   //$result->status = "error";
