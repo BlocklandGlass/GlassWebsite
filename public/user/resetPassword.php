@@ -50,28 +50,30 @@
   }
 ?>
 <div class="maincontainer">
-  <?php if($response["message"] !== null) {
-    echo $response["message"];
-  }
+	<div class="tile" style="width:50%; margin: 0 auto;">
+	  <?php if($response["message"] !== null) {
+	    echo $response["message"];
+	  }
 
-  if($response["form"]) {
-  ?>
-  <form method="post" target="resetPassword.php?token=<?php echo urlencode($_REQUEST['token']); ?>&id=<?php echo ($_REQUEST['id']+0) ?>">
-    <table class="formtable">
-      <tr>
-        <td>Password</td>
-        <td><input type="password" name="password" /></td>
-      </tr>
-      <tr>
-        <td>Confirm</td>
-        <td><input type="password" name="confirm" /></td>
-      </tr>
-      <tr>
-        <td colspan="2"><input type="submit" value="Reset" /></td>
-      </tr>
-    </table>
-  </form>
-  <?php } ?>
+	  if($response["form"]) {
+	  ?>
+	  <form method="post" action="resetPassword.php?token=<?php echo urlencode($_REQUEST['token']); ?>&id=<?php echo ($_REQUEST['id']+0) ?>">
+	    <table class="formtable">
+	      <tr>
+	        <td>Password</td>
+	        <td><input type="password" name="password" /></td>
+	      </tr>
+	      <tr>
+	        <td>Confirm</td>
+	        <td><input type="password" name="confirm" /></td>
+	      </tr>
+	      <tr>
+	        <td colspan="2"><input type="submit" value="Reset" /></td>
+	      </tr>
+	    </table>
+	  </form>
+	  <?php } ?>
+	</div>
 </div>
 
 <?php include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>

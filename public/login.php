@@ -13,36 +13,40 @@
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>
 <div class="maincontainer">
-	<div class="center" id="loginStatus">
-		<?php echo("<p>" . utf8_encode($loginStatus['message']) . "</p>"); ?>
-	</div>
-	<form action="login.php" method="post" id="mainLoginForm">
-		<table class="formtable">
-			<tbody>
-				<tr><td class="center" colspan="2"><h2>Log In</h2></td></tr>
-				<tr><td>E-mail or BLID:</td><td><input type="text" name="username" id="username" autofocus></td></tr>
-				<tr><td>Password:</td><td><input type="password" name="password" id="password"></td></tr>
-				<tr><td class="center" colspan="2"><input type="submit"></td></tr>
-			</tbody>
-		</table>
-		<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
+	<div class="tile" style="width:50%; margin: 0 auto;">
+		<div class="center" id="loginStatus">
+			<?php echo("<p>" . utf8_encode($loginStatus['message']) . "</p>"); ?>
+		</div>
+		<form action="login.php" method="post" id="mainLoginForm">
+			<table class="formtable">
+				<tbody>
+					<tr><td class="center" colspan="2"><h2>Log In</h2></td></tr>
+					<tr><td>E-mail or BLID:</td><td><input type="text" name="username" id="username" autofocus></td></tr>
+					<tr><td>Password:</td><td><input type="password" name="password" id="password"></td></tr>
+					<tr><td class="center" colspan="2"><input type="submit"></td></tr>
+				</tbody>
+			</table>
+			<div style="text-align: center; font-size:0.8em">
+				<a href="/user/forgotPassword.php">Forgot your password?</a>
+			</div>
+			<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
+			<?php
+				if(isset($_POST['redirect'])) {
+					echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($_POST['redirect']) . "\">");
+				}
+			?>
+		</form>
 		<?php
 			if(isset($_POST['redirect'])) {
+				echo("<p class=\"center\">Don't have an account? <a href=\"register.php\" onclick=\"document.getElementById('redirectToRegisterForm').submit(); return false;\">Register</a></p>");
+				echo("<form class=\"hidden\" action=\"/register.php\" method=\"post\" id=\"redirectToRegisterForm\">");
 				echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($_POST['redirect']) . "\">");
+				echo("</form>");
+			} else {
+				echo("<p class=\"center\">Don't have an account? <a href=\"register.php\">Register</a></p>");
 			}
 		?>
-	</form>
-<?php
-	if(isset($_POST['redirect'])) {
-		echo("<p class=\"center\">Don't have an account? <a href=\"register.php\" onclick=\"document.getElementById('redirectToRegisterForm').submit(); return false;\">Register</a></p>");
-		echo("<form class=\"hidden\" action=\"/register.php\" method=\"post\" id=\"redirectToRegisterForm\">");
-		echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($_POST['redirect']) . "\">");
-		echo("</form>");
-	} else {
-		echo("<p class=\"center\">Don't have an account? <a href=\"register.php\">Register</a></p>");
-	}
-?>
-
+	</div>
 </div>
 <div class="hidden" id="preloadImage">
 	<img src="/img/loading.gif" />
