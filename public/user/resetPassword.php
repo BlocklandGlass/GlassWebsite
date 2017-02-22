@@ -5,10 +5,6 @@
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 	use Glass\UserManager;
-	use Glass\AddonManager;
-	use Glass\BuildManager;
-	use Glass\BuildObject;
-	use Glass\BoardObject;
 	use Glass\NotificationManager;
 	use Glass\NotificationObject;
 
@@ -27,7 +23,7 @@
     } else {
       $blid = $_REQUEST['id'];
       $token = $_REQUEST['token'];
-      apc_delete('userObject_' . $_REQUEST['id']);
+
       $userObj = UserManager::getFromBLID($blid);
       if($userObj->getResetKey() !== $token) {
         $response = [
