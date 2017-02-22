@@ -279,43 +279,54 @@ class UserManager {
 			    <meta name="keywords" content="" />
 			    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1" />
 			    <style type="text/css">
-			    h1 {
-			      margin-top: 0;
-			    }
+				    h1 {
+				      margin-top: 0;
+				    }
 
-			    td {
-			      width: 600px;
-			      padding: 20px;
-			      font-family: Verdana;
-			      border-radius: 15px;
-			      border: 1px solid #aaa;
-			      background-color: #ccc;
-			    }
+				    td {
+				      width: 600px;
+				      padding: 20px;
+				      font-family: Verdana;
+				      border-radius: 15px;
+				      border: 1px solid #aaa;
+				      background-color: #ccc;
+				    }
 
-			    td[class=footer] {
-			      background-color: #333;
-			      color: #fff;
-			      font-weight: bold;
-			      padding:10px;
-			    }
+				    td[class=footer] {
+				      background-color: #333;
+				      color: #fff;
+				      font-weight: bold;
+				      padding:10px;
+				    }
 
-			    table {
-			      width: 600px;
-			      margin: 15px auto;
-			    }
+				    table {
+				      width: 600px;
+				      margin: 15px auto;
+				    }
+
+						.tile {
+						  margin: 5px;
+						  padding: 15px;
+						  font-size: 0.8em;
+						  background-color: #ebebeb;
+						  border-radius: 2px;
+						  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.1);
+						}
 			    </style>
 			  </head>
 			  <body>
 			    <table class="content">
 			      <tr>
-			        <td>
+			        <td class="tile">
 			          <h1>Blockland Glass</h1>
-			          You seem to have forgotten your password! Please click <a href="http://blocklandglass.com/user/resetPassword.php?token=' . urlencode($resetToken) . '&id=' . $user->getBLID() . '">here to reset your password</a>.<br /><br />
-								If you were not the one who requested a password reset, you may disregard this message.
+								<p>
+				          You seem to have forgotten your password! Please click <a href="http://blocklandglass.com/user/resetPassword.php?token=' . urlencode($resetToken) . '&id=' . $user->getBLID() . '">here to reset your password</a>.<br /><br />
+									If you were not the one who requested a password reset, you may disregard this message.
+								</p>
 			        </td>
 			      </tr>
 			      <tr>
-			        <td class="footer" style="background-color:#333;color:#fff;font-weight: bold;padding:10px;font-size:0.6em; text-align:center;border: 1px solid black;">Email sent ' . date('H:i:s M-d-y') . '</td>
+			        <td class="tile" style="background-color:#333;color:#fff;font-weight: bold;padding:10px;font-size:0.6em; text-align:center;border: 1px solid black;">Email sent ' . date('H:i:s M-d-y') . '</td>
 			      </tr>
 			    </table>
 			  </body>
