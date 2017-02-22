@@ -37,7 +37,7 @@
         if($form) {
       ?>
     </p>
-    <form method="post" target="forgotPassword.php">
+    <form method="post" action="forgotPassword.php">
       <table class="formtable">
         <tr>
           <td>BL_ID</td>
