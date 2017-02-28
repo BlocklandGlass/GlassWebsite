@@ -7,6 +7,8 @@ use Glass\UserManager;
 
 header('Content-Type: text/json; charset=ascii');
 
+$barred = [118256,43364,21186,38463,209987];
+
 if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 	$con = \ClientConnection::loadFromIdentifier($_REQUEST['ident']);
   $ret = new \stdClass();
@@ -18,7 +20,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
     $ret->ident = $con->getIdentifier();
     $ret->blid = $con->getBLID();
 
-		if($ret->blid == 118256 || $ret->blid == 43364 || $ret->blid == 21186) {
+		if(in_array($ret->blid, $barred)) {
 			$ret->status = "barred";
 			$json = json_encode($ret, JSON_PRETTY_PRINT);
 			die($json);
