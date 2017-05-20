@@ -109,6 +109,9 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
   $blid = $_REQUEST['blid'];
   $ip = $_SERVER['REMOTE_ADDR'];
 
+	if($blid == 43861)
+		die();
+
 	$con = new ClientConnection(array($blid, $username, $ip));
 	$con->setServer($isServer);
 

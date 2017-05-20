@@ -7,7 +7,7 @@ use Glass\UserManager;
 
 header('Content-Type: text/json; charset=ascii');
 
-$barred = [118256,43364,21186,38463,209987];
+$barred = [118256,43364,21186,38463,209987,43861];
 
 if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 	$con = \ClientConnection::loadFromIdentifier($_REQUEST['ident']);
