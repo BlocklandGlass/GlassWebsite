@@ -100,11 +100,7 @@ setInterval(nextImage, 5000);
 		$nonglass = StatManager::getMasterServerStats()['users'];
 		$glass = sizeof(UserLog::getRecentlyActive());
         $percentage = floor(100/$nonglass*$glass);
-		if($percentage > 100)
-            echo "<b>" . $percentage . "%</b> (how is this happening)";
-        else
-            echo "<b>" . $percentage . "%</b>";
-		?>
+        echo "<b>" . $percentage . "%</b>"; ?>
 		of Blockland as of this moment. Glass has <b>
 		<?php
 		echo $ct = UserLog::getUniqueCount();
