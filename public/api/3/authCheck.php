@@ -7,7 +7,7 @@ use Glass\UserManager;
 
 header('Content-Type: text/json; charset=ascii');
 
-$barred = [118256,43364,21186,38463,209987,43861];
+$barred = [118256,43364,21186,209987,43861];
 //43861 - Steee
 
 $ip = $_REQUEST['ip'] ?? false;
