@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: text');
+//header('Content-Type: text');
 
 if(isset($_GET['doc'])) {
   $doc = $_GET['doc'];
