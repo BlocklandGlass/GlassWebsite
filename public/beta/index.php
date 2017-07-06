@@ -15,7 +15,7 @@
     $id = "Open Beta 1";
     $class = "red";
     $ao = AddonManager::getFromId($glassAddonId);
-    $version = "4.0.0-beta.1";
+    $version = "4.1.0-beta.1";
     ?>
     <div style="text-align: center">
       <?php
