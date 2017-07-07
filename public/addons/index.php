@@ -14,7 +14,7 @@
 ?>
 <div class="maincontainer">
 	<?php include(realpath(dirname(__DIR__) . "/../private/searchbar.php")); ?>
-	<ul class="addonnav tile" style="margin-bottom: 15px;">
+	<ul class="addonnav tile">
 		<li><a href="/addons/boards.php">Boards</a></li>
 		<li><a href="/addons/rtb/">RTB Archive</a></li>
 		<?php
@@ -26,29 +26,26 @@
 		<?php } ?>
 	</ul>
 
-	<table style="width: 100%;">
-		<tbody>
-			<tr>
-				<td style="text-align:center;">
-					<h3>Weekly Downloads</h3>
-				</td>
-				<td style="text-align:center;">
-					<h3>Recent Uploads</h3>
-				</td>
-			</tr>
-			<tr>
-				<td style="width:50%; vertical-align:top">
-					<div class="tile">
-						<?php include(realpath(dirname(__DIR__) . "/ajax/getTrendingAddons.php")); ?>
-					</div>
-				</td>
-				<td style="width:50%; vertical-align:top">
-					<div class="tile">
-						<?php include(realpath(dirname(__DIR__) . "/ajax/getNewAddons.php")); ?>
-					</div>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<div style="display: flex; flex-wrap: wrap;">
+		<div style="flex-grow: 1">
+			<div style="text-align: center; margin-top: 15px;">
+				<h3>Weekly Downloads</h3>
+			</div>
+
+			<div class="tile">
+				<?php include(realpath(dirname(__DIR__) . "/ajax/getTrendingAddons.php")); ?>
+			</div>
+		</div>
+
+		<div style="flex-grow: 1">
+			<div style="text-align: center; margin-top: 15px;">
+				<h3>Recent Uploads</h3>
+			</div>
+
+			<div class="tile">
+				<?php include(realpath(dirname(__DIR__) . "/ajax/getNewAddons.php")); ?>
+			</div>
+		</div>
+	</div>
 </div>
 <?php include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>
