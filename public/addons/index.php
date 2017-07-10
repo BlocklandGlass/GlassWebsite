@@ -27,7 +27,7 @@
 	</ul>
 
 	<div style="display: flex; flex-wrap: wrap;">
-		<div style="flex-grow: 1">
+		<div style="flex-grow: 1; flex-shrink: 1; overflow-x: auto;">
 			<div style="text-align: center; margin-top: 15px;">
 				<h3>Weekly Downloads</h3>
 			</div>
@@ -37,7 +37,7 @@
 			</div>
 		</div>
 
-		<div style="flex-grow: 1">
+		<div style="flex-grow: 1; flex-shrink: 1; overflow-x: auto;">
 			<div style="text-align: center; margin-top: 15px;">
 				<h3>Recent Uploads</h3>
 			</div>
