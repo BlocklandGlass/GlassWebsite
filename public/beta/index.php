@@ -12,10 +12,10 @@
   	</p>
     <?php
     $glassAddonId = 11; //this needs to be changed before going live, or we need a "find addon by name"
-    $id = "Open Beta 4";
+    $id = "Open Beta 5";
     $class = "red";
     $ao = AddonManager::getFromId($glassAddonId);
-    $version = "4.1.0-beta.4";
+    $version = "4.1.0-beta.5";
     ?>
     <div style="text-align: center">
       <?php
