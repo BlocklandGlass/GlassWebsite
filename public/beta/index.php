@@ -1,4 +1,7 @@
 <?php
+	header('Location: /');
+	return;
+	
 	require_once dirname(__DIR__) . '/../private/autoload.php';
 	require_once(realpath(dirname(__DIR__) . "/../private/header.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
