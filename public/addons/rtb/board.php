@@ -32,8 +32,8 @@
 					foreach($addons as $addon) {
 						?>
 						<tr>
-						<td style="width: 33%"><a href="view.php?id=<?php echo $addon->id?>"><?php echo $addon->title ?></a></td>
-						<td><?php echo $addon->id ?></td>
+						<td style="min-width: 33%; text-align: left;"><a href="view.php?id=<?php echo $addon->id?>"><?php echo $addon->title ?></a></td>
+						<td style="width: 90px;"><?php echo $addon->id ?></td>
 						</tr><?php
 					}
 

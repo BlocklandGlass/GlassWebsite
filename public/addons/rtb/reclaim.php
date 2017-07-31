@@ -18,23 +18,25 @@
   }
 ?>
 <div class="maincontainer">
-  <?php if($ret === true) {
-    echo "<b>Your reclaim request has been submitted for approval</b>";
-  } else if($ret === false) {
-    echo "<b>Your reclaim request has failed</b>";
-  }
-  ?>
-  <h1 style="text-align:center"><img src="/img/rtb_logo.gif"><br /><?php echo $addonData->title ?></h1>
-  <hr />
-  You can reclaim your old RTB add-ons and have them automatically imported and updated, reclaiming your old users and issuing them the latest version.<br />
-  <br />
-  Name of Current Add-On on Glass: <input type="text" id="addon" />
-  <form method="post" action="">
-    <input type="hidden" name="action" value="reclaim" />
-    <div id="options">
+	<div class="tile">
+	  <?php if($ret === true) {
+	    echo "<b>Your reclaim request has been submitted for approval</b>";
+	  } else if($ret === false) {
+	    echo "<b>Your reclaim request has failed</b>";
+	  }
+	  ?>
+	  <h1 style="text-align:center"><img src="/img/rtb_logo.gif"><br /><?php echo $addonData->title ?></h1>
+	  <hr />
+	  You can reclaim your old RTB add-ons and have them automatically imported and updated, reclaiming your old users and issuing them the latest version.<br />
+	  <br />
+	  Name of Current Add-On on Glass: <input type="text" id="addon" />
+	  <form method="post" action="">
+	    <input type="hidden" name="action" value="reclaim" />
+	    <div id="options">
 
-    </div>
-  </form>
+	    </div>
+	  </form>
+	</div>
 </div>
 <script type="text/javascript">
 $("#addon").keyup(function() {
