@@ -42,7 +42,6 @@
 			flex-grow: 1;
 			flex-shrink: 1;
 			overflow-x: auto;
-			max-width: 50%;
 
 			word-wrap: break-word;
 		}
