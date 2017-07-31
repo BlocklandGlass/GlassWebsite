@@ -18,30 +18,30 @@
 <div class="maincontainer">
   <h1 style="text-align:center"><img src="/img/rtb_logo.gif"><br /><?php echo $_GET['name']; ?></h1>
   <a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archive</a> >> <a href="#"><?php echo $_GET['name']; ?></a>
-	<table class="boardtable">
-	<tbody>
-		<tr class="boardheader">
-			<td>Name</td>
-			<td>ID</td>
-		</tr>
-<?php
-  $addons = RTBAddonManager::getFromType($_GET['name']);
 
-	foreach($addons as $addon) {
-		?>
-		<tr>
-		<td style="width: 33%"><a href="view.php?id=<?php echo $addon->id?>"><?php echo $addon->title ?></a></td>
-		<td><?php echo $addon->id ?></td>
-		</tr><?php
-	}
+	<div class="tile">
+		<table class="boardtable">
+			<tbody>
+				<tr class="boardheader">
+					<td>Name</td>
+					<td>ID</td>
+				</tr>
+				<?php
+				  $addons = RTBAddonManager::getFromType($_GET['name']);
 
-	//TO DO: page number links should also appear at the bottom, probably inside of the grey footer
-?>
-		<tr class="boardheader">
-			<td colspan="4"></td>
-		</tr>
-		</tbody>
-	</table>
+					foreach($addons as $addon) {
+						?>
+						<tr>
+						<td style="width: 33%"><a href="view.php?id=<?php echo $addon->id?>"><?php echo $addon->title ?></a></td>
+						<td><?php echo $addon->id ?></td>
+						</tr><?php
+					}
+
+					//TO DO: page number links should also appear at the bottom, probably inside of the grey footer
+				?>
+			</tbody>
+		</table>
+	</div>
 </div>
 
 <?php include(realpath(dirname(__DIR__) . "/../../private/footer.php")); ?>
