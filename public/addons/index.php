@@ -30,20 +30,27 @@
 		.flex-container {
 			display: flex;
 
-			-webkit-flex-direction: row;
-			flex-direction: row;
-			-webkit-align-items: flex-start;
-			align-items: flex-start;
-
-			flex-wrap: wrap;
+			flex-flow: row wrap;
 		}
 
 		.flex-body {
 			flex-grow: 1;
 			flex-shrink: 1;
+			flex: 1;
 			overflow-x: auto;
 
 			word-wrap: break-word;
+			min-width: 270px;
+		}
+
+		@media screen and (max-width: 720px) {
+    	.flex-container {
+				flex-flow: column wrap;
+			}
+
+			.flex-body {
+				display: inline-block;
+			}
 		}
 	</style>
 
