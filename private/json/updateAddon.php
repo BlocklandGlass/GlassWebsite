@@ -159,7 +159,8 @@ function codeToMessage($code) {
 	}
 
 	if(isset($uploadVersion)) {
-		return AddonManager::submitUpdate($addonObject, $uploadVersion, $tempLocation, $uploadChangelog, $_REQUEST['restart']);
+		$restart = isset($_REQUEST['restart']);
+		return AddonManager::submitUpdate($addonObject, $uploadVersion, $tempLocation, $uploadChangelog, $restart);
 	}
 	return $response;
 ?>

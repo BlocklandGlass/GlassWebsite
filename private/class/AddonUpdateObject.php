@@ -114,7 +114,7 @@ class AddonUpdateObject {
       }
 
 			$removed = array_diff($oldFiles, $newFiles);
-			$removed = array_diff($removed, ['glass.json', 'version.json']);
+			$removed = array_diff($removed, ['glass.json', 'version.json', 'namecheck.txt']);
 			return $removed;
     } else {
       return [
@@ -159,9 +159,9 @@ class AddonUpdateObject {
       }
 
 			$added = array_diff($newFiles, $oldFiles);
-			$removed = array_diff($oldFiles, $newFiles, ["glass.json", "version.json"]);
+			$removed = array_diff($oldFiles, $newFiles, ["glass.json", "version.json", "namecheck.txt"]);
 			$commonFiles = array_intersect($newFiles, $oldFiles);
-			$commonFiles = array_diff($commonFiles, ["glass.json", "version.json"]);
+			$commonFiles = array_diff($commonFiles, ["glass.json", "version.json", "namecheck.txt"]);
 			$diff = [];
 			foreach($commonFiles as $fi) {
 				if(strpos($fi, ".cs") == strlen($fi)-3) {
