@@ -53,7 +53,7 @@
 			echo " ... ";
 
 			//TO DO: switch this over to ajax requests
-			echo "<a href=\"?id=" . $boardObject->getID() . "&page=" . ($pages-1) . "\">" . $pages-1 . "</a>";
+			echo "<a href=\"?id=" . $boardObject->getID() . "&page=" . ($pages-1) . "\">" . ($pages-1) . "</a>";
 			echo "<a href=\"?id=" . $boardObject->getID() . "&page=" . $pages . "\">" . $pages . "</a>";
 		} else if($pages-3 < $page) {
 			echo "<a href=\"?id=" . $boardObject->getID() . "&page=1\">1</a>";

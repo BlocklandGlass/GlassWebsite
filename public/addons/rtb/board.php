@@ -43,7 +43,7 @@
 					echo " ... ";
 
 					//TO DO: switch this over to ajax requests
-					echo "<a href=\"?name=" . $type . "&page=" . ($pages-1) . "\">" . $pages-1 . "</a>";
+					echo "<a href=\"?name=" . $type . "&page=" . ($pages-1) . "\">" . ($pages-1) . "</a>";
 					echo "<a href=\"?name=" . $type . "&page=" . $pages . "\">" . $pages . "</a>";
 				} else if($pages-3 < $page) {
 					echo "<a href=\"?name=" . $type . "&page=1\">1</a>";
@@ -86,7 +86,7 @@
 			<tbody>
 				<tr class="boardheader shadow-1">
 					<td style="width: auto; text-align: left;">Name</td>
-					<td style="text-align: center;">Author</td>
+					<td style="text-align: center !important;">Author</td>
 					<td style="width: 90px;">ID</td>
 				</tr>
 				<?php
