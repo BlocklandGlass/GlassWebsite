@@ -22,7 +22,7 @@
 		$page = 0;
 	}
 
-	$pageCt = ceil(RTBAddonManager::getTypeCount($type)/15);
+	$pages = ceil(RTBAddonManager::getTypeCount($type)/15);
 	$addons = RTBAddonManager::getFromType($type, $page*15);
 ?>
 <div class="maincontainer">
@@ -85,7 +85,7 @@
 		<table class="boardtable">
 			<tbody>
 				<tr class="boardheader shadow-1">
-					<td style="width: auto;">Name</td>
+					<td style="width: auto; text-align: left;">Name</td>
 					<td style="text-align: center;">Author</td>
 					<td style="width: 90px;">ID</td>
 				</tr>
@@ -94,7 +94,7 @@
 						?>
 						<tr>
 						<td style="text-align: left; width: auto;"><a href="view.php?id=<?php echo $addon->id?>"><?php echo $addon->title ?></a></td>
-						<td style="text-align: center; width: 30%"><?php echo $addon->author ?></td>
+						<td style="text-align: center; width: 40%"><?php echo $addon->author ?></td>
 						<td style="width: 90px;"><?php echo $addon->id ?></td>
 						</tr><?php
 					}
