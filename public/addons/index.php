@@ -26,8 +26,30 @@
 		<?php } ?>
 	</ul>
 
-	<div style="display: flex; flex-wrap: wrap;">
-		<div style="flex-grow: 1; flex-shrink: 1; overflow-x: auto;">
+	<style>
+		.flex-container {
+			display: flex;
+
+			-webkit-flex-direction: row;
+			flex-direction: row;
+			-webkit-align-items: flex-start;
+			align-items: flex-start;
+
+			flex-wrap: wrap;
+		}
+
+		.flex-body {
+			flex-grow: 1;
+			flex-shrink: 1;
+			overflow-x: auto;
+			max-width: 50%;
+
+			word-wrap: break-word;
+		}
+	</style>
+
+	<div class="flex-container">
+		<div class="flex-body">
 			<div style="text-align: center; margin-top: 15px;">
 				<h3>Weekly Downloads</h3>
 			</div>
@@ -37,7 +59,7 @@
 			</div>
 		</div>
 
-		<div style="flex-grow: 1; flex-shrink: 1; overflow-x: auto;">
+		<div class="flex-body">
 			<div style="text-align: center; margin-top: 15px;">
 				<h3>Recent Uploads</h3>
 			</div>
