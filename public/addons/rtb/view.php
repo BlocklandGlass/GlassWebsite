@@ -14,10 +14,10 @@
 ?>
 <div class="maincontainer">
 	<span style="font-size: 9pt;"><a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archive</a> >> <a href="board.php?name=<?php echo $addonData->type; ?>"><?php echo $addonData->type; ?></a> >> <a href="#"><?php echo htmlspecialchars($addonData->title); ?></a></span>
-  <?php
-		echo "<h2>" . utf8_encode($addonData->title) . "</h2>";
-	?>
-	<div style="tile">
+		<div class="tile">
+		<?php
+			echo "<h2>" . utf8_encode($addonData->title) . "</h2>";
+		?>
 		<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 			<div class="addoninfoleft">
 				<image style="height:1.5em" src="/img/icons32/folder_vertical_zipper.png" />
