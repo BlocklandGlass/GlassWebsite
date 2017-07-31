@@ -29,19 +29,71 @@
   <h1 style="text-align:center"><img src="/img/rtb_logo.gif"><br /><?php echo $_GET['name']; ?></h1>
   <a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archive</a> >> <a href="#"><?php echo $_GET['name']; ?></a>
 
+	<div class="pagenav" style="margin-right: 20px">
+		<?php
+			if($pages >= 7) {
+				if($page < 4) {
+					for($i = 0; $i < 4; $i++) {
+						if($i+1 == $page) {
+							echo "[<a href=\"board.php?name=" . $type . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>] ";
+						} else {
+							echo "<a href=\"board.php?name=" . $type . "&page=" . ($i+1) . "\">" . ($i+1) . "</a> ";
+						}
+					}
+					echo " ... ";
+
+					//TO DO: switch this over to ajax requests
+					echo "<a href=\"?name=" . $type . "&page=" . ($pages-1) . "\">" . $pages-1 . "</a>";
+					echo "<a href=\"?name=" . $type . "&page=" . $pages . "\">" . $pages . "</a>";
+				} else if($pages-3 < $page) {
+					echo "<a href=\"?name=" . $type . "&page=1\">1</a>";
+					echo "<a href=\"?name=" . $type . "&page=2\">2</a>";
+					echo " ... ";
+
+					for($i = $pages-4; $i < $pages; $i++) {
+						if($i+1 == $page) {
+							echo "[<a href=\"board.php?name=" . $type . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>] ";
+						} else {
+							echo "<a href=\"board.php?name=" . $type . "&page=" . ($i+1) . "\">" . ($i+1) . "</a> ";
+						}
+					}
+				} else { ?>
+					<a href="?id=<?php echo $boardObject->getID() ?>&page=1">1</a>
+					<a href="?id=<?php echo $boardObject->getID() ?>&page=2">2</a>
+					...
+					<a href="?id=<?php echo $boardObject->getID() . "&page=" . ($page-1); ?>"><?php echo $page-1; ?></a>
+					[<a href="?id=<?php echo $boardObject->getID() . "&page=" . $page; ?>"><?php echo $page; ?></a>]
+					<a href="?id=<?php echo $boardObject->getID() . "&page=" . ($page+1); ?>"><?php echo $page+1; ?></a>
+					...
+					<a href="?id=<?php echo $boardObject->getID() . "&page=" . ($pages-1); ?>"><?php echo $pages-1; ?></a>
+					<a href="?id=<?php echo $boardObject->getID() . "&page=" . $pages; ?>"><?php echo $pages; ?></a>
+					<?php
+				}
+			} else {
+				for($i = 0; $i < $pages; $i++) {
+					if($i+1 == $page) {
+						echo "[<a href=\"board.php?name=" . $type . "&page=" . ($i+1) . "\">" . ($i+1) . "</a>] ";
+					} else {
+						echo "<a href=\"board.php?name=" . $type . "&page=" . ($i+1) . "\">" . ($i+1) . "</a> ";
+						}
+					}
+			}
+		?>
+	</div>
+
 	<div class="tile">
 		<table class="boardtable">
 			<tbody>
 				<tr class="boardheader shadow-1">
-					<td>Name</td>
-					<td>Author</td>
+					<td style="width: auto;">Name</td>
+					<td style="text-align: center;">Author</td>
 					<td style="width: 90px;">ID</td>
 				</tr>
 				<?php
 					foreach($addons as $addon) {
 						?>
 						<tr>
-						<td style="text-align: left;"><a href="view.php?id=<?php echo $addon->id?>"><?php echo $addon->title ?></a></td>
+						<td style="text-align: left; width: auto;"><a href="view.php?id=<?php echo $addon->id?>"><?php echo $addon->title ?></a></td>
 						<td style="text-align: center; width: 30%"><?php echo $addon->author ?></td>
 						<td style="width: 90px;"><?php echo $addon->id ?></td>
 						</tr><?php
