@@ -19,8 +19,10 @@
 			?>
 			<tr>
 				<td style="padding: 10px; width: 20px;font-family: Impact, HelveticaNeue-CondensedBold, Helvetica Neue; font-size:1.5em"><?php echo $index+1; ?></td>
-				<td style="line-height: 1.3em;"><a href="/addons/addon.php?id=<?php echo $addon->id ?>"><?php echo utf8_encode($addon->getName()) ?></a> in
-					<a href="/addons/board.php?id=<?php echo $addon->getBoard() ?>">
+				<td style="line-height: 1.1em; text-align: left;">
+					<a href="/addons/addon.php?id=<?php echo $addon->id ?>"><?php echo utf8_encode($addon->getName()) ?></a>
+					<br />
+					<a style="font-size: 0.8em; color: #999;" href="/addons/board.php?id=<?php echo $addon->getBoard() ?>">
 	        <?php
 	        // work around because boardmanager::getfromid decides to hang if you're not logged into the site
 	        echo BoardManager::getFromId($addon->getBoard())->getName();
@@ -40,7 +42,7 @@
 						} else if($since < 3600*48) {
 							$time = "Yesterday at " . date("g:i A", strtotime($addon->uploadDate));
 						} else {
-							$time = date("M jS Y", strtotime($addon->uploadDate));
+							$time = date("m/j/Y", strtotime($addon->uploadDate));
 						}
 						echo $time; ?>
 				</td>
