@@ -18,7 +18,7 @@ $body  = $_REQUEST['body']  ?? false;
 $aid   = $_REQUEST['aid']   ?? false;
 $ident = $_REQUEST['ident'] ?? false;
 
-if(!$title || !$body || !$aid || $ident) {
+if($title === false || $body === false || $aid === false || $ident === false) {
   $ret->error = "missing parameters";
   $ret->_title = $title;
   $ret->_body  = $body;
