@@ -11,6 +11,7 @@ header("Content-Type: text/json");
 
 $ret = new stdClass();
 $ret->status = "failed";
+$ret->error  = "undefined";
 
 $title = $_REQUEST['title'] ?? false;
 $body  = $_REQUEST['body']  ?? false;
@@ -18,15 +19,18 @@ $aid   = $_REQUEST['aid']   ?? false;
 $ident = $_REQUEST['ident'] ?? false;
 
 if(!$title || !$body || !$aid || $ident) {
+  $ret->error = "missing parameters";
   die(json_encode($ret, JSON_PRETTY_PRINT));
 }
 
 $con = ClientConnection::loadFromIdentifier();
 if(!is_object($con) || !$con->isAuthed()) {
+  $ret->error = "not authed";
   die(json_encode($ret, JSON_PRETTY_PRINT));
 }
 
 if(strlen($title) < 5 || strlen($body) < 5 || $aid < 0) {
+  $ret->error = "invalid parameters";
   die(json_encode($ret, JSON_PRETTY_PRINT));
 }
 
