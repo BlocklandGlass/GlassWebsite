@@ -27,7 +27,7 @@ if($title === false || $body === false || $aid === false || $ident === false) {
   die(json_encode($ret, JSON_PRETTY_PRINT));
 }
 
-$con = ClientConnection::loadFromIdentifier();
+$con = ClientConnection::loadFromIdentifier($ident);
 if(!is_object($con) || !$con->isAuthed()) {
   $ret->error = "not authed";
   die(json_encode($ret, JSON_PRETTY_PRINT));
