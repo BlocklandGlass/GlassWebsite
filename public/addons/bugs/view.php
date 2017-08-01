@@ -151,7 +151,7 @@
         </div>
       </div>
       <div style="display: inline-block">
-        <h2 style="margin-top:0; padding-top:0; display: inline-block"><?php echo $addonObject->getName(); ?> <span style="color: #bbb">#<?php echo $bug->id;?></span></h2>
+        <h2 style="margin-top:0; padding-top:0; display: inline-block; margin-bottom: 5px"><?php echo $addonObject->getName(); ?> <span style="color: #bbb">#<?php echo $bug->id;?></span></h2>
         <?php
 
         if(!$bug->open) {
@@ -159,7 +159,13 @@
         }
 
         ?>
-        <h3><?php echo $bug->title; ?></h3>
+        <h3 style="margin-bottom: 0"><?php echo $bug->title; ?></h3>
+        <div style="font-size: 0.8em; color: #999">
+          <?php $name = UserLog::getCurrentUsername($bug->blid);
+          if(!$name) $name = "Blockhead" . $bug->blid;
+          ?>
+          Opened by <a href="/users/view.php?id=<?php echo $bug->blid ?>"><?php echo $name ?></a>
+        </div>
         <p>
           <?php echo $bug->body; ?>
         </p>
