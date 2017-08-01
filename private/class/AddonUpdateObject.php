@@ -58,6 +58,10 @@ class AddonUpdateObject {
 		return $this->status == null;
 	}
 
+	public function isApproved() {
+		return $this->status == 1;
+	}
+
 	public function isRestart() {
 		return $this->restart;
 	}

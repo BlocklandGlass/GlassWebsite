@@ -10,6 +10,8 @@ if($addon === false) {
 
 $updates = AddonManager::getUpdates($addon);
 foreach($updates as $up) {
+  if(!$up->isApproved()) continue;
+
   echo "<version:" . $up->getVersion() . ">\n";
   echo $up->getChangeLog();
   echo "\n</version>\n";
