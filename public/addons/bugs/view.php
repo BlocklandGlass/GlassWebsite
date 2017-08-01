@@ -164,7 +164,7 @@
           <?php $name = UserLog::getCurrentUsername($bug->blid);
           if(!$name) $name = "Blockhead" . $bug->blid;
           ?>
-          Opened by <a href="/users/view.php?id=<?php echo $bug->blid ?>"><?php echo $name ?></a>
+          Opened by <a href="/user/view.php?blid=<?php echo $bug->blid ?>"><?php echo $name ?></a>
         </div>
         <p>
           <?php echo $bug->body; ?>
