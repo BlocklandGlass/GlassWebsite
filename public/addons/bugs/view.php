@@ -225,6 +225,7 @@
                     echo $name;
                   }
                   ?>
+                <br />
                 <div style="display:inline-block; text-align: left; margin-top:50px; font-weight:nomral; font-size:0.8em;color:#666;">
                   <?php echo $comment->timestamp ?>
                 </div>
