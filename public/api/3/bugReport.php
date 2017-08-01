@@ -20,6 +20,10 @@ $ident = $_REQUEST['ident'] ?? false;
 
 if(!$title || !$body || !$aid || $ident) {
   $ret->error = "missing parameters";
+  $ret->_title = $title;
+  $ret->_body  = $body;
+  $ret->_ident = $ident;
+  $ret->_aid   = $aid;
   die(json_encode($ret, JSON_PRETTY_PRINT));
 }
 
