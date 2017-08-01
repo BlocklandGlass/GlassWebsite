@@ -20,13 +20,15 @@
 		} catch (Exception $e) {
 			$hasAccount = false;
 		}
-	}
 
-	$userLog = UserLog::getCurrentUsername($blid);
-	if(!$userLog && !$hasAccount) {
-		$failed = true;
+		$userLog = UserLog::getCurrentUsername($blid);
+		if(!$userLog && !$hasAccount) {
+			$failed = true;
+		} else {
+			$failed = false;
+		}
 	} else {
-		$failed = false;
+		$failed = true;
 	}
 ?>
 <div class="maincontainer">
@@ -35,7 +37,7 @@
 			if($failed) {
 				$msg  = "<h2>Uh-Oh</h2>";
 				$msg .= "<p>We've never seen that user before. Sorry!</p>";
-				die($msg);
+				echo $msg;
 				return;
 			}
 
@@ -68,6 +70,12 @@
 			}
 
 			$lastseen = UserLog::getLastSeen($blid);
+			if($lastseen) {
+				$time = strtotime($lastseen);
+				$lastseen = date("F j, Y, g:i a", $time);
+			} else {
+				$lastseen = "Never";
+			}
 			echo "<p><b>Last Seen:</b> $lastseen";
 			echo "<br /><b>BL_ID:</b> $blid";
 			echo "</p>";
@@ -88,6 +96,12 @@
 					echo "<td>" . htmlspecialchars(utf8_encode($namedata->username)) . "</td>";
 					echo "<td>" . $namedata->date . "</td>";
 					echo "</tr>";
+				}
+
+				if(sizeof($history) == 0) {
+					echo "<tr><td colspan=\"2\" style=\"color: #666; text-align: center\">";
+					echo "No recorded name changes!";
+					echo "</td></tr>";
 				}
 				?>
 			</tbody>
