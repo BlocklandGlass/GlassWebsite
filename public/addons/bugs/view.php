@@ -159,15 +159,15 @@
         }
 
         ?>
-        <h3 style="margin-bottom: 0"><?php echo $bug->title; ?></h3>
+        <h3 style="margin-bottom: 0"><?php echo htmlspecialchars($bug->title); ?></h3>
         <div style="font-size: 0.8em; color: #999">
           <?php $name = UserLog::getCurrentUsername($bug->blid);
           if(!$name) $name = "Blockhead" . $bug->blid;
           ?>
-          Opened by <a href="/user/view.php?blid=<?php echo $bug->blid ?>"><?php echo $name ?></a>
+          Opened by <a href="/user/view.php?blid=<?php echo $bug->blid ?>"><?php echo htmlspecialchars($name) ?></a>
         </div>
         <p>
-          <?php echo $bug->body; ?>
+          <?php echo htmlspecialchars($bug->body); ?>
         </p>
       </div>
     </div>
@@ -237,7 +237,7 @@
                 </div>
               </td>
               <td style="vertical-align: top">
-                <?php echo $comment->body ?>
+                <?php echo htmlspecialchars($comment->body) ?>
               </td>
             </tr>
 
