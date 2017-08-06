@@ -79,5 +79,13 @@ class StatUsageManager {
 
     return $ret;
   }
+
+  public static function getActiveUsers($aid, $days = 30) {
+    $db = new DatabaseManager();
+    StatUsageManager::verifyTable($db);
+    $res = $db->query("SELECT `blid` FROM `stats_usage` WHERE `aid`='" . $db->sanitize($aid) ."' AND `reported` > now() - INTERVAL $days DAY");
+
+    return $res->num_rows ?? 0;
+  }
 }
 ?>

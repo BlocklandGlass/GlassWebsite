@@ -4,6 +4,8 @@
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 	use Glass\UserManager;
 	use Glass\UserLog;
+	use Glass\AddonManager;
+	use Glass\StatUsageManager;
 
 	$blid = $_GET['blid'] ?? false;
 
@@ -107,6 +109,50 @@
 			</tbody>
 		</table>
 	</div>
+	<?php
+	if($hasAccount) {
+	?>
+
+	<div class="tile">
+		<table class="listTable" style="width: 100%">
+			<thead>
+				<tr>
+					<th>
+						Add-On
+					</th>
+					<th>
+						Downloads
+					</th>
+					<th>
+						Active Users (Week)
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+
+				$addons = AddonManager::getFromBLID($user->getBLID(), ["deleted"=>0, "approved"=>1]);
+				foreach($addons as $aid) {
+					$addon = AddonManager::getFromId($aid);
+					$name = $addon->getName();
+					$downloads = $addon->getTotalDownloads();
+					$users = StatUsageManager::getActiveUsers($aid, 7);
+
+					echo "<tr><td><a href=\"/addons/addon.php?id=$aid\">$name</a></td><td>$downloads</td><td>$users</td>";
+				}
+
+				if(sizeof($addons) == 0) {
+					echo '<tr><td colspan="3" style="text-align: center">No uploaded content</td></tr>';
+				}
+
+				?>
+			</tbody>
+		</table>
+	</div>
+
+	<?php
+	}
+	?>
 </div>
 
 <?php include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>
