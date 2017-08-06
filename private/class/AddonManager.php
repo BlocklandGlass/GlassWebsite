@@ -465,6 +465,31 @@ class AddonManager {
 		}
 	}
 
+	public static function updateInfo($id, $dataArray) {
+		if(sizeof($dataArray) == 0) return;
+
+		$db = new DatabaseManager();
+		$id = $db->sanitize($id);
+
+		$sql = "UPDATE `addon_addons` SET ";
+		$didFirst = false;
+		foreach($dataArray as $key=>$val) {
+			$key = $db->sanitize($key);
+			$val = $db->sanitize($val);
+
+			if($didFirst) {
+				$sql .= " , ";
+			} else {
+				$didFirst = true;
+			}
+
+			$sql .= "`$key`='$val' ";
+		}
+		$sql .= " WHERE `id`='$id'";
+
+		$db->query($sql);
+	}
+
 	//returns an array of just the ids in order
 	//we should really be doing that more instead of caching entire objects in multiple places
 	public static function getNewAddons($count = 10) {

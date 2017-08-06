@@ -53,7 +53,7 @@
 
 		if($current = UserManager::getCurrent()) {
 			if($current->inGroup("Moderator")) {
-				echo "<div style=\"background-color: #aabbcc; padding: 10px; border-radius:10px; margin-top:10px; text-align:center\"><a href=\"moderate.php?id=" . $addonObject->getId() . "\">Moderator Settings</a></div>";
+				echo "<div class=\"tile\" style=\"background-color: #ed7669; padding: 10px; margin-top:10px; text-align:center\"><a href=\"moderate.php?id=" . $addonObject->getId() . "\">Moderator Settings</a></div>";
 			}
 		}
 
@@ -62,7 +62,7 @@
 
     $author = $addonObject->getAuthor();
 
-		echo "Uploaded by " . htmlspecialchars($author->getUsername());
+		echo "Uploaded by <a href=\"/user/view.php?blid=" . $author->getBLID() . "\">" . htmlspecialchars($author->getUsername()) . "</a>";
 	?>
 	<div style="margin-top: 15px; margin-bottom: 15px; display: inline-block; width: 100%;">
 		<div class="addoninfoleft">
