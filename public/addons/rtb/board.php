@@ -58,15 +58,15 @@
 						}
 					}
 				} else { ?>
-					<a href="?id=<?php echo $boardObject->getID() ?>&page=1">1</a>
-					<a href="?id=<?php echo $boardObject->getID() ?>&page=2">2</a>
+					<a href="?name=<?php echo $type; ?>&page=1">1</a>
+					<a href="?name=<?php echo $type; ?>&page=2">2</a>
 					...
-					<a href="?id=<?php echo $boardObject->getID() . "&page=" . ($page-1); ?>"><?php echo $page-1; ?></a>
-					[<a href="?id=<?php echo $boardObject->getID() . "&page=" . $page; ?>"><?php echo $page; ?></a>]
-					<a href="?id=<?php echo $boardObject->getID() . "&page=" . ($page+1); ?>"><?php echo $page+1; ?></a>
+					<a href="?name=<?php echo $type . "&page=" . ($page-1); ?>"><?php echo $page-1; ?></a>
+					[<a href="?name=<?php echo $type . "&page=" . $page; ?>"><?php echo $page; ?></a>]
+					<a href="?name=<?php echo $type . "&page=" . ($page+1); ?>"><?php echo $page+1; ?></a>
 					...
-					<a href="?id=<?php echo $boardObject->getID() . "&page=" . ($pages-1); ?>"><?php echo $pages-1; ?></a>
-					<a href="?id=<?php echo $boardObject->getID() . "&page=" . $pages; ?>"><?php echo $pages; ?></a>
+					<a href="?name=<?php echo $type . "&page=" . ($pages-1); ?>"><?php echo $pages-1; ?></a>
+					<a href="?name=<?php echo $type . "&page=" . $pages; ?>"><?php echo $pages; ?></a>
 					<?php
 				}
 			} else {
