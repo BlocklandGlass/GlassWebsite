@@ -46,8 +46,8 @@
 					echo "<a href=\"?name=" . $type . "&page=" . ($pages-1) . "\">" . ($pages-1) . "</a>";
 					echo "<a href=\"?name=" . $type . "&page=" . $pages . "\">" . $pages . "</a>";
 				} else if($pages-3 < $page) {
-					echo "<a href=\"?name=" . $type . "&page=1\">1</a>";
-					echo "<a href=\"?name=" . $type . "&page=2\">2</a>";
+					echo "<a href=\"?name=" . $type . "&page=1\">1</a> ";
+					echo "<a href=\"?name=" . $type . "&page=2\">2</a> ";
 					echo " ... ";
 
 					for($i = $pages-4; $i < $pages; $i++) {
