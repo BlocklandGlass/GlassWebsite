@@ -16,13 +16,13 @@
 	include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
 
 	$type = $_GET['name'] ?? "";
-	$page = $_GET['page'] ?? 0;
+	$page = $_GET['page'] ?? 1;
 
-	if(!is_numeric($page) || $page < 0) {
-		$page = 0;
+	if(!is_numeric($page) || $page < 1) {
+		$page = 1;
 	}
 
-	$pages = ceil(RTBAddonManager::getTypeCount($type)/15);
+	$pages = floor(RTBAddonManager::getTypeCount($type)/15);
 	$addons = RTBAddonManager::getFromType($type, $page*15);
 ?>
 <div class="maincontainer">
