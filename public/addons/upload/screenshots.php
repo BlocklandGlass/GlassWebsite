@@ -11,6 +11,11 @@
   $id = $_REQUEST['id'] ?? 0;
   $addon = AddonManager::getFromId($id);
 
+	if(isset($_POST['delete'])) {
+    if($_POST['delete'] == 1) {
+      ScreenshotManager::deleteScreenshot($_POST['sid']);
+    }
+  }
 ?>
 <style>
 	#drop-box-box {
