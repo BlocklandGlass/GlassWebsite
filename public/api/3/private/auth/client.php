@@ -77,8 +77,8 @@ switch($action) {
     $require_daa = false;
     $user = UserManager::getFromBLID($blid);
     if($user) {
-      if($user->inGroup("Adminstrator")) {
-        $require_daa = "Adminstrator";
+      if($user->inGroup("Administrator")) {
+        $require_daa = "Administrator";
       } else if($user->inGroup("Moderator")) {
         $require_daa = "Moderator";
       }
