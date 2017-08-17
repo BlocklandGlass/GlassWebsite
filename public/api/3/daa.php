@@ -57,10 +57,10 @@ if($data !== null) {
   $call   = $data->call; // the equivalent local .php file
   $params = $data->params; // the GET/POST variables associated
 
-  if(strpos($call, "/") !== false || strpos($call, ".") !== false)
+  if(!ctype_alpha($cal))
     unauthorized();
 
-  $file   = dirname(__FILE__) . '/' . $call . '.php';
+  $file = dirname(__FILE__) . '/' . $call . '.php';
   if(is_file($file)) {
 
     foreach($params as $key=>$val) {
