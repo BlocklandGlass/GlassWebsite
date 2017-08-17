@@ -1,4 +1,5 @@
 <?php
+	require dirname(__DIR__) . '/../../private/autoload.php';
 use Glass\ScreenshotManager;
 
 if(isset($_POST['delete'])) {

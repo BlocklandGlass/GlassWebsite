@@ -9,6 +9,7 @@ button {
 </style>
 
 <?php
+	require dirname(__DIR__) . '/../../private/autoload.php';
 use Glass\DependencyManager;
 use Glass\AddonManager;
 

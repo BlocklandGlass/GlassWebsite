@@ -5,6 +5,7 @@ require_once dirname(__FILE__) . "/BlocklandAuth.php";
 
 use Glass\UserManager;
 use Glass\UserLog;
+use Glass\DigestAccessAuthentication;
 
 class ClientConnection {
   private $blid;
@@ -17,6 +18,7 @@ class ClientConnection {
   private $identifier;
 
   private $server;
+  private $daa;
 
 
   public static function loadFromIdentifier($ident) {
@@ -55,6 +57,29 @@ class ClientConnection {
     apc_store("clientConnection_" . $this->identifier, $this);
   }
 
+  function setDigestAccessAuth($bool) {
+    if($bool) {
+      if(!is_object($this->daa)) {
+        $this->daa = new DigestAccessAuthentication('api.blocklandglass.com');
+        $this->digest = $this->daa->generate();
+        $this->identifier = $this->daa->getOpaque();
+      }
+    } else {
+      $this->daa = null;
+    }
+  }
+
+  function isDAA() {
+    return is_object($this->daa);
+  }
+
+  function getDigestData() {
+    return $this->digest;
+  }
+
+  function getDigest() {
+    return $this->daa;
+  }
 
   function getIdentifier() {
     return $this->identifier;
@@ -62,6 +87,10 @@ class ClientConnection {
 
   function isAuthed() {
     return $this->blAuthed;
+  }
+
+  function checkIp($ip) {
+    return $this->ip == $ip;
   }
 
   function attemptBlocklandAuth() {
@@ -102,6 +131,10 @@ class ClientConnection {
 
   function getBlid() {
     return $this->blid;
+  }
+
+  function getUsername() {
+    return $this->name;
   }
 }
 

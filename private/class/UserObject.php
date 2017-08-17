@@ -10,6 +10,8 @@ class UserObject {
 
 	private $verified;
 	private $email;
+
+	private $daaHash;
 	//private $profile;
 
 	public function __construct($resource) {
@@ -19,6 +21,7 @@ class UserObject {
 		$this->admin = intval($resource->admin);
 		$this->verified = intval($resource->verified);
 		$this->email = $resource->email;
+		$this->daaHash = $resource->daaHash;
 		if(isset($resource->reset)) {
 			$this->reset = explode(" ", $resource->reset);
 		} else {
@@ -112,6 +115,10 @@ class UserObject {
 		$database = new DatabaseManager();
 		$database->query("UPDATE `users` SET `email`='" . $database->sanitize($email) . "' WHERE `blid`='" . $database->sanitize($this->getBlid()) . "'");
 		$this->email = $email;
+	}
+
+	public function getDAAHash() {
+		return $this->daaHash;
 	}
 }
 ?>

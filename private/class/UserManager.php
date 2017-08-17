@@ -4,6 +4,7 @@ namespace Glass;
 //require_once(realpath(dirname(__FILE__) . '/UserHandler.php'));
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 require_once(realpath(dirname(__FILE__) . '/UserObject.php'));
+require_once(realpath(dirname(__FILE__) . '/DigestAccessAuthentication.php'));
 
 class UserManager {
 	private static $cacheTime = 600;
@@ -17,7 +18,7 @@ class UserManager {
 
 		$database = new DatabaseManager();
 		UserManager::verifyTable($database);
-		$resource = $database->query("SELECT username, blid, banned, admin, verified, email, reset FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "' AND `verified` = 1");
+		$resource = $database->query("SELECT username, blid, banned, admin, verified, email, reset, daaHash FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "' AND `verified` = 1");
 
 		if(!$resource) {
 			throw new \Exception("Database error: " . $database->error());
@@ -37,7 +38,7 @@ class UserManager {
 
 		$database = new DatabaseManager();
 		UserManager::verifyTable($database);
-		$resource = $database->query("SELECT username, blid, banned, admin, verified, email, reset FROM `users` WHERE `username` = '" . $database->sanitize($username) . "' AND `verified` = 1");
+		$resource = $database->query("SELECT username, blid, banned, admin, verified, email, reset, daaHash FROM `users` WHERE `username` = '" . $database->sanitize($username) . "' AND `verified` = 1");
 
 		if(!$resource) {
 			throw new \Exception("Database error: " . $database->error());
@@ -127,6 +128,8 @@ class UserManager {
 			$_SESSION['email']		= $loginDetails['email'];
 			$_SESSION['username'] = $loginDetails['username'];
 
+			UserManager::generateHashDAA($_SESSION['blid'], $password);
+
 			$userObject = UserManager::getFromBLID($_SESSION['blid']);
 			if($userObject == false || $userObject->isMigrated()) {
 				return [
@@ -151,6 +154,19 @@ class UserManager {
 		$hash = hash("sha256", $password . $salt);
 
 		$database->query("UPDATE `users` SET `reset`='', `password`='" . $database->sanitize($hash) . "', `salt`='" . $database->sanitize($salt) . "' WHERE `blid`='" . $database->sanitize($blid) . "'");
+		UserManager::generateHashDAA($blid, $password);
+	}
+
+	public static function generateHashDAA($blid, $password) {
+		$database = new DatabaseManager();
+		UserManager::verifyTable($database);
+
+		$hash = DigestAccessAuthentication::hashPassword('sha1', 'api.blocklandglass.com', $blid, $password);
+
+		$blid = $database->sanitize($blid);
+		$hash = $database->sanitize($hash);
+
+		$database->query("UPDATE `users` SET `daaHash`='$hash' WHERE `blid`='$blid'");
 	}
 
 	public static function register($email, $password1, $password2, $blid) {
@@ -364,6 +380,7 @@ class UserManager {
 			`admin` TINYINT NOT NULL DEFAULT 0,
 			`reset` TEXT,
 			`profile` TEXT,
+			`daaHash` TEXT,
 			KEY (`blid`),
 			UNIQUE KEY (`email`))")) {
 			throw new \Exception("Error creating users table: " . $database->error());

@@ -12,19 +12,19 @@ use Glass\UserLog;
 // ident    - unique numerical session identifier
 // username - username
 // blid     - blockland id
-// version  - version of glass
-
-if(isset($_REQUEST['server'])) {
-	if($_REQUEST['server']) {
-		$isServer = true;
-	} else {
-		$isServer = false;
-	}
-} else {
-	$isServer = false;
-}
+// version  - version of
 
 header('Content-Type: text/json');
+
+$isServer = ($_REQUEST['server'] ?? false) != false;
+
+if($isServer) {
+	require dirname(__FILE__) . '/private/auth/server.php';
+} else {
+	require dirname(__FILE__) . '/private/auth/client.php';
+	return;
+}
+
 if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
   // glass checks in every 5 (?) minutes
   // on the old site, this was used to keep the "currently active" list
@@ -108,6 +108,7 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
   $username = $_REQUEST['username'];
   $blid = $_REQUEST['blid'];
   $ip = $_SERVER['REMOTE_ADDR'];
+	$authType = $_REQUEST['auth'] ?? "default";
 
 	if($blid == 43861)
 		die();

@@ -6,7 +6,7 @@
  *
  * Handles Digest connections. All data is handled outside, but this makes sure
  * the connection is safe by checking verification values that are hashed.
- * It is made to be so 
+ * It is made to be so
  */
 
 namespace Glass;
@@ -86,13 +86,13 @@ class DigestAccessAuthentication
 			return null;
 		if ($this->opaque != $obj->opaque)
 			return null;
-		// Require 
+		// Require
 		if ((empty($this->qop) xor empty($obj->qop)) ||
 			(!empty($this->qop) && !in_array($obj->qop, $this->qop)))
 			return null;
 
 		// Prepare session
-		if (strpos($obj->algorithm, '-sess') >= 0)
+		if (strpos($obj->algorithm, '-sess') !== false)
 		{
 			$sess = true;
 			$obj->algorithm = substr($obj->algorithm, 0, -5);
@@ -100,6 +100,7 @@ class DigestAccessAuthentication
 		// Check if algorithm exists
 		if (!in_array($obj->algorithm, hash_algos()))
 		{
+			echo $obj->algorithm . " missing!";
 			return null;
 		}
 
@@ -108,8 +109,8 @@ class DigestAccessAuthentication
 		// HA1
 		if ($sess)
 		{
-			$hash1 = hash($obj->algorithm, 
-				implode($deli, 
+			$hash1 = hash($obj->algorithm,
+				implode($deli,
 					[$password, $obj->nonce, $obj->cnonce]));
 		}
 		else
@@ -120,14 +121,14 @@ class DigestAccessAuthentication
 		// HA2
 		if ($obj->qop == 'auth-int')
 		{
-			$hash2 = hash($obj->algorithm, 
-				implode($deli, 
+			$hash2 = hash($obj->algorithm,
+				implode($deli,
 					[$method, $obj->uri, json_encode($obj->data, JSON_UNESCAPED_SLASHES)]));
 		}
 		else
 		{
-			$hash2 = hash($obj->algorithm, 
-				implode($deli, 
+			$hash2 = hash($obj->algorithm,
+				implode($deli,
 					[$method, $obj->uri]));
 		}
 
@@ -144,14 +145,14 @@ class DigestAccessAuthentication
 			else
 				return null;
 
-			$response = hash($obj->algorithm, 
-				implode($deli, 
+			$response = hash($obj->algorithm,
+				implode($deli,
 					[$hash1, $obj->nonce, $obj->nc, $obj->cnonce, $hash2]));
 		}
 		else
 		{
-			$response = hash($obj->algorithm, 
-				implode($deli, 
+			$response = hash($obj->algorithm,
+				implode($deli,
 					[$hash1, $obj->nonce, $hash2]));
 		}
 
