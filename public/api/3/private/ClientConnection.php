@@ -20,9 +20,17 @@ class ClientConnection {
   private $server;
   private $daa;
 
+  private $expire;
+
+  public static $cacheTime = 15 * 60;
+
 
   public static function loadFromIdentifier($ident) {
     $obj = apc_fetch("clientConnection_" . $ident, $success);
+
+    if($obj->blAuthed && $obj->expire < time()) {
+      return false;
+    }
 
     if($success && is_object($obj)) {
       return $obj;
@@ -122,6 +130,7 @@ class ClientConnection {
     $this->blAuthed = $bool;
     if($bool) {
       UserLog::addEntry($this->blid, $this->name);
+      $this->expire = time() + ClientConnection::$cacheTime;
     }
   }
 

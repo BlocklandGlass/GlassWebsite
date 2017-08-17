@@ -48,8 +48,13 @@ foreach($res as $result) {
   $addon = AddonManager::getFromId($result);
   $r->title = $addon->getName();
   $r->id = $addon->getId();
-  $r->author = UserManager::getFromBLID($addon->getManagerBLID());
-  $r->summary = "";
+
+  $author = UserManager::getFromBLID($addon->getManagerBLID());
+  $r->author = new stdClass();
+  $r->author->username = $author->username;
+  $r->author->blid = $author->blid;
+
+  $r->summary = " - ";
   //$r->description = $addon->getDescription();
   $ret->results[] = $r;
 }

@@ -47,9 +47,8 @@ $client = false;
 if($ident) {
   $client = ClientConnection::loadFromIdentifier($ident);
 
-  //ensure that the client is still who they say!
-  if(!$client->checkIp($ip)) {
-
+  if($client === false || !$client->checkIp($ip)) {
+    unauthorized();
   }
 
 } else {
@@ -186,6 +185,7 @@ switch($action) {
 
   case "daa-checkin":
     if(!$client->isAuthed()) unauthorized();
+
 
   break;
 
