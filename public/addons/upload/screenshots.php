@@ -3,6 +3,7 @@
 	use Glass\BoardManager;
 	use Glass\UploadManager;
   use Glass\AddonManager;
+	use Glass\ScreenshotManager;
 
 	$_PAGETITLE = "Blockland Glass | Screenshots";
 	include(__DIR__ . "/../../../private/header.php");
@@ -11,10 +12,8 @@
   $id = $_REQUEST['id'] ?? 0;
   $addon = AddonManager::getFromId($id);
 
-	if(isset($_POST['delete'])) {
-    if($_POST['delete'] == 1) {
-      ScreenshotManager::deleteScreenshot($_POST['sid']);
-    }
+  if($_POST['delete'] ?? false) {
+    ScreenshotManager::deleteScreenshot($_POST['sid']);
   }
 ?>
 <style>
@@ -149,7 +148,12 @@
 <div id="image-viewer">
 	<img id="image-view" class="center" />
 	<div id="image-bar">
-		<a class="btn red">Delete</a>
+
+		<form target="" method="post">
+	    <input type="hidden" id="image-view-ssid" name="sid" value="" />
+	    <input type="submit" class="btn red" name="delete" value="Delete" />
+    </form>
+
 	</div>
 </div>
 <div class="maincontainer" style="text-align:center">

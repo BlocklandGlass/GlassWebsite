@@ -7,6 +7,7 @@ $(function(){
     var id = $(this).attr('ssid');
     $("#image-viewer").show();
     $("#image-view").attr('src', 'http://cdn.blocklandglass.com/screenshots/' + id);
+    $("#image-view-ssid").val(id);
   });
 
   $("#image-viewer").click(function(evt) {
