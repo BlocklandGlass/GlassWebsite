@@ -57,6 +57,9 @@ if($data !== null) {
   $call   = $data->call; // the equivalent local .php file
   $params = $data->params; // the GET/POST variables associated
 
+  if(strpos($call, "/") !== false || strpos($call, ".") !== false)
+    unauthorized();
+
   $file   = dirname(__FILE__) . '/' . $call . '.php';
   if(is_file($file)) {
 
