@@ -131,7 +131,7 @@
 			<tbody>
 				<?php
 
-				$addons = AddonManager::getFromBLID($user->getBLID(), ["deleted"=>0, "approved"=>1]);
+				$addons = AddonManager::getFromBLID($userObject->getBLID(), ["deleted"=>0, "approved"=>1]);
 				foreach($addons as $aid) {
 					$addon = AddonManager::getFromId($aid);
 					$name = $addon->getName();
