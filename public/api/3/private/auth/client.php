@@ -11,26 +11,6 @@ use Glass\UserManager;
 use Glass\UserLog;
 
 
-function unauthorized() {
-  $ret = new stdClass();
-  $ret->status = "unauthorized";
-  die(json_encode($ret, JSON_PRETTY_PRINT));
-}
-
-function badParameters() {
-  $ret = new stdClass();
-  $ret->status = "error";
-  $ret->error  = "Bad Paramaters";
-  die(json_encode($ret, JSON_PRETTY_PRINT));
-}
-
-function daaHashMissing() {
-  $ret = new stdClass();
-  $ret->status = "daa-hash-missing";
-  die(json_encode($ret, JSON_PRETTY_PRINT));
-}
-
-
 $action = $_REQUEST['action'] ?? false;
 $ident  = $_GET['ident'] ?? false;
 $ip     = $_SERVER['REMOTE_ADDR'];
