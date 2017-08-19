@@ -180,6 +180,9 @@ switch($action) {
   case "daa-checkin":
     if(!$client->isAuthed()) unauthorized();
 
+    // TODO
+    $client->setAuthed(true);
+    $ret->status = "success";
 
   break;
 
@@ -261,8 +264,13 @@ switch($action) {
     if(!$client->isAuthed()) unauthorized();
 
     // TODO need a way to delete the accounts!
+    $ret->status = "empty";
   break;
 
+  default:
+    $ret->status = "error";
+    $ret->error  = "Unknown call \"$action\"";
+  break;
 }
 
 echo json_encode($ret, JSON_PRETTY_PRINT);
