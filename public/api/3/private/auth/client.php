@@ -63,6 +63,9 @@ switch($action) {
       }
     }
 
+    // TODO remove this at 4.2 also
+    $require_daa = false;
+
     if($authType == "daa" || $require_daa !== false) {
 
       // send back DAA keys so they can proceed
@@ -79,23 +82,34 @@ switch($action) {
       // start normal auth, no DAA
       $success = $client->attemptBlocklandAuth();
       if($success) {
+        // blockland authenticated
         $ret->status = "success";
-        $ret->ident  = $client->getIdentifier();
-
-        $client->setAuthed(true);
 
         // check if user has a pending, unverified account
         if(!$client->hasGlassAccount()) {
           $userArray = $client->getUnverifiedAccounts();
           if(sizeof($userArray) > 0) {
+
             $ret->action = "verify";
+
             $verifyData = array();
             foreach($userArray as $user) {
               $verifyData[] = $user->getEmail();
             }
+
             $ret->verify_data = $verifyData;
+
+            // account verification requires DAA
+            // if the user opts to not verify, all pending accounts will be
+            // deleted and this will no occur again
+            $client->setDigestAccessAuth(true);
+            $ret->daa = $client->getDigestData();
           }
         }
+
+        $ret->ident  = $client->getIdentifier(); //could be opaque now
+
+        $client->setAuthed(true);
       } else {
         // Blockland Auth failed
         $ret->status = "failed";
@@ -170,7 +184,12 @@ switch($action) {
   break;
 
   case "verify":
+    // TODO this will be disabled after 4.2
     if(!$client->isAuthed()) unauthorized();
+
+    // client does not have 4.2 if we've gotten here
+    // so turn off DAA
+    $client->setDigestAccessAuth(false);
 
     if($client->hasGlassAccount()) {
       $ret->result = "error";
@@ -191,6 +210,59 @@ switch($action) {
       }
     }
   break;
+
+
+  case "daa-verify-account":
+    if($client === false || !$client->isAuthed()) unauthorized();
+
+    if($client->hasGlassAccount()) {
+      $ret->status = "verify-has-account";
+      break;
+    }
+
+    // we need to check the user's message against every possible password
+
+    $json     = file_get_contents('php://input');
+    $object   = json_decode($json);
+    $digest   = $client->getDigest();
+
+    $accounts = $client->getUnverifiedAccounts();
+
+    $ret->status = "verify-failed";
+
+    $nonceCount = $digest->getNonceCount(); // hacky
+
+    foreach($accounts as $account) {
+      // this could be problematic for compatibility?
+      if($account->getDAAHash() == null || $account->getDAAHash() == "")
+        continue;
+
+      $digest->restore($object->nonce, $object->opaque, $nonceCount); // we're checking multiple hashes under the same count
+
+      $data = $digest->validate($object, "POST", $account->getDAAHash());
+      if($data !== null) {
+        // success! make sure the email contained is the email for the account
+        if(strtolower($data->email) == strtolower($account->getEmail())) {
+
+          $account->setVerified(true);
+          $ret->status = "verify-success";
+          break;
+
+        } else {
+          // right password but wrong email!
+          // keep trying, another pair may be correct`
+        }
+
+      }
+    }
+  break;
+
+  case "verify-reject":
+    if(!$client->isAuthed()) unauthorized();
+
+    // TODO need a way to delete the accounts!
+  break;
+
 }
 
 echo json_encode($ret, JSON_PRETTY_PRINT);

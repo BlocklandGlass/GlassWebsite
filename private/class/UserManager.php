@@ -59,7 +59,7 @@ class UserManager {
 
 		$database = new DatabaseManager();
 		UserManager::verifyTable($database);
-		$resource = $database->query("SELECT username, blid, banned, admin, verified, email FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "'");
+		$resource = $database->query("SELECT username, blid, banned, admin, verified, email, daaHash FROM `users` WHERE `blid` = '" . $database->sanitize($blid) . "'");
 
 		if(!$resource) {
 			throw new \Exception("Database error: " . $database->error());

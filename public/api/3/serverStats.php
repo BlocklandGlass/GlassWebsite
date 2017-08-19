@@ -1,7 +1,9 @@
 <?php
 require_once dirname(__DIR__) . '/../../private/autoload.php';
 use Glass\ServerTracker;
+
 header('Content-Type: text/json');
+
 $reqIp = $_GET['ip'] ?? false;
 $reqPort = $_GET['port'] ?? false;
 if(!$reqIp || !$reqPort) {

@@ -64,7 +64,7 @@ if($data !== null) {
   if(is_file($file)) {
 
     foreach($params as $key=>$val) {
-      $_REQUEST[$key] = $val;
+      $_REQUEST[$key] = urldecode($val);
     }
     require realpath($file);
 
