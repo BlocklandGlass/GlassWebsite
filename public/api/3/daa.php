@@ -60,7 +60,12 @@ if($data !== null) {
   if(!ctype_alpha($call))
     unauthorized();
 
+
+  if($call == "daa")
+    badParameters();
+
   $file = dirname(__FILE__) . '/' . $call . '.php';
+
   if(is_file($file)) {
 
     foreach($params as $key=>$val) {
