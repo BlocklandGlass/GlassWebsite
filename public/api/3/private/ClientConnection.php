@@ -105,7 +105,7 @@ class ClientConnection {
   }
 
   function attemptBlocklandAuth() {
-    return BlocklandAuth::checkAuth($this->name, $this->ip, $this->blid);
+    return BlocklandAuth::checkAuth(utf8_encode($this->name), $this->ip, $this->blid);
   }
 
   function hasGlassAccount() {
