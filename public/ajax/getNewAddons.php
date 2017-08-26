@@ -20,7 +20,7 @@
 			<tr>
 				<td style="padding: 10px; width: 20px;font-family: Impact, HelveticaNeue-CondensedBold, Helvetica Neue; font-size:1.5em"><?php echo $index+1; ?></td>
 				<td style="line-height: 1.1em; text-align: left;">
-					<a href="/addons/addon.php?id=<?php echo $addon->id ?>"><?php echo utf8_encode($addon->getName()) ?></a>
+					<a href="/addons/addon.php?id=<?php echo $addon->id ?>"><?php echo htmlspecialchars($addon->getName()) ?></a>
 					<br />
 					<a style="font-size: 0.8em; color: #999;" href="/addons/board.php?id=<?php echo $addon->getBoard() ?>">
 	        <?php
