@@ -37,7 +37,7 @@
       } else {
         $path = dirname(__FILE__) . "/tab/" . $_GET['tab'] . ".php";
         if(is_file($path)) {
-          include($path));
+          include($path);
         } else {
           echo "Invalid tab!";
         }
