@@ -32,10 +32,15 @@
 	</div>
 	<div class="tile" style="width: 685px; padding: 15px; float: right;">
 		<?php
-      if(!isset($_GET['tab']) || !is_file(dirname(__FILE__) . "/tab/" . $_GET['tab'] . ".php")) {
-        echo "Invalid tab";
+      if(!isset($_GET['tab'])) {
+        echo "Select a tab on the left to continue.";
       } else {
-			  include(realpath(dirname(__FILE__) . "/tab/" . $_GET['tab'] . ".php"));
+        $path = dirname(__FILE__) . "/tab/" . $_GET['tab'] . ".php";
+        if(is_file($path)) {
+          include($path));
+        } else {
+          echo "Invalid tab!";
+        }
       }
 		?>
 	</div>

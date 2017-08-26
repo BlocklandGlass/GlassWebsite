@@ -24,9 +24,9 @@
 					<br />
 					<a style="font-size: 0.8em; color: #999;" href="/addons/board.php?id=<?php echo $addon->getBoard() ?>">
 	        <?php
-	        // work around because boardmanager::getfromid decides to hang if you're not logged into the site
-	        echo BoardManager::getFromId($addon->getBoard())->getName();
-	        ?></a>
+	        	// work around because boardmanager::getfromid decides to hang if you're not logged into the site
+	        	echo htmlspecialchars(BoardManager::getFromId($addon->getBoard())->getName()); ?>
+          </a>
 				</td>
 				<td style="font-size: .8em">
 					<?php
@@ -36,9 +36,9 @@
 						} else if($since < 60) {
 							$time = floor($since) . " seconds ago";
 						} else if($since < 3600) {
-							$time = floor($since/60) . " minute" . (floor($since/60) == 1 ? "" : "s")  . " ago";
+							$time = floor($since/60) . " minute" . (floor($since/60) == 1 ? "" : "s") . " ago";
 						} else if($since < 3600*24) {
-							$time = floor($since/(3600)) . " hours ago";
+							$time = floor($since/(3600)) . " hour" . (floor($since/3600) == 1 ? "" : "s") . " ago";
 						} else if($since < 3600*48) {
 							$time = "Yesterday at " . date("g:i A", strtotime($addon->uploadDate));
 						} else {
@@ -47,7 +47,7 @@
 						echo $time; ?>
 				</td>
 				<td style="font-size: .8em">
-					<?php echo htmlspecialchars(utf8_encode($user->getUsername())); ?>
+					<?php echo htmlspecialchars($user->getUsername()); ?>
 				</td>
 			</tr>
 			<?php

@@ -31,12 +31,12 @@
 					<br />
 					<a style="font-size: 0.8em; color: #999;" href="/addons/board.php?id=<?php echo $addon->getBoard() ?>">
 	        <?php
-	        	echo BoardManager::getFromId($addon->getBoard())->getName();
+	        	echo htmlspecialchars(BoardManager::getFromId($addon->getBoard())->getName());
 					?>
 	      </td>
 				<td>
 					<?php
-						echo htmlspecialchars(utf8_encode($addon->getAuthor()->getUsername()));
+						echo htmlspecialchars($addon->getAuthor()->getUsername());
 					?>
 				</td>
 				<td style="font-weight: bold;">
