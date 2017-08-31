@@ -100,7 +100,6 @@ class DigestAccessAuthentication
 		// Check if algorithm exists
 		if (!in_array($obj->algorithm, hash_algos()))
 		{
-			echo $obj->algorithm . " missing!";
 			return null;
 		}
 
