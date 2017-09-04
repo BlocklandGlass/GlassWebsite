@@ -69,6 +69,10 @@ foreach($addonIds as $aid) {
   $retboard->author    = $user;
   $retboard->downloads = $addon->getDownloads("web") + $addon->getDownloads("ingame");
   $retboard->summary   = $addon->getSummary();
+
+  if($retboard->summary == "")
+    $retboard->summary = " ";
+
   $ret->addons[] = $retboard;
 }
 
