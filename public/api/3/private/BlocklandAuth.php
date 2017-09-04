@@ -1,6 +1,8 @@
 <?php
 require dirname(__DIR__) . '/../../../private/autoload.php';
 
+use Glass\BlocklandAuthenticate;
+
 class BlocklandAuth {
   public static function checkAuth($username, $ip, $blid) {
     $res = BlocklandAuth::auth($username, $ip);

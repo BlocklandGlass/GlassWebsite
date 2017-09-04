@@ -1,6 +1,7 @@
 <?php
 namespace Glass;
 use Glass\DatabaseManager;
+use Glass\BlocklandAuthenticate;
 
 //this should be merged with the UserManager class
 class UserLog {
