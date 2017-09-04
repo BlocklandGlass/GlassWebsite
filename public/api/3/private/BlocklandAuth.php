@@ -30,7 +30,7 @@ function BlocklandAuthenticate($username, $ip = false) {
 	$username = mb_convert_encoding(urldecode($username), "ISO-8859-1");
 	$username = str_replace("%", "%25", $username);
 	$encodeChars = array(" ", "@", "$", "&", "?", "=", "+", ":", ",", "/");
-	$encodeValues = array("%20", "%40", "%24", "%26", "%3F", "%3D", "%2B", "3A","%2C", "%2F");
+	$encodeValues = array("%20", "%40", "%24", "%26", "%3F", "%3D", "%2B", "%3A","%2C", "%2F");
 	$username = str_replace($encodeChars, $encodeValues, $username);
 
 	$postData = "NAME=${username}&IP=${ip}";
