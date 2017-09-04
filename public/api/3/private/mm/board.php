@@ -66,8 +66,9 @@ foreach($addonIds as $aid) {
     $user = utf8_encode($user);
   }
 
-  $retboard->author = $user;
+  $retboard->author    = $user;
   $retboard->downloads = $addon->getDownloads("web") + $addon->getDownloads("ingame");
+  $retboard->summary   = $addon->getSummary();
   $ret->addons[] = $retboard;
 }
 

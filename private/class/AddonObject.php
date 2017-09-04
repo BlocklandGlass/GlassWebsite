@@ -49,6 +49,8 @@ class AddonObject {
 
 		$this->uploadDate = $resource->uploadDate;
 		$this->url = "https://s3.amazonaws.com/" . urlencode(AWSFileManager::getBucket()) . "/addons/" . $this->id;
+
+		$this->summary = $resource->summary;
 	}
 
 	public function getID() {
@@ -154,6 +156,10 @@ class AddonObject {
 
 	public function getDescriptionTML() {
 		return TML::format($this->description);
+	}
+
+	public function getSummary() {
+		return $this->summary;
 	}
 }
 
