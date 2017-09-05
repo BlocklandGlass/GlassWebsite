@@ -1,54 +1,88 @@
 <?php
-require_once dirname(__DIR__) . '/../../private/autoload.php';
-require_once dirname(__FILE__) . "/private/ClientConnection.php";
+	require_once dirname(__DIR__) . '/../../private/autoload.php';
+	require_once dirname(__FILE__) . "/private/ClientConnection.php";
 
-use Glass\UserLog;
-use Glass\UserManager;
+	// Glass Live Server authentication verification
 
-header('Content-Type: text/json; charset=ascii');
+	use Glass\UserLog;
+	use Glass\UserManager;
+	use Glass\DigestAccessAuthentication;
 
-$barred = [118256,43364,21186,209987,43861];
-//43861 - Steee
 
-$ip = $_REQUEST['ip'] ?? false;
-$country_code = "No IP";
-$country_name = "No IP";
-if($ip) {
-	if($pos = strrpos($ip, ":")) {
-		$ip = substr($ip, $pos+1);
+	header('Content-Type: text/json; charset=ascii');
+
+	$barred = [118256,43364,21186,209987,43861];
+	//43861 - Steee
+
+	$ip = $_REQUEST['ip'] ?? false;
+	$country_code = "No IP";
+	$country_name = "No IP";
+	if($ip) {
+		if($pos = strrpos($ip, ":")) {
+			$ip = substr($ip, $pos+1);
+		}
+		$loc = geoip_record_by_name($ip);
+		$country_code = $loc["country_code"] ?? "N/A";
+		$country_name = $loc["country_name"] ?? "N/A";
 	}
-	$loc = geoip_record_by_name($ip);
-	$country_code = $loc["country_code"] ?? "N/A";
-	$country_name = $loc["country_name"] ?? "N/A";
-}
 
-if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
-	$con = ClientConnection::loadFromIdentifier($_REQUEST['ident']);
-  $ret = new \stdClass();
-  if(!is_object($con)) {
-    $ret->status = "fail";
-		error_log("Auth failed for ident " . $_REQUEST['ident']);
-  } else {
-		error_log("Auth pass for " . $_REQUEST['ident']);
-    $ret->ident = $con->getIdentifier();
-    $ret->blid = $con->getBLID();
+	if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
+		$client = ClientConnection::loadFromIdentifier($_REQUEST['ident']);
+		$ret = new \stdClass();
 
+		// check to see if there was a valid client connection with that identity
+		if(!is_object($client)) {
+			$ret->status = "fail";
+			error_log("Auth failed for ident " . $_REQUEST['ident']);
+			die(json_encode($ret, JSON_PRETTY_PRINT));
+		}
+
+
+		$user = UserManager::getFromBLID($client->getBLID());
+
+		// check DAA
+		if($_REQUEST['daa'] ?? false) {
+			$json     = file_get_contents('php://input');
+			$object   = json_decode($json);
+			$digest   = $client->getDigest();
+
+			if($user === false) {
+				$ret->status = "fail";
+				error_log("DAA Auth failed for ident " . $_REQUEST['ident'] . " (no user)");
+				die(json_encode($ret, JSON_PRETTY_PRINT));
+			}
+
+			$res = $digest->validate($object, "POST", $user->getDAAHash());
+			if(!$res) {
+				$ret->status = "fail";
+				error_log("DAA Auth failed for blid " . $user->getBLID());
+				die(json_encode($ret, JSON_PRETTY_PRINT));
+			}
+		}
+
+		// set up return info
+		$ret->ident = $client->getIdentifier();
+		$ret->blid = $client->getBLID();
+
+		// check to see if user is barred, need a permanent solution
 		if(in_array($ret->blid, $barred)) {
 			$ret->status = "barred";
 			$json = json_encode($ret, JSON_PRETTY_PRINT);
 			die($json);
 		}
 
+		// some special characters stuff
 		$ret->username = iconv("ISO-8859-1", "UTF-8", UserLog::getCurrentUsername($ret->blid));
-		error_log("Username is " . $ret->username);
 
+		// defaulting flags
 		$ret->admin = false;
 		$ret->mod = false;
 
+		// location info
 		$ret->geoip_country_name = $country_name;
 		$ret->geoip_country_code = $country_code;
 
-		$user = UserManager::getFromBLID($ret->blid);
+		// checking to see if user is privileged
 		if($user !== false) {
 			$ret->beta = false;
 
@@ -62,22 +96,13 @@ if(isset($_REQUEST['ident']) && $_REQUEST['ident'] != "") {
 			}
 
 			if($user->inGroup("Beta") || $user->inGroup("Reviewer")) {
-				$ret->beta = true;
+			$ret->beta = true;
 			}
 		}
 
-		if($ret->blid == 27323) {
-			$ret->beta = true;
-		}
+		$ret->status = "success";
 
-    $ret->status = "success";
-  }
-	error_log("Auth completed");
-  $json = json_encode($ret, JSON_PRETTY_PRINT);
-	if($json === false) {
-		error_log("...but JSON conversion failed!");
-	} else {
+		$json = json_encode($ret, JSON_PRETTY_PRINT);
 		die($json);
 	}
-}
 ?>

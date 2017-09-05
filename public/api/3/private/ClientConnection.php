@@ -28,14 +28,15 @@ class ClientConnection {
   public static function loadFromIdentifier($ident) {
     $obj = apc_fetch("clientConnection_" . $ident, $success);
 
-    if($obj->blAuthed && $obj->expire < time()) {
-      $name = $obj->name;
-      $blid = $obj->blid;
-      error_log("Glass Auth Expired! ($name, $blid)");
-      return false;
-    }
-
     if($success && is_object($obj)) {
+
+	   if($obj->blAuthed && $obj->expire < time()) {
+        $name = $obj->name;
+        $blid = $obj->blid;
+        error_log("Glass Auth Expired! ($name, $blid)");
+        return false;
+      }
+
       return $obj;
     } else {
       return false;
