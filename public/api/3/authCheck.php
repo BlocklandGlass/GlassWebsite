@@ -33,6 +33,7 @@
 		// check to see if there was a valid client connection with that identity
 		if(!is_object($client)) {
 			$ret->status = "fail";
+			$ret->failure = "Ident does not exist!";
 			error_log("Auth failed for ident " . $_REQUEST['ident']);
 			die(json_encode($ret, JSON_PRETTY_PRINT));
 		}
@@ -48,6 +49,7 @@
 
 			if($user === false) {
 				$ret->status = "fail";
+				$ret->failure = "Requested DAA but no user!";
 				error_log("DAA Auth failed for ident " . $_REQUEST['ident'] . " (no user)");
 				die(json_encode($ret, JSON_PRETTY_PRINT));
 			}
@@ -55,6 +57,7 @@
 			$res = $digest->validate($object, "POST", $user->getDAAHash());
 			if(!$res) {
 				$ret->status = "fail";
+				$ret->failure = "DAA failure!";
 				error_log("DAA Auth failed for blid " . $user->getBLID());
 				die(json_encode($ret, JSON_PRETTY_PRINT));
 			}
