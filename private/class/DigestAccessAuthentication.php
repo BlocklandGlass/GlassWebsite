@@ -6,7 +6,8 @@
  *
  * Handles Digest connections. All data is handled outside, but this makes sure
  * the connection is safe by checking verification values that are hashed.
- * It is made to be so
+ * It is made to be support any hashing algorithm that PHP allows. It is also
+ * fully automatic by calling a minimal amount of methods to verify content.
  */
 
 namespace Glass;
