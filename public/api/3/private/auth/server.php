@@ -24,7 +24,7 @@ function processClientArg($clients, $ip, $port) {
       $dat = explode("\t", $clDat);
       $obj = new \stdClass();
 
-      $obj->name = $dat[0];
+      $obj->name = iconv("ISO-8859-1", "UTF-8", $dat[0]);
       $obj->blid = intval($dat[1]);
       $obj->status = $dat[2];
       $obj->version = $dat[3];
