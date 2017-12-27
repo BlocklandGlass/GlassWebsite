@@ -1,7 +1,7 @@
 <?php
 	header('Location: /');
 	return;
-	
+
 	require_once dirname(__DIR__) . '/../private/autoload.php';
 	require_once(realpath(dirname(__DIR__) . "/../private/header.php"));
 	require_once(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
@@ -11,14 +11,14 @@
   <div class="tile">
   	<p>
   		<h2>Open Beta</h2>
-  		We currently have an open beta pending the release of <b>Glass v4.1.0</b>. This is not a entirely stable release and there will likely be issues. Please be sure to report bugs!
+  		We currently have an open beta pending the release of <b>Glass v4.2.0</b>. This is not a entirely stable release and there will likely be issues. Please be sure to report bugs!
   	</p>
     <?php
     $glassAddonId = 11; //this needs to be changed before going live, or we need a "find addon by name"
-    $id = "Open Beta 7";
+    $id = "Open Beta 1";
     $class = "red";
     $ao = AddonManager::getFromId($glassAddonId);
-    $version = "4.1.0-beta.7";
+    $version = "4.2.0-beta.1";
     ?>
     <div style="text-align: center">
       <?php
