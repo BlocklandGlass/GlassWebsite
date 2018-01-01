@@ -40,15 +40,42 @@ class UserLog {
     $db = new DatabaseManager();
     UserLog::verifyTable($db);
 
-    $resouce = $db->query("SELECT `username` FROM `user_log` WHERE `blid`='" . $db->sanitize($blid) . "'");
+    $resource = $db->query("SELECT `username` FROM `user_log` WHERE `blid`='" . $db->sanitize($blid) . "'");
 
-    if($resouce->num_rows > 0) {
-      $result = $resouce->fetch_object();
+    if($resource->num_rows > 0) {
+      $result = $resource->fetch_object();
       return $result->username;
     } else {
       return false;
     }
   }
+
+	// returns blid and username pairs for a given array of blids, $blids
+	public static function getUsernames($blids) {
+		$blidStr = "";
+		foreach($blids as $blid) {
+			if(!is_numeric($blid)) {
+				continue;
+			}
+
+			if($blidStr === "")
+				$blidStr = $blid;
+			else
+				$blidStr .= "," . $blid;
+		}
+
+    $db = new DatabaseManager();
+    UserLog::verifyTable($db);
+
+    $resource = $db->query("SELECT `blid`,`username` FROM `user_log` WHERE `blid` IN (" . $db->sanitize($blidStr) . ")");
+
+		$ret = [];
+    while(($obj = $resource->fetch_object()) != null) {
+			$ret[$obj->blid] = $obj->username;
+		}
+
+		return $ret;
+	}
 
 	public static function getLastSeen($blid) {
 		$db = new DatabaseManager();
