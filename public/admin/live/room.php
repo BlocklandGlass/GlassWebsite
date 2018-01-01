@@ -6,7 +6,9 @@ use Glass\GroupManager;
 
 $user = UserManager::getCurrent();
 
-if(!$user || !$user->inGroup("Administrator")) {
+$allowed = $user->inGroup("Administrator") || $user->inGroup("Moderator");
+
+if(!$user || !$allowed) {
   header('Location: /login.php?redirect=' . urlencode("/admin/live/"));
   return;
 }
