@@ -2,7 +2,7 @@
 	require dirname(__DIR__) . '/../private/autoload.php';
   use Glass\UserManager;
   use Glass\GroupManager;
-  session_start();
+	
 	$user = UserManager::getCurrent();
 
 	$_PAGETITLE = "Blockland Glass | Control Panel";
