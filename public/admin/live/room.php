@@ -125,6 +125,16 @@ if($content !== false) {
       td {
         font-family: monospace;
       }
+
+      .params-join {
+        font-style: italic;
+        color: rgb(0, 150, 0);
+      }
+
+      .params-exit {
+        font-style: italic;
+        color: rgb(200, 0, 0);
+      }
     </style>
   </head>
   <body>
@@ -160,7 +170,9 @@ if($content !== false) {
             $time = $data->time;
             $type = $data->type;
             $string = $data->string;
-            echo "<tr><td>$time</td><td>$type</td><td>$string</td></tr>";
+
+            $class = "params-$type";
+            echo "<tr><td>$time</td><td>$type</td><td class=\"$class\">$string</td></tr>";
           }
 
         ?>
