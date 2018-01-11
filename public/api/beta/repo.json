@@ -7,8 +7,8 @@
             "channels": [
                 {
                     "name": "beta",
-                    "version": "4.2.0-beta.2",
-                    "restartRequired": "4.2.0-beta.2",
+                    "version": "4.2.0-beta.3",
+                    "restartRequired": "4.2.0-beta.3",
                     "file": "http://api.blocklandglass.com/api/beta/download.php"
                 }
             ]
