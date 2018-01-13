@@ -11,8 +11,9 @@
 
 	header('Content-Type: text/json; charset=ascii');
 
-	$barred = [118256,43364,21186,209987,43861,219615];
+	$barred = [118256,43364,21186,209987,43861,219615,206488,34728];
 	//43861 - Steee
+	//206488, 34728 - https://forum.blockland.us/index.php?topic=316286.msg9773227#msg9773227
 
 	$ip = $_REQUEST['ip'] ?? false;
 	$country_code = "No IP";
