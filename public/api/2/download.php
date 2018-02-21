@@ -10,9 +10,8 @@ use Glass\AWSFileManager;
 
 $type = $_REQUEST['type']; //addon_update, addon_download, build, rtb
 
-if(isset($_REQUEST['debug'])) {
-  $debug = $_REQUEST['debug'];
-}
+$debug = $_REQUEST['debug'] ?? false;
+
 
 if($type == "addon_update" || $type == "addon_download") {
   $id = $_REQUEST['id'];
