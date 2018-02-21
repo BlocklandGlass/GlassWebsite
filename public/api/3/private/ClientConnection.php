@@ -106,7 +106,14 @@ class ClientConnection {
   }
 
   function attemptBlocklandAuth() {
-    return BlocklandAuth::checkAuth(utf8_encode($this->name), $this->ip, $this->blid);
+    $res = BlocklandAuth::checkAuth(utf8_encode($this->name), $this->ip, $this->blid);
+
+    if($res == false) {
+      // debug
+      error_log("Blockland Auth failed for " . utf8_encode($this->name) . " - " . $this->ip . " - " . $this->blid);
+    }
+
+    return $res;
   }
 
   function hasGlassAccount() {

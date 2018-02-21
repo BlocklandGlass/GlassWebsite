@@ -35,7 +35,7 @@
 		if(!is_object($client)) {
 			$ret->status = "fail";
 			$ret->failure = "Ident does not exist!";
-			error_log("Auth failed for ident " . $_REQUEST['ident']);
+			error_log("Auth failed for ident " . $_REQUEST['ident'] . ": " . $ret->failure);
 			die(json_encode($ret, JSON_PRETTY_PRINT));
 		}
 
