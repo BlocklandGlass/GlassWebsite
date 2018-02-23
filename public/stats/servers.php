@@ -33,7 +33,8 @@
 
 		if(sizeof($clients) > 0 && $clients[0]->name != "") {
 			foreach($clients as $cl) {
-				$name = utf8_encode($cl->name);
+				//$name = utf8_encode($cl->name);
+        $name = $cl->name;
 
 				if($cl->status == "")
 					$cl->status = "-";
