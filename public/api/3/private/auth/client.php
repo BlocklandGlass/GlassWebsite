@@ -27,7 +27,7 @@ $client = false;
 if($ident) {
   $client = ClientConnection::loadFromIdentifier($ident);
 
-  if($client === false || !$client->checkIp($ip)) {
+  if($client === false || !$client->checkIp($ip) || $client->isServer()) {
     unauthorized();
   }
 

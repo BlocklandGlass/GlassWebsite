@@ -53,7 +53,7 @@ $client = false;
 if($ident) {
   $client = ClientConnection::loadFromIdentifier($ident);
 
-  if($client === false || !$client->checkIp($ip)) {
+  if($client === false || !$client->checkIp($ip) || !$client->isServer()) {
     unauthorized();
   }
 
@@ -89,7 +89,7 @@ switch($action) {
     } else {
 
       // start normal auth, no DAA
-      $success = $client->attemptBlocklandAuth();
+      $success = $client->attemptServerAuth();
       if($success) {
         $ret->status = "success";
         $ret->ident  = $client->getIdentifier();
@@ -135,7 +135,7 @@ switch($action) {
 
       if($name == $client->getUsername() && $blid == $client->getBlid()) {
         // do blockland auth
-        $success = $client->attemptBlocklandAuth();
+        $success = $client->attemptServerAuth();
         if($success) {
 
           $ret->status = "success";

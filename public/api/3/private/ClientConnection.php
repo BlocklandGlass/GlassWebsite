@@ -116,6 +116,32 @@ class ClientConnection {
     return $res;
   }
 
+  function attemptServerAuth() {
+    // ordinary blockland auth doesn't work for servers
+    // but we can check the IP/Username pair to the master server
+
+    $name = "";
+    if(substr($this->name, -1) === "s") {
+      $name = $this->name . "'";
+    } else {
+      $name = $this->name . "'s";
+    }
+
+    $data = file_get_contents("http://master2.blockland.us");
+    $rows = explode("\n", $data);
+
+    // filter for IP and name
+    $rows = array_filter($rows, function($val) use ($name) {
+      $field = explode("\t", trim($val));
+      if(sizeof($field) < 9)
+        return false;
+
+      return ($field[0] == $this->ip) && (strpos($field[4], $name) === 0);
+    });
+
+    return (sizeof($rows) > 0);
+  }
+
   function hasGlassAccount() {
     $user = UserManager::getFromBLID($this->blid);
     if($user !== false) {
@@ -147,6 +173,10 @@ class ClientConnection {
 
   function setServer($bool) {
     $this->server = $bool;
+  }
+
+  function isServer() {
+    return $this->server;
   }
 
   function getBlid() {

@@ -8,6 +8,8 @@ use Glass\ServerTracker;
 use Glass\NotificationManager;
 use Glass\UserLog;
 
+ini_set('display_errors', 0);
+
 function unauthorized() {
   $ret = new stdClass();
   $ret->status = "unauthorized";
