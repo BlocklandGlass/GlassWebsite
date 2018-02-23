@@ -33,7 +33,7 @@ foreach($servers as $s) {
 
   $res->clients = $clients;
 
-  echo json_encode($res, JSON_PRETTY_PRINT);
+  echo json_encode($res, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
   die();
 }
 
