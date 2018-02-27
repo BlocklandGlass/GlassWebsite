@@ -10,9 +10,15 @@
   if($blid) {
     $user = UserManager::getFromBLID($blid);
     if($user) {
-      $message = "You've been sent an email with instructions on how to reset your password.";
-      $form = false;
-      UserManager::sendPasswordResetEmail($user);
+      try {
+        UserManager::sendPasswordResetEmail($user);
+        $message = "You've been sent an email with instructions on how to reset your password.";
+        $form = false;
+      } catch(Exception $e) {
+        $message = "There appears to be no e-mail address associated with your account! Message a Glass team member on the Blockland Forums for help!";
+        $form = false;
+      }
+
     } else {
       $message = "There is no account with that BL_ID!";
     }
@@ -28,19 +34,23 @@
 <div class="maincontainer">
   <div class="tile" style="width:50%; margin: 0 auto;">
     <h2>Forgot Password</h2>
-    <p>
-      <?php
-        if($message) {
-          echo $message;
-        }
+    <div style="background-color: #fafafa; color: #666; border-radius: 5px; padding: 1px; margin-bottom: 15px">
+      <p style="text-align: center">
+        <?php
+          if($message) {
+            echo $message;
+          }
+        ?>
+      </p>
+    </div>
+    <?php
+      if($form) {
+    ?>
 
-        if($form) {
-      ?>
-    </p>
     <form method="post" action="forgotPassword.php">
       <table class="formtable">
         <tr>
-          <td>BL_ID</td>
+          <td>Blockland ID:</td>
           <td><input type="text" name="blid" /></td>
         </tr>
         <tr>

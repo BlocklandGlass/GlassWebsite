@@ -8,6 +8,9 @@
 		header("Location: " . $loginStatus['redirect']);
 		die();
 	}
+
+  $redirect = $_REQUEST['redirect'] ?? ($_REQUEST['rd'] ?? false);
+
 	$_PAGETITLE = "Blockland Glass | Log In";
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
@@ -31,16 +34,16 @@
 			</div>
 			<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
 			<?php
-				if(isset($_POST['redirect'])) {
-					echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($_POST['redirect']) . "\">");
+				if($redirect != false) {
+					echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($redirect) . "\">");
 				}
 			?>
 		</form>
 		<?php
-			if(isset($_POST['redirect'])) {
+			if($redirect != false) {
 				echo("<p class=\"center\">Don't have an account? <a href=\"register.php\" onclick=\"document.getElementById('redirectToRegisterForm').submit(); return false;\">Register</a></p>");
 				echo("<form class=\"hidden\" action=\"/register.php\" method=\"post\" id=\"redirectToRegisterForm\">");
-				echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($_POST['redirect']) . "\">");
+				echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($redirect) . "\">");
 				echo("</form>");
 			} else {
 				echo("<p class=\"center\">Don't have an account? <a href=\"register.php\">Register</a></p>");

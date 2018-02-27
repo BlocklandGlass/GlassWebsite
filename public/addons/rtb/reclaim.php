@@ -8,6 +8,11 @@
 	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
 	include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
 
+  $user = UserManager::getCurrent();
+  if($user == false) {
+    header('Location: /login.php');
+  }
+
   $addonData = RTBAddonManager::getAddonFromId($_GET['id']);
 
   $ret = null;
