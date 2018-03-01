@@ -47,7 +47,8 @@ $ret->board_id = $addonObject->getBoard();
 $ret->board = BoardManager::getFromID($addonObject->getBoard())->getName();
 
 $ret->name = $addonObject->getName();
-$ret->description = utf8_encode($addonObject->getDescriptionTML());
+// $ret->description = utf8_encode($addonObject->getDescriptionTML());
+$ret->description = utf8_encode($addonObject->getDescription());
 
 $ret->date = date("M jS Y, g:i A", strtotime($addonObject->getUploadDate()));
 
