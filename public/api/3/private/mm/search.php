@@ -54,7 +54,7 @@ foreach($res as $result) {
   $r->author->username = $author->username;
   $r->author->blid = $author->blid;
 
-  $r->summary = " - ";
+  $r->summary = $addon->getSummary();
   //$r->description = $addon->getDescription();
   $ret->results[] = $r;
 }
