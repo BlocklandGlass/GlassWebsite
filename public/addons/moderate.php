@@ -58,7 +58,7 @@
 		<h2 style=\"margin-bottom: 0px;\">Moderating: <i><?php echo $addonObject->getName() ?></i></h2>
 		<?php
 			$author = $addonObject->getAuthor();
-			echo "Uploaded by " . $author->getUsername();
+			echo "Uploaded by " . htmlspecialchars(utf8_encode($author->getUsername()));
 		?>
 		<div style="margin-top: 15px; margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 			<div class="addoninfoleft">

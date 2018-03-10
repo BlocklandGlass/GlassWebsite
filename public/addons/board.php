@@ -107,7 +107,7 @@
 					$addon = AddonManager::getFromID($aid); ?>
 					<tr>
 					<td style="width: 33%; text-align:left"><a href="addon.php?id=<?php echo $addon->getID(); ?>"><?php echo $addon->getName(); ?></a></td>
-					<td style="font-size: 11pt; text-align:center"><?php echo $addon->getAuthor()->getUsername();	?>
+					<td style="font-size: 11pt; text-align:center"><?php echo htmlspecialchars(utf8_encode($addon->getAuthor()->getUsername()));	?>
 					</td>
 					<td><?php echo ($addon->getDownloads("web") + $addon->getDownloads("ingame")); ?></td>
 					</tr><?php

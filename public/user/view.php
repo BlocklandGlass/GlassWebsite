@@ -37,7 +37,7 @@
 	<div class="tile">
 		<?php
 			if($failed) {
-				$msg  = "<h2>Uh-Oh</h2>";
+				$msg  = "<h2>Uh Oh</h2>";
 				$msg .= "<p>We've never seen that user before. Sorry!</p>";
 				echo $msg;
 				return;
@@ -59,15 +59,15 @@
 					$title = "Administrator";
 					$color = "red";
 				} else if($userObject->inGroup("Moderator")) {
-					$title = "Moderator";
+					$title = "Chat Moderator";
 					$color = "orange";
 				} else if($userObject->inGroup("Reviewer")) {
-					$title = "Reviewer";
+					$title = "Add-On Reviewer";
 					$color = "green";
 				}
 
 				if($title) {
-					echo "This user is a <span style=\"color: $color; font-weight: bold;\">$title</span>.";
+					echo "This user is a verified <span style=\"color: $color; font-weight: bold;\">$title</span>.";
 				}
 			}
 

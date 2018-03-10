@@ -62,7 +62,7 @@
 
     $author = $addonObject->getAuthor();
 
-		echo "Uploaded by <a href=\"/user/view.php?blid=" . $author->getBLID() . "\">" . htmlspecialchars($author->getUsername()) . "</a>";
+		echo "Uploaded by <a href=\"/user/view.php?blid=" . $author->getBLID() . "\">" . htmlspecialchars(utf8_encode($author->getUsername())) . "</a>";
 	?>
 	<div style="margin-top: 15px; margin-bottom: 15px; display: inline-block; width: 100%;">
 		<div class="addoninfoleft">
