@@ -15,3 +15,5 @@ public/local
 
 composer.phar
 composer.lock
+
+*.bak
