@@ -16,26 +16,26 @@
 <div class="maincontainer">
 	<div class="tile">
 		<h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Mod Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/5/2016)</span></h2>
-		<p><i>If you would like to suggest amendments to the following information, contact a Administrator.</i></p>
-		<h3><image style="height: 1.4em" src="/img/icons32/file_save_as.png" /> On the Subject of Filenames</h3>
+		<p><i>If you would like to suggest amendments to the following information, contact an administrator.</i></p>
+		<h3><image style="height: 1.4em" src="/img/icons32/file_save_as.png" /> Filenames</h3>
 		<p>Ensure that the add-on's filename is appropriate to the add-on's function, and follows the standard Blockland add-on filename convention: <i>AddonType_AddonName.zip</i></p>
-		<h3><image style="height: 1.4em" src="/img/icons32/creative_commons.png" /> On the Subject of Ownership</h3>
+		<h3><image style="height: 1.4em" src="/img/icons32/creative_commons.png" /> Ownership</h3>
 		<p>Ensure that the user uploading the add-on is the original author of it.</p>
-		<h3><image style="height: 1.4em" src="/img/icons32/gear_in.png" /> On the Subject of Client Add-Ons</h3>
+		<h3><image style="height: 1.4em" src="/img/icons32/gear_in.png" /> Client Add-Ons</h3>
 		<p><b>These add-ons are to be inspected very carefully.</b> Ensure that:</p>
 		<ul>
 			<li>They only interact with the server(s) they're intended for.</li>
 			<li>They add no additional functionality outside of their intended operation.</li>
 			<li>They clean up after themselves.</li>
 		</ul>
-		<h3><image style="height: 1.4em" src="/img/icons32/roadworks.png" /> On the Subject of Quality</h3>
+		<h3><image style="height: 1.4em" src="/img/icons32/roadworks.png" /> Quality</h3>
 		<p>Glass is not as stringent as RTB used to be, but do ensure that the add-on is not complete garbage (i.e. has a practical use) and that a reasonable amount of effort has been put into it. Bad examples:</p>
 		<ul>
 			<li>Variants of the Shoe RP gamemode.</li>
 			<li>Clearly unfinished add-ons.</li>
 			<li>Duplicates of other add-ons.</li>
 		</ul>
-		<h3><image style="height: 1.4em" src="/img/icons32/caution_biohazard.png" /> On the Subject of Malicious Add-Ons</h3>
+		<h3><image style="height: 1.4em" src="/img/icons32/caution_biohazard.png" /> Malicious Add-Ons</h3>
 		<p><b>Above all else, ensure the add-on is not malicious, that it can not be easily exploited by a regular user and has no backdoors - <span style="color: red">this is your top priority</span>.</b></p>
 	</div>
 	<div class="tile" style="margin-top 15px">

@@ -53,10 +53,10 @@ tbody tr:nth-child(2n) {
 <div class="maincontainer">
   <div class="tile">
     <h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Mod Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/3/2016)</span></h2>
-    <p><i>If you would like to suggest amendments to the following information, contact a Administrator.</i></p>
-    <h3><image style="height: 1.4em" src="/img/icons32/creative_commons.png" /> On the Subject of Ownership</h3>
+    <p><i>If you would like to suggest amendments to the following information, contact an administrator.</i></p>
+    <h3><image style="height: 1.4em" src="/img/icons32/creative_commons.png" /> Ownership</h3>
     <p>Ensure that the user trying to reclaim the add-on is the original author and not a third party or impersonator.</p>
-    <h3><image style="height: 1.4em" src="/img/icons32/roadworks.png" /> On the Subject of Quality</h3>
+    <h3><image style="height: 1.4em" src="/img/icons32/roadworks.png" /> Quality</h3>
     <p>Ensure the add-on being imported is not an add-on of which came from RTB's Bargain Bin.</p>
 	</div>
   <div class="tile" style="margin-top 15px">

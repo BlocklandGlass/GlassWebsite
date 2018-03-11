@@ -62,7 +62,7 @@
 					$title = "Chat Moderator";
 					$color = "orange";
 				} else if($userObject->inGroup("Reviewer")) {
-					$title = "Add-On Reviewer";
+					$title = "Mod Reviewer";
 					$color = "green";
 				}
 

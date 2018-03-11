@@ -53,7 +53,7 @@
 
 		if($current = UserManager::getCurrent()) {
 			if($current->inGroup("Moderator")) {
-				echo "<div class=\"tile\" style=\"background-color: #ed7669; padding: 10px; margin-top:10px; text-align:center\"><a href=\"moderate.php?id=" . $addonObject->getId() . "\">Moderator Settings</a></div>";
+				echo "<div class=\"tile\" style=\"background-color: #ed7669; padding: 10px; margin-top:10px; text-align:center\"><a href=\"moderate.php?id=" . $addonObject->getId() . "\">Moderation</a></div>";
 			}
 		}
 

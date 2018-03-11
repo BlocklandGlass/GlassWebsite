@@ -44,10 +44,10 @@ tbody tr:nth-child(2n) {
 <div class="maincontainer">
   <div class="tile">
     <h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Mod Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/4/2016)</span></h2>
-    <p><i>If you would like to suggest amendments to the following information, contact a Administrator.</i></p>
-    <h3><image style="height: 1.4em" src="/img/icons32/brick_error.png" /> On the Subject of Brick Packs</h3>
+    <p><i>If you would like to suggest amendments to the following information, contact an administrator.</i></p>
+    <h3><image style="height: 1.4em" src="/img/icons32/brick_error.png" /> Brick Packs</h3>
     <p><b>If the add-on being updated was previously imported from RTB</b>, ensure the update does not change UI names as this will break old save files.</p>
-    <h3><image style="height: 1.4em" src="/img/icons32/caution_biohazard.png" /> On the Subject of Malicious Updates</h3>
+    <h3><image style="height: 1.4em" src="/img/icons32/caution_biohazard.png" /> Malicious Updates</h3>
     <p><b>Above all else, ensure the update is not malicious, that it can not be easily exploited by a regular user and has no backdoors - <span style="color: red">this is your top priority</span>.</b></p>
 	</div>
   <div class="tile" style="margin-top 15px">

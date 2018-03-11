@@ -124,7 +124,7 @@
 		      <tr>
 		        <td><b>Description</b></td>
 		        <td>
-							<textarea name="description"><?php echo $addonObject->getDescription() ?></textarea>
+							<textarea name="description" style="height: 200px;"><?php echo $addonObject->getDescription() ?></textarea>
 						</td>
 		      </tr>
 		      <tr>

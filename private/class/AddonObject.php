@@ -85,7 +85,7 @@ class AddonObject {
 		return $this->approved == -1;
 	}
 
-	public function getRejectReason() {
+	public function getRejectReason() { // deprecated, reject reasons no longer saved to database...
 		if(isset($this->reviewInfo->rejectReason)) {
 			return $this->reviewInfo->rejectReason;
 		} else {
