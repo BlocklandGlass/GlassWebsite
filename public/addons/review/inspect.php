@@ -31,7 +31,7 @@
 	</style>
   <h2><?php echo $addon->getName(); ?></h2>
   <p>Uploaded <?php echo date("M jS Y, g:i A", strtotime($addon->getUploadDate())); ?> by <?php echo '<a href="/user/view.php?blid=' . $manager->getBlid() . '"?>' . $manager->getName() . '</a>'; ?><br>
-  The current time & date is: <?php echo date("M jS Y, g:i A"); ?></p>
+  The current date & time is: <?php echo date("M jS Y, g:i A"); ?></p>
   <hr />
   <table>
     <tbody>

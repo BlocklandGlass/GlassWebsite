@@ -12,8 +12,8 @@
     return;
   }
 ?>
-<style>
 <!--
+<style>
 thead {
   background-color: #ccc;
   margin-bottom: 10px;
