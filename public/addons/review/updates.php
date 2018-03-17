@@ -12,7 +12,6 @@
     return;
   }
 ?>
-<!--
 <style>
 thead {
   background-color: #ccc;
@@ -40,7 +39,6 @@ tbody tr:nth-child(2n) {
   background-color: #eee;
 }
 </style>
--->
 <div class="maincontainer">
   <div class="tile">
     <h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Mod Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/4/2016)</span></h2>
