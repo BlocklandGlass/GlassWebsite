@@ -25,39 +25,6 @@
 	<table class="userhome">
 		<tbody>
 			<tr>
-
-				<td>
-					<div class="tile" style="height: 250px;">
-						<h2>Hey there, <b><?php echo htmlspecialchars(UserManager::getCurrent()->getUsername()); ?></b></h2>
-						<p>
-							<b>Blockland Activity</b>
-							<br />
-							Coming Soon
-					</div>
-				</td>
-
-				<td style="width: 50%">
-					<div class="tile" style="height: 250px; overflow:hidden;">
-						<h2>Recent Activity</h2>
-						<?php
-						$notifications = NotificationManager::getFromBLID($userObject->getBLID(), 0, 10); // TODO NotifcationManager::getFromUser(9789, 10);
-
-						if($notifications !== false && sizeof($notifications) > 0) {
-							foreach($notifications as $noteId) {
-								$noteObject = NotificationManager::getFromId($noteId);
-								echo '<div style="padding: 15px; margin: 5px;">';
-								echo $noteObject->toHTML();
-								echo '<br /><span style="font-size: 0.8em;">' . date("M jS Y, g:i A", strtotime($noteObject->getDate())) . '</span>';
-								echo '</div>';
-							}
-						} else {
-							echo '<div style="text-align: center">No recent activity</div>';
-						}
-						?>
-					</div>
-				</td>
-			</tr>
-			<tr>
 				<td colspan="2">
 					<div class="tile">
 
@@ -121,9 +88,11 @@
 									echo '<td style="text-align: left !important"><a href="/addons/addon.php?id=' . $ao->getId() . '"><span style="font-size: 1.2em; font-weight:bold;">' . $ao->getName() . '</span></a></td>';
 
 									if($ao->getDeleted()) {
-										echo '<td style="color: red">Deleted</td>';
+										echo '<td>Deleted</td>';
 									} else if($ao->getApproved()) {
 										echo '<td>Approved</td>';
+                  } else if($ao->isRejected()) {
+                    echo '<td>Rejected</td>';
 									} else {
 										echo '<td>Under Review</td>';
 									}

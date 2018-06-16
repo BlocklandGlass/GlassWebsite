@@ -6,7 +6,7 @@
 
   $id = $_REQUEST['id'];
   $addonObject = AddonManager::getFromId($id);
-  if($addonObject !== false && $addonObject->getApproved() && !$addonObject->isRejected()) {
+  if($addonObject !== false && $addonObject->getApproved() && !$addonObject->isRejected() && !$addonObject->getDeleted()) {
     StatManager::downloadAddon($addonObject, "web", $_SERVER['REMOTE_ADDR']);
 
 		header('Location: http://' . AWSFileManager::getBucket() . '/addons/' . $id);

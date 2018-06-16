@@ -29,7 +29,7 @@
 ?>
 <div class="maincontainer">
 	<div class="tile">
-		<h2><a href="/addons/addon.php?id=<?php echo $addon->getId(); ?>"><?php echo $addon->getName(); ?></a></h2>Statistics
+		<h2>Statistics: <a href="/addons/addon.php?id=<?php echo $addon->getId(); ?>"><?php echo $addon->getName(); ?></a></h2>
 	</div>
 	<div class="tile" style="width: calc(50% - 40px); float:left; display: inline-block">
 		<b>Version Usage Chart</b>

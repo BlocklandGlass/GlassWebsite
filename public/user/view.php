@@ -101,8 +101,8 @@
 				}
 
 				if(sizeof($history) == 0) {
-					echo "<tr><td colspan=\"2\" style=\"color: #666; text-align: center\">";
-					echo "No recorded name changes!";
+					echo "<tr><td colspan=\"2\" style=\"text-align: center\">";
+					echo "No recorded name changes.";
 					echo "</td></tr>";
 				}
 				?>
@@ -142,7 +142,7 @@
 				}
 
 				if(sizeof($addons) == 0) {
-					echo '<tr><td colspan="3" style="text-align: center">No uploaded content</td></tr>';
+					echo '<tr><td colspan="3" style="text-align: center">No uploaded content.</td></tr>';
 				}
 
 				?>

@@ -6,7 +6,7 @@
 	$id = $_REQUEST['id'] ?? false;
 	$user = UserManager::getCurrent();
 	$addon = AddonManager::getFromId($id);
-	if($user === false || $addon === false || $addon->getManagerBLID() !== $user->getBlid()) {
+	if($user === false || $addon === false || ($addon->getManagerBLID() !== $user->getBlid() && !$user->inGroup("Administrator"))) {
 		header("Location: /login.php");
 		die();
 	}

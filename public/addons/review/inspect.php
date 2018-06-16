@@ -15,6 +15,15 @@
   }
 
   $addon = AddonManager::getFromID($_REQUEST['id']);
+
+	if($addon->getDeleted()) {
+    include(realpath(dirname(__DIR__) . "/../../public/addons/deleted.php"));
+		die();
+	} else if($addon->isRejected()) {
+    include(realpath(dirname(__DIR__) . "/../../public/addons/rejected.php"));
+    die();
+  }
+
   $manager = UserManager::getFromBLID($addon->getManagerBLID());
 ?>
 <div class="maincontainer">
@@ -111,7 +120,7 @@
 					</td>
 					<td style="padding: 10px; background-color: #FFCCCC; border-top-right-radius: 10px; width: 50%">
 						<b>Rejection Reason</b><br />
-						<textarea style="width: 400px; height: 150px; font-size: 0.8em; margin: 0 auto;" name="reason"></textarea>
+						<textarea style="width: 400px; height: 150px; font-size: 0.8em; margin: 0 auto;" name="reason" placeholder="Rejection reasons not available." disabled></textarea>
 					</td>
 				</tr>
 				<tr>
