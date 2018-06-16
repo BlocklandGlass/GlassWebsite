@@ -10,6 +10,12 @@
 		header("Location: /login.php");
 		die();
 	}
+
+	if($addon->getDeleted()) {
+    include 'deleted.php';
+		die();
+  }
+
 	$_PAGETITLE = "Blockland Glass | Delete Add-On";
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));

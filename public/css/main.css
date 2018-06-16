@@ -614,7 +614,7 @@ input[type="submit"]:active {
   border-radius: 5px;
   padding: 15px 25px;
   font-size: 22px;
-  text-decoration: none;
+  text-decoration: none !important;
   margin: 20px;
   color: #fff !important;
   position: relative;

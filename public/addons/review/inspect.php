@@ -17,10 +17,10 @@
   $addon = AddonManager::getFromID($_REQUEST['id']);
 
 	if($addon->getDeleted()) {
-    include(realpath(dirname(__DIR__) . "/../../public/addons/deleted.php"));
+    include '/../deleted.php';
 		die();
 	} else if($addon->isRejected()) {
-    include(realpath(dirname(__DIR__) . "/../../public/addons/rejected.php"));
+    include '/../rejected.php';
     die();
   }
 

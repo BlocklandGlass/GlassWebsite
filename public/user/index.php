@@ -30,7 +30,7 @@
 
 						<h2 style="width: 50%; display:inline-block; float:left;">Your Content</h3>
 						<a class="btn green" href="/addons/upload/upload.php" style="font-size: 1em; float:right; margin: 0; margin-bottom: 20px; padding: 10px 15px;">
-							<img style="width: 1em;" src="http://blocklandglass.com/img/icons32/inbox_upload.png" alt="New"/> Upload New Add-On
+							Upload New Add-On
 						</a>
 						<table class="listTable" style="width: 100%">
 							<thead>

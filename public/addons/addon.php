@@ -27,7 +27,10 @@
 		die();
 	}
 
-	if($addonObject->isRejected()) {
+  if($addonObject->getDeleted()) {
+		include 'deleted.php';
+		die();
+	} else if($addonObject->isRejected()) {
 		include 'rejected.php';
 		die();
 	} else if(!$addonObject->getApproved()) {
