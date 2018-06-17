@@ -49,9 +49,9 @@
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
   <div class="tile">
-    <h1>Delete <?php echo htmlspecialchars($addon->getName()) ?>?</h1>
+    <h1>Delete <?php echo htmlspecialchars($addon->getName()) ?></h1>
     <p>
-      Are you sure you want to delete <a href="/addons/addon.php?id=<?php echo $id; ?>"><?php echo htmlspecialchars($addon->getName()); ?></a>?
+      Are you sure you want to delete <a href="/addons/addon.php?id=<?php echo $id; ?>"><?php echo htmlspecialchars($addon->getName()); ?></a>?<br>
       <span style="color:red">This action cannot be undone.</span>
     </p>
     <div style="text-align:center">

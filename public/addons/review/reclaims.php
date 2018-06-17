@@ -20,33 +20,6 @@
     }
   }
 ?>
-<style>
-thead {
-  background-color: #ccc;
-  margin-bottom: 10px;
-}
-
-table th {
-  padding: 5px;
-  margin-bottom: 10px;
-}
-
-table td {
-  padding: 5px;
-}
-
-table th:first-child {
-  border-radius: 5px 0 0 5px;
-}
-
-table th:last-child {
-  border-radius: 0 5px 5px 0;
-}
-
-tbody tr:nth-child(2n) {
-  background-color: #eee;
-}
-</style>
 <div class="maincontainer">
   <?php
     include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
@@ -59,8 +32,8 @@ tbody tr:nth-child(2n) {
     <h3><image style="height: 1.4em" src="/img/icons32/roadworks.png" /> Quality</h3>
     <p>Ensure the add-on being imported is not an add-on of which came from RTB's Bargain Bin.</p>
 	</div>
-  <div class="tile" style="margin-top 15px">
-    <table style="width: 100%">
+  <div class="tile" style="margin-top: 15px">
+    <table style="width: 100%" class="listTable">
       <thead>
         <tr><th>RTB Add-On</th><th>Glass Add-On</th><th>User</th><th> </th></tr>
       </thead>

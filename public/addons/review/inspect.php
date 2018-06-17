@@ -15,13 +15,6 @@
     return;
   }
 
-  try {
-    $addonObject = AddonManager::getFromID($_REQUEST['id']);
-  } catch(Exception $e) {
-    header('Location: /addons');
-    die("addon doesnt exist");
-  }
-
   if($addonObject->getDeleted()) {
     include(__DIR__ . "/../deleted.php");
 		die();
@@ -37,10 +30,7 @@
 ?>
 <div class="maincontainer">
   <?php
-    $p = realpath(dirname(__DIR__) . "/../../private/navigationbar.php");
-    echo $p . "<br>";
-    echo __DIR__;
-    include($p);
+    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
   ?>
   <h2><?php echo $addonObject->getName(); ?></h2>
   <p>Uploaded <?php echo date("M jS Y, g:i A", strtotime($addonObject->getUploadDate())); ?> by <?php echo '<a href="/user/view.php?blid=' . $manager->getBlid() . '"?>' . $manager->getName() . '</a>'; ?><br>

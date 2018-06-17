@@ -40,7 +40,7 @@
 		<h3><image style="height: 1.4em" src="/img/icons32/caution_biohazard.png" /> Malicious Add-Ons</h3>
 		<p><strong>Above all else, ensure the add-on is not malicious, that it can not be easily exploited by a regular user and has no backdoors - <span style="color: red">this is your top priority</span>.</strong></p>
 	</div>
-	<div class="tile" style="margin-top 15px">
+	<div class="tile" style="margin-top: 15px">
 		<table style="width: 100%" class="listTable">
 	    <thead>
 	      <tr><th>Add-On</th><th>Uploader</th><th>Uploaded</th></tr>

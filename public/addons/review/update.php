@@ -9,18 +9,26 @@
 
 	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
 
-  $addon = AddonManager::getFromID($_REQUEST['id']);
-  $update = AddonManager::getUpdates($addon)[0];
-  $manager = UserManager::getFromBLID($addon->getManagerBLID());
+  $addonObject = AddonManager::getFromID($_REQUEST['id']);
+  $update = AddonManager::getUpdates($addonObject)[0];
+  $manager = UserManager::getFromBLID($addonObject->getManagerBLID());
 
 	$user = UserManager::getCurrent();
 	$owner = false;
-	if($user->getBlid() == $addon->getManagerBLID()) {
+	if($user->getBlid() == $addonObject->getManagerBLID()) {
 		$owner = true;
 	} else if(!$user || !$user->inGroup("Reviewer")) {
 		header('Location: /addons');
 		return;
 	}
+
+  if($addonObject->getDeleted()) {
+    include(__DIR__ . "/../deleted.php");
+		die();
+	} else if($addonObject->isRejected()) {
+    include(__DIR__ . "/../rejected.php");
+    die();
+  }
 
   //$diffData = $update->getDiff();
 ?>
@@ -38,9 +46,9 @@ td {
     include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
   ?>
 	<div class="tile">
-	  <h2><?php echo $addon->getName(); ?></h2>
+	  <h2><?php echo $addonObject->getName(); ?></h2>
 	  <p>
-			<span style="font-weight:bold;padding: 2px; border: 1px solid rgb(192,192,255); background: rgb(224,224,255); border-radius: 2px;">v<?php echo $addon->getVersion();?></span> -> <span style="font-weight:bold;padding: 2px; border: 1px solid rgb(192,255,192); background: rgb(224,255,224); border-radius: 2px;">v<?php echo $update->getVersion();?></span>
+			<span style="font-weight:bold;padding: 2px; border: 1px solid rgb(192,192,255); background: rgb(224,224,255); border-radius: 2px;">v<?php echo $addonObject->getVersion();?></span> -> <span style="font-weight:bold;padding: 2px; border: 1px solid rgb(192,255,192); background: rgb(224,255,224); border-radius: 2px;">v<?php echo $update->getVersion();?></span>
 		</p>
 	  <hr />
 	  <table style="width: 100%">
@@ -97,7 +105,7 @@ td {
 		</p>
 	</div>
   <form action="approveUpdate.php" method="post">
-		<input type="hidden" name="aid" value="<?php echo $addon->getId() ?>" />
+		<input type="hidden" name="aid" value="<?php echo $addonObject->getId() ?>" />
 		<?php if($owner) { ?>
 		<input type="submit" name="action" value="Cancel Update" />
 		<?php }

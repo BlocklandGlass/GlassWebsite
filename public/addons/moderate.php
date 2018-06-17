@@ -52,7 +52,7 @@
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
 	<span style="font-size: 9pt;">
-		<a href="addon.php?id=<?php echo $addonObject->getId() ?>"><?php echo $addonObject->getName() ?></a> >> <strong>Moderate</strong>
+		<a href="addon.php?id=<?php echo $addonObject->getId() ?>"><?php echo $addonObject->getName() ?></a> >> <strong>Moderation</strong>
 	</span>
 
 	<div class="tile">
@@ -132,6 +132,11 @@
 		      <tr>
 		        <td colspan="2">
 		          <input type="submit" value="Update" />
+              <?php
+                if($user->inGroup("Administrator")) {
+                  echo '<a class="btn red" style="float: right;" href="delete.php?id=' . echo $addonObject->getId() . '">Delete</a>';
+                }
+              ?>
 		        </td>
 		      </tr>
 		    </tbody>
