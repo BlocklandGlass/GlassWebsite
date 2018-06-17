@@ -15,19 +15,19 @@
 
   $addon = AddonManager::getFromID($_REQUEST['id']);
 
-	if($addon->getDeleted()) {
-    echo "Add-On is deleted.";
-    // include(__DIR__ . "/../deleted.php");
-		// die();
-	} else if($addon->isRejected()) {
-    echo "Add-On is rejected.";
-    // include(__DIR__ . "/../rejected.php");
-    // die();
-  } else if($addon->getApproved()) {
-    echo "Add-On already approved.";
-    // include(__DIR__ . "/../approved.php");
-    // die();
-  }
+	// if($addon->getDeleted()) {
+    // echo "Add-On is deleted.";
+    // // include(__DIR__ . "/../deleted.php");
+		// // die();
+	// } else if($addon->isRejected()) {
+    // echo "Add-On is rejected.";
+    // // include(__DIR__ . "/../rejected.php");
+    // // die();
+  // } else if($addon->getApproved()) {
+    // echo "Add-On already approved.";
+    // // include(__DIR__ . "/../approved.php");
+    // // die();
+  // }
 
   $manager = UserManager::getFromBLID($addon->getManagerBLID());
 ?>
@@ -35,17 +35,6 @@
   <?php
     include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
   ?>
-	<style>
-	.code {
-		font-size: 0.8em;
-		background-color: #eee;
-	  padding: 5px;
-	  width: 50%;
-	  vertical-align : top;
-	  white-space    : pre;
-	  font-family    : monospace;
-	}
-	</style>
   <h2><?php echo $addon->getName(); ?></h2>
   <p>Uploaded <?php echo date("M jS Y, g:i A", strtotime($addon->getUploadDate())); ?> by <?php echo '<a href="/user/view.php?blid=' . $manager->getBlid() . '"?>' . $manager->getName() . '</a>'; ?><br>
   The current date & time is: <?php echo date("M jS Y, g:i A"); ?></p>
@@ -68,18 +57,10 @@
         <td style="padding: 10px;"><strong>Author</strong></td>
         <td>
         <?php
-        echo $addon->getAuthor()->getUsername();
+          echo $addon->getAuthor()->getUsername();
         ?>
         </td>
       </tr>
-      <!--
-      <tr>
-        <td style="padding: 10px;"><strong>Tags</strong></td>
-        <td>
-
-        </td>
-      </tr>
-      -->
 			<tr>
         <td colspan="2" style="font-size:0.8em">
 					<?php
