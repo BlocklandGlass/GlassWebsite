@@ -172,7 +172,7 @@ class UserManager {
 	public static function register($email, $password1, $password2, $blid) {
 		if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 			return [
-				"message" => "Invalid e-mail address"
+				"message" => "Invalid e-mail address."
 			];
 		}
 
@@ -203,7 +203,7 @@ class UserManager {
 			];
 		} else if($loginDetails2) {
 			return [
-				"message" => "That E-mail address is already in use."
+				"message" => "E-mail address already in use."
 			];
 		}
 		$database = new DatabaseManager();

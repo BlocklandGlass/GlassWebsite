@@ -11,8 +11,8 @@
 		echo "<a href=\"#\">" . utf8_encode($addonObject->getName()) . "</a></span>";
 		echo "<h2>" . utf8_encode($addonObject->getName()) . "</h2>";
 	?>
-	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
-		This add-on has not been approved by a Mod Reviewer yet.
+	<div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em; background-color: #ffcccc; text-align:center; border-radius: 10px; padding: 10px; font-size: 1em">
+		<strong>This add-on has not been approved by a Mod Reviewer yet.</strong><br />
   </div>
 </div>
 <?php

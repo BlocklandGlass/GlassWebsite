@@ -22,10 +22,10 @@
 			<table class="formtable">
 				<tbody>
 					<tr><td class="center" colspan="2"><h2>Register</h2></td></tr>
-					<tr><td>E-Mail Address:</td><td><input type="text" name="email" id="email"></td></tr>
-					<tr><td>BLID:</td><td><input type="text" name="blid" id="blid"></td></tr>
-					<tr><td>Password:</td><td><input type="password" name="password" id="password"></td></tr>
-					<tr><td>Verify Password:</td><td><input type="password" name="verify" id="verify"></td></tr>
+					<tr><td>E-Mail Address:</td><td><input type="text" name="email" id="email" required></td></tr>
+					<tr><td>BLID:</td><td><input type="text" name="blid" id="blid" required></td></tr>
+					<tr><td>Password:</td><td><input type="password" name="password" id="password" required></td></tr>
+					<tr><td>Verify Password:</td><td><input type="password" name="verify" id="verify" required></td></tr>
 					<tr><td class="center" colspan="2"><input type="submit"></td></tr>
 				</tbody>
 			</table>

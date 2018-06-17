@@ -26,8 +26,8 @@
 			<table class="formtable">
 				<tbody>
 					<tr><td class="center" colspan="2"><h2>Log In</h2></td></tr>
-					<tr><td>E-mail or BLID:</td><td><input type="text" name="username" id="username" autofocus></td></tr>
-					<tr><td>Password:</td><td><input type="password" name="password" id="password"></td></tr>
+					<tr><td>E-mail or BL_ID:</td><td><input type="text" name="username" id="username" required autofocus></td></tr>
+					<tr><td>Password:</td><td><input type="password" name="password" id="password" required></td></tr>
 					<tr><td class="center" colspan="2"><input type="submit"></td></tr>
 				</tbody>
 			</table>
