@@ -118,10 +118,6 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-body {
-  background-color: #11964a;
-}
-
 input[type="text"], input[type="password"], input[type="email"], textarea {
   display: block;
 
@@ -412,7 +408,6 @@ input[type="submit"]:active {
   font-size: 14pt;
   background-color: white;
   height: 100%;
-  padding: 20px;
 }
 
 .maincontainer > p {
