@@ -15,25 +15,25 @@
 
   $addon = AddonManager::getFromID($_REQUEST['id']);
 
-	// if($addon->getDeleted()) {
-    // echo "Add-On is deleted.";
-    // // include(__DIR__ . "/../deleted.php");
-		// // die();
-	// } else if($addon->isRejected()) {
-    // echo "Add-On is rejected.";
-    // // include(__DIR__ . "/../rejected.php");
-    // // die();
-  // } else if($addon->getApproved()) {
-    // echo "Add-On already approved.";
-    // // include(__DIR__ . "/../approved.php");
-    // // die();
-  // }
+	if($addon->getDeleted()) {
+    echo "Add-On is deleted.";
+    // include(__DIR__ . "/../deleted.php");
+		// die();
+	} else if($addon->isRejected()) {
+    echo "Add-On is rejected.";
+    // include(__DIR__ . "/../rejected.php");
+    // die();
+  } else if($addon->getApproved()) {
+    echo "Add-On already approved.";
+    // include(__DIR__ . "/../approved.php");
+    // die();
+  }
 
   $manager = UserManager::getFromBLID($addon->getManagerBLID());
 ?>
 <div class="maincontainer">
   <?php
-    $p = realpath(dirname(__DIR__) . "/../../private/navigationbar.php";
+    $p = realpath(dirname(__DIR__) . "/../../private/navigationbar.php");
     include($p);
   ?>
   <h2><?php echo $addon->getName(); ?></h2>
