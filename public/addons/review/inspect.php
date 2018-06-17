@@ -2,7 +2,6 @@
 	$_PAGETITLE = "Blockland Glass | Inspect Update";
 
 	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
 	use Glass\AddonManager;
 	use Glass\BoardManager;
 	use Glass\UserManager;
@@ -30,6 +29,9 @@
   $manager = UserManager::getFromBLID($addon->getManagerBLID());
 ?>
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php")); #636
+  ?>
 	<style>
 	.code {
 		font-size: 0.8em;

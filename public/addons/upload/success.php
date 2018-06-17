@@ -7,7 +7,6 @@
   $_PAGETITLE = "Blockland Glass | Upload Success";
 
   include(realpath(dirname(dirname(__DIR__)) . "/../private/header.php"));
-  include(realpath(dirname(dirname(__DIR__)) . "/../private/navigationbar.php"));
 ?>
 <style>
   .typebox {
@@ -30,10 +29,13 @@
   }
 </style>
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(dirname(__DIR__)) . "/../private/navigationbar.php")); #636
+  ?>
   <div class="tile">
     <h2>Success!</h2>
     <p>
-      Your add-on uploaded successfully. It'll now be carefully reviewed by our reviewers and hopefully approved.
+      Your add-on was uploaded successfully. It'll now be carefully reviewed by our reviewers and hopefully approved.
     </p>
     <p>
       <a href="/addons/">Back to Add-ons</a>

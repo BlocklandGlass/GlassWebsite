@@ -7,12 +7,13 @@
 	$_PAGETITLE = "Blockland Glass | Current Servers";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 
 	$servers = ServerTracker::getActiveServers();
 ?>
 <div class="maincontainer">
 	<?php
+   include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+
 	 foreach($servers as $s) {
     echo "<div class=\"tile\" style=\"width: 50%; margin: 0 auto; margin-bottom: 10px\"><h3 style=\"padding-bottom: 0; margin-bottom: 0\">" . utf8_encode($s->host) . "'s Server</h3>";
 		$addr = $s->ip . ":" . $s->port;

@@ -1,10 +1,12 @@
 <?php
 	require_once dirname(__DIR__) . '/private/autoload.php';
 	require_once(realpath(dirname(__DIR__) . "/private/header.php"));
-	require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 	use Glass\AddonManager;
 ?>
 <div class="maincontainer">
+  <?php
+    require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php")); #636
+  ?>
 	<div class="tile">
 		<h2>Download</h2>
 		<p>

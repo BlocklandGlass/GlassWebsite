@@ -5,11 +5,13 @@
 	$_PAGETITLE = "Blockland Glass | Boards";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 ?>
 
 <div class="maincontainer">
-  <?php include(realpath(dirname(__DIR__) . "/../private/searchbar.php")); ?>
+  <?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+    include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
+  ?>
   <div style="margin-left: 20px;">
 		<a href="/addons/">Add-Ons</a> >> <a href="#">Boards</a>
 	</div>

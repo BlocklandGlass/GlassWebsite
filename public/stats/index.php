@@ -8,7 +8,6 @@
 	$_PAGETITLE = "Blockland Glass | Statistics";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 
 	$user = UserManager::getCurrent();
 
@@ -56,6 +55,9 @@ form {
 }
 </style>
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+  ?>
 	<style>
 		td {
 			padding: 5px;

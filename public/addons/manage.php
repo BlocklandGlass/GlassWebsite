@@ -17,7 +17,6 @@
 
 	$_PAGETITLE = "Blockland Glass | Manage Add-On";
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 
 	if(!isset($_GET['tab']) || $_GET['tab'] == "") {
 		$_GET['tab'] = "desc";
@@ -25,6 +24,9 @@
 ?>
 
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+  ?>
 	<div class="tile" style="width:calc(100%-15px); font-size: 1.8em">
 		Managing <b><?php echo htmlspecialchars($addon->getName()) ?></b>
 	</div>

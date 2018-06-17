@@ -2,7 +2,6 @@
 	require dirname(__DIR__) . '/../../private/autoload.php';
 	$_PAGETITLE = "Blockland Glass | Reclaim List";
 	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
 	use Glass\AddonManager;
 	use Glass\RTBAddonManager;
 	use Glass\UserManager;
@@ -51,6 +50,9 @@ tbody tr:nth-child(2n) {
 </style>
 -->
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php")); #636
+  ?>
   <div class="tile">
     <h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Mod Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/3/2016)</span></h2>
     <p><i>If you would like to suggest amendments to the following information, contact an administrator.</i></p>

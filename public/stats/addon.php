@@ -13,7 +13,6 @@
 	$_PAGETITLE = "Blockland Glass | Add-On Stats";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 
 	$user = UserManager::getCurrent();
 
@@ -28,8 +27,11 @@
 	$downloadData[date("Y-m-d H:i:s")] = StatManager::getStatistics($addon->getId());
 ?>
 <div class="maincontainer">
-	<div class="tile">
-		<h2>Statistics: <a href="/addons/addon.php?id=<?php echo $addon->getId(); ?>"><?php echo $addon->getName(); ?></a></h2>
+  <?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+  ?>
+	<div class="tile" style="width:calc(100%-15px); font-size: 1.8em">
+		Statistics <b><?php echo htmlspecialchars($addon->getName()) ?></b>
 	</div>
 	<div class="tile" style="width: calc(50% - 40px); float:left; display: inline-block">
 		<b>Version Usage Chart</b>

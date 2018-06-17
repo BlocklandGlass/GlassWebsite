@@ -8,7 +8,6 @@
 	$_PAGETITLE = "Blockland Glass | Current Users";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 
 	$users = UserLog::getRecentlyActive();
 ?>
@@ -49,6 +48,9 @@ form {
 
 </style>
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+  ?>
 	<table class="list">
     <tbody>
       <tr>

@@ -9,9 +9,11 @@
 	}
 	$_PAGETITLE = "Blockland Glass | Register";
 	include realpath(dirname(__DIR__) . "/private/header.php");
-	include realpath(dirname(__DIR__) . "/private/navigationbar.php");
 ?>
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/private/navigationbar.php")); #636
+  ?>
 	<div class="center" id="registerStatus" style="display: none;">
 		<?php echo("<p>" . utf8_encode($registerStatus['message']) . "</p>"); ?>
 	</div>

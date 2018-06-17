@@ -7,7 +7,6 @@
 		die();
 	}
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 	use Glass\UserManager;
 	use Glass\AddonManager;
 	use Glass\BoardManager;
@@ -22,6 +21,9 @@
 
 ?>
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+  ?>
 	<table class="userhome">
 		<tbody>
 			<tr>

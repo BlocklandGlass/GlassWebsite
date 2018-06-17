@@ -1,7 +1,6 @@
 <?php
 	require_once dirname(__DIR__) . '/../private/autoload.php';
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 	use Glass\UserManager;
 	use Glass\UserLog;
 	use Glass\AddonManager;
@@ -34,6 +33,9 @@
 	}
 ?>
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+  ?>
 	<div class="tile">
 		<?php
 			if($failed) {

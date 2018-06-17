@@ -46,9 +46,11 @@
 	$_PAGETITLE = "Blockland Glass | " . $addonObject->getName();
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 ?>
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+  ?>
 	<span style="font-size: 9pt;">
 		<a href="addon.php?id=<?php echo $addonObject->getId() ?>"><?php echo $addonObject->getName() ?></a> >> <b>Moderate</b>
 	</span>

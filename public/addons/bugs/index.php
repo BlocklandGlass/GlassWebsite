@@ -34,10 +34,12 @@
 	$_PAGETITLE = "Blockland Glass | Bugs";
 
 	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
 ?>
 
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php")); #636
+  ?>
   <span style="font-size: 0.8em; padding-left: 10px">
     <a href="/addons/addon.php?id=<?php echo $addonObject->getId();?>"><?php echo $addonObject->getName(); ?></a> >> <b>Bugs</b>
   </span>
@@ -97,7 +99,7 @@
         }
 
         if(sizeof($open) == 0) {
-          echo '<tr><td colspan="4" style="text-align: center">No Open Bugs!</td></tr>';
+          echo '<tr><td colspan="4" style="text-align: center">No open bugs.</td></tr>';
         }
 
         ?>
@@ -156,7 +158,7 @@
         }
 
         if(sizeof($closed) == 0) {
-          echo '<tr><td colspan="4" style="text-align: center">No Closed Bugs!</td></tr>';
+          echo '<tr><td colspan="4" style="text-align: center">No closed bugs.</td></tr>';
         }
 
         ?>

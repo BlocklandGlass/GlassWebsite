@@ -8,7 +8,6 @@
 	}
 
 	require_once(realpath(dirname(__DIR__) . "/private/header.php"));
-	require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 
 	use Glass\UserLog;
 	use Glass\StatManager;
@@ -68,6 +67,8 @@ setInterval(nextImage, 5000);
 </div>
 <div class="maincontainer">
 	<?php
+  require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php")); #636
+
 	if($testEnvironment) {
 	?>
 	<p>

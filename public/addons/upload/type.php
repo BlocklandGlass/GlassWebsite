@@ -13,7 +13,6 @@
 	$_PAGETITLE = "Blockland Glass | Upload";
 
 	include(realpath(dirname(dirname(__DIR__)) . "/private/header.php"));
-	include(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php"));
 ?>
 <style>
 	.typebox {
@@ -36,6 +35,9 @@
 	}
 </style>
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php")); #636
+  ?>
   <h2>Select an Add-On Type</h3>
   There's a few types of content that we accept here:
   <ul>

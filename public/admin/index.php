@@ -7,7 +7,6 @@
 
 	$_PAGETITLE = "Blockland Glass | Control Panel";
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 
   if(!GroupManager::getFromName("Administrator")) {
     GroupManager::createDefaultGroups();
@@ -22,6 +21,9 @@
 ?>
 
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+  ?>
 	<div class="tile" style="width: 185px; float: left;">
 		<ul class="sidenav">
 			<li><a href="?tab=board">Boards</a></li>

@@ -13,9 +13,11 @@
 
 	$_PAGETITLE = "Blockland Glass | Log In";
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
-	include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
 ?>
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/private/navigationbar.php")); #636
+  ?>
 	<div class="tile" style="width:50%; margin: 0 auto;">
 		<div class="center" id="loginStatus">
 			<?php echo("<p>" . utf8_encode($loginStatus['message']) . "</p>"); ?>

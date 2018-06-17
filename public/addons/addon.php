@@ -45,10 +45,11 @@
 	$_PAGETITLE = "Blockland Glass | " . $addonObject->getName();
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 ?>
 <div class="maincontainer">
 	<?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+
 		echo "<span style=\"font-size: 0.8em; padding-left: 10px\"><a href=\"/addons/\">Add-Ons</a> >> ";
 		echo "<a href=\"/addons/boards.php\">Boards</a> >> ";
 		echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . utf8_encode($boardObject->getName()) . "</a> >> ";
@@ -90,7 +91,6 @@
 			 <image style="height:1.5em" src="http://blocklandglass.com/img/icons32/inbox_download.png" /><br />
 			<br />
 			<a href="bugs/?id=<?php echo $addonObject->getId()?>">View Bug Tracker</a>
-			<?php /*<a href="review/code.php?id=<?php echo $addonObject->getId() ?>">View source code</a> */?>
 		</div>
 	</div>
 	</div>

@@ -23,10 +23,12 @@
 	}
 	$_PAGETITLE = "Blockland Glass | " . $boardObject->getName();
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 ?>
 <div class="maincontainer">
-	<?php include(realpath(dirname(__DIR__) . "/../private/searchbar.php")); ?>
+	<?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+    include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
+  ?>
 	<h1 style="text-align:center"><?php echo $boardObject->getName(); ?></h1>
 	<div style="margin-left: 20px; display: inline-block;">
 		<a href="/addons">Add-Ons</a> >> <a href="/addons/boards.php">Boards</a> >> <a href="#"><?php echo $boardObject->getName() ?></a>

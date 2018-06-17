@@ -10,9 +10,11 @@
 	$_PAGETITLE = "Blockland Glass | " . utf8_encode($addonData->title);
 
 	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
 ?>
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php")); #636
+  ?>
 	<span style="font-size: 9pt;"><a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archive</a> >> <a href="board.php?name=<?php echo $addonData->type; ?>"><?php echo $addonData->type; ?></a> >> <a href="#"><?php echo htmlspecialchars($addonData->title); ?></a></span>
 		<div class="tile">
 		<?php

@@ -7,7 +7,6 @@
 		die();
 	}
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 	use Glass\UserManager;
 	use Glass\AddonManager;
 	use Glass\BuildManager;
@@ -48,6 +47,9 @@
 
 ?>
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+  ?>
 	<span style="font-size: 1.5em;">Hey there, <b><?php echo $_SESSION['username']; ?></b></span>
 	<p>Welcome to the new Blockland Glass 2 website! We've rebuilt everything from the ground up, and to get started we're going to need some more information.</p>
   <form method="post" action="migrate.php">

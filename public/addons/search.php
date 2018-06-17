@@ -6,10 +6,12 @@
 	$_PAGETITLE = "Blockland Glass | Search Results";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 ?>
 <div class="maincontainer">
-	<?php include(realpath(dirname(__DIR__) . "/../private/searchbar.php")); ?>
+  <?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+    include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
+  ?>
 	<div id="searchResults">
 		<?php include(realpath(dirname(__DIR__) . "/ajax/search.php")); ?>
 	</div>

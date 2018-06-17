@@ -12,7 +12,6 @@
 	}
 	$_PAGETITLE = "Blockland Glass | Add-On Upload";
 	include(__DIR__ . "/../../../private/header.php");
-	include(__DIR__ . "/../../../private/navigationbar.php");
 
 	$message = "";
 
@@ -30,6 +29,7 @@
 ?>
 <div class="maincontainer" style="text-align:center">
 	<?php
+    include(__DIR__ . "/../../../private/navigationbar.php"); #636
 		//if(isset($status["message"])) {
 		//	echo $status["message"];
 		//}

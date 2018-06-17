@@ -27,11 +27,12 @@
 
 <?php
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 ?>
 
-
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+  ?>
   <div class="tile" style="width:50%; margin: 0 auto;">
     <h2>Forgot Password</h2>
     <div style="background-color: #fafafa; color: #666; border-radius: 5px; padding: 1px; margin-bottom: 15px">

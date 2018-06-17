@@ -7,11 +7,7 @@
 	use Glass\UserManager;
 	use Glass\UserLog;
 
-
-
-
 	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
 
   $addon = AddonManager::getFromID($_REQUEST['id']);
   $update = AddonManager::getUpdates($addon)[0];
@@ -38,6 +34,9 @@ td {
 }
 </style>
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php")); #636
+  ?>
 	<div class="tile">
 	  <h2><?php echo $addon->getName(); ?></h2>
 	  <p>
@@ -91,15 +90,6 @@ td {
 	      </tr>
 			</tbody>
 		</table>
-	</div>
-	<div class="tile">
-		<p>
-			Work-in-progress code viewer: <a href="code.php?id=<?php echo $addon->getId() ?>">Code Viewer</a>
-		</p>
-		<hr />
-		<b>Changed Files</b>
-		<br />
-		WIP
 	</div>
 	<div class="tile">
 		<p>

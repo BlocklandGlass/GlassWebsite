@@ -18,7 +18,6 @@
 
 	$_PAGETITLE = "Blockland Glass | Delete Add-On";
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 
   $confirm = $_REQUEST['confirm'] ?? false;
   if($confirm !== false && $_SESSION['deleteConfirm'] ?? false === $id) {
@@ -46,6 +45,9 @@
 ?>
 
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+  ?>
   <div class="tile">
     <h1>Delete <?php echo htmlspecialchars($addon->getName()) ?>?</h1>
     <p>

@@ -1,10 +1,12 @@
 <?php
 	use Glass\BoardManager;
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 ?>
 <div class="maincontainer">
-<?php include(realpath(dirname(__DIR__) . "/../private/searchbar.php")); ?>
+<?php
+  include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+  include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
+?>
 <table style="margin-left: auto;margin-right: auto;">
 <tbody>
 <tr>

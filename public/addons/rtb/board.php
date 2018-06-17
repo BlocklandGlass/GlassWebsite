@@ -13,7 +13,6 @@
 
 	$_PAGETITLE = "Blockland Glass | RTB Boards";
 	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
 
 	$type = $_GET['name'] ?? "";
 	$page = $_GET['page'] ?? 1;
@@ -26,6 +25,9 @@
 	$addons = RTBAddonManager::getFromType($type, $page*15);
 ?>
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php")); #636
+  ?>
   <h1 style="text-align:center"><img src="/img/rtb_logo.gif"><br /><?php echo $_GET['name']; ?></h1>
   <a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archive</a> >> <a href="#"><?php echo $_GET['name']; ?></a>
 

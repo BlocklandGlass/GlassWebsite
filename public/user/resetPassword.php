@@ -3,7 +3,6 @@
 	session_start();
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
-	include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 	use Glass\UserManager;
 	use Glass\NotificationManager;
 	use Glass\NotificationObject;
@@ -50,6 +49,9 @@
   }
 ?>
 <div class="maincontainer">
+  <?php
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+  ?>
 	<div class="tile" style="width:50%; margin: 0 auto;">
 	  <?php if($response["message"] !== null) {
 	    echo $response["message"];

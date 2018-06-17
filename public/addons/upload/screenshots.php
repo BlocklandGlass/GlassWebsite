@@ -7,7 +7,6 @@
 
 	$_PAGETITLE = "Blockland Glass | Screenshots";
 	include(__DIR__ . "/../../../private/header.php");
-	include(__DIR__ . "/../../../private/navigationbar.php");
 
   $id = $_REQUEST['id'] ?? 0;
   $addon = AddonManager::getFromId($id);
@@ -157,6 +156,9 @@
 	</div>
 </div>
 <div class="maincontainer" style="text-align:center">
+  <?php
+    include(__DIR__ . "/../../../private/navigationbar.php"); #636
+  ?>
   <div class="tile" style="text-align: left">
     <h3>Screenshots</h3>
     <p>
