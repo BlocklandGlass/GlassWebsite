@@ -118,6 +118,10 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+body {
+  background-color: #15b358;  
+}
+
 input[type="text"], input[type="password"], input[type="email"], textarea {
   display: block;
 
@@ -127,7 +131,7 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
   font-size: 0.9em;
   border: 1px solid #ccc;
 
-  width: 700px;
+  width: 400px;
 
   border-radius: 0;
 }
@@ -201,7 +205,7 @@ input[type="submit"]:active {
 }
 
 .maincontainer a:hover {
-  color: #ccc;
+  color: #eee;
 }
 
 .maincontainer a:visited {
@@ -410,6 +414,7 @@ input[type="submit"]:active {
   font-size: 14pt;
   background-color: white;
   height: 100%;
+  padding: 20px;
 }
 
 .maincontainer > p {
