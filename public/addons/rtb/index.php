@@ -25,7 +25,7 @@
 	<div class="tile">
 		<table class="boardtable">
 			<tbody>
-				<tr class="boardheader shadow-1">
+				<tr class="boardheader">
 					<td style="margin:0;padding:0;width:0;"></td>
 					<td>Name</td>
 					<td style="width:70px">Files</td>

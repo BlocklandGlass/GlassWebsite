@@ -22,6 +22,7 @@
     include(__DIR__ . "/../rejected.php");
     die();
   } else if($addon->getApproved()) {
+    echo __DIR__;
     include(__DIR__ . "/../approved.php");
     die();
   }
@@ -50,19 +51,19 @@
   <table>
     <tbody>
       <tr>
-        <td style="padding: 10px;"><b>Filename</b></td>
+        <td style="padding: 10px;"><strong>Filename</strong></td>
         <td><?php echo $addon->getFilename() ?></td>
       </tr>
       <tr>
-        <td style="padding: 10px;"><b>Description</b></td>
+        <td style="padding: 10px;"><strong>Description</strong></td>
         <td><?php echo $addon->getDescription() ?></td>
       </tr>
       <tr>
-        <td style="padding: 10px;"><b>Version</b></td>
+        <td style="padding: 10px;"><strong>Version</strong></td>
         <td><pre style="font-size: .5em"><?php echo $addon->getVersion(); ?></pre></td>
       </tr>
       <tr>
-        <td style="padding: 10px;"><b>Author</b></td>
+        <td style="padding: 10px;"><strong>Author</strong></td>
         <td>
         <?php
         echo $addon->getAuthor()->getUsername();
@@ -71,7 +72,7 @@
       </tr>
       <!--
       <tr>
-        <td style="padding: 10px;"><b>Tags</b></td>
+        <td style="padding: 10px;"><strong>Tags</strong></td>
         <td>
 
         </td>
@@ -104,7 +105,7 @@
 			<tbody>
 				<tr>
 					<td style="vertical-align:top; width: 50%; background-color: #CCFFCC; padding: 10px; border-top-left-radius: 10px;">
-				    <b>Approve to board:</b><br/>
+				    <strong>Approve to board:</strong><br/>
 						<select name="board" value="A">
 				    	<option value="" disabled >Choose One</option>
 				    	<option value="" disabled></option>
@@ -124,7 +125,7 @@
 						</select>
 					</td>
 					<td style="padding: 10px; background-color: #FFCCCC; border-top-right-radius: 10px; width: 50%">
-						<b>Rejection Reason</b><br />
+						<strong>Rejection Reason</strong><br />
 						<textarea style="width: 400px; height: 150px; font-size: 0.8em; margin: 0 auto;" name="reason" placeholder="Rejection reasons not available." disabled></textarea>
 					</td>
 				</tr>

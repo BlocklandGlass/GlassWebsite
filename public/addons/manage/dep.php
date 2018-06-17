@@ -24,10 +24,10 @@ if(isset($_REQUEST['action'])) {
 $dep = DependencyManager::getDependenciesFromAddonID($_GET['id']);
 
 if(sizeof($dep) == 0) {
-  $html = "<b>No Dependencies!</b>";
+  $html = "<strong>No Dependencies!</strong>";
 } else {
   $html = "<form action=\"\" method=\"post\"><input type=\"hidden\" name=\"action\" value=\"delete\" />";
-  $html .= "<table><tbody><tr><td colspan=\"2\"><b>Dependencies:</b></td></tr>";
+  $html .= "<table><tbody><tr><td colspan=\"2\"><strong>Dependencies:</strong></td></tr>";
   foreach($dep as $did) {
     $d = DependencyManager::getFromId($did);
     $html = $html . "<td>" . AddonManager::getFromId($d->getRequired())->getName() . "</td><td><button name=\"aid\" value=\"" . $d->getRequired() . "\">Delete</button></td></tr>";

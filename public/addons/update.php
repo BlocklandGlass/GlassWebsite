@@ -26,14 +26,14 @@
 					</tr>
 					<tr>
 						<td>
-	            <b>Version</b><br />
+	            <strong>Version</strong><br />
 	            <span style="font-size: 0.7em;"><a href="http://semver.org" target="_blank">SemVer</a> naming convention</span>
 	          </td>
 						<td><input type="text" name="addonversion" id="addonversion" value="<?php echo $status['version']; ?>"/></td>
 					</tr>
 					<tr>
 						<td>
-	            <b>Change-Log</b><br />
+	            <strong>Change-Log</strong><br />
 	            <span style="font-size: 0.7em;"><a href="https://bitbucket.org/Greek2me/support_updater#rst-header-formatting" target="_blank">TML</a> mark-up</span>
 	          </td>
 						<td><textarea style="font-size:0.8em;" rows="5" name="changelog" /></textarea></td>
@@ -41,7 +41,7 @@
 					<tr>
 						<td>
 							<p>
-								<b>File</b>
+								<strong>File</strong>
 							</p>
 						</td>
 						<td style="vertical-align: middle">
@@ -51,7 +51,7 @@
 					<tr>
 						<td>
 							<p>
-								<b>Restart Required</b>
+								<strong>Restart Required</strong>
 							</p>
 						</td>
 						<td style="vertical-align: middle; text-align:left">

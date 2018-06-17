@@ -48,7 +48,7 @@
 				} elseif($user->inGroup("Reviewer")) {
 					echo("<span style=\"color: green\">Mod Reviewer</span>");
 				//} elseif($user->banned) {
-					//echo("<b>Banned</b>");
+					//echo("<strong>Banned</strong>");
 				}
 				echo("</span></td><td>");
 				echo(utf8_encode($comment->getComment()));

@@ -60,7 +60,7 @@ form {
       </tr>
 			<?php foreach($users as $u) {
 				$username = utf8_encode(UserLog::getCurrentUsername($u->blid));
-				echo "<tr><td><b>" . $username . "</b></td><td>" . $u->blid . "</td><td>" . StatUsageManager::getVersionUsed($u->blid, 11) . "</td></tr>";
+				echo "<tr><td><strong>" . $username . "</strong></td><td>" . $u->blid . "</td><td>" . StatUsageManager::getVersionUsed($u->blid, 11) . "</td></tr>";
 			} ?>
 		</tbody>
 	</table>

@@ -31,15 +31,15 @@
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
 	<div class="tile" style="width:calc(100%-15px); font-size: 1.8em">
-		Statistics <b><?php echo htmlspecialchars($addon->getName()) ?></b>
+		Statistics <strong><?php echo htmlspecialchars($addon->getName()) ?></strong>
 	</div>
 	<div class="tile" style="width: calc(50% - 40px); float:left; display: inline-block">
-		<b>Version Usage Chart</b>
+		<strong>Version Usage Chart</strong>
 		<hr />
   	<canvas id="myChart" style="width:100%;height:300px"></canvas>
 	</div>
 	<div class="tile" style="width: calc(50% - 40px); float:right; display: inline-block">
-		<b>Version Usage List</b>
+		<strong>Version Usage List</strong>
 		<hr />
   	<table class="listTable" style="width: 100%">
 			<thead>
@@ -88,7 +88,7 @@
 		</table>
 	</div>
 	<div class="tile" style="padding-top: 10px; display: inline-block; width: calc(100% - 40px)">
-		<b>Downloads</b>
+		<strong>Downloads</strong>
 		<hr />
   	<canvas id="downloads_chart" style=""></canvas>
 	</div>

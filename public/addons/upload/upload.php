@@ -41,7 +41,7 @@
 				Blockland Glass provides easy add-on browsing for our users, ensuring safety and usability. We ask that you, the developer, only upload age-appropriate and safe content. All add-ons are reviewed before becoming publically available.
 			</p>
 			<p>
-				<b>Do not upload content that you did not make. Period.</b>
+				<strong>Do not upload content that you did not make. Period.</strong>
 			</p>
 			<p>
 				<a href="https://daringfireball.net/projects/markdown/syntax">Markdown</a> is supported for descriptions. Glass uses the <a href="http://semver.org">SemVer</a> versioning system
@@ -57,15 +57,15 @@
 						</td>
 					</tr>
 					<tr>
-						<td><b>Name</b></td>
-						<td><input type="text" name="addonname" id="addonname" style="width: 400px" placeholder="Give your add-on a title" value="<?php echo $_REQUEST['addonname'] ?? ""; ?>"/></td>
+						<td><strong>Name</strong></td>
+						<td><input type="text" name="addonname" id="addonname" style="width: 400px" placeholder="Give your add-on a title" value="<?php echo $_REQUEST['addonname'] ?? ""; ?>" required /></td>
 					</tr>
 					<tr>
-						<td><b>Summary</b></td>
-						<td><input type="text" name="summary" id="summary" style="width: 400px" placeholder="A short one-liner description" value="<?php echo $_REQUEST['summary'] ?? ""; ?>"/></td>
+						<td><strong>Summary</strong></td>
+						<td><input type="text" name="summary" id="summary" style="width: 400px" placeholder="A short one-liner description" value="<?php echo $_REQUEST['summary'] ?? ""; ?>" required /></td>
 					</tr>
 					<tr>
-						<td><b>Board</b></td>
+						<td><strong>Board</strong></td>
 						<td style="text-align:left">
 							<select name="board"  value="<?php echo $_REQUEST['board'] ?? ""; ?>">
 								<?php
@@ -80,20 +80,20 @@
 						</td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top"><b>Description</b></td>
-						<td><textarea style="font-size:0.8em;width:400px;height:200px" name="description" placeholder="How does it work? Markdown is supported."/><?php echo $_REQUEST['description'] ?? ""; ?></textarea></td>
+						<td style="vertical-align:top"><strong>Description</strong></td>
+						<td><textarea style="font-size:0.8em;width:400px;height:200px" name="description" placeholder="How does it work? Markdown is supported." required /><?php echo $_REQUEST['description'] ?? ""; ?></textarea></td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top"><b>Filename</b></td>
-						<td><input type="text" name="filename" style="width: 400px" placeholder="Client_MySuperCoolAddon"  value="<?php echo $_REQUEST['filename'] ?? ""; ?>"/></td>
+						<td style="vertical-align:top"><strong>Filename</strong></td>
+						<td><input type="text" name="filename" style="width: 400px" placeholder="Client_MySuperCoolAddon"  value="<?php echo $_REQUEST['filename'] ?? ""; ?>" required /></td>
 					</tr>
 					<tr>
-						<td style="vertical-align:top"><b>Current Version</b></td>
-						<td><input type="text" name="version" style="width: 400px" placeholder="Probably 1.0.0"  value="<?php echo $_REQUEST['version'] ?? "1.0.0"; ?>"/></td>
+						<td style="vertical-align:top"><strong>Current Version</strong></td>
+						<td><input type="text" name="version" style="width: 400px" placeholder="Probably 1.0.0"  value="<?php echo $_REQUEST['version'] ?? "1.0.0"; ?>" required /></td>
 					</tr>
 					<tr>
 						<td>
-							<p><b>File</b></p>
+							<p><strong>File</strong></p>
 							<!--<span style="font-size: 0.7em;">You can find your saves in your Blockland folder!</span>
 							<p class="description">You can find your saves in your Blockland folder!</p>-->
 						</td>

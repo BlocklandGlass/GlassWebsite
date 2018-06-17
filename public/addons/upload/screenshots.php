@@ -162,7 +162,7 @@
   <div class="tile" style="text-align: left">
     <h3>Screenshots</h3>
     <p>
-      Now that you've uploaded <b><?php echo htmlspecialchars($addon->getName()); ?></b>, why don't you show us what its all about and upload some screenshots?
+      Now that you've uploaded <strong><?php echo htmlspecialchars($addon->getName()); ?></strong>, why don't you show us what its all about and upload some screenshots?
     </p>
     <div style="text-align: center">
       <form>

@@ -74,9 +74,9 @@ td {
   <table style="width: 100%">
     <tbody>
       <tr>
-        <td><b>Repository Url</b></td>
-        <td><b>Repository Type</b></td>
-        <td><b>Channel</b></td>
+        <td><strong>Repository Url</strong></td>
+        <td><strong>Repository Type</strong></td>
+        <td><strong>Channel</strong></td>
       </tr>
       <tr>
         <td><input type="text" name="url" value="<?php echo $url ?>"/></td>

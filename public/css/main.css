@@ -33,20 +33,10 @@ html {
   padding: 15px;
   font-size: 0.8em;
   background-color: #ebebeb;
-  border-radius: 2px;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.1);
 }
 
 .tile h1,h2,h3,h4 {
   margin-top: 5px;
-}
-
-.shadow-1 {
-  box-shadow: 0 1px 1px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.1);
-}
-
-.shadow-2 {
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.1);
 }
 
 /*
@@ -135,10 +125,11 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
   padding: 5px;
 
   font-size: 0.9em;
-  border-radius: 3px;
   border: 1px solid #ccc;
 
   width: 300px;
+
+  border-radius: 0;
 }
 
 input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, textarea:hover {
@@ -150,7 +141,6 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
 }
 
 input[type="submit"] {
-  border-radius: 5px;
   padding: 15px 25px;
   font-size: 1em;
   text-decoration: none;
@@ -212,7 +202,6 @@ input[type="submit"]:active {
 
 .maincontainer a:hover {
   color: #ccc;
-  text-decoration: underline;
 }
 
 .maincontainer a:visited {
@@ -364,7 +353,6 @@ input[type="submit"]:active {
   text-decoration: none;
   font-weight: bold;
   padding: 5px 15px;
-  border-radius: 5px;
 }
 
 .navbtn:hover {
@@ -439,7 +427,6 @@ input[type="submit"]:active {
 .searchbar {
   display: block;
   font-size: 16pt;
-  border-radius: 5px;
   border: 1px solid #ccc;
 }
 
@@ -544,7 +531,7 @@ input[type="submit"]:active {
 .boardheader td {
   font-size: 1.2em;
   padding: 5px 10px 5px 10px;
-  background-color: #69dd9a;
+  background-color: #2ecc71;
   color: #fff;
   font-weight: bold;
   text-align: center !important;
@@ -556,16 +543,13 @@ input[type="submit"]:active {
   text-align: left !important;
 }
 
-.listTable > thead > tr {
-  box-shadow: 0 1px 1px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.1);
-}
-
 .listTable > thead > tr > th {
   font-size: 1.1em;
   padding: 5px 10px 5px 10px;
-  background-color: #69dd9a;
+  background-color: #2ecc71;
   font-weight: bold;
   text-align: center !important;
+  color: white;
 }
 
 .listTable td {
@@ -582,7 +566,6 @@ input[type="submit"]:active {
 }
 
 .homebtn {
-  border-radius: 5px;
   padding: 10px 20px;
   font-size: 20px;
   text-decoration: none;
@@ -602,7 +585,6 @@ input[type="submit"]:active {
 }
 
 .btn {
-  border-radius: 5px;
   padding: 15px 25px;
   font-size: 22px;
   text-decoration: none !important;
@@ -841,7 +823,6 @@ input[type="submit"]:active {
   display: block;
   background-color: #eee;
   padding: 5px;
-  border-radius: 5px;
 }
 
 .addonnavmod {
@@ -853,7 +834,6 @@ input[type="submit"]:active {
 }
 
 .addonnav > li {
-  border-radius: 5px;
   display: inline-block;
   list-style-type: none;
   margin: 0;

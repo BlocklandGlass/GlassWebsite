@@ -27,9 +27,9 @@
   ?>
 	<div class="tile">
 	  <?php if($ret === true) {
-	    echo "<b>Your reclaim request has been submitted for approval</b>";
+	    echo "<strong>Your reclaim request has been submitted for approval</strong>";
 	  } else if($ret === false) {
-	    echo "<b>Your reclaim request has failed</b>";
+	    echo "<strong>Your reclaim request has failed</strong>";
 	  }
 	  ?>
 	  <h1 style="text-align:center"><img src="/img/rtb_logo.gif"><br /><?php echo $addonData->title ?></h1>
@@ -53,7 +53,7 @@ $("#addon").keyup(function() {
     res = JSON.parse(data);
     var html = "";
     for(i = 0; i < res.length; i++) {
-      html = html + "<b>" + res[i].name + "</b> <button name=\"aid\" type=\"submit\" value=\"" + res[i].id + "\">Reclaim</button><br />";
+      html = html + "<strong>" + res[i].name + "</strong> <button name=\"aid\" type=\"submit\" value=\"" + res[i].id + "\">Reclaim</button><br />";
     }
     $("#options").html(html);
   })

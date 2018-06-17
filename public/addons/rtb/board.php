@@ -86,7 +86,7 @@
 	<div class="tile">
 		<table class="boardtable">
 			<tbody>
-				<tr class="boardheader shadow-1">
+				<tr class="boardheader">
 					<td style="width: auto; text-align: left;">Name</td>
 					<td style="text-align: center !important;">Author</td>
 					<td style="width: 90px;">ID</td>

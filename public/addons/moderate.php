@@ -52,15 +52,15 @@
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
 	<span style="font-size: 9pt;">
-		<a href="addon.php?id=<?php echo $addonObject->getId() ?>"><?php echo $addonObject->getName() ?></a> >> <b>Moderate</b>
+		<a href="addon.php?id=<?php echo $addonObject->getId() ?>"><?php echo $addonObject->getName() ?></a> >> <strong>Moderate</strong>
 	</span>
 
 	<div class="tile">
 
-		<h2 style=\"margin-bottom: 0px;\">Moderating: <i><?php echo $addonObject->getName() ?></i></h2>
+		<h2 style=\"margin-bottom: 0px;\">Moderating <strong><?php echo $addonObject->getName() ?></strong></h2>
 		<?php
 			$author = $addonObject->getAuthor();
-			echo "Uploaded by " . htmlspecialchars(utf8_encode($author->getUsername()));
+			echo "Uploaded by <a href=\"/user/view.php?blid=" . $author->getBLID() . "\">" . htmlspecialchars(utf8_encode($author->getUsername())) . "</a>";
 		?>
 		<div style="margin-top: 15px; margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em">
 			<div class="addoninfoleft">
@@ -101,11 +101,11 @@
 		  <table class="formtable">
 		    <tbody>
 		      <tr>
-		        <td style="width: 10%"><b>Title</b></td>
+		        <td style="width: 10%"><strong>Title</strong></td>
 		        <td><input type="text" name="name" value="<?php echo htmlspecialchars($addonObject->getName()) ?>"/></td>
 		      </tr>
 		      <tr>
-		        <td><b>Board</b></td>
+		        <td><strong>Board</strong></td>
 		        <td>
 							<select name="board">
 								<?php
@@ -124,7 +124,7 @@
 						</td>
 		      </tr>
 		      <tr>
-		        <td><b>Description</b></td>
+		        <td><strong>Description</strong></td>
 		        <td>
 							<textarea name="description" style="height: 200px;"><?php echo $addonObject->getDescription() ?></textarea>
 						</td>

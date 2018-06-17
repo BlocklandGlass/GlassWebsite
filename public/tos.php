@@ -815,7 +815,7 @@
       of video content. For more information, please visit our website at blocklandglass.com.
     </p>
     <h2>GENERAL INFORMATION</h2>
-    <b>ENTIRE AGREEMENT</b>
+    <strong>ENTIRE AGREEMENT</strong>
     <p>
       This TOS constitutes the entire agreement between you and Blockland Glass and
       shall govern the use of our Services, superseding any prior version of this TOS
@@ -824,7 +824,7 @@
       or purchase certain other Blockland Glass Services, affiliate Services,
       third-party content or third-party software.
     </p>
-    <b>CHOICE OF LAW AND FORUM</b>
+    <strong>CHOICE OF LAW AND FORUM</strong>
     <p>
       It is at the mutual agreement of both you and Blockland Glass with regard to
       the TOS that the relationship between the parties shall be governed by the laws
@@ -836,7 +836,7 @@
       agree to waive any and all objections to the exercise of jurisdiction over the
       parties by such courts and to venue in such courts.
     </p>
-    <b>WAIVER AND SEVERABILITY OF TERMS</b>
+    <strong>WAIVER AND SEVERABILITY OF TERMS</strong>
     <p>
       At any time, should Blockland Glass fail to exercise or enforce any right or
       provision of the TOS, such failure shall not constitute a waiver of such right
@@ -845,14 +845,14 @@
       should endeavor to give effect to the parties' intentions as reflected in the
       provision, and the other provisions of the TOS remain in full force and effect.
     </p>
-    <b>NO RIGHT OF SURVIVORSHIP NON-TRANSFERABILITY</b>
+    <strong>NO RIGHT OF SURVIVORSHIP NON-TRANSFERABILITY</strong>
     <p>
       You acknowledge, understand and agree that your account is non-transferable and any
       rights to your ID and/or contents within your account shall terminate upon your
       death. Upon receipt of a copy of a death certificate, your account may be
       terminated and all contents therein permanently deleted.
     </p>
-    <b>STATUTE OF LIMITATIONS</b>
+    <strong>STATUTE OF LIMITATIONS</strong>
     <p>
       You acknowledge, understand and agree that regardless of any statute or law to the
       contrary, any claim or action arising out of or related to the use of our Services

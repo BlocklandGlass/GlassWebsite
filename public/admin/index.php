@@ -32,7 +32,7 @@
 			<li><a href="?tab=bans">Bans</a></li>
     </ul>
 	</div>
-	<div class="tile" style="width: 685px; padding: 15px; float: right;">
+	<div class="tile" style="width: 1010px; padding: 15px; float: right;">
 		<?php
       if(!isset($_GET['tab'])) {
         echo "Select a tab on the left to continue.";

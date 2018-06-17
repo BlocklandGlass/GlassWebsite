@@ -80,10 +80,10 @@
 			} else {
 				$lastseen = "Never";
 			}
-			echo "<p><b>Last Seen:</b> $lastseen";
-			echo "<br /><b>BL_ID:</b> $blid";
+			echo "<p><strong>Last Seen:</strong> $lastseen";
+			echo "<br /><strong>BL_ID:</strong> $blid";
 			echo "</p>";
-			//echo("<a href=\"/addons/search.php?blid=" . htmlspecialchars($userObject->getBLID()) . "\"><b>Find Add-Ons by this user</b></a>");
+			//echo("<a href=\"/addons/search.php?blid=" . htmlspecialchars($userObject->getBLID()) . "\"><strong>Find Add-Ons by this user</strong></a>");
 			?>
 		<hr />
 		<table class="listTable" style="width: 100%">

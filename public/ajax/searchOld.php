@@ -36,7 +36,7 @@
 
 		if($result->num_rows) {
 			while($row = $result->fetch_object()) {
-				echo "<p><b><a href=\"addon.php?id=" . $row->id . "\">" . utf8_encode($row->name) . "</a></b><br />";
+				echo "<p><strong><a href=\"addon.php?id=" . $row->id . "\">" . utf8_encode($row->name) . "</a></strong><br />";
 
 				if(strlen($row->description) > 200) {
 					$desc = substr($row->description, 0, 196) . " ...";

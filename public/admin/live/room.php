@@ -154,7 +154,7 @@ if($content !== false) {
     <hr />
     <?php
       if($content === false) {
-        echo "<b>No data for $date</b>";
+        echo "<strong>No data for $date</strong>";
       } else {
     ?>
     <table>

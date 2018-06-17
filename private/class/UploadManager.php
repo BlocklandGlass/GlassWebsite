@@ -8,7 +8,7 @@ class UploadManager {
   public static function getStatus($submission, $file) {
     if(!isset($submission['csrftoken'])) {
       return [
-        "message" => "Upload an add-on!"
+        "message" => "Upload an add-on"
       ];
     }
 
@@ -30,25 +30,25 @@ class UploadManager {
     $name = trim($name);
 
     if(strlen($name) == 0) {
-      $problems[] = "Missing name";
+      $problems[] = "Missing name.";
     } if(strlen($name) < 3) {
-      $problems[] = "Add-On name is too short!";
+      $problems[] = "Add-On name is too short.";
     }
 
     //summary
     $summary = trim($summary);
 
     if(strlen($summary) == 0) {
-      $problems[] = "Missing summary";
+      $problems[] = "Missing summary.";
     }
 
     //board
     if(!$boardId) {
-      $problems[] = "No board selected";
+      $problems[] = "No board selected.";
     } else {
       $board = BoardManager::getFromID($boardId);
       if(!$board) {
-        $problems[] = "Invalid board";
+        $problems[] = "Invalid board.";
       }
     }
 
@@ -56,19 +56,19 @@ class UploadManager {
     $description = trim($description);
 
     if(strlen($description) == 0) {
-      $problems[] = "Missing description";
+      $problems[] = "Missing description.";
     }
 
     //filename
     $filename = trim($filename);
 
     if(strlen($filename) == 0) {
-      $problems[] = "Missing description";
+      $problems[] = "Missing description.";
     }
 
     $idx = strpos($filename, "_");
     if($idx === false || $idx == 0 || $idx == strlen($filename)-1) {
-      $problems[] = "Invalid filename";
+      $problems[] = "Invalid filename.";
     }
 
     if(strpos($filename, ".zip") === false) {
@@ -95,9 +95,9 @@ class UploadManager {
     //================================
 
     if(empty($file['name'])) {
-      $problems[] = "No file was uploaded";
+      $problems[] = "No file was uploaded.";
     } else if(pathinfo($file['name'], PATHINFO_EXTENSION) != "zip") {
-  		$problems[] = "Only .zip files are allowed";
+  		$problems[] = "Only .zip files are allowed.";
   	}
 
     if(sizeof($problems) > 0) {

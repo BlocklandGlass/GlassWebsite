@@ -50,21 +50,21 @@
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
-	<span style="font-size: 1.5em;">Hey there, <b><?php echo $_SESSION['username']; ?></b></span>
+	<span style="font-size: 1.5em;">Hey there, <strong><?php echo $_SESSION['username']; ?></strong></span>
 	<p>Welcome to the new Blockland Glass 2 website! We've rebuilt everything from the ground up, and to get started we're going to need some more information.</p>
   <form method="post" action="migrate.php">
     <table class="formtable">
       <tbody>
         <?php if(isset($error)) {
-          echo "<tr><td colspan=\"2\"><b style=\"color:red;\">" . $error . "</b></td></tr>";
+          echo "<tr><td colspan=\"2\"><b style=\"color:red;\">" . $error . "</strong></td></tr>";
         }
         ?>
         <tr>
-          <td><b>E-Mail Address</b></td>
+          <td><strong>E-Mail Address</strong></td>
           <td><input type="email" name="email" value="<?php echo $_POST['email']; ?>"></td>
         </tr>
         <tr>
-          <td><b>Confirm</b></td>
+          <td><strong>Confirm</strong></td>
           <td><input type="email" name="conf" value="<?php echo $_POST['conf']; ?>"></td>
         </tr>
         <tr>

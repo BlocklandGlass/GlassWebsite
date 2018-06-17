@@ -24,7 +24,7 @@
 		<h3><image style="height: 1.4em" src="/img/icons32/creative_commons.png" /> Ownership</h3>
 		<p>Ensure that the user uploading the add-on is the original author of it.</p>
 		<h3><image style="height: 1.4em" src="/img/icons32/gear_in.png" /> Client Add-Ons</h3>
-		<p><b>These add-ons are to be inspected very carefully.</b> Ensure that:</p>
+		<p><strong>These add-ons are to be inspected very carefully.</strong> Ensure that:</p>
 		<ul>
 			<li>They only interact with the server(s) they're intended for.</li>
 			<li>They add no additional functionality outside of their intended operation.</li>
@@ -38,7 +38,7 @@
 			<li>Duplicates of other add-ons.</li>
 		</ul>
 		<h3><image style="height: 1.4em" src="/img/icons32/caution_biohazard.png" /> Malicious Add-Ons</h3>
-		<p><b>Above all else, ensure the add-on is not malicious, that it can not be easily exploited by a regular user and has no backdoors - <span style="color: red">this is your top priority</span>.</b></p>
+		<p><strong>Above all else, ensure the add-on is not malicious, that it can not be easily exploited by a regular user and has no backdoors - <span style="color: red">this is your top priority</span>.</strong></p>
 	</div>
 	<div class="tile" style="margin-top 15px">
 		<table style="width: 100%" class="listTable">

@@ -46,7 +46,7 @@ td {
 	  <table style="width: 100%">
 	    <tbody>
 	      <tr>
-	        <td style="padding: 10px"><b>Change-Log</b></td>
+	        <td style="padding: 10px"><strong>Change-Log</strong></td>
 	        <td style="width: 80%">
 						<div style="width: 90%; padding: 5px; margin: 0; font-size: 0.9em; background-color: rgba(255,255,255,0.8); max-height: 300px; y-overflow:scroll;" disabled="1"><?php
 						$cl = $update->getChangeLog() ?? "";
@@ -59,7 +59,7 @@ td {
 					</td>
 	      </tr>
 	      <tr>
-	        <td style="padding-left: 10px; vertical-align: top"><b>New Files</b></td>
+	        <td style="padding-left: 10px; vertical-align: top"><strong>New Files</strong></td>
 	        <td style="color: green" class="monospace">
 						<?php
 							$new = $update->getNewFiles();
@@ -74,7 +74,7 @@ td {
 					</td>
 	      </tr>
 	      <tr>
-					<td style="padding-left: 10px; vertical-align: top"><b>Removed Files Files</b></td>
+					<td style="padding-left: 10px; vertical-align: top"><strong>Removed Files Files</strong></td>
 	        <td style="color: red" class="monospace">
 						<?php
 							$new = $update->getRemovedFiles();

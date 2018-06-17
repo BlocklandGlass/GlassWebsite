@@ -40,7 +40,7 @@
 			<?php
 			$id = "RTB";
 			$class = "red";
-			echo '<a href="http://' . AWSFileManager::getBucket() . '/rtb/' . $addonData->filename .  '" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />Imported Archive</span></a>';
+			echo '<a href="http://' . AWSFileManager::getBucket() . '/rtb/' . $addonData->filename .  '" class="btn dlbtn ' . $class . '"><strong>' . ucfirst($id) . '</strong><span style="font-size:9pt"><br />Imported Archive</span></a>';
 			?>
 		</div>
 		<?php } else {

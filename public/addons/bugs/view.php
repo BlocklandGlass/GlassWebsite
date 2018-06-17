@@ -129,7 +129,7 @@
     include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
   ?>
   <span style="font-size: 0.8em; padding-left: 10px">
-    <a href="/addons/addon.php?id=<?php echo $addonObject->getId();?>"><?php echo $addonObject->getName(); ?></a> >> <a href="/addons/bugs?id=<?php echo $addonObject->getId();?>">Bugs</a> >> <b>Bug #<?php echo $bug->id ?></b>
+    <a href="/addons/addon.php?id=<?php echo $addonObject->getId();?>"><?php echo $addonObject->getName(); ?></a> >> <a href="/addons/bugs?id=<?php echo $addonObject->getId();?>">Bugs</a> >> <strong>Bug #<?php echo $bug->id ?></strong>
   </span>
 
   <div class="tile">
@@ -252,7 +252,7 @@
           ?>
           <tr>
             <td style="width:20%; vertical-align: top; padding: 20px; text-align: right">
-              <b>New Comment</b>
+              <strong>New Comment</strong>
             </td>
             <td style="text-align: center">
               <textarea name="body" style="display:block; width:calc(100% - 30px); height: 170px;"></textarea>

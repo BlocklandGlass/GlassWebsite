@@ -28,7 +28,7 @@
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
 	<div class="tile" style="width:calc(100%-15px); font-size: 1.8em">
-		Managing <b><?php echo htmlspecialchars($addon->getName()) ?></b>
+		Managing <strong><?php echo htmlspecialchars($addon->getName()) ?></strong>
 	</div>
 	<div class="tile" style="width: 200px; float: left;">
 		<ul class="sidenav">
@@ -47,7 +47,7 @@
 			<li><a href="https://blocklandglass.com/stats/addon.php?id=<?php echo $_GET['id'] ?>">Statistics</a></li>
 		</ul>
 	</div>
-	<div class="tile" style="width: 680px; padding: 15px; float: right;">
+	<div class="tile" style="width: 1000px; padding: 15px; float: right;">
 		<?php
 			include(realpath(dirname(__FILE__) . "/manage/" . $_GET['tab'] . ".php"));
 		?>

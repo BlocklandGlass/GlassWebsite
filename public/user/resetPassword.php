@@ -26,12 +26,12 @@
       $userObj = UserManager::getFromBLID($blid);
       if($userObj->getResetKey() !== $token) {
         $response = [
-          "message" => "<b>Invalid reset token.</b> Did you request a password reset twice on accident?",
+          "message" => "<strong>Invalid reset token.</strong> Did you request a password reset twice on accident?",
           "form" => false
         ];
       } else if((time()-$userObj->getResetTime()) > 1800) {
         $response = [
-          "message" => "<b>Your password reset has expired!</b> Try resending the email. " . (time()-$userObj->getResetTime()),
+          "message" => "<strong>Your password reset has expired!</strong> Try resending the email. " . (time()-$userObj->getResetTime()),
           "form" => false
         ];
       } else {

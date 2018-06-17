@@ -41,9 +41,9 @@
   <h2>Select an Add-On Type</h3>
   There's a few types of content that we accept here:
   <ul>
-    <li><b>Add-Ons</b> are anything that starts with a server.cs or client.cs file.</li>
-    <li><b>Clients</b> are typically server-specific and are mainly delivered in-game. These add-ons add GUIs or specific client effects that correspond to a modded server</li>
-    <li><b>Other</b> contains colorsets, sounds, prints, or anything that isn't a normal add-on</li>
+    <li><strong>Add-Ons</strong> are anything that starts with a server.cs or client.cs file.</li>
+    <li><strong>Clients</strong> are typically server-specific and are mainly delivered in-game. These add-ons add GUIs or specific client effects that correspond to a modded server</li>
+    <li><strong>Other</strong> contains colorsets, sounds, prints, or anything that isn't a normal add-on</li>
   </ul>
   <div style="text-align:center">
     <a href="upload.php?t=addon" class="typebox">Add-On<br /><br /><img src="/img/icons32/folder_vertical_zipper.png" /></a>

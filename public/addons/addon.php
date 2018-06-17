@@ -111,11 +111,11 @@
 		$version = $addonObject->getVersion();
 		$id = "stable";
 		$class = "green";
-		echo '<a href="/addons/download.php?id=' . $addonObject->getId() . '&beta=0" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />v' . $version . '</span></a>';
+		echo '<a href="/addons/download.php?id=' . $addonObject->getId() . '&beta=0" class="btn dlbtn ' . $class . '"><strong>' . ucfirst($id) . '</strong><span style="font-size:9pt"><br />v' . $version . '</span></a>';
 		if($addonObject->hasBeta()) {
 			$id = "beta";
 			$class = "red";
-			echo '<a href="/addons/download.php?id=' . $addonObject->getId() . '&beta=1" class="btn dlbtn ' . $class . '"><b>' . ucfirst($id) . '</b><span style="font-size:9pt"><br />v' . $addonObject->getBetaVersion() . '</span></a>';
+			echo '<a href="/addons/download.php?id=' . $addonObject->getId() . '&beta=1" class="btn dlbtn ' . $class . '"><strong>' . ucfirst($id) . '</strong><span style="font-size:9pt"><br />v' . $addonObject->getBetaVersion() . '</span></a>';
 		}
 		?>
 	</div>
@@ -138,7 +138,7 @@
 		$deps = DependencyManager::getDependenciesFromAddonID($_GET['id']);
 		if(sizeof($deps) > 0) {
 			echo "<hr /><div style=\"text-align:center\">";
-			echo "<b>This add-on has some dependencies or add-ons that it requires to run:</b><br/><br/>";
+			echo "<strong>This add-on has some dependencies or add-ons that it requires to run:</strong><br/><br/>";
 			foreach($deps as $did) {
 				$dep = DependencyManager::getFromId($did);
 				$rid = $dep->getRequired();

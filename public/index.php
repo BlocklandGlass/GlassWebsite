@@ -63,7 +63,7 @@ setInterval(nextImage, 5000);
 		<div style="padding-top: 50px;">
 			<image style="margin: 10px 0px 5px 0px; max-width: 100%" src="/img/logoWhite.png" />
 			<h2 style="font-weight: normal">A service for the community, by the community</h2>
-			<a href="dl.php" class="btn blue"><b>Download</b></a><br />
+			<a href="dl.php" class="btn blue"><strong>Download</strong></a><br />
 			<a href="https://host.blocklandglass.com/" class="btn green" style="width: 150px">Hosting</a>
 			<a href="addons" class="btn yellow" style="width: 150px">Add-Ons</a><br /><br />
 		</div>
@@ -87,32 +87,20 @@ setInterval(nextImage, 5000);
 	<br />
 	<p>
 		<h3>By the community?</h3>
-		Glass is intended to be a group project. Although the bulk of the work has been fronted individually, we're striving to move to an open-source site, allowing for Glass to be a truely community made project.
+		Glass is intended to be a group project. Although the bulk of the work has been fronted individually, we're striving to move to an open-source site, allowing for Glass to be a truly community made project.
 	</p>
 	<br />
 	<p>
 		<h3>Live Stats</h3>
-		Right now, there's <b><?php
+		Right now, there's <strong><?php
 		echo StatManager::getMasterServerStats()['servers'];
-		?></b> Blockland servers online with <b><?php
+		?></strong> Blockland servers online with <strong><?php
 		echo $ct = StatManager::getMasterServerStats()['users'];
-		?></b> <?php echo ($ct == 1 ? "user" : "users") ?>. Of those, <a href="stats/users.php"><?php
-		echo $ct = sizeof(UserLog::getRecentlyActive());
-		?></a> <?php echo ($ct == 1 ? "user" : "users") ?> are running Glass - which equates to <?php
-		$nonglass = StatManager::getMasterServerStats()['users'];
-		$glass = sizeof(UserLog::getRecentlyActive());
-        $percentage = floor(100/$nonglass*$glass);
-        echo "<b>" . $percentage . "%</b>"; ?>
-		of Blockland as of this moment. Glass has <b>
-		<?php
-		echo $ct = UserLog::getUniqueCount();
-		?>
-		</b>
-        active <?php echo ($ct == 1 ? "user" : "users") ?>, with a total of <a href="stats/"><?php
+		?></strong> <?php echo ($ct == 1 ? "user" : "users") ?>. Glass has a total of <a href="stats/"><?php
 		$web = StatManager::getAllAddonDownloads("web")+0;
 		$ingame = StatManager::getAllAddonDownloads("ingame")+0;
 		$updates = StatManager::getAllAddonDownloads("updates")+0;
-		echo $web+$ingame; ?></b></a> downloads and <b><?php echo $updates; ?></b> updates.
+		echo $web+$ingame; ?></strong></a> downloads and <strong><?php echo $updates; ?></strong> updates.
 	</p>
 	<br />
 	<p>

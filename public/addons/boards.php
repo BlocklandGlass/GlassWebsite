@@ -24,8 +24,8 @@
 			  $boards = BoardManager::getGroup($group);
 
 				?>
-				<tr class="boardheader shadow-1" style="position: relative !important;">
-					<td colspan="3"><b><?php echo $group; ?></b></td>
+				<tr class="boardheader" style="position: relative !important;">
+					<td colspan="3"><strong><?php echo $group; ?></strong></td>
 				</tr>
 				<?php
 

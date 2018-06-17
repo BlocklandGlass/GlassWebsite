@@ -95,7 +95,7 @@
 	<div class="tile">
 	<table class="boardtable">
 		<tbody>
-			<tr class="boardheader shadow-1">
+			<tr class="boardheader">
 				<td>Name</td>
 				<td style="text-align:center !important">Uploader</td>
 				<td>Downloads</td>

@@ -41,7 +41,7 @@
     include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
   ?>
   <span style="font-size: 0.8em; padding-left: 10px">
-    <a href="/addons/addon.php?id=<?php echo $addonObject->getId();?>"><?php echo $addonObject->getName(); ?></a> >> <b>Bugs</b>
+    <a href="/addons/addon.php?id=<?php echo $addonObject->getId();?>"><?php echo $addonObject->getName(); ?></a> >> <strong>Bugs</strong>
   </span>
   <div class="tile">
     <div style="text-align: right;">

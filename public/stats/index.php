@@ -70,11 +70,11 @@ form {
 				<td>Type</td>
 				<td>Downloads</td>
 			</tr>
-			<tr><td><b>Web:</b></td><td><?php echo $web ?></td></tr>
-			<tr><td><b>In-game:</b></td><td><?php echo $ingame ?></td></tr>
-			<tr><td><b>Update:</b></td><td><?php echo $updates ?></td></tr>
-			<tr><td><b>Total:</b></td><td><?php echo $total ?></td></tr>
-			<!--<tr><td><b>Since Glass 2:</b></td><td><?php echo $total-38535; ?></td></tr>-->
+			<tr><td><strong>Web:</strong></td><td><?php echo $web ?></td></tr>
+			<tr><td><strong>In-game:</strong></td><td><?php echo $ingame ?></td></tr>
+			<tr><td><strong>Update:</strong></td><td><?php echo $updates ?></td></tr>
+			<tr><td><strong>Total:</strong></td><td><?php echo $total ?></td></tr>
+			<!--<tr><td><strong>Since Glass 2:</strong></td><td><?php echo $total-38535; ?></td></tr>-->
 		</tbody>
 	</table>
 	<hr />
