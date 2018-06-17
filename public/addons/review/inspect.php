@@ -13,20 +13,20 @@
     return;
   }
 
-  echo __DIR__;
-  return;
-
   $addon = AddonManager::getFromID($_REQUEST['id']);
 
 	if($addon->getDeleted()) {
-    include(__DIR__ . "/../deleted.php");
-		die();
+    echo "Add-On is deleted.";
+    // include(__DIR__ . "/../deleted.php");
+		// die();
 	} else if($addon->isRejected()) {
-    include(__DIR__ . "/../rejected.php");
-    die();
+    echo "Add-On is rejected.";
+    // include(__DIR__ . "/../rejected.php");
+    // die();
   } else if($addon->getApproved()) {
-    include(__DIR__ . "/../approved.php");
-    die();
+    echo "Add-On already approved.";
+    // include(__DIR__ . "/../approved.php");
+    // die();
   }
 
   $manager = UserManager::getFromBLID($addon->getManagerBLID());
