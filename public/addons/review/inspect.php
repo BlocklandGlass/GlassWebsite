@@ -15,20 +15,25 @@
     return;
   }
 
-  $addon = AddonManager::getFromID($_REQUEST['id']);
+  try {
+    $addonObject = AddonManager::getFromID($_REQUEST['id']);
+  } catch(Exception $e) {
+    header('Location: /addons');
+    die("addon doesnt exist");
+  }
 
-	if($addon->getDeleted()) {
+  if($addonObject->getDeleted()) {
     include(__DIR__ . "/../deleted.php");
 		die();
-	} else if($addon->isRejected()) {
+	} else if($addonObject->isRejected()) {
     include(__DIR__ . "/../rejected.php");
     die();
-  } else if($addon->getApproved()) {
+  } else if($addonObject->getApproved()) {
     include(__DIR__ . "/../approved.php");
     die();
   }
 
-  $manager = UserManager::getFromBLID($addon->getManagerBLID());
+  $manager = UserManager::getFromBLID($addonObject->getManagerBLID());
 ?>
 <div class="maincontainer">
   <?php
@@ -37,36 +42,36 @@
     echo __DIR__;
     include($p);
   ?>
-  <h2><?php echo $addon->getName(); ?></h2>
-  <p>Uploaded <?php echo date("M jS Y, g:i A", strtotime($addon->getUploadDate())); ?> by <?php echo '<a href="/user/view.php?blid=' . $manager->getBlid() . '"?>' . $manager->getName() . '</a>'; ?><br>
+  <h2><?php echo $addonObject->getName(); ?></h2>
+  <p>Uploaded <?php echo date("M jS Y, g:i A", strtotime($addonObject->getUploadDate())); ?> by <?php echo '<a href="/user/view.php?blid=' . $manager->getBlid() . '"?>' . $manager->getName() . '</a>'; ?><br>
   The current date & time is: <?php echo date("M jS Y, g:i A"); ?></p>
   <hr />
   <table>
     <tbody>
       <tr>
         <td style="padding: 10px;"><strong>Filename</strong></td>
-        <td><?php echo $addon->getFilename() ?></td>
+        <td><?php echo $addonObject->getFilename() ?></td>
       </tr>
       <tr>
         <td style="padding: 10px;"><strong>Description</strong></td>
-        <td><?php echo $addon->getDescription() ?></td>
+        <td><?php echo $addonObject->getDescription() ?></td>
       </tr>
       <tr>
         <td style="padding: 10px;"><strong>Version</strong></td>
-        <td><pre style="font-size: .5em"><?php echo $addon->getVersion(); ?></pre></td>
+        <td><pre style="font-size: .5em"><?php echo $addonObject->getVersion(); ?></pre></td>
       </tr>
       <tr>
         <td style="padding: 10px;"><strong>Author</strong></td>
         <td>
         <?php
-          echo $addon->getAuthor()->getUsername();
+          echo $addonObject->getAuthor()->getUsername();
         ?>
         </td>
       </tr>
 			<tr>
         <td colspan="2" style="font-size:0.8em">
 					<?php
-			    $file = realpath(dirname(__DIR__) . '/../addons/files/local/' . $addon->getId() . '.zip');
+			    $file = realpath(dirname(__DIR__) . '/../addons/files/local/' . $addonObject->getId() . '.zip');
 					$zip = new \ZipArchive();
 			    $res = $zip->open($file);
 					if($res === TRUE) {
@@ -85,7 +90,7 @@
   </table>
   <hr />
   <form action="approve.php" method="post">
-		<input type="hidden" name="aid" value="<?php echo $addon->getId() ?>" />
+		<input type="hidden" name="aid" value="<?php echo $addonObject->getId() ?>" />
 		<table style="width:100%">
 			<tbody>
 				<tr>
@@ -97,7 +102,7 @@
 							<?php
 								$boards = BoardManager::getAllBoards();
 								foreach($boards as $board) {
-									if($board->getId() == $addon->getBoard()) {
+									if($board->getId() == $addonObject->getBoard()) {
 										echo 'selected!';
 										$selected = true;
 									} else {
@@ -124,7 +129,7 @@
 				</tr>
 				<tr>
 					<td colspan="2" style="background-color: #eee; text-align: center; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
-						<a style="btn blue" href="download.php?file=aws_sync/<?php echo $addon->getId() ?>">Download</a>
+						<a style="btn blue" href="download.php?file=aws_sync/<?php echo $addonObject->getId() ?>">Download</a>
 					</td>
 				</tr>
 			</tbody>
