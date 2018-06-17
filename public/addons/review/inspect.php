@@ -1,5 +1,5 @@
 <?php
-  require dirname(__FILE__) . '/autoload.php';
+  require dirname(__DIR__) . '/../../private/autoload.php';
 
 	$_PAGETITLE = "Blockland Glass | Inspect Add-On";
 
