@@ -1,4 +1,6 @@
 <?php
+  require dirname(__FILE__) . '/autoload.php';
+
 	$_PAGETITLE = "Blockland Glass | Inspect Add-On";
 
 	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
@@ -16,17 +18,14 @@
   $addon = AddonManager::getFromID($_REQUEST['id']);
 
 	if($addon->getDeleted()) {
-    echo "Add-On is deleted.";
-    // include(__DIR__ . "/../deleted.php");
-		// die();
+    include(__DIR__ . "/../deleted.php");
+		die();
 	} else if($addon->isRejected()) {
-    echo "Add-On is rejected.";
-    // include(__DIR__ . "/../rejected.php");
-    // die();
+    include(__DIR__ . "/../rejected.php");
+    die();
   } else if($addon->getApproved()) {
-    echo "Add-On already approved.";
-    // include(__DIR__ . "/../approved.php");
-    // die();
+    include(__DIR__ . "/../approved.php");
+    die();
   }
 
   $manager = UserManager::getFromBLID($addon->getManagerBLID());
@@ -34,6 +33,8 @@
 <div class="maincontainer">
   <?php
     $p = realpath(dirname(__DIR__) . "/../../private/navigationbar.php");
+    echo $p . "<br>";
+    echo __DIR__;
     include($p);
   ?>
   <h2><?php echo $addon->getName(); ?></h2>
