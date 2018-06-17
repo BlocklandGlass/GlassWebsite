@@ -15,6 +15,8 @@
     return;
   }
 
+  $addonObject = AddonManager::getFromID($_REQUEST['id']);
+
   if($addonObject->getDeleted()) {
     include(__DIR__ . "/../deleted.php");
 		die();

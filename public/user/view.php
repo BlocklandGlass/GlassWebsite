@@ -80,8 +80,8 @@
 			} else {
 				$lastseen = "Never";
 			}
-			echo "<br /><strong>BL_ID:</strong> $blid";
-			echo "<p><strong>Last Seen:</strong> $lastseen";
+			echo "<p><strong>BL_ID:</strong> $blid";
+			echo "<br /><strong>Last Seen:</strong> $lastseen";
 			echo "</p>";
 			//echo("<a href=\"/addons/search.php?blid=" . htmlspecialchars($userObject->getBLID()) . "\"><strong>Find Add-Ons by this user</strong></a>");
 			?>
