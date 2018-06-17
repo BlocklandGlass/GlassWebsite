@@ -13,7 +13,7 @@
 ?>
 <div class="maincontainer">
   <?php
-    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php")); #636
+    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
   ?>
 	<span style="font-size: 9pt;"><a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archive</a> >> <a href="board.php?name=<?php echo $addonData->type; ?>"><?php echo $addonData->type; ?></a> >> <a href="#"><?php echo htmlspecialchars($addonData->title); ?></a></span>
 		<div class="tile">

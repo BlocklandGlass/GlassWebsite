@@ -5,7 +5,7 @@
 	?>
 	<div class="maincontainer">
     <?php
-      require_once(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+      require_once(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
     ?>
 		<div class="tile">
 			<p>

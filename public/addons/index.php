@@ -13,7 +13,7 @@
 ?>
 <div class="maincontainer">
   <?php
-    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
     include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
   ?>
 	<ul class="addonnav tile">

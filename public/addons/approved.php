@@ -6,7 +6,7 @@
 ?>
 <div class="maincontainer">
 	<?php
-    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
 
 		echo "<span style=\"font-size: 9pt;\"><a href=\"/addons/\">Add-Ons</a> >> ";
 		echo "<a href=\"#\">" . utf8_encode($addonObject->getName()) . "</a></span>";

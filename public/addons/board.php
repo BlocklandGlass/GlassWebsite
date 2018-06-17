@@ -26,7 +26,7 @@
 ?>
 <div class="maincontainer">
 	<?php
-    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
     include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
   ?>
 	<h1 style="text-align:center"><?php echo $boardObject->getName(); ?></h1>

@@ -36,7 +36,7 @@
 </style>
 <div class="maincontainer">
   <?php
-    include(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php")); #636
+    include(realpath(dirname(dirname(__DIR__)) . "/private/navigationbar.php"));
   ?>
   <h2>Select an Add-On Type</h3>
   There's a few types of content that we accept here:

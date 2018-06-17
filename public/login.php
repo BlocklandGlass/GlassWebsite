@@ -16,7 +16,7 @@
 ?>
 <div class="maincontainer">
   <?php
-    include(realpath(dirname(__DIR__) . "/private/navigationbar.php")); #636
+    include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
   ?>
 	<div class="tile" style="width:50%; margin: 0 auto;">
 		<div class="center" id="loginStatus">

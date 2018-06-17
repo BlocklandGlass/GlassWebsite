@@ -49,7 +49,7 @@
 ?>
 <div class="maincontainer">
   <?php
-    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
 	<span style="font-size: 9pt;">
 		<a href="addon.php?id=<?php echo $addonObject->getId() ?>"><?php echo $addonObject->getName() ?></a> >> <b>Moderate</b>

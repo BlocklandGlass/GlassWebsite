@@ -44,6 +44,10 @@ function nextImage() {
 
 setInterval(nextImage, 5000);
 </script>
+<div class="maincontainer">
+	<?php
+  require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
+  ?>
 <div class="bigheadcontainer">
 	<div class="home-slideshow">
 		<img src="/img/home/IcePalace.jpg" />
@@ -65,10 +69,7 @@ setInterval(nextImage, 5000);
 		</div>
 	</div>
 </div>
-<div class="maincontainer">
-	<?php
-  require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php")); #636
-
+  <?php
 	if($testEnvironment) {
 	?>
 	<p>

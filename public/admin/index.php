@@ -22,7 +22,7 @@
 
 <div class="maincontainer">
   <?php
-    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php")); #636
+    include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
 	<div class="tile" style="width: 185px; float: left;">
 		<ul class="sidenav">

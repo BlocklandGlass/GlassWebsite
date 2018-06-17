@@ -59,7 +59,7 @@
 
 <div class="maincontainer">
   <?php
-    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php")); #636
+    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
   ?>
   <span style="font-size: 0.8em; padding-left: 10px">
     <a href="/addons/addon.php?id=<?php echo $addonObject->getId();?>"><?php echo $addonObject->getName(); ?></a> >> <a href="/addons/bugs?id=<?php echo $addonObject->getId();?>">Bugs</a> >> <b>New</b>

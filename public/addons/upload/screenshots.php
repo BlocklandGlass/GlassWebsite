@@ -157,7 +157,7 @@
 </div>
 <div class="maincontainer" style="text-align:center">
   <?php
-    include(__DIR__ . "/../../../private/navigationbar.php"); #636
+    include(__DIR__ . "/../../../private/navigationbar.php");
   ?>
   <div class="tile" style="text-align: left">
     <h3>Screenshots</h3>

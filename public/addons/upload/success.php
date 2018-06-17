@@ -30,7 +30,7 @@
 </style>
 <div class="maincontainer">
   <?php
-    include(realpath(dirname(dirname(__DIR__)) . "/../private/navigationbar.php")); #636
+    include(realpath(dirname(dirname(__DIR__)) . "/../private/navigationbar.php"));
   ?>
   <div class="tile">
     <h2>Success!</h2>

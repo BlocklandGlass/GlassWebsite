@@ -29,7 +29,7 @@
 ?>
 <div class="maincontainer" style="text-align:center">
 	<?php
-    include(__DIR__ . "/../../../private/navigationbar.php"); #636
+    include(__DIR__ . "/../../../private/navigationbar.php");
 		//if(isset($status["message"])) {
 		//	echo $status["message"];
 		//}

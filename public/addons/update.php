@@ -13,7 +13,7 @@
 ?>
 <div class="maincontainer" style="text-align:center">
   <?php
-    include dirname(__DIR__) . "/../private/navigationbar.php"; #636
+    include dirname(__DIR__) . "/../private/navigationbar.php";
   ?>
 	<form action="update.php?id=<?php echo $_REQUEST['id'] ?>" method="post" enctype="multipart/form-data">
 		<div class="tile" style="display: inline-block; margin: auto 0; width: 590px; text-align:center">

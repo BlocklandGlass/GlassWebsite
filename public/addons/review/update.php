@@ -35,7 +35,7 @@ td {
 </style>
 <div class="maincontainer">
   <?php
-    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php")); #636
+    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
   ?>
 	<div class="tile">
 	  <h2><?php echo $addon->getName(); ?></h2>

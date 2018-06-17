@@ -12,7 +12,7 @@
 ?>
 <div class="maincontainer">
   <?php
-    include(realpath(dirname(__DIR__) . "/private/navigationbar.php")); #636
+    include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
   ?>
 	<div class="center" id="registerStatus" style="display: none;">
 		<?php echo("<p>" . utf8_encode($registerStatus['message']) . "</p>"); ?>

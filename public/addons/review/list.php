@@ -14,7 +14,7 @@
 ?>
 <div class="maincontainer">
   <?php
-    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php")); #636
+    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
   ?>
 	<div class="tile">
 		<h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Mod Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/5/2016)</span></h2>
