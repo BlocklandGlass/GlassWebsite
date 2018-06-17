@@ -338,14 +338,11 @@ input[type="submit"]:active {
 	height: auto;
 	padding: 8px;
 	margin: 0px;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
 }
 
 .navcontent .mobilemenu > li {
 	display: block;
 	padding: 8px;
-	font-size:
 }
 
 .navbtn {

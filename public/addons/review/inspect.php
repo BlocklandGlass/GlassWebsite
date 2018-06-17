@@ -1,5 +1,5 @@
 <?php
-	$_PAGETITLE = "Blockland Glass | Inspect Update";
+	$_PAGETITLE = "Blockland Glass | Inspect Add-On";
 
 	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
 	use Glass\AddonManager;
@@ -13,6 +13,9 @@
     return;
   }
 
+  echo __DIR__;
+  return;
+
   $addon = AddonManager::getFromID($_REQUEST['id']);
 
 	if($addon->getDeleted()) {
@@ -22,7 +25,6 @@
     include(__DIR__ . "/../rejected.php");
     die();
   } else if($addon->getApproved()) {
-    echo __DIR__;
     include(__DIR__ . "/../approved.php");
     die();
   }
