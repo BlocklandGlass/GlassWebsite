@@ -134,7 +134,7 @@
 		          <input type="submit" value="Update" />
               <?php
                 if($user->inGroup("Administrator")) {
-                  echo '<a class="btn red" style="float: right;" href="delete.php?id=' . echo $addonObject->getId() . '">Delete</a>';
+                  echo '<a class=\"btn red\" style=\"float: right;\" href=\"delete.php?id=' . $addonObject->getId() . '\">Delete</a>';
                 }
               ?>
 		        </td>
