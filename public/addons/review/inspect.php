@@ -33,7 +33,8 @@
 ?>
 <div class="maincontainer">
   <?php
-    include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
+    $p = realpath(dirname(__DIR__) . "/../../private/navigationbar.php";
+    include($p);
   ?>
   <h2><?php echo $addon->getName(); ?></h2>
   <p>Uploaded <?php echo date("M jS Y, g:i A", strtotime($addon->getUploadDate())); ?> by <?php echo '<a href="/user/view.php?blid=' . $manager->getBlid() . '"?>' . $manager->getName() . '</a>'; ?><br>
