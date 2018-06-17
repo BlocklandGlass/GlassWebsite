@@ -20,7 +20,6 @@
     }
   }
 ?>
-<!--
 <style>
 thead {
   background-color: #ccc;
@@ -48,7 +47,6 @@ tbody tr:nth-child(2n) {
   background-color: #eee;
 }
 </style>
--->
 <div class="maincontainer">
   <?php
     include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));

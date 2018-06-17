@@ -561,6 +561,14 @@ input[type="submit"]:active {
   text-align: left;
 }
 
+.list tr td:first-child {
+  border-radius: 0;
+}
+
+.list tr td:last-child {
+  border-radius: 0;
+}
+
 .pagenav {
   float: right;
 }
@@ -843,7 +851,6 @@ input[type="submit"]:active {
 
 .addonnav > li > a {
   display: block;
-  border-radius: 5px;
   background-color: #ddd;
   list-style-type: none;
   margin: 5px;
