@@ -26,6 +26,7 @@ html {
     font-size: 1em;
     line-height: 1.4;
     font-family: Geneva, sans-serif;
+    /*background-color: #ddd;*/
 }
 
 .tile {
@@ -278,7 +279,7 @@ input[type="submit"]:active {
 .navcontent {
   max-width: 1280px;
   margin: 0 auto;
-  font-size: 1em;
+  font-size: 18px;
   padding: 8px;
   text-align: left;
   vertical-align: middle;
@@ -291,7 +292,7 @@ input[type="submit"]:active {
   position: relative;
   display: inline-block;
   float: right;
-  margin: 7px;
+  margin: 5px;
   margin-bottom: 0px;
   padding: 5px;
 }
@@ -350,10 +351,15 @@ input[type="submit"]:active {
   text-decoration: none;
   font-weight: bold;
   padding: 5px 15px;
+
+  transition: 0.2s linear;
+   -webkit-transition: 0.2s linear;
+   -moz-transition: 0.2s linear;
 }
 
 .navbtn:hover {
   background-color: #48E68B;
+  color: #eee !important;
 }
 
 .bigheadcontainer {
@@ -406,7 +412,7 @@ input[type="submit"]:active {
   max-width: 1280px;
   margin: 0 auto;
   font-size: 14pt;
-  background-color: white;
+  background-color: #fff;
   height: 100%;
 }
 
@@ -565,7 +571,7 @@ input[type="submit"]:active {
 }
 
 .homebtn {
-  padding: 10px 20px;
+  padding: 5px 10px;
   font-size: 20px;
   text-decoration: none;
   color: #fff;
@@ -592,6 +598,10 @@ input[type="submit"]:active {
   position: relative;
   display: inline-block;
   font-weight: normal !important;
+
+  transition: background-color 0.1s linear;
+   -webkit-transition: background-color 0.1s linear;
+   -moz-transition: background-color 0.1s linear;
 }
 
 .btn:active {
