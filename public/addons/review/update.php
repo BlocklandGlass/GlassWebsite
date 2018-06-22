@@ -82,7 +82,7 @@ td {
 					</td>
 	      </tr>
 	      <tr>
-					<td style="padding-left: 10px; vertical-align: top"><strong>Removed Files Files</strong></td>
+					<td style="padding-left: 10px; vertical-align: top"><strong>Removed Files</strong></td>
 	        <td style="color: red" class="monospace">
 						<?php
 							$new = $update->getRemovedFiles();

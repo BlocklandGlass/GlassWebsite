@@ -508,7 +508,7 @@ class AddonObject {
 		$verDat->channel = $channelName[$branch];
 
 		$liveBranch = new \stdClass();
-		$liveBranch->url = "http://blocklandglass.com/api/support_updater/repo.php";
+		$liveBranch->url = "https://blocklandglass.com/api/support_updater/repo.php";
 		$liveBranch->format = "JSON";
 		$liveBranch->id = $this->getId();
 

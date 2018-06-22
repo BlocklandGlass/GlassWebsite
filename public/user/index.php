@@ -82,9 +82,9 @@
 									$board = BoardManager::getFromId($ao->getBoard());
 									echo '<tr>';
 									if(!$ao->getApproved()) {
-										echo '<td><img style="width: 1.2em;" src="http://blocklandglass.com/img/icons32/hourglass.png" alt="Under Review"/></td>';
+										echo '<td><img style="width: 1.2em;" src="https://blocklandglass.com/img/icons32/hourglass.png" alt="Under Review"/></td>';
 									} else {
-										echo '<td><img style="width: 1.2em;" src="http://blocklandglass.com/img/icons32/' . $board->getIcon() . '.png"/></td>';
+										echo '<td><img style="width: 1.2em;" src="https://blocklandglass.com/img/icons32/' . $board->getIcon() . '.png"/></td>';
 									}
 
 									echo '<td style="text-align: left !important"><a href="/addons/addon.php?id=' . $ao->getId() . '"><span style="font-size: 1.2em; font-weight:bold;">' . $ao->getName() . '</span></a></td>';

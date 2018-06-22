@@ -3,7 +3,7 @@ use Glass\DatabaseManager;
 return;
 $db = new DatabaseManager();
 
-$json = file_get_contents("http://blocklandglass.com/downloadsExport.php");
+$json = file_get_contents("https://blocklandglass.com/downloadsExport.php");
 $data = json_decode($json, true);
 
 foreach($data as $id=>$dat) {

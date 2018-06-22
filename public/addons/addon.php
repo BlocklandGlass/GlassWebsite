@@ -70,17 +70,17 @@
 	?>
 	<div style="margin-top: 15px; margin-bottom: 15px; display: inline-block; width: 100%;">
 		<div class="addoninfoleft">
-			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/tag.png" />
+			<image style="height:1.5em" src="https://blocklandglass.com/img/icons32/tag.png" />
 			<?php
 				echo htmlspecialchars($boardObject->getName());
 			?>
 			<br />
-			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/folder_vertical_zipper.png" />
+			<image style="height:1.5em" src="https://blocklandglass.com/img/icons32/folder_vertical_zipper.png" />
 			<?php
 				echo $addonObject->getFilename();
 			?>
 			<br />
-			<image style="height:1.5em" src="http://blocklandglass.com/img/icons32/time.png" />
+			<image style="height:1.5em" src="https://blocklandglass.com/img/icons32/time.png" />
 			<?php echo date("M jS Y, g:i A", strtotime($addonObject->getUploadDate())); ?>
 			<br />
 		</div>
@@ -88,7 +88,7 @@
 			<?php
 			echo ($addonObject->getDownloads("web") + $addonObject->getDownloads("ingame"));
 			?>
-			 <image style="height:1.5em" src="http://blocklandglass.com/img/icons32/inbox_download.png" /><br />
+			 <image style="height:1.5em" src="https://blocklandglass.com/img/icons32/inbox_download.png" /><br />
 			<br />
 			<a href="bugs/?id=<?php echo $addonObject->getId()?>">View Bug Tracker</a>
 		</div>

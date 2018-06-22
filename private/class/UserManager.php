@@ -336,7 +336,7 @@ class UserManager {
 			        <td class="tile">
 			          <h1>Blockland Glass</h1>
 								<p>
-				          You seem to have forgotten your password! Please click <a href="http://blocklandglass.com/user/resetPassword.php?token=' . urlencode($resetToken) . '&id=' . $user->getBLID() . '">here to reset your password</a>.<br /><br />
+				          You seem to have forgotten your password! Please click <a href="https://blocklandglass.com/user/resetPassword.php?token=' . urlencode($resetToken) . '&id=' . $user->getBLID() . '">here to reset your password</a>.<br /><br />
 									If you were not the one who requested a password reset, you may disregard this message.
 								</p>
 			        </td>
