@@ -5,7 +5,7 @@ use Glass\UserManager;
 <div id="navcontainer" class="navcontainer">
 	<div id="navcontent" class="navcontent">
 		<!-- temporary nav -->
-		<a class="homebtn" href="/"><img style="height: 38px" src="http://glass.local/img/logoWhite.png" /></a>
+		<a class="homebtn" href="/"><img style="height: 38px" src="http://blocklandglass.com/img/logoWhite.png" /></a>
 		<ul>
 			<li><a href="/addons" class="navbtn">Add-Ons</a></li>
 			<!-- <li><a href="/builds" class="navbtn">Builds</a></li> -->
