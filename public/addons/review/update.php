@@ -46,7 +46,7 @@ td {
     include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
   ?>
 	<div class="tile">
-	  <h2><?php echo '<a href="/addons/addon.php?id=' . $addonObject->getId() . '">' . $addonObject->getName(); . '</a>'; ?></h2>
+	  <h2><?php echo '<a href="/addons/addon.php?id=' . $addonObject->getId() . '">' . $addonObject->getName() . '</a>'; ?></h2>
 	  <p>
 			<span style="font-weight:bold;padding: 2px; border: 1px solid rgb(192,192,255); background: rgb(224,224,255); border-radius: 2px;">v<?php echo $addonObject->getVersion();?></span> -> <span style="font-weight:bold;padding: 2px; border: 1px solid rgb(192,255,192); background: rgb(224,255,224); border-radius: 2px;">v<?php echo $update->getVersion();?></span>
 		</p>
