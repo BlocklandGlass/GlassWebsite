@@ -86,7 +86,7 @@
 		<table style="width:100%">
 			<tbody>
 				<tr>
-					<td style="vertical-align:top; width: 50%; background-color: #CCFFCC; padding: 10px; border-top-left-radius: 10px;">
+					<td style="vertical-align:top; width: 50%; background-color: #CCFFCC; padding: 10px;">
 				    <strong>Approve to board:</strong><br/>
 						<select name="board" value="A">
 				    	<option value="" disabled >Choose One</option>
@@ -106,7 +106,7 @@
 							?>
 						</select>
 					</td>
-					<td style="padding: 10px; background-color: #FFCCCC; border-top-right-radius: 10px; width: 50%">
+					<td style="padding: 10px; background-color: #FFCCCC; width: 50%">
 						<strong>Rejection Reason</strong><br />
 						<textarea style="width: 400px; height: 150px; font-size: 0.8em; margin: 0 auto;" name="reason" placeholder="Rejection reasons not available." disabled></textarea>
 					</td>
@@ -120,7 +120,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" style="background-color: #eee; text-align: center; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+					<td colspan="2" style="background-color: #eee; text-align: center;">
 						<a style="btn blue" href="download.php?file=aws_sync/<?php echo $addonObject->getId() ?>">Download</a>
 					</td>
 				</tr>

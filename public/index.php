@@ -61,7 +61,7 @@ setInterval(nextImage, 5000);
 
 	<div class="home-head">
 		<div style="padding-top: 50px;">
-			<image style="margin: 10px 0px 5px 0px; max-width: 100%" src="/img/logoWhite.png" />
+			<image style="margin: 10px 0px 5px 0px; max-width: 100%" src="http://blocklandglass.com/img/logoWhite.png" />
 			<h2 style="font-weight: normal">A service for the community, by the community</h2>
 			<a href="dl.php" class="btn blue"><strong>Download</strong></a><br />
 			<a href="https://host.blocklandglass.com/" class="btn green" style="width: 150px">Hosting</a>
@@ -80,33 +80,35 @@ setInterval(nextImage, 5000);
 	<?php
 	}
 	?>
-	<p>
-		<h3>What's Glass?</h3>
-		Blockland Glass is a service made for <a href="http://blockland.us">Blockland</a> to help expand and cultivate the community. Currently, Glass acts as a content and social platform offering the ability to download Glass add-ons in-game, manage your servers' preferences, add friends and talk to others through the chatroom or direct messaging.
-	</p>
-	<br />
-	<p>
-		<h3>By the community?</h3>
-		Glass is intended to be a group project. Although the bulk of the work has been fronted individually, we're striving to move to an open-source site, allowing for Glass to be a truly community made project.
-	</p>
-	<br />
-	<p>
-		<h3>Live Stats</h3>
-		Right now, there's <strong><?php
-		echo StatManager::getMasterServerStats()['servers'];
-		?></strong> Blockland servers online with <strong><?php
-		echo $ct = StatManager::getMasterServerStats()['users'];
-		?></strong> <?php echo ($ct == 1 ? "user" : "users") ?>. Glass has a total of <a href="stats/"><?php
-		$web = StatManager::getAllAddonDownloads("web")+0;
-		$ingame = StatManager::getAllAddonDownloads("ingame")+0;
-		$updates = StatManager::getAllAddonDownloads("updates")+0;
-		echo $web+$ingame; ?></strong></a> downloads and <strong><?php echo $updates; ?></strong> updates.
-	</p>
-	<br />
-	<p>
-		<h3>Want to get involved?</h3>
-		Blockland Glass is an open-source project open to any contributions. If you're interested, please contribute on <a href="https://github.com/BlocklandGlass">GitHub</a> and check out the <a href="https://forum.blockland.us/index.php?topic=284376.0">Blockland Glass Topic</a> over on the Blockland Forums!
-	</p>
+  <div style="padding: 20px;">
+    <p>
+      <h3>What's Glass?</h3>
+      Blockland Glass is a service made for <a href="http://blockland.us">Blockland</a> to help expand and cultivate the community. Currently, Glass acts as a content and social platform offering the ability to download Glass add-ons in-game, manage your servers' preferences, add friends and talk to others through the chatroom or direct messaging.
+    </p>
+    <br />
+    <p>
+      <h3>By the community?</h3>
+      Glass is intended to be a group project. Although the bulk of the work has been fronted individually, we're striving to move to an open-source site, allowing for Glass to be a truly community made project.
+    </p>
+    <br />
+    <p>
+      <h3>Live Stats</h3>
+      Right now, there's <strong><?php
+      echo StatManager::getMasterServerStats()['servers'];
+      ?></strong> Blockland servers online with <strong><?php
+      echo $ct = StatManager::getMasterServerStats()['users'];
+      ?></strong> <?php echo ($ct == 1 ? "user" : "users") ?>. Glass has a total of <a href="stats/"><?php
+      $web = StatManager::getAllAddonDownloads("web")+0;
+      $ingame = StatManager::getAllAddonDownloads("ingame")+0;
+      $updates = StatManager::getAllAddonDownloads("updates")+0;
+      echo $web+$ingame; ?></strong></a> downloads and <strong><?php echo $updates; ?></strong> updates.
+    </p>
+    <br />
+    <p>
+      <h3>Want to get involved?</h3>
+      Blockland Glass is an open-source project open to any contributions. If you're interested, please contribute on <a href="https://github.com/BlocklandGlass">GitHub</a> and check out the <a href="https://forum.blockland.us/index.php?topic=284376.0">Blockland Glass Topic</a> over on the Blockland Forums!
+    </p>
+  </div>
 </div>
 
 <?php require_once(realpath(dirname(__DIR__) . "/private/footer.php")); ?>

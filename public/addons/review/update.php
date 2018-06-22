@@ -46,7 +46,7 @@ td {
     include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
   ?>
 	<div class="tile">
-	  <h2><?php echo $addonObject->getName(); ?></h2>
+	  <h2><?php echo '<a href="/addons/addon.php?id=' . $addonObject->getId() . '">' . $addonObject->getName(); . '</a>'; ?></h2>
 	  <p>
 			<span style="font-weight:bold;padding: 2px; border: 1px solid rgb(192,192,255); background: rgb(224,224,255); border-radius: 2px;">v<?php echo $addonObject->getVersion();?></span> -> <span style="font-weight:bold;padding: 2px; border: 1px solid rgb(192,255,192); background: rgb(224,255,224); border-radius: 2px;">v<?php echo $update->getVersion();?></span>
 		</p>
@@ -59,7 +59,7 @@ td {
 						<div style="width: 90%; padding: 5px; margin: 0; font-size: 0.9em; background-color: rgba(255,255,255,0.8); max-height: 300px; y-overflow:scroll;" disabled="1"><?php
 						$cl = $update->getChangeLog() ?? "";
 						if(strlen(trim($cl)) == 0) {
-							echo 'No Change-Log';
+							echo 'No change-log provided.';
 						} else {
 							echo htmlspecialchars($cl);
 						}
@@ -72,7 +72,7 @@ td {
 						<?php
 							$new = $update->getNewFiles();
 							if(isset($new['status']) && $new['status'] == "error") {
-								echo "Error opening ZipArchive(s):<br>New File: " . $new['new'] . "<br>Old File: " . $new['old'];
+								echo "Error opening Zip Archive(s):<br>New File: " . $new['new'] . "<br>Old File: " . $new['old'];
 							} else {
 								foreach($new as $newFile) {
 									echo '+ ' . $newFile . '<br />';
@@ -87,7 +87,7 @@ td {
 						<?php
 							$new = $update->getRemovedFiles();
 							if(isset($new['status']) && $new['status'] == "error") {
-								echo "Error opening ZipArchive(s):<br>New File: " . $new['new'] . "<br>Old File: " . $new['old'];
+								echo "Error opening Zip Archive(s):<br>New File: " . $new['new'] . "<br>Old File: " . $new['old'];
 							} else {
 								foreach($new as $newFile) {
 									echo '- ' . $newFile . '<br />';

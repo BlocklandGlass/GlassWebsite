@@ -143,7 +143,7 @@
 				$dep = DependencyManager::getFromId($did);
 				$rid = $dep->getRequired();
 				$requiredAddon = AddonManager::getFromId($rid);
-				echo "<div style=\"padding: 10px; background-color: #ffbbbb; display: inline-block; border-radius: 5px\"><a href=\"addon.php?id=" . $requiredAddon->getId() . "\">" . $requiredAddon->getName() . "</a></div>";
+				echo "<div style=\"margin-bottom: 20px; padding: 10px; background-color: #ffbbbb; display: inline-block;\"><a href=\"addon.php?id=" . $requiredAddon->getId() . "\">" . $requiredAddon->getName() . "</a></div>";
 			}
 			echo "</div>";
 		}
