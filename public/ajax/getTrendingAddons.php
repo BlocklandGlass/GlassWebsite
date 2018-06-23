@@ -49,7 +49,7 @@
 		}
 
 		if($ct == 0) {
-			echo '<tr><td colspan="4" style="text-align:center; padding: 15px">No downloads this week :(</td></tr>';
+			echo '<tr><td colspan="4" style="text-align:center; padding: 15px">No downloads this week.</td></tr>';
 		}
 	?>
 	</tbody>

@@ -32,7 +32,7 @@
 				</tbody>
 			</table>
 			<div style="text-align: center; font-size:0.8em">
-				<a href="/user/forgotPassword.php">Forgot your password?</a>
+				<a href="/user/forgotPassword.php">Forgotten your password?</a>
 			</div>
 			<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
 			<?php

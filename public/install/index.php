@@ -6,7 +6,7 @@
       $_SESSION['root'] = true;
       header('Location: /install/moduleCheck.php');
     } else {
-      $message = "Incorrect token! A new token has been generated";
+      $message = "Incorrect token! A new token has been generated.";
     }
   }
 

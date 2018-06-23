@@ -4,7 +4,7 @@
   use Glass\UserManager;
 
   $blid = $_POST['blid'] ?? false;
-  $message = "Please insert your Blockland ID and we'll send you an email to reset your account.";
+  $message = "Please insert your Blockland ID and we'll send you an e-mail to reset your account.";
   $form = true;
 
   if($blid) {
@@ -12,7 +12,7 @@
     if($user) {
       try {
         UserManager::sendPasswordResetEmail($user);
-        $message = "You've been sent an email with instructions on how to reset your password.";
+        $message = "You've been sent an e-mail with instructions on how to reset your password.";
         $form = false;
       } catch(Exception $e) {
         $message = "There appears to be no e-mail address associated with your account! Message a Glass team member on the Blockland Forums for help!";
@@ -34,7 +34,7 @@
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
   <div class="tile" style="width:50%; margin: 0 auto;">
-    <h2>Forgot Password</h2>
+    <h2>Forgotten Password</h2>
     <div style="background-color: #fafafa; color: #666; border-radius: 5px; padding: 1px; margin-bottom: 15px">
       <p style="text-align: center">
         <?php

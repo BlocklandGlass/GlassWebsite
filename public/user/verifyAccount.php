@@ -10,7 +10,7 @@
 		<div class="tile">
 			<p>
 				<h1>Account Verification</h1>
-				To use the Glass website, you first need to verify your account. It's fairly simple: <a href="/dl.php">Install the add-on</a> and start Blockland! A prompt should automatically appear to verify your account.
+				To use the Glass website, you first need to verify your account. It's fairly simple: <a href="/dl.php">Install the add-on</a> and start Blockland!<br>A prompt should automatically appear to verify your account.
 			</p>
 		</div>
 	</div>

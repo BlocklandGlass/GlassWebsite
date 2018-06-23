@@ -23,14 +23,14 @@
 				<tbody>
 					<tr><td class="center" colspan="2"><h2>Register</h2></td></tr>
 					<tr><td>E-Mail Address:</td><td><input type="text" name="email" id="email" required></td></tr>
-					<tr><td>BLID:</td><td><input type="text" name="blid" id="blid" required></td></tr>
+					<tr><td>BL_ID:</td><td><input type="text" name="blid" id="blid" required></td></tr>
 					<tr><td>Password:</td><td><input type="password" name="password" id="password" required></td></tr>
 					<tr><td>Verify Password:</td><td><input type="password" name="verify" id="verify" required></td></tr>
 					<tr><td class="center" colspan="2"><input type="submit"></td></tr>
 				</tbody>
 			</table>
 			<p>
-			By registering an account, you are agreeing to the <a href="/tos.php">Terms of Service</a>
+			By registering an account, you are agreeing to the <a href="/tos.php">Terms of Service.</a>
 			</p>
 			<?php
 			if(isset($_POST['redirect'])) {

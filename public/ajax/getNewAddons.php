@@ -52,6 +52,10 @@
 			</tr>
 			<?php
 		}
+
+		if($ct == 0) {
+			echo '<tr><td colspan="4" style="text-align:center; padding: 15px">No recent uploads.</td></tr>';
+		}
 	?>
 	</tbody>
 </table>

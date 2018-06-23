@@ -11,7 +11,7 @@
     die();
   }
 
-  $config = json_decode(file_get_contents( dirname(__DIR__) . '/private/config.json' ));
+  $config = json_decode(file_get_contents( dirname(__DIR__) . '/../private/config.json' ));
 
   $success = true;
   $message = [];

@@ -21,7 +21,7 @@
     $obj->aws_access_key_id = $_POST['aws_key'] ?? "";
     $obj->aws_secret_access_key = $_POST['aws_secret'] ?? "";
     $obj->aws_bucket = $_POST['aws_bucket'] ?? "";
-    file_put_contents(dirname(__DIR__) . '/private/config.json', json_encode($obj));
+    file_put_contents(dirname(__DIR__) . '/../private/config.json', json_encode($obj));
   }
 
   function createDefaultConfig() {
@@ -37,10 +37,10 @@
     return $obj;
   }
 
-  $fileExists = is_file( dirname(__DIR__) . '/private/config.json' );
+  $fileExists = is_file( dirname(__DIR__) . '/../private/config.json' );
 
   if($fileExists) {
-    $config = json_decode(file_get_contents( dirname(__DIR__) . '/private/config.json' ));
+    $config = json_decode(file_get_contents( dirname(__DIR__) . '/../private/config.json' ));
     if($config == false || $config == null) {
       $config = createDefaultConfig();
     }
@@ -64,7 +64,7 @@
   <body>
     <h2>Config</h2>
     <p>
-      <?php if($fileExists) { echo 'Please fill out the config below...'; } else { echo 'You have no config! Please fill out the file below'; } ?>
+      <?php if($fileExists) { echo 'Please fill out the fields below:'; } else { echo 'You have no config set! Please fill out the fields below:'; } ?>
     </p>
     <form method="post" action="configCheck.php">
       <table>

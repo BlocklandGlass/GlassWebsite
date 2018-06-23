@@ -95,12 +95,12 @@ class UserManager {
 
 				if(!$loginDetails) {
 					return [
-						"message" => "This BL_ID has not been verified yet, please use your E-mail instead"
+						"message" => "This BL_ID has not been verified yet, please use your E-mail instead."
 					];
 				}
 			} else {
 				return [
-					"message" => "Invalid BL_ID"
+					"message" => "Invalid BL_ID."
 				];
 			}
 		} elseif(filter_var($identifier, FILTER_VALIDATE_EMAIL)) {
@@ -108,14 +108,14 @@ class UserManager {
 			$loginDetails = UserManager::getLoginDetailsFromEmail($email);
 		} else {
 			return [
-				"message" => "Invalid E-mail/BL_ID"
+				"message" => "Invalid E-mail/BL_ID."
 			];
 		}
 
 		if(!$loginDetails) {
 			//username not found
 			return [
-				"message" => "Incorrect login credentials"
+				"message" => "Incorrect login credentials."
 			];
 		}
 		$hash = $loginDetails['hash'];
@@ -142,7 +142,7 @@ class UserManager {
 			}
 		}
 		return [
-			"message" => "Incorrect login credentials"
+			"message" => "Incorrect login credentials."
 		];
 	}
 
@@ -191,7 +191,7 @@ class UserManager {
 
 		if(!is_numeric($blid)) {
 			return [
-				"message" => "INVALID BL_ID"
+				"message" => "Invalid BL_ID."
 			];
 		}
 		$loginDetails1 = UserManager::getLoginDetailsFromBLID($blid);
