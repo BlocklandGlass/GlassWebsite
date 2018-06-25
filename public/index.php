@@ -44,6 +44,11 @@ function nextImage() {
 
 setInterval(nextImage, 5000);
 </script>
+<style>
+.navcontainer {
+	margin-bottom: 0;
+}
+</style>
 <div class="maincontainer">
 	<?php
   require_once(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
@@ -80,34 +85,60 @@ setInterval(nextImage, 5000);
 	<?php
 	}
 	?>
-  <div style="padding: 20px;">
-    <p>
-      <h3>What's Glass?</h3>
-      Blockland Glass is a service made for <a href="http://blockland.us">Blockland</a> to help expand and cultivate the community. Currently, Glass acts as a content and social platform offering the ability to download Glass add-ons in-game, manage your servers' preferences, add friends and talk to others through the chatroom or direct messaging.
-    </p>
-    <br />
-    <p>
-      <h3>By the community?</h3>
-      Glass is intended to be a group project. Although the bulk of the work has been fronted individually, we're striving to move to an open-source site, allowing for Glass to be a truly community made project.
-    </p>
-    <br />
-    <p>
-      <h3>Live Stats</h3>
-      Right now, there's <strong><?php
-      echo StatManager::getMasterServerStats()['servers'];
-      ?></strong> Blockland servers online with <strong><?php
-      echo $ct = StatManager::getMasterServerStats()['users'];
-      ?></strong> <?php echo ($ct == 1 ? "user" : "users") ?>. Glass has a total of <a href="stats/"><?php
-      $web = StatManager::getAllAddonDownloads("web")+0;
-      $ingame = StatManager::getAllAddonDownloads("ingame")+0;
-      $updates = StatManager::getAllAddonDownloads("updates")+0;
-      echo $web+$ingame; ?></strong></a> downloads and <strong><?php echo $updates; ?></strong> updates.
-    </p>
-    <br />
-    <p>
-      <h3>Want to get involved?</h3>
-      Blockland Glass is an open-source project open to any contributions. If you're interested, please contribute on <a href="https://github.com/BlocklandGlass">GitHub</a> and check out the <a href="https://forum.blockland.us/index.php?topic=284376.0">Blockland Glass Topic</a> over on the Blockland Forums!
-    </p>
+  <div class="home-content">
+		<div>
+			<h3>What's Glass?</h3>
+	    <p>
+	      Blockland Glass is a service made for <a href="http://blockland.us">Blockland</a> to help expand and cultivate the community.  Glass acts as a content and social platform offering the ability to download Glass add-ons in-game, manage your servers' preferences, add friends and talk to others through the chatroom or direct messaging.
+	    </p>
+		</div>
+		<div style="float:right;">
+			<img src="http://i.imgur.com/V1qsgpl.png" style="margin: 10px">
+		</div>
+		<div>
+			<h3 style="display: inline-block; margin: 0">Mod Manager</h3>
+			<p>
+				The Mod Manager allows you to browse, search, and install add-ons without ever exiting Blockland. You’re able to access all add-ons upload directly to Glass, as well as search and download add-ons from the RTB 4 Archive. The Mod Manager also ensures that all of your add-ons are kept up to date, thanks to Support_Updater, and import your old RTB add-ons to be updated to the latest version.
+			</p>
+		</div>
+		<div>
+			<h3>Glass Live</h3>
+			<p>
+				Our social system, dubbed Glass Live, allows you to keep in touch with your friends, chat through public chatrooms or direct message, and join and invite your friends to servers.
+			</p>
+		</div>
+		<div>
+			<h3>Preferences</h3>
+			<p>
+				We’ve implemented our own preferences system to make up for the loss of RTB preferences. All RTB preferences are automatically imported and available to control, along with some new preference types and optionsrticular.
+			</p>
+		</div>
+		<div>
+			<h3>Server Features</h3>
+			<p>
+				Glass enables you to preview servers before you join them, viewing the server’s preview image and player list. On top of that, we allow you to mark favorite servers, giving you notifications about the server’s status and allowing you to view and join it from the main menu. Glass also allows servers to have their own custom loading screen images, similar to how maps images worked before shadows and shaders.
+			</p>
+		</div>
+		<div>
+			<h3>Live Stats</h3>
+	    <p>
+	      Right now, there's <strong><?php
+	      echo StatManager::getMasterServerStats()['servers'];
+	      ?></strong> Blockland servers online with <strong><?php
+	      echo $ct = StatManager::getMasterServerStats()['users'];
+	      ?></strong> <?php echo ($ct == 1 ? "user" : "users") ?>. Glass has a total of <a href="stats/"><?php
+	      $web = StatManager::getAllAddonDownloads("web")+0;
+	      $ingame = StatManager::getAllAddonDownloads("ingame")+0;
+	      $updates = StatManager::getAllAddonDownloads("updates")+0;
+	      echo $web+$ingame; ?></strong></a> downloads and <strong><?php echo $updates; ?></strong> updates.
+	    </p>
+		</div>
+		<div>
+			<h3>Want to get involved?</h3>
+	    <p>
+	      Blockland Glass is an open-source project open to any contributions. If you're interested, please contribute on <a href="https://github.com/BlocklandGlass">GitHub</a> and check out the <a href="https://forum.blockland.us/index.php?topic=284376.0">Blockland Glass Topic</a> over on the Blockland Forums!
+	    </p>
+		</div>
   </div>
 </div>
 
