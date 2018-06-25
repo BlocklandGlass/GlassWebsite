@@ -122,15 +122,15 @@ setInterval(nextImage, 5000);
 		<div>
 			<h3>Live Stats</h3>
 	    <p>
-	      Right now, there's <strong><?php
-	      echo StatManager::getMasterServerStats()['servers'];
+	      Right now, there are <strong><?php
+	      echo number_format(StatManager::getMasterServerStats()['servers']);
 	      ?></strong> Blockland servers online with <strong><?php
-	      echo $ct = StatManager::getMasterServerStats()['users'];
-	      ?></strong> <?php echo ($ct == 1 ? "user" : "users") ?>. Glass has a total of <a href="stats/"><?php
+	      echo $ct = number_format(StatManager::getMasterServerStats()['users']);
+	      ?></strong> <?php echo ($ct == 1 ? "user" : "users") ?>. Glass has delivered a total of <a href="stats/"><?php
 	      $web = StatManager::getAllAddonDownloads("web")+0;
 	      $ingame = StatManager::getAllAddonDownloads("ingame")+0;
 	      $updates = StatManager::getAllAddonDownloads("updates")+0;
-	      echo $web+$ingame; ?></strong></a> downloads and <strong><?php echo $updates; ?></strong> updates.
+	      echo number_format($web+$ingame); ?></strong></a> add-on downloads and <strong><?php echo number_format($updates); ?></strong> updates.
 	    </p>
 		</div>
 		<div>
