@@ -10,6 +10,14 @@
 	if(isset($_GET['id'])) {
 		try {
 			$addonObject = AddonManager::getFromId($_GET['id'] + 0);
+
+      if($addonObject->getDeleted()) {
+        include(__DIR__ . "/../deleted.php");
+        die();
+      } else if($addonObject->isRejected()) {
+        include(__DIR__ . "/../rejected.php");
+        die();
+      }
 		} catch(Exception $e) {
 			//board doesn't exist
 			header('Location: /addons');

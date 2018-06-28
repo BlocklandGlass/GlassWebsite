@@ -27,7 +27,7 @@ class GroupObject {
 	}
 
 	public function getLeader() {
-		return $this->name;
+		return $this->leader;
 	}
 
 	public function getName() {

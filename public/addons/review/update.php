@@ -22,13 +22,13 @@
 		return;
 	}
 
-  if($addonObject->getDeleted()) {
-    include(__DIR__ . "/../deleted.php");
-		die();
-	} else if($addonObject->isRejected()) {
-    include(__DIR__ . "/../rejected.php");
-    die();
-  }
+  // if($addonObject->getDeleted()) {
+    // include(__DIR__ . "/../deleted.php");
+		// die();
+	// } else if($addonObject->isRejected()) {
+    // include(__DIR__ . "/../rejected.php");
+    // die();
+  // }
 
   //$diffData = $update->getDiff();
 ?>
@@ -82,7 +82,7 @@ td {
 					</td>
 	      </tr>
 	      <tr>
-					<td style="padding-left: 10px; vertical-align: top"><strong>Removed Files Files</strong></td>
+					<td style="padding-left: 10px; vertical-align: top"><strong>Removed Files</strong></td>
 	        <td style="color: red" class="monospace">
 						<?php
 							$new = $update->getRemovedFiles();
@@ -109,10 +109,16 @@ td {
 		<?php if($owner) { ?>
 		<input type="submit" name="action" value="Cancel Update" />
 		<?php }
-		if($user->inGroup("Reviewer")) { ?>
-		<input type="submit" name="action" value="Approve" />
+		if($user->inGroup("Reviewer")) {
+      if($addonObject->getDeleted() || $addonObject->isRejected()) {
+    ?>
+    <input type="submit" name="action" value="Reject" />
+		<?php } else { ?>
+    <input type="submit" name="action" value="Approve" />
 		<input type="submit" name="action" value="Reject" />
-		<?php } ?>
+    <?php }
+    }
+    ?>
   </form>
 </div>
 

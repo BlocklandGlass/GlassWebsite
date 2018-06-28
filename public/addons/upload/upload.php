@@ -41,7 +41,7 @@
 				Blockland Glass provides easy add-on browsing for our users, ensuring safety and usability. We ask that you, the developer, only upload age-appropriate and safe content. All add-ons are reviewed before becoming publically available.
 			</p>
 			<p>
-				<strong>Do not upload content that you did not make. Period.</strong>
+				<strong><div style="font-size: 1.2rem; color: red; text-align: center;">Do not upload content that you did not make.</div></strong>
 			</p>
 			<p>
 				<a href="https://daringfireball.net/projects/markdown/syntax">Markdown</a> is supported for descriptions. Glass uses the <a href="http://semver.org">SemVer</a> versioning system
@@ -58,11 +58,11 @@
 					</tr>
 					<tr>
 						<td><strong>Name</strong></td>
-						<td><input type="text" name="addonname" id="addonname" style="width: 400px" placeholder="Give your add-on a title" value="<?php echo $_REQUEST['addonname'] ?? ""; ?>" required /></td>
+						<td><input type="text" name="addonname" id="addonname" style="width: 400px" placeholder="Give your add-on a title." value="<?php echo $_REQUEST['addonname'] ?? ""; ?>" required /></td>
 					</tr>
 					<tr>
 						<td><strong>Summary</strong></td>
-						<td><input type="text" name="summary" id="summary" style="width: 400px" placeholder="A short one-liner description" value="<?php echo $_REQUEST['summary'] ?? ""; ?>" required /></td>
+						<td><input type="text" name="summary" id="summary" style="width: 400px" placeholder="A short one-liner description." value="<?php echo $_REQUEST['summary'] ?? ""; ?>" required /></td>
 					</tr>
 					<tr>
 						<td><strong>Board</strong></td>
@@ -85,7 +85,7 @@
 					</tr>
 					<tr>
 						<td style="vertical-align:top"><strong>Filename</strong></td>
-						<td><input type="text" name="filename" style="width: 400px" placeholder="Client_MySuperCoolAddon"  value="<?php echo $_REQUEST['filename'] ?? ""; ?>" required /></td>
+						<td><input type="text" name="filename" style="width: 400px" placeholder="Weapon_Example"  value="<?php echo $_REQUEST['filename'] ?? ""; ?>" required /></td>
 					</tr>
 					<tr>
 						<td style="vertical-align:top"><strong>Current Version</strong></td>

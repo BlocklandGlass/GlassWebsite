@@ -13,7 +13,15 @@
 		die();
 	}
 
-	$addon = AddonManager::getFromId($_GET['id']);
+	$addonObject = AddonManager::getFromId($_GET['id']);
+
+  if($addonObject->getDeleted()) {
+    include(__DIR__ . "/../addons/deleted.php");
+		die();
+	} else if($addonObject->isRejected()) {
+    include(__DIR__ . "/../addons/rejected.php");
+    die();
+  }
 
 	$_PAGETITLE = "Blockland Glass | Manage Add-On";
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
@@ -28,7 +36,7 @@
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
 	<div class="tile" style="width:calc(100%-15px); font-size: 1.8em">
-		Managing <strong><?php echo htmlspecialchars($addon->getName()) ?></strong>
+		Managing <strong><?php echo htmlspecialchars($addonObject->getName()) ?></strong>
 	</div>
 	<div class="tile" style="width: 200px; float: left;">
 		<ul class="sidenav">

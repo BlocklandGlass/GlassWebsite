@@ -41,15 +41,20 @@
 				echo("<br /><span style=\"font-size: .8em;\">" . $user->getBLID());
 				echo("<br />" . date("M jS Y, g:i A", strtotime($comment->getTimeStamp())) . "<br />");
 
-				if($user->inGroup("Administrator")) { //add check if user is author of add-on
-					echo("<span style=\"color: red\">Administrator</span>");
-				} elseif($user->inGroup("Moderator")) {
-					echo("<span style=\"color: orange\">Moderator</span>");
-				} elseif($user->inGroup("Reviewer")) {
-					echo("<span style=\"color: green\">Mod Reviewer</span>");
-				//} elseif($user->banned) {
-					//echo("<strong>Banned</strong>");
-				}
+        if($user->getBanned()) {
+					echo("<span style=\"color: gray\">Banned</span>");
+				} else {
+          if($user->getBLID() == $addonObject->getAuthor()->getBLID()) {
+            echo("<span style=\"font-weight: bold\">Uploader</span>");
+          } elseif($user->inGroup("Administrator")) {
+            echo("<span style=\"color: red\">Administrator</span>");
+          } elseif($user->inGroup("Reviewer")) {
+            echo("<span style=\"color: green\">Mod Reviewer</span>");
+          } elseif($user->inGroup("Moderator")) {
+            echo("<span style=\"color: orange\">Chat Moderator</span>");
+          }
+        }
+
 				echo("</span></td><td>");
 				echo(utf8_encode($comment->getComment()));
 				echo("</td></tr>");

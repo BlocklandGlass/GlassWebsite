@@ -4,7 +4,7 @@
 			<th></th>
 			<th>Add-On</th>
 			<th>Date</th>
-			<th>Author</th>
+			<th>Uploader</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -15,6 +15,7 @@
 		$users = $response['users'];
 
 		foreach($addons as $index=>$addon) {
+      $ct++;
 			$user = $users[$addon->blid];
 			?>
 			<tr>
@@ -55,7 +56,7 @@
 
 		if($ct == 0) {
 			echo '<tr><td colspan="4" style="text-align:center; padding: 15px">No recent uploads.</td></tr>';
-		}
+    }
 	?>
 	</tbody>
 </table>

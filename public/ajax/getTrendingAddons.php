@@ -3,7 +3,7 @@
 		<tr>
 			<th></th>
 			<th>Add-On</th>
-			<th>Author</th>
+			<th>Uploader</th>
 			<th>Downloads</th>
 		</tr>
 	</thead>

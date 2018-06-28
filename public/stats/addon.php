@@ -16,22 +16,27 @@
 
 	$user = UserManager::getCurrent();
 
-  $addon = AddonManager::getFromId($_GET['id']);
+  $addonObject = AddonManager::getFromId($_GET['id']);
+
+  if(!$addonObject->getApproved()) {
+    include(__DIR__ . "/../addons/unapproved.php");
+		die();
+  }
 
   $csm = new CronStatManager();
-  //$data = $csm->getRecentAddonUsage($addon->getId());
+  //$data = $csm->getRecentAddonUsage($addonObject->getId());
 
-	$dist = StatUsageManager::getDistribution($addon->getId());
+	$dist = StatUsageManager::getDistribution($addonObject->getId());
 
-	$downloadData = StatManager::getHourlyDownloads($addon->getId(), 24);
-	$downloadData[date("Y-m-d H:i:s")] = StatManager::getStatistics($addon->getId());
+	$downloadData = StatManager::getHourlyDownloads($addonObject->getId(), 24);
+	$downloadData[date("Y-m-d H:i:s")] = StatManager::getStatistics($addonObject->getId());
 ?>
 <div class="maincontainer">
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
 	<div class="tile" style="width:calc(100%-15px); font-size: 1.8em">
-		Statistics <strong><?php echo htmlspecialchars($addon->getName()) ?></strong>
+		Statistics <strong><?php echo htmlspecialchars($addonObject->getName()) ?></strong>
 	</div>
 	<div class="tile" style="width: calc(50% - 40px); float:left; display: inline-block">
 		<strong>Version Usage Chart</strong>
@@ -47,15 +52,15 @@
 			</thead>
 			<tbody>
 				<?php
-					$ret = array($addon->getVersion() . " (stable)");
-					if(isset($dist[$addon->getVersion()]) && $dist[$addon->getVersion()] !== null) {
-						$vals = array($dist[$addon->getVersion()]);
+					$ret = array($addonObject->getVersion() . " (stable)");
+					if(isset($dist[$addonObject->getVersion()]) && $dist[$addonObject->getVersion()] !== null) {
+						$vals = array($dist[$addonObject->getVersion()]);
 					} else {
 						$vals = array(0);
 					}
 
 					foreach($dist as $ver=>$count) {
-						if($ver == $addon->getVersion()) {
+						if($ver == $addonObject->getVersion()) {
 							continue;
 						}
 
@@ -97,17 +102,17 @@
 	var data = {
 	    labels: <?php
 				$ret = array("Stable");
-				if(isset($dist[$addon->getVersion()]) && $dist[$addon->getVersion()] !== null) {
-					$vals = array($dist[$addon->getVersion()]);
+				if(isset($dist[$addonObject->getVersion()]) && $dist[$addonObject->getVersion()] !== null) {
+					$vals = array($dist[$addonObject->getVersion()]);
 				} else {
 					$vals = array(0);
 				}
 				$col = array("#55acee");
 
-				if($addon->hasBeta()) {
+				if($addonObject->hasBeta()) {
 					$ret[] = "Beta";
-					if(isset($dist[$addon->getBetaVersion()]) && $addon->getBetaVersion() != null) {
-						$vals[] = $dist[$addon->getBetaVersion()];
+					if(isset($dist[$addonObject->getBetaVersion()]) && $addonObject->getBetaVersion() != null) {
+						$vals[] = $dist[$addonObject->getBetaVersion()];
 					} else {
 						$vals[] = 0;
 					}
@@ -115,12 +120,12 @@
 				}
 
 				foreach($dist as $ver=>$count) {
-					if($ver == $addon->getVersion()) {
+					if($ver == $addonObject->getVersion()) {
 						continue;
 					}
 
-					if($addon->hasBeta()) {
-						if($addon->getBetaVersion() == $ver) {
+					if($addonObject->hasBeta()) {
+						if($addonObject->getBetaVersion() == $ver) {
 							continue;
 						}
 					}

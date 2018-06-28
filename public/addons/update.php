@@ -1,5 +1,7 @@
 <?php
 	require dirname(__DIR__) . '/../private/autoload.php';
+  use Glass\AddonManager;
+
 	session_start();
 	$status = include dirname(__DIR__) . "/../private/json/updateAddon.php";
 
@@ -8,6 +10,17 @@
 		header("Location: " . $status['redirect']);
 		die();
 	}
+
+	$addonObject = AddonManager::getFromId($_GET['id']);
+
+  if($addonObject->getDeleted()) {
+    include(__DIR__ . "/../addons/deleted.php");
+		die();
+	} else if($addonObject->isRejected()) {
+    include(__DIR__ . "/../addons/rejected.php");
+    die();
+  }
+
 	$_PAGETITLE = "Blockland Glass | Add-On Update";
 	include dirname(__DIR__) . "/../private/header.php";
 ?>

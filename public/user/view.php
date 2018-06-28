@@ -1,6 +1,7 @@
 <?php
 	require_once dirname(__DIR__) . '/../private/autoload.php';
 
+  use Glass\GroupManager;
 	use Glass\UserManager;
 	use Glass\UserLog;
 
@@ -61,21 +62,35 @@
 			echo "<p>";
 
 			if($hasAccount) {
-				$title = false;
-				if($userObject->inGroup("Administrator")) {
-					$title = "Administrator";
-					$color = "red";
-				} else if($userObject->inGroup("Moderator")) {
-					$title = "Chat Moderator";
-					$color = "orange";
-				} else if($userObject->inGroup("Reviewer")) {
-					$title = "Mod Reviewer";
-					$color = "green";
-				}
+				$roles = true;
+				// if($userObject->inGroup("Administrator")) {
+					// $title = "Administrator";
+					// $color = "red";
+				// } else if($userObject->inGroup("Moderator")) {
+					// $title = "Chat Moderator";
+					// $color = "orange";
+				// } else if($userObject->inGroup("Reviewer")) {
+					// $title = "Mod Reviewer";
+					// $color = "green";
+				// }
 
-				if($title) {
-					echo "This user is a verified <span style=\"color: $color; font-weight: bold;\">$title</span>.";
-				}
+				// if($title) {
+					// echo "This user is a verified <span style=\"color: $color; font-weight: bold;\">$title</span>.";
+				// }
+
+        if($roles) {
+          echo "This user is part of the following roles:<br>";
+          echo "<ul>";
+
+          $groups = GroupManager::getGroupsFromBLID($blid);
+
+          foreach($groups as $gid) {
+            $group = GroupManager::getFromId($gid);
+            echo "<li><strong style=\"color: #" . $group->getColor() . ";\">" . $group->getName() . ($group->getLeader() == $blid ? " (Leader)" : "") . "</strong></li>";
+          }
+
+          echo "</ul>";
+        }
 			}
 
 			$lastseen = UserLog::getLastSeen($blid);

@@ -115,12 +115,15 @@ foreach($comments as $comid) {
 
   $user = UserManager::getFromBlid($comment->getBlid());
   if($user) {
+    // if ($user->getBLID() == $addonObject->getAuthor()->getBLID()) {
+      // $action->title = "Uploader";
     if($user->inGroup("Administrator")) {
       $action->title = "Administrator";
-    } else if($user->inGroup("Moderator")) {
-      $action->title = "Moderator";
     } else if($user->inGroup("Reviewer")) {
       $action->title = "Mod Reviewer";
+    } else if($user->inGroup("Moderator")) {
+      // $action->title = "Chat Moderator";
+      $action->title = "Moderator";
     }
   }
 

@@ -16,7 +16,7 @@
       ?>
       <div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em; background-color: #ffcccc; text-align:center; padding: 10px; font-size: 1em">
         <span style="float: left"><img src="/img/icons32/warning.png"></span>
-        <strong>This add-on has been deleted.</strong><br />
+        <strong>This add-on is no longer available.</strong><br />
       </div>
     </div>
 </div>
