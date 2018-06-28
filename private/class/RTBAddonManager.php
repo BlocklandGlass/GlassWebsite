@@ -91,6 +91,10 @@ class RTBAddonManager {
     $db = new DatabaseManager();
     $res = $db->query("SELECT DISTINCT(type) AS board FROM `rtb_addons` ORDER BY `type` ASC");
 
+    if($res === false) {
+      return false;
+    }
+
     $boards = array();
     while($obj = $res->fetch_object()) {
       $boards[] = $obj->board;

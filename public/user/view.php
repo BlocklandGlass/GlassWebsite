@@ -1,10 +1,8 @@
 <?php
 	require_once dirname(__DIR__) . '/../private/autoload.php';
-	include(realpath(dirname(__DIR__) . "/../private/header.php"));
+
 	use Glass\UserManager;
 	use Glass\UserLog;
-	use Glass\AddonManager;
-	use Glass\StatUsageManager;
 
 	$blid = $_GET['blid'] ?? false;
 
@@ -31,6 +29,20 @@
 	} else {
 		$failed = true;
 	}
+
+  $history = UserLog::getHistory($blid);
+  if($hasAccount) {
+    $name = htmlspecialchars(utf8_encode($userObject->getName()));
+  } else {
+    $name = htmlspecialchars(utf8_encode($userLog));
+  }
+
+  $_PAGETITLE = "Blockland Glass | " . $name;
+
+
+	include(realpath(dirname(__DIR__) . "/../private/header.php"));
+	use Glass\AddonManager;
+	use Glass\StatUsageManager;
 ?>
 <div class="maincontainer">
   <?php
@@ -43,13 +55,6 @@
 				$msg .= "<p>We've never seen that user before. Sorry!</p>";
 				echo $msg;
 				return;
-			}
-
-			$history = UserLog::getHistory($blid);
-			if($hasAccount) {
-				$name = htmlspecialchars(utf8_encode($userObject->getName()));
-			} else {
-				$name = htmlspecialchars(utf8_encode($userLog));
 			}
 
 			echo "<h2>$name</h2>";

@@ -418,7 +418,7 @@ class AddonManager {
 	public static function getCountFromBoard($boardID) {
 		$database = new DatabaseManager();
 		AddonManager::verifyTable($database);
-		$resource = $database->query("SELECT COUNT(*) FROM `addon_addons` WHERE board='" . $boardID . "'  AND deleted=0");
+		$resource = $database->query("SELECT COUNT(*) FROM `addon_addons` WHERE board='" . $boardID . "'  AND deleted=0 AND approved=1");
 
 		if(!$resource) {
 			throw new \Exception("Database error: " . $database->error());

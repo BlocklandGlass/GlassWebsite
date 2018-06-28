@@ -98,7 +98,7 @@ setInterval(nextImage, 5000);
 		<div>
 			<h3 style="display: inline-block; margin: 0">Mod Manager</h3>
 			<p>
-				The Mod Manager allows you to browse, search, and install add-ons without ever exiting Blockland. You’re able to access all add-ons upload directly to Glass, as well as search and download add-ons from the RTB 4 Archive. The Mod Manager also ensures that all of your add-ons are kept up to date, thanks to Support_Updater, and import your old RTB add-ons to be updated to the latest version.
+				The Mod Manager allows you to browse, search, and install add-ons without ever exiting Blockland. You're able to access all add-ons upload directly to Glass, as well as search and download add-ons from the RTB 4 Archive. The Mod Manager also ensures that all of your add-ons are kept up to date, thanks to Support_Updater, and import your old RTB add-ons to be updated to the latest version.
 			</p>
 		</div>
 		<div>
@@ -110,13 +110,13 @@ setInterval(nextImage, 5000);
 		<div>
 			<h3>Preferences</h3>
 			<p>
-				We’ve implemented our own preferences system to make up for the loss of RTB preferences. All RTB preferences are automatically imported and available to control, along with some new preference types and optionsrticular.
+				We've implemented our own preferences system to make up for the loss of RTB preferences. All RTB preferences are automatically imported and available to control, along with some new preference types and options in particular.
 			</p>
 		</div>
 		<div>
 			<h3>Server Features</h3>
 			<p>
-				Glass enables you to preview servers before you join them, viewing the server’s preview image and player list. On top of that, we allow you to mark favorite servers, giving you notifications about the server’s status and allowing you to view and join it from the main menu. Glass also allows servers to have their own custom loading screen images, similar to how maps images worked before shadows and shaders.
+				Glass enables you to preview servers before you join them, viewing the server's preview image and player list. On top of that, we allow you to mark favorite servers, giving you notifications about the server's status and allowing you to view and join it from the main menu. Glass also allows servers to have their own custom loading screen images, similar to how maps images worked before shadows and shaders.
 			</p>
 		</div>
 		<div>

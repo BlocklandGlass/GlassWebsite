@@ -52,7 +52,7 @@ class BoardObject {
 
 			$database = new DatabaseManager();
 			$this->verifyTable($database);
-			$resource = $database->query("SELECT COUNT(*) FROM `addon_addons` WHERE board='" . $database->sanitize($this->id) . "'  AND deleted=0");
+			$resource = $database->query("SELECT COUNT(*) FROM `addon_addons` WHERE board='" . $database->sanitize($this->id) . "' AND deleted=0 AND approved=1");
 
 			if(!$resource) {
 				throw new \Exception("Database error: " . $database->error());

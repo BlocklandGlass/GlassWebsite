@@ -35,10 +35,11 @@
   <div class="tile">
     <h2>Success!</h2>
     <p>
-      Your add-on was uploaded successfully. It'll now be carefully reviewed by our reviewers and hopefully approved.
+      Your add-on was uploaded successfully.<br>
+      It will now be carefully reviewed by our mod reviewers and hopefully approved.
     </p>
     <p>
-      <a href="/addons/">Back to Add-ons</a>
+      <a href="/user/">View your content.</a>
     </p>
   </div>
 </div>

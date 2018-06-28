@@ -30,20 +30,24 @@
 					<td>Name</td>
 					<td style="width:70px">Files</td>
 				</tr>
-	<?php
-	  $boards = RTBAddonManager::getBoards();
+        <?php
+          $boards = RTBAddonManager::getBoards();
 
-		foreach($boards as $board) {
-			?>
-			<tr>
-			<td style="margin:0;padding:0;width:0;"></td>
-			<td><a href="board.php?name=<?php echo $board?>"><?php echo $board ?></a></td>
-			<td><?php echo RTBAddonManager::getBoardCount($board); ?></td>
-			</tr><?php
-		}
+          if($boards === false) {
+            echo '<tr><td colspan="3" style="text-align:center; padding: 15px">No RTB imports found.</td></tr>';
+          } else {
+            foreach($boards as $board) {
+              ?>
+              <tr>
+              <td style="margin:0;padding:0;width:0;"></td>
+              <td><a href="board.php?name=<?php echo $board?>"><?php echo $board ?></a></td>
+              <td><?php echo RTBAddonManager::getBoardCount($board); ?></td>
+              </tr><?php
+            }
 
-		//TO DO: page number links should also appear at the bottom, probably inside of the grey footer
-	?>
+            //TO DO: page number links should also appear at the bottom, probably inside of the grey footer
+          }
+          ?>
 			</tbody>
 		</table>
   </div>

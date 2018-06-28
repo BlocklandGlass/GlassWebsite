@@ -678,6 +678,10 @@ input[type="submit"]:active {
   background-color: #FFDE29;
 }
 
+.reviewbody {
+  margin: 10px;
+}
+
 .userhome {
   width: 100%;
 }
