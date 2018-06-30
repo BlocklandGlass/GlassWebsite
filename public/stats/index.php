@@ -35,6 +35,7 @@
 		$stats->users_online_bl = $users_online_bl;
 		$stats->users_online_glass = $users_online_glass;
 		$stats->users_total = $users_total;
+
 		apc_store("stats_general", $stats, 600);
 	} else {
 		$web = $stats->web;
@@ -263,15 +264,15 @@ td {
 					</tr>
 					<tr>
 						<td><strong>Online Blockland:</strong></td>
-						<td><?php echo number_format(number_format($users_online_bl)); ?></td>
+						<td><?php echo number_format($users_online_bl); ?></td>
 					</tr>
 					<tr>
 						<td><strong>Online Glass:</strong></td>
-						<td><?php echo number_format(number_format($users_online_glass)); ?></td>
+						<td><?php echo number_format($users_online_glass); ?></td>
 					</tr>
 					<tr>
 						<td><strong>Total Glass:</strong></td>
-						<td><?php echo number_format(number_format($users_total)); ?></td>
+						<td><?php echo number_format($users_total); ?></td>
 					</tr>
 				</tbody>
 			</table>
