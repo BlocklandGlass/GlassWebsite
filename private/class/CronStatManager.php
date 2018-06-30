@@ -59,6 +59,21 @@ class CronStatManager {
     }
   }
 
+  function getEntriesAfter($time, $duration) {
+    $database = new DatabaseManager();
+    $res = $database->query("SELECT * FROM `cron_statistics` WHERE `duration`='" . $database->sanitize($duration) . "' AND `time` >='" . $database->sanitize($time) . "'");
+    if($res === false || $res->num_rows == 0) {
+      return false;
+    } else {
+      $obj_array = [];
+      while($obj = $res->fetch_object()) {
+        $obj_array[] = json_decode($obj->data);
+      }
+      return $obj_array;
+    }
+  }
+
+
   function collectHourStat($store = false) {
     $stats = new \stdClass();
     $stats->time = gmdate("Y-m-d H:00:00", time());
@@ -167,8 +182,9 @@ class CronStatManager {
 
   public function getRecentBlocklandStats($hours = 12) {
     $ret = array();
+    $entries = $this->getEntriesAfter(gmdate("Y-m-d H:00:00", time()-(($hours)*3600)), "hour");
     for($i = 1; $i <= $hours; $i++) {
-      $entry = $this->getEntry(gmdate("Y-m-d H:00:00", time()-(($hours-$i)*3600)), "hour");
+      $entry = $entries[$i-1] ?? false;
       if($entry != false) {
         $ret[gmdate("Y-m-d H:00:00", time()-(($hours-$i)*3600))] = $entry->master;
       }
