@@ -1,9 +1,10 @@
 <?php
 	require dirname(__DIR__) . '/../private/autoload.php';
-	use Glass\GroupManager;
-	use Glass\UserManager;
 	use Glass\CronStatManager;
+	use Glass\GroupManager;
 	use Glass\StatManager;
+	use Glass\UserManager;
+	use Glass\UserLog;
 
 	$_PAGETITLE = "Blockland Glass | Statistics";
 
@@ -11,13 +12,43 @@
 
 	$user = UserManager::getCurrent();
 
-	$web = StatManager::getAllAddonDownloads("web")+0;
-	$ingame = StatManager::getAllAddonDownloads("ingame")+0;
-	$updates = StatManager::getAllAddonDownloads("updates")+0;
-	$total = $web+$ingame+$updates;
+ 	$csm = new CronStatManager();
+	$stats = apc_fetch("stats_general", $success);
+	$stats = false;
 
-  $csm = new CronStatManager();
-  $data = $csm->getRecentBlocklandStats(24);
+	if(!$success || !$stats) {
+		$web = StatManager::getAllAddonDownloads("web")+0;
+		$ingame = StatManager::getAllAddonDownloads("ingame")+0;
+		$updates = StatManager::getAllAddonDownloads("updates")+0;
+		$total = $web+$ingame+$updates;
+		$data = $csm->getRecentBlocklandStats(24);
+
+		$users_online_bl = StatManager::getMasterServerStats()['users'];
+		$users_online_glass = sizeof(UserLog::getRecentlyActive());
+		$users_total = UserLog::getUniqueCount();
+
+		$stats = new stdClass();
+		$stats->web = $web;
+		$stats->ingame = $ingame;
+		$stats->updates = $updates;
+		$stats->total = $total;
+		$stats->data = $data;
+		$stats->users_online_bl = $users_online_bl;
+		$stats->users_online_glass = $users_online_glass;
+		$stats->users_total = $users_total;
+		apc_store("stats_general", $stats, 600);
+	} else {
+		$web = $stats->web;
+		$ingame = $stats->ingame;
+		$updates = $stats->updates;
+		$total = $stats->total;
+		$data = $stats->data;
+
+		$users_online_bl = $stats->users_online_bl;
+		$users_online_glass = $stats->users_online_glass;
+		$users_total = $stats->users_total;
+	}
+
 ?>
 <style>
 .list td {
@@ -25,25 +56,21 @@
 }
 
 .list tr:nth-child(2n+1) td {
-  background-color: #ddd;
+  background-color: #fafafa;
 }
 
-.list tr:first-child td {
-  background-color: #777;
+.list th {
+  background-color: #2ecc71;
+	padding: 5px 10px;
   color: #fff;
   font-weight: bold;
-}
-
-.list tr td:first-child {
-  border-radius: 10px 0 0 10px;
-}
-
-.list tr td:last-child {
-  border-radius: 0 10px 10px 0;
+	font-size: inherit;
 }
 
 .list {
   margin: 0 auto;
+	width: 100%;
+	font-size: 0.8em
 }
 
 .maincontainer p {
@@ -53,109 +80,183 @@
 form {
   text-align: center;
 }
+
+td {
+	padding: 5px;
+	text-align: center;
+}
+
+.flex-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.flex-container > div {
+	background-color: #eee;
+	padding: 10px;
+	margin: 5px;
+	flex-basis: calc(400px);
+	flex-grow: 1;
+
+	overflow: hidden;
+}
+
+.stat-info {
+	font-size: 12px;
+	text-align: center;
+	margin-top:10px;
+	padding: 10px;
+}
 </style>
 <div class="maincontainer">
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
-	<style>
-		td {
-			padding: 5px;
-			font-size: 0.8em
-		}
-	</style>
-	<table class="list">
-		<tbody>
-			<tr>
-				<td>Type</td>
-				<td>Downloads</td>
-			</tr>
-			<tr><td><strong>Web:</strong></td><td><?php echo $web ?></td></tr>
-			<tr><td><strong>In-game:</strong></td><td><?php echo $ingame ?></td></tr>
-			<tr><td><strong>Update:</strong></td><td><?php echo $updates ?></td></tr>
-			<tr><td><strong>Total:</strong></td><td><?php echo $total ?></td></tr>
-			<!--<tr><td><strong>Since Glass 2:</strong></td><td><?php echo $total-38535; ?></td></tr>-->
-		</tbody>
-	</table>
-	<hr />
-	<i>All times US Eastern Time. Displayed Blockland information is not fully accurate. Only users logged in on the hour exactly are recorded. Additionally, only users in servers are accounted for.</i>
-  <canvas id="myChart" style="width:400px;height:400px"></canvas>
-  <script>
-  var ctx = document.getElementById("myChart");
-  var myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-          labels: <?php
-					$res = array();
-					foreach($data as $time=>$dat) {
-						date_default_timezone_set('US/Eastern');
-						$res[] = date("g:ia", strtotime($time . " UTC"));
-					}
-					echo json_encode($res);
-					?>,
-          datasets: [{
-            label: "Players",
-            fill: false,
-            lineTension: 0.1,
-            backgroundColor: "rgba(75,192,192,0.4)",
-            borderColor: "rgba(75,192,192,1)",
-            borderCapStyle: 'round',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: "rgba(75,192,192,1)",
-            pointBackgroundColor: "#fff",
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: "rgba(75,192,192,1)",
-            pointHoverBorderColor: "rgba(220,220,220,1)",
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
-            data: <?php
-            $res = array();
-            foreach($data as $time=>$dat) {
-              $res[] = $dat->users;
-            }
-            echo json_encode($res);
-            ?>,
-          },{
-            label: "Servers",
-            fill: false,
-            lineTension: 0,
-            backgroundColor: "rgba(255,0,0,0.4)",
-            borderColor: "rgba(255,0,0,0.4)",
-            borderCapStyle: 'round',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: "rgba(255,0,0,0.4)",
-            pointBackgroundColor: "#fff",
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: "rgba(255,0,0,0.4)",
-            pointHoverBorderColor: "rgba(255,0,0,0.4)",
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
-            data: <?php
-            $res = array();
-            foreach($data as $time=>$dat) {
-              $res[] = $dat->servers;
-            }
-            echo json_encode($res);
-            ?>,
-          }]
-      },
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero:true
-                  }
-              }]
-          }
-      }
-  });
-  </script>
+	<div class="flex-container">
+		<div>
+			<h3>File Downloads</h3>
+			<table class="list">
+				<tbody>
+					<tr>
+						<th style="width: 30%">Type</th>
+						<th>Downloads</th>
+					</tr>
+					<tr>
+						<td><strong>Website:</strong></td>
+						<td><?php echo number_format($web) ?></td>
+					</tr>
+					<tr>
+						<td><strong>In-game:</strong></td>
+						<td><?php echo number_format($ingame) ?></td>
+					</tr>
+					<tr>
+						<td><strong>Updates:</strong></td>
+						<td><?php echo number_format($updates) ?></td>
+					</tr>
+					<tr>
+						<td><strong>Total:</strong></td>
+						<td><?php echo number_format($total) ?></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="stat-info">
+				<i>Blockland content is served through both the website and our in-game Mod Manager platform. We also provide in-game add-on updates.</i>
+			</div>
+		</div>
+		<div>
+			<h3>Blockland Activity</h3>
+			<canvas id="myChart" style="height:400px; background-color:#fafafa"></canvas>
+			<div class="stat-info">
+				<i>All times are Eastern Standard Time. Displayed Blockland information is not fully accurate. Only users logged in on the hour exactly are recorded. Additionally, only users in servers are accounted for.</i>
+			</div>
+		  <script>
+		  var ctx = document.getElementById("myChart");
+		  var myChart = new Chart(ctx, {
+		      type: 'line',
+		      data: {
+		          labels: <?php
+							$res = array();
+							foreach($data as $time=>$dat) {
+								date_default_timezone_set('US/Eastern');
+								$res[] = date("g:ia", strtotime($time . " UTC"));
+							}
+							echo json_encode($res);
+							?>,
+		          datasets: [{
+		            label: "Players",
+		            fill: false,
+		            lineTension: 0.1,
+		            backgroundColor: "rgba(75,192,192,0.4)",
+		            borderColor: "rgba(75,192,192,1)",
+		            borderCapStyle: 'round',
+		            borderDash: [],
+		            borderDashOffset: 0.0,
+		            borderJoinStyle: 'miter',
+		            pointBorderColor: "rgba(75,192,192,1)",
+		            pointBackgroundColor: "#fff",
+		            pointBorderWidth: 1,
+		            pointHoverRadius: 5,
+		            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+		            pointHoverBorderColor: "rgba(220,220,220,1)",
+		            pointHoverBorderWidth: 2,
+		            pointRadius: 1,
+		            pointHitRadius: 10,
+		            data: <?php
+		            $res = array();
+		            foreach($data as $time=>$dat) {
+		              $res[] = $dat->users;
+		            }
+		            echo json_encode($res);
+		            ?>,
+		          },{
+		            label: "Servers",
+		            fill: false,
+		            lineTension: 0,
+		            backgroundColor: "rgba(255,0,0,0.4)",
+		            borderColor: "rgba(255,0,0,0.4)",
+		            borderCapStyle: 'round',
+		            borderDash: [],
+		            borderDashOffset: 0.0,
+		            borderJoinStyle: 'miter',
+		            pointBorderColor: "rgba(255,0,0,0.4)",
+		            pointBackgroundColor: "#fff",
+		            pointBorderWidth: 1,
+		            pointHoverRadius: 5,
+		            pointHoverBackgroundColor: "rgba(255,0,0,0.4)",
+		            pointHoverBorderColor: "rgba(255,0,0,0.4)",
+		            pointHoverBorderWidth: 2,
+		            pointRadius: 1,
+		            pointHitRadius: 10,
+		            data: <?php
+		            $res = array();
+		            foreach($data as $time=>$dat) {
+		              $res[] = $dat->servers;
+		            }
+		            echo json_encode($res);
+		            ?>,
+		          }]
+		      },
+		      options: {
+							responsive: true,
+		          scales: {
+		              yAxes: [{
+		                  ticks: {
+		                      beginAtZero:true
+		                  }
+		              }]
+		          }
+		      }
+		  });
+		  </script>
+		</div>
+		<div>
+			<h3>Users</h3>
+			<table class="list">
+				<tbody>
+					<tr>
+						<th style="width: 40%">Type</th>
+						<th>Users</th>
+					</tr>
+					<tr>
+						<td><strong>Online Blockland:</strong></td>
+						<td><?php echo number_format(number_format($users_online_bl)); ?></td>
+					</tr>
+					<tr>
+						<td><strong>Online Glass:</strong></td>
+						<td><?php echo number_format(number_format($users_online_glass)); ?></td>
+					</tr>
+					<tr>
+						<td><strong>Total Glass:</strong></td>
+						<td><?php echo number_format(number_format($users_total)); ?></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="stat-info">
+				<i>At times, the number of users online Glass may be higher than users online Blockland. Only users in Blockland servers are counted, and there may be more players using Glass than actually in servers.</i>
+			</div>
+		</div>
+		<div style="background:none; height: 0;">
+		</div>
+	</div>
 </div>
