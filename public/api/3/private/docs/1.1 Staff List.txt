@@ -1,18 +1,18 @@
 <font:verdana bold:15>Staff List
 
-<font:verdana bold:13>Administrators
+<font:verdana bold:13>Administrators<font:verdana:12>
 
 <bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_red> <font:verdana bold:12>Jincux<font:verdana:12> 9789
 <bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_red> <font:verdana bold:12>Shock<font:verdana:12> 636
 <bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_red> <font:verdana bold:12>Crown<font:verdana:12> 2143
 
-<font:verdana bold:13>Chat Moderators
+<font:verdana bold:13>Chat Moderators<font:verdana:12>
 
 <bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_orange> <font:verdana bold:12>Visolator<font:verdana:12> 48980
 <bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_orange> <font:verdana bold:12>Skill4Life<font:verdana:12> 4382
 <bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_orange> <font:verdana bold:12>DragonoidSlayer<font:verdana:12> 29131
-<bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_orange> <font:verdana bold:12>Ostinyo<font:verdana:12> 15369
+<bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_orange> <font:verdana bold:12>Ostinyo<font:verdana:12> 15269
 
-<font:verdana bold:13>Mod Reviewers
+<font:verdana bold:13>Mod Reviewers<font:verdana:12>
 
 <bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_green> <font:verdana bold:12>Conan<font:verdana:12> 4928

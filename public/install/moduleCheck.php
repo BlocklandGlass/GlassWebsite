@@ -17,7 +17,7 @@
   </head>
   <body>
     <h2>PHP Modules</h2>
-    <?php if(!InstallationManager::isLinux()) echo '<h3 style="color: red; font-weight: bold;">Attention: Windows operating system detected, do not use this installation for production use.</h3>'; ?>
+    <?php if(InstallationManager::isWindows()) echo '<h3 style="color: red; font-weight: bold;">Attention: Windows operating system detected, do not use this installation for production use. Some features will not work correctly.</h3>'; ?>
     <p>
       Checking to see if all required PHP modules are installed...
     </p>

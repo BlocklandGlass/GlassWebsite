@@ -20,6 +20,9 @@ $dlg->type = "recent";
 
 $ar = array();
 foreach($recent as $ao) {
+  if(!$ao->getApproved() || $ao->getDeleted()) {
+    continue;
+  }
 
   $o = new \stdClass();
   $o->id = $ao->getId();
@@ -40,11 +43,13 @@ $ar = array();
 foreach($recentUpdates as $r) {
   $ao = $r->getAddon();
 
-  if(!$ao->getApproved())
+  if(!$ao->getApproved() || $ao->getDeleted()) {
     continue;
+  }
 
-  if($ao->getBoard() == 10) // bargain bin
-    continue;
+  // bargain bin gone
+  // if($ao->getBoard() == 10) // bargain bin
+    // continue;
 
   $o = new \stdClass();
   $o->id = $ao->getId();

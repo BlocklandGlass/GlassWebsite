@@ -18,11 +18,6 @@
 
   $addonObject = AddonManager::getFromId($_GET['id']);
 
-  if(!$addonObject->getApproved()) {
-    include(__DIR__ . "/../addons/unapproved.php");
-		die();
-  }
-
   $csm = new CronStatManager();
   //$data = $csm->getRecentAddonUsage($addonObject->getId());
 

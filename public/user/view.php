@@ -38,8 +38,16 @@
     $name = htmlspecialchars(utf8_encode($userLog));
   }
 
-  $_PAGETITLE = "Blockland Glass | " . $name;
+  $lastseen = UserLog::getLastSeen($blid);
+  if($lastseen) {
+    $time = strtotime($lastseen);
+    $lastseen = date("F j, Y, g:i a", $time);
+  } else {
+    $lastseen = "Never";
+  }
 
+  $_PAGETITLE = "Blockland Glass | " . $name;
+  $_PAGEDESCRIPTION = "BL_ID: $blid\r\nLast Seen: $lastseen";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 	use Glass\AddonManager;
@@ -62,27 +70,10 @@
 			echo "<p>";
 
 			if($hasAccount) {
-				$roles = true;
-				// if($userObject->inGroup("Administrator")) {
-					// $title = "Administrator";
-					// $color = "red";
-				// } else if($userObject->inGroup("Moderator")) {
-					// $title = "Chat Moderator";
-					// $color = "orange";
-				// } else if($userObject->inGroup("Reviewer")) {
-					// $title = "Mod Reviewer";
-					// $color = "green";
-				// }
-
-				// if($title) {
-					// echo "This user is a verified <span style=\"color: $color; font-weight: bold;\">$title</span>.";
-				// }
-
-        if($roles) {
+        $groups = GroupManager::getGroupsFromBLID($blid);
+        if(sizeof($groups) > 0) {
           echo "This user is part of the following roles:<br>";
           echo "<ul>";
-
-          $groups = GroupManager::getGroupsFromBLID($blid);
 
           foreach($groups as $gid) {
             $group = GroupManager::getFromId($gid);
@@ -93,13 +84,6 @@
         }
 			}
 
-			$lastseen = UserLog::getLastSeen($blid);
-			if($lastseen) {
-				$time = strtotime($lastseen);
-				$lastseen = date("F j, Y, g:i a", $time);
-			} else {
-				$lastseen = "Never";
-			}
 			echo "<p><strong>BL_ID:</strong> $blid";
 			echo "<br /><strong>Last Seen:</strong> $lastseen";
 			echo "</p>";

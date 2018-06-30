@@ -43,6 +43,7 @@
 	}
 
 	$_PAGETITLE = "Blockland Glass | " . $addonObject->getName();
+  $_PAGEDESCRIPTION = $addonObject->getDescription();
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 ?>

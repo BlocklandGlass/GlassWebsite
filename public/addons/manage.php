@@ -47,12 +47,12 @@
 		</ul>
 		<br />
 		<ul class="sidenav">
-			<li><a href="https://blocklandglass.com/addons/update.php?id=<?php echo $_GET['id'] ?>">Update</a></li>
+			<li><a href="/addons/update.php?id=<?php echo $_GET['id'] ?>">Update</a></li>
 			<li><a href="?id=<?php echo $_GET['id'] ?>&tab=repo">Repository</a></li>
 		</ul>
 		<br />
 		<ul class="sidenav">
-			<li><a href="https://blocklandglass.com/stats/addon.php?id=<?php echo $_GET['id'] ?>">Statistics</a></li>
+			<li><a href="/stats/addon.php?id=<?php echo $_GET['id'] ?>">Statistics</a></li>
 		</ul>
 	</div>
 	<div class="tile" style="width: 1000px; padding: 15px; float: right;">

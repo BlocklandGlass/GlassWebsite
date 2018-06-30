@@ -9,14 +9,26 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="og:site_name" content="Blockland Glass" />
+    <meta name="og:type" content="website" />
+    <meta name="og:image" content="/img/logo2.png" />
 		<?php
 			if(isset($_PAGETITLE)) {
 				echo '<title>' . $_PAGETITLE . '</title>';
 			} else {
 				echo '<title>Blockland Glass</title>';
 			}
+
+      if(isset($_PAGETITLE)) {
+        echo '<meta name="og:title" content="' . str_replace("Blockland Glass | ", "", $_PAGETITLE) . '" />';
+      }
+
+      if(isset($_PAGEDESCRIPTION)) {
+        echo '<meta name="og:description" content="' . mb_strimwidth($_PAGEDESCRIPTION, 0, 140, "...") . '" />';
+      } else {
+        echo '<meta name="og:description" content="Social and content platform for Blockland." />';
+      }
 		?>
-		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<!-- Temporary -->
