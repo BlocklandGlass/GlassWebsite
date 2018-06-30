@@ -14,7 +14,6 @@
 
  	$csm = new CronStatManager();
 	$stats = apc_fetch("stats_general", $success);
-	$stats = false;
 
 	if(!$success || !$stats) {
 		$web = StatManager::getAllAddonDownloads("web")+0;
