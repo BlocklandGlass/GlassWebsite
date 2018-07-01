@@ -98,25 +98,35 @@
 			<tr class="boardheader">
 				<td>Name</td>
 				<td style="text-align:center !important">Uploader</td>
+				<td>Version</td>
 				<td>Downloads</td>
 			</tr>
 			<?php
-				//$addons = $boardObject->getAddons(($page-1)*10, 10);
 				$addonIDs = AddonManager::getFromBoardID($boardObject->getID(), ($page-1)*10, 10);
-				//$addons = BoardManager::getAddonsFromBoardID($boardObject->getID(), ($page-1)*10, 10);
 
 				foreach($addonIDs as $aid) {
 					$addon = AddonManager::getFromID($aid); ?>
 					<tr>
-					<td style="width: 33%; text-align:left"><a href="addon.php?id=<?php echo $addon->getID(); ?>"><?php echo $addon->getName(); ?></a></td>
-					<td style="font-size: 11pt; text-align:center"><?php echo htmlspecialchars(utf8_encode($addon->getAuthor()->getUsername()));	?>
+					<td style="width: 33%; text-align:left">
+						<a href="addon.php?id=<?php echo $addon->getID(); ?>"><?php echo htmlspecialchars($addon->getName()); ?></a>
+						<p style="padding: 0; margin: 0; font-size: 0.8em; color: #666;">
+							<?php echo htmlspecialchars($addon->getSummary()); ?>
+						</p>
+					</td>
+					<td style="font-size: 11pt; text-align:center">
+						<a href="/user/view.php?blid=<?php echo $addon->getBLID() ?>">
+							<?php echo htmlspecialchars(utf8_encode($addon->getAuthor()->getUsername()));	?>
+						</a>
+					</td>
+					<td>
+						<?php echo htmlspecialchars($addon->getVersion()); ?>
 					</td>
 					<td><?php echo ($addon->getDownloads("web") + $addon->getDownloads("ingame")); ?></td>
 					</tr><?php
 				}
 
 				if(sizeof($addonIDs) == 0) {
-					echo '<tr><td colspan="3">No Add-Ons!</td></tr>';
+					echo '<tr><td colspan="4">No Add-Ons!</td></tr>';
 				}
 				//TO DO: page number links should also appear at the bottom, probably inside of the grey footer
 			?>
