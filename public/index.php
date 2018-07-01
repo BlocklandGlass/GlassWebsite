@@ -92,8 +92,8 @@ setInterval(nextImage, 5000);
 	      Blockland Glass is a service made for <a href="http://blockland.us">Blockland</a> to help expand and cultivate the community.  Glass acts as a content and social platform offering the ability to download Glass add-ons in-game, manage your servers' preferences, add friends and talk to others through the chatroom or direct messaging.
 	    </p>
 		</div>
-		<div style="float:right;">
-			<img src="http://i.imgur.com/V1qsgpl.png" style="margin: 10px">
+		<div style="float:right; overflow:none; max-width: 100%">
+			<img src="http://i.imgur.com/V1qsgpl.png" style="margin: 10px;  max-width: 100%;">
 		</div>
 		<div>
 			<h3 style="display: inline-block; margin: 0">Mod Manager</h3>
