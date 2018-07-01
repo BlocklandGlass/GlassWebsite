@@ -40,7 +40,9 @@
 
   if($owner) {
     if($_POST['action'] == "Cancel Update") {
-
+      $update = AddonManager::getUpdates($addon)[0];
+      AddonManager::cancelUpdate($update->getId());
+      header('Location: /user');
     }
   }
 ?>
