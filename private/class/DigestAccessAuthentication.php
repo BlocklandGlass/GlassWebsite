@@ -26,6 +26,9 @@ namespace Glass;
 // $digest->getOpaque();
 // $digest->getNonceCount();
 
+/**
+ *
+ */
 class DigestAccessAuthentication
 {
 	private $realm = '';

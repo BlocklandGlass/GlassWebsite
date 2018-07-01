@@ -114,7 +114,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">971</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">905</span>
                                 </a>
                             </li>
                             <li>
@@ -144,19 +144,19 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-612226195"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-446621079"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-612226195" class="accordion-body collapse in">
+            <div id="namespace-446621079" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-610594011"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-110767673"></a>
                                 <a href="../namespaces/Glass.html" style="margin-left: 30px; padding-left: 0">Glass</a>
             </div>
-            <div id="namespace-610594011" class="accordion-body collapse ">
+            <div id="namespace-110767673" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -228,7 +228,7 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\Glass</small>AddonManager</h1>
-                    <p><em></em></p>
+                    <p><em>A manager class for AddonObjects</em></p>
                     
                     
                                         
@@ -551,36 +551,36 @@
             <article class="method">
                 <h3 class="public ">submitUpdate()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">submitUpdate(  <span class="argument">$addon</span>,   <span class="argument">$version</span>,   <span class="argument">$file</span>,   <span class="argument">$changelog</span>,   <span class="argument">$restart</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">submitUpdate(integer  <span class="argument">$addon</span>, string  <span class="argument">$version</span>, string  <span class="argument">$file</span>, string  <span class="argument">$changelog</span>, boolean  <span class="argument">$restart</span>) : void</pre>
+                <p><em>Inserts update information in to the database</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$addon </td>
-                                <td></td>
+                                <td><p>The addon id being updated</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$version </td>
-                                <td></td>
+                                <td><p>Version being updated to</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$file </td>
-                                <td></td>
+                                <td><p>Location of the updated file</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$changelog </td>
-                                <td></td>
+                                <td><p>Update changelog textarea</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>boolean</td>
                                 <td>$restart </td>
-                                <td></td>
+                                <td><p>Whether the update requires a Blockland restart</p></td>
                             </tr>
                                             </table>
                 
@@ -606,16 +606,16 @@
             <article class="method">
                 <h3 class="public ">cancelUpdate()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">cancelUpdate(  <span class="argument">$id</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">cancelUpdate(integer  <span class="argument">$id</span>) </pre>
+                <p><em>Cancels pending updates through database deletion</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$id </td>
-                                <td></td>
+                                <td><p>The update id to cancel</p></td>
                             </tr>
                                             </table>
                 
@@ -641,16 +641,16 @@
             <article class="method">
                 <h3 class="public ">rejectUpdate()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">rejectUpdate(  <span class="argument">$id</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">rejectUpdate(integer  <span class="argument">$id</span>) </pre>
+                <p><em>Marks update as &quot;rejected&quot;</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$id </td>
-                                <td></td>
+                                <td><p>The update id to reject</p></td>
                             </tr>
                                             </table>
                 
@@ -676,49 +676,49 @@
             <article class="method">
                 <h3 class="public ">uploadNewAddon()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">uploadNewAddon(  <span class="argument">$user</span>,   <span class="argument">$boardId</span>,   <span class="argument">$name</span>,   <span class="argument">$file</span>,   <span class="argument">$filename</span>,   <span class="argument">$description</span>,   <span class="argument">$summary</span>,   <span class="argument">$version</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">uploadNewAddon(\Glass\UserObject  <span class="argument">$user</span>, integer  <span class="argument">$boardId</span>, string  <span class="argument">$name</span>, string  <span class="argument">$file</span>, string  <span class="argument">$filename</span>, string  <span class="argument">$description</span>, string  <span class="argument">$summary</span>, string  <span class="argument">$version</span>) </pre>
+                <p><em>Handles the upload of an add-on, including files, screenshot generation, and database updates</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td><a href="../classes/Glass.UserObject.html">\Glass\UserObject</a></td>
                                 <td>$user </td>
-                                <td></td>
+                                <td><p>Add-on author</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$boardId </td>
-                                <td></td>
+                                <td><p>The board selected for the add-on</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$name </td>
-                                <td></td>
+                                <td><p>The add-on's name</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$file </td>
-                                <td></td>
+                                <td><p>The add-on's file location</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$filename </td>
-                                <td></td>
+                                <td><p>The intended filename when downloaded</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$description </td>
                                 <td></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$summary </td>
                                 <td></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$version </td>
                                 <td></td>
                             </tr>
@@ -746,26 +746,26 @@
             <article class="method">
                 <h3 class="public ">approveAddon()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">approveAddon(  <span class="argument">$id</span>,   <span class="argument">$board</span>,   <span class="argument">$approver</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">approveAddon(integer  <span class="argument">$id</span>, integer  <span class="argument">$board</span>, integer  <span class="argument">$approver</span>) : void</pre>
+                <p><em>Marks add-on as approved</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$id </td>
-                                <td></td>
+                                <td><p>The add-on id (aid)</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$board </td>
-                                <td></td>
+                                <td><p>Board id to place the add-on in</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$approver </td>
-                                <td></td>
+                                <td><p>The blid of the approver</p></td>
                             </tr>
                                             </table>
                 
@@ -791,26 +791,26 @@
             <article class="method">
                 <h3 class="public ">rejectAddon()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">rejectAddon(  <span class="argument">$id</span>,   <span class="argument">$reason</span>,   <span class="argument">$rejecter</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">rejectAddon(integer  <span class="argument">$id</span>, integer  <span class="argument">$reason</span>, integer  <span class="argument">$rejecter</span>) : void</pre>
+                <p><em>Rejected a pending add-on</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$id </td>
-                                <td></td>
+                                <td><p>The add-on id (aid)</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$reason </td>
-                                <td></td>
+                                <td><p>The reason for rejection (unused)</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$rejecter </td>
-                                <td></td>
+                                <td><p>The blid of the user who rejected the add-on</p></td>
                             </tr>
                                             </table>
                 
@@ -836,26 +836,28 @@
             <article class="method">
                 <h3 class="public ">getFromID()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getFromID(  <span class="argument">$id</span>,   <span class="argument">$resource = false</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getFromID(integer  <span class="argument">$id</span>, \Glass\stdClass  <span class="argument">$resource = false</span>) : \Glass\AddonObject</pre>
+                <p><em>Returns an AddonObject by addon id</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$id </td>
-                                <td></td>
+                                <td><p>Add-on id to query</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>\Glass\stdClass</td>
                                 <td>$resource </td>
-                                <td></td>
+                                <td><p>An object to create the AddonObject from, typically MySQL results</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/Glass.AddonObject.html">\Glass\AddonObject</a>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -876,21 +878,21 @@
             <article class="method">
                 <h3 class="public ">moveBoard()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">moveBoard(  <span class="argument">$aid</span>,   <span class="argument">$bid</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">moveBoard(integer  <span class="argument">$aid</span>, integer  <span class="argument">$bid</span>) : void</pre>
+                <p><em>Moves add-on to a different board</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$aid </td>
-                                <td></td>
+                                <td><p>Add-on id</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$bid </td>
-                                <td></td>
+                                <td><p>Destination board id</p></td>
                             </tr>
                                             </table>
                 
@@ -916,27 +918,29 @@
             <article class="method">
                 <h3 class="public ">searchAddons()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">searchAddons(  <span class="argument">$search</span>) </pre>
-                <p><em>$search - contains a number of optional parameters in an array
- 	$name - (STRING) string to search for in addon name
- 	$blid - (INT) BLID of addon uploader
- 	$board - (INT) id of board to search in
- 	$offset - (INT) offset for results
- 	$limit - (INT) maximum number of results to return, defaults to 10
- 	$sort - (INT) a number representing the sorting method, defaults to ORDER BY `name` ASC</em></p>
-                
+                <pre class="signature" style="margin-right: 54px;">searchAddons(array  <span class="argument">$search</span>) : array&lt;mixed,integer&gt;</pre>
+                <p><em>Searches add-ons with paramaters defined in $search</em></p>
+                <p>Search options:</p>
+<pre><code>$name - (STRING) string to search for in addon name
+$blid - (INT) BLID of addon uploader
+$board - (INT) id of board to search in
+$offset - (INT) offset for results
+$limit - (INT) maximum number of results to return, defaults to 10
+$sort - (INT) a number representing the sorting method, defaults to ORDER BY name ASC</code></pre>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>array</td>
                                 <td>$search </td>
-                                <td></td>
+                                <td><p>Seach query</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,integer&gt;
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1002,26 +1006,29 @@
             <article class="method">
                 <h3 class="public ">getFromBLID()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getFromBLID(  <span class="argument">$blid</span>,   <span class="argument">$param</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getFromBLID(integer  <span class="argument">$blid</span>, array  <span class="argument">$param</span>) : array&lt;mixed,integer&gt;</pre>
+                <p><em>Returns a list of add-ons from an author with blid $blid</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$blid </td>
-                                <td></td>
+                                <td><p>Author BLID</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>array</td>
                                 <td>$param </td>
-                                <td></td>
+                                <td><p>Other search parameters (see the <code>Glass\AddonManager\search</code> function)</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,integer&gt;
+                                            &mdash; <p>List of add-on IDs</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1042,13 +1049,16 @@
             <article class="method">
                 <h3 class="public ">getAll()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getAll() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getAll() : array&lt;mixed,integer&gt;</pre>
+                <p><em>Get a list of all AddonObject&#039;s, indexed by addon id</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,integer&gt;
+                                            &mdash; <p>List of all AddonObject's indexed by id</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1069,13 +1079,16 @@
             <article class="method">
                 <h3 class="public ">getUnapproved()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getUnapproved() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getUnapproved() : array&lt;mixed,integer&gt;</pre>
+                <p><em>A list of all unapproved add-ons</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,integer&gt;
+                                            &mdash; <p>List of all unapproved AddonObject's indexed by id</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1096,21 +1109,23 @@
             <article class="method">
                 <h3 class="public ">getCountFromBoard()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getCountFromBoard(  <span class="argument">$boardID</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getCountFromBoard(integer  <span class="argument">$boardID</span>) : integer</pre>
+                <p><em>Get the number of add-ons in a board</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$boardID </td>
-                                <td></td>
+                                <td><p>The board id</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    integer
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1132,7 +1147,7 @@
                 <h3 class="public ">clearSearchCache()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
                 <pre class="signature" style="margin-right: 54px;">clearSearchCache() </pre>
-                <p><em></em></p>
+                <p><em>Clears the search cache (unimplements)</em></p>
                 
 
                 
@@ -1147,7 +1162,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            depreciated
+                        </th>
+                        <td>
+                                                                                            
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -1158,26 +1180,29 @@
             <article class="method">
                 <h3 class="public ">updateName()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">updateName(  <span class="argument">$addon</span>,   <span class="argument">$name</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">updateName(\Glass\AddonObject  <span class="argument">$addon</span>, string  <span class="argument">$name</span>) : array&lt;mixed,string&gt;</pre>
+                <p><em>Update an add-on&#039;s name</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td><a href="../classes/Glass.AddonObject.html">\Glass\AddonObject</a></td>
                                 <td>$addon </td>
-                                <td></td>
+                                <td><p>The AddonObject to rename</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$name </td>
-                                <td></td>
+                                <td><p>The name to change to</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,string&gt;
+                                            &mdash; <p>Results of name update</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1198,16 +1223,16 @@
             <article class="method">
                 <h3 class="public ">updateDescription()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">updateDescription(  <span class="argument">$addon</span>,   <span class="argument">$desc</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">updateDescription(\Glass\AddonObject  <span class="argument">$addon</span>,   <span class="argument">$desc</span>) : array&lt;mixed,string&gt;</pre>
+                <p><em>Update an add-on&#039;s description</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td><a href="../classes/Glass.AddonObject.html">\Glass\AddonObject</a></td>
                                 <td>$addon </td>
-                                <td></td>
+                                <td><p>The AddonObject to modify</p></td>
                             </tr>
                                                     <tr>
                                 <td></td>
@@ -1217,7 +1242,10 @@
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,string&gt;
+                                            &mdash; <p>Results of the update</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1238,8 +1266,8 @@
             <article class="method">
                 <h3 class="public ">updateInfo()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">updateInfo(  <span class="argument">$id</span>,   <span class="argument">$dataArray</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">updateInfo(  <span class="argument">$id</span>, array&lt;mixed,string&gt;  <span class="argument">$dataArray</span>) : void</pre>
+                <p><em>Update an add-on&#039;s information</em></p>
                 
 
                                     <h4>Parameters</h4>
@@ -1250,9 +1278,9 @@
                                 <td></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>array&lt;mixed,string&gt;</td>
                                 <td>$dataArray </td>
-                                <td></td>
+                                <td><p>Key/value pairs to update (corresponding to MySQL columns)</p></td>
                             </tr>
                                             </table>
                 
@@ -1278,21 +1306,24 @@
             <article class="method">
                 <h3 class="public ">getNewAddons()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getNewAddons(  <span class="argument">$count = 10</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getNewAddons(integer  <span class="argument">$count = 10</span>) : array&lt;mixed,integer&gt;</pre>
+                <p><em>Returns `$count` of the latest add-ons</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$count </td>
-                                <td></td>
+                                <td><p>Number of add-ons to return</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,integer&gt;
+                                            &mdash; <p>List of addon ids, sorted newest to oldest</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1313,21 +1344,23 @@
             <article class="method">
                 <h3 class="public ">getRecentAddons()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getRecentAddons(  <span class="argument">$time = null</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getRecentAddons(integer  <span class="argument">$time = 10080</span>) : array&lt;mixed,\Glass\AddonObject&gt;</pre>
+                <p><em>Returns add-ons made after `$time`</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$time </td>
-                                <td></td>
+                                <td><p>Number of minutes ago to query (default 1 week)</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,<a href="../classes/Glass.AddonObject.html">\Glass\AddonObject</a>&gt;
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1348,21 +1381,23 @@
             <article class="method">
                 <h3 class="public ">getRecentUpdates()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getRecentUpdates(  <span class="argument">$time = null</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getRecentUpdates(integer  <span class="argument">$time = 10080</span>) : array&lt;mixed,\Glass\AddonUpdateObject&gt;</pre>
+                <p><em>Returns add-ons updates after `$time`</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$time </td>
-                                <td></td>
+                                <td><p>Number of minutes ago to query</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,<a href="../classes/Glass.AddonUpdateObject.html">\Glass\AddonUpdateObject</a>&gt;
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1383,21 +1418,23 @@
             <article class="method">
                 <h3 class="public ">getUpdates()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getUpdates(  <span class="argument">$addon</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getUpdates(\Glass\AddonObject  <span class="argument">$addon</span>) : array&lt;mixed,\Glass\AddonUpdateObject&gt;</pre>
+                <p><em>Returns updates corresponding to an addon</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td><a href="../classes/Glass.AddonObject.html">\Glass\AddonObject</a></td>
                                 <td>$addon </td>
-                                <td></td>
+                                <td><p>Addon object to get updates for</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,<a href="../classes/Glass.AddonUpdateObject.html">\Glass\AddonUpdateObject</a>&gt;
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1418,13 +1455,15 @@
             <article class="method">
                 <h3 class="public ">getPendingUpdates()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getPendingUpdates() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getPendingUpdates() : array&lt;mixed,\Glass\AddonUpdateObject&gt;</pre>
+                <p><em>Returns all pending updates</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,<a href="../classes/Glass.AddonUpdateObject.html">\Glass\AddonUpdateObject</a>&gt;
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1445,16 +1484,16 @@
             <article class="method">
                 <h3 class="public ">approveUpdate()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">approveUpdate(  <span class="argument">$update</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">approveUpdate(\Glass\AddonUpdateObject  <span class="argument">$update</span>) : void</pre>
+                <p><em>Approve a pending update</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td><a href="../classes/Glass.AddonUpdateObject.html">\Glass\AddonUpdateObject</a></td>
                                 <td>$update </td>
-                                <td></td>
+                                <td><p>Update to approve</p></td>
                             </tr>
                                             </table>
                 
@@ -1480,21 +1519,23 @@
             <article class="method">
                 <h3 class="public ">deleteAddon()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">deleteAddon(  <span class="argument">$addon</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">deleteAddon(integer  <span class="argument">$addon</span>) : boolean</pre>
+                <p><em>Soft-delete an add-on</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$addon </td>
-                                <td></td>
+                                <td><p>Add-on id to delete</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1515,21 +1556,24 @@
             <article class="method">
                 <h3 class="public ">getLocalFile()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getLocalFile(  <span class="argument">$addon</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getLocalFile(integer  <span class="argument">$addon</span>) : string</pre>
+                <p><em>Get the local file path for an add-on. Downloads the file from AWS if it is not kept locally</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$addon </td>
-                                <td></td>
+                                <td><p>Add-on id to get path for</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Add-on path</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -1550,8 +1594,8 @@
             <article class="method">
                 <h3 class="public ">verifyTable()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">verifyTable(  <span class="argument">$database</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">verifyTable(  <span class="argument">$database</span>) : void</pre>
+                <p><em>Creates database tables</em></p>
                 
 
                                     <h4>Parameters</h4>
@@ -1629,7 +1673,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on July 1st, 2018 at 05:28.
+                    on July 1st, 2018 at 06:12.
                 </section>
             </section>
         </section>

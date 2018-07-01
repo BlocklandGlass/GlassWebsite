@@ -1,4 +1,7 @@
 <?php
+/**
+ * \Glass\AddonManager class definition
+ */
 namespace Glass;
 
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
@@ -9,7 +12,9 @@ require_once(realpath(dirname(__FILE__) . '/NotificationManager.php'));
 
 use Glass\AWSFileManager;
 
-//this should be the only class to interact with table `addon_addons`
+/**
+ * A manager class for AddonObjects
+ */
 class AddonManager {
 	private static $indexCacheTime = 3600;
 	private static $objectCacheTime = 3600;
@@ -22,6 +27,17 @@ class AddonManager {
 	public static $SORTDOWNLOADASC = 2;
 	public static $SORTDOWNLOADDESC = 3;
 
+	/**
+ 	 * Inserts update information in to the database
+	 *
+	 * @param int $addon The addon id being updated
+	 * @param string $version Version being updated to
+	 * @param string $file Location of the updated file
+	 * @param string $changelog Update changelog textarea
+	 * @param bool $restart Whether the update requires a Blockland restart
+	 *
+	 * @return void
+   */
 	public static function submitUpdate($addon, $version, $file, $changelog, $restart) {
 		if(!is_object($addon)) {
 			$addon = AddonManager::getFromID($addon);
@@ -62,18 +78,40 @@ class AddonManager {
 		);
 	}
 
+	/**
+	 * Cancels pending updates through database deletion
+	 *
+	 * @param int $id The update id to cancel
+	 */
 	public static function cancelUpdate($id) {
 		$db = new DatabaseManager();
 		$id = $db->sanitize($id);
 		$db->query("DELETE FROM `addon_updates` WHERE `id`='$id'");
 	}
 
+	/**
+	 * Marks update as "rejected"
+	 *
+	 * @param int $id The update id to reject
+	 */
 	public static function rejectUpdate($id) {
 		$db = new DatabaseManager();
 		$id = $db->sanitize($id);
 		$db->query("UPDATE `addon_updates` SET `approved`=b'0' WHERE `id`='$id'");
 	}
 
+	/**
+	 * Handles the upload of an add-on, including files, screenshot generation, and database updates
+	 *
+	 * @param UserObject $user Add-on author
+	 * @param int $boardId The board selected for the add-on
+	 * @param string $name The add-on's name
+	 * @param string $file The add-on's file location
+	 * @param string $filename The intended filename when downloaded
+	 * @param string $description
+	 * @param string $summary
+	 * @param string $version
+	 */
 	public static function uploadNewAddon($user, $boardId, $name, $file, $filename, $description, $summary, $version) {
 		$database = new DatabaseManager();
 		AddonManager::verifyTable($database);
@@ -160,6 +198,15 @@ class AddonManager {
 		return $response;
 	}
 
+	/**
+	 * Marks add-on as approved
+	 *
+	 * @param int $id The add-on id (aid)
+	 * @param int $board Board id to place the add-on in
+	 * @param int $approver The blid of the approver
+	 *
+	 * @return void
+	 */
 	public static function approveAddon($id, $board, $approver) {
 		$database = new DatabaseManager();
 		$database->query("UPDATE `addon_addons` SET `approved`='1', `board`='" . $database->sanitize($board) . "' WHERE `id`='" . $database->sanitize($id) . "'");
@@ -184,6 +231,15 @@ class AddonManager {
 		StatManager::addStatsToAddon($id);
 	}
 
+	/**
+	 * Rejected a pending add-on
+	 *
+	 * @param int $id The add-on id (aid)
+	 * @param int $reason The reason for rejection (unused)
+	 * @param int $rejecter The blid of the user who rejected the add-on
+	 *
+	 * @return void
+	 */
 	public static function rejectAddon($id, $reason, $rejecter) {
 		$revInf = new \stdClass();
 		$revInf->rejected = true;
@@ -214,6 +270,14 @@ class AddonManager {
 		NotificationManager::createNotification($manager, '$2 was rejected by $1', $params);
 	}
 
+	/**
+	 * Returns an AddonObject by addon id
+	 *
+	 * @param int $id Add-on id to query
+	 * @param stdClass $resource An object to create the AddonObject from, typically MySQL results
+	 *
+	 * @return AddonObject
+	 */
 	public static function getFromID($id, $resource = false) {
 		if($resource !== false) {
 			$addonObject = new AddonObject($resource);
@@ -236,6 +300,14 @@ class AddonManager {
 		return $addonObject;
 	}
 
+	/**
+	 * Moves add-on to a different board
+	 *
+	 * @param int $aid Add-on id
+	 * @param int $bid Destination board id
+	 *
+	 * @return void
+	 */
 	public static function moveBoard($aid, $bid) {
 		$db = new DatabaseManager();
 		AddonManager::verifyTable($db);
@@ -244,14 +316,21 @@ class AddonManager {
 	}
 
 	/**
-	 *  $search - contains a number of optional parameters in an array
-	 *  	$name - (STRING) string to search for in addon name
-	 *  	$blid - (INT) BLID of addon uploader
-	 *  	$board - (INT) id of board to search in
-	 *  	$offset - (INT) offset for results
-	 *  	$limit - (INT) maximum number of results to return, defaults to 10
-	 *  	$sort - (INT) a number representing the sorting method, defaults to ORDER BY `name` ASC
+	 * Searches add-ons with paramaters defined in $search
 	 *
+	 * Search options:
+	 * ```
+	 * $name - (STRING) string to search for in addon name
+	 * $blid - (INT) BLID of addon uploader
+	 * $board - (INT) id of board to search in
+	 * $offset - (INT) offset for results
+	 * $limit - (INT) maximum number of results to return, defaults to 10
+	 * $sort - (INT) a number representing the sorting method, defaults to ORDER BY name ASC
+	 * ```
+	 *
+	 * @param array $search Seach query
+	 *
+	 * @return int[]
 	 */
 	public static function searchAddons($search) { //$name = false, $blid = false, $board = false) {
 		//Caching this seems difficult and can cause issues with stale data easily
@@ -353,34 +432,15 @@ class AddonManager {
 		]);
 	}
 
-	//bargain bin should probably just be a board instead of a flag in the database
-//	public static function getBargain() {
-//		$ret = array();
-//
-//		$db = new DatabaseManager();
-//		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE bargain=1 AND deleted=0 AND danger=0");
-//		while($obj = $res->fetch_object()) {
-//			$ret[$obj->id] = AddonManager::getFromId($obj->id);
-//		}
-//		$res->close();
-//		return $ret;
-//	}
 
-	//this should probably be a board too
-//	public static function getDangerous() {
-//		$ret = array();
-//
-//		$db = new DatabaseManager();
-//		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE deleted=0 AND danger=1");
-//		while($obj = $res->fetch_object()) {
-//			$ret[$obj->id] = AddonManager::getFromId($obj->id);
-//		}
-//		return $ret;
-//	}
-
-	//this function should probably take a blid or aid instead of an object
-	//should probably switch from Author to BLID for consistency
-	//this should also probably just use searchAddons(0
+	/**
+	 * Returns a list of add-ons from an author with blid $blid
+	 *
+	 * @param int $blid Author BLID
+	 * @param array $param Other search parameters (see the `Glass\AddonManager\search` function)
+	 *
+	 * @return int[] List of add-on IDs
+	 */
 	public static function getFromBLID($blid, $param) {
 		if($param !== null && !is_array($param)) {
 			throw new \Exception("Using old AddonManager::getFromBlid!");
@@ -391,8 +451,11 @@ class AddonManager {
 		return AddonManager::searchAddons($search);
 	}
 
-	//from a caching perspective, I already have each board cached, so I would like to avoid duplicate data
-	//oh well, this function isn't actually used anyway
+	/**
+	 * Get a list of all AddonObject's, indexed by addon id
+	 *
+	 * @return int[] List of all AddonObject's indexed by id
+	 */
 	public static function getAll() {
 		$ret = array();
 
@@ -404,6 +467,11 @@ class AddonManager {
 		return $ret;
 	}
 
+	/**
+	 * A list of all unapproved add-ons
+	 *
+	 * @return int[] List of all unapproved AddonObject's indexed by id
+	 */
 	public static function getUnapproved() {
 		$ret = array();
 
@@ -415,6 +483,12 @@ class AddonManager {
 		return $ret;
 	}
 
+	/**
+	 * Get the number of add-ons in a board
+	 *
+	 * @param int $boardID The board id
+	 * @return int
+	 */
 	public static function getCountFromBoard($boardID) {
 		$database = new DatabaseManager();
 		AddonManager::verifyTable($database);
@@ -429,10 +503,23 @@ class AddonManager {
 		return $count;
 	}
 
+	/**
+	* Clears the search cache (unimplements)
+	*
+	* @depreciated
+	*/
 	public static function clearSearchCache() {
 
 	}
 
+	/**
+	 * Update an add-on's name
+	 *
+	 * @param AddonObject $addon The AddonObject to rename
+	 * @param string $name The name to change to
+	 *
+	 * @return string[] Results of name update
+	 */
 	public static function updateName($addon, $name) {
 		if($addon->getName() !== $name) {
 			$database = new DatabaseManager();
@@ -449,6 +536,14 @@ class AddonManager {
 		}
 	}
 
+	/**
+	 * Update an add-on's description
+	 *
+	 * @param AddonObject $addon The AddonObject to modify
+	 * @param string $description The description to change to
+	 *
+	 * @return string[] Results of the update
+	 */
 	public static function updateDescription($addon, $desc) {
 		if($addon->getDescription() !== $desc) {
 			$database = new DatabaseManager();
@@ -465,6 +560,14 @@ class AddonManager {
 		}
 	}
 
+	/**
+	 * Update an add-on's information
+	 *
+	 * @param AddonObject $addon The AddonObject to modify
+	 * @param string[] $dataArray Key/value pairs to update (corresponding to MySQL columns)
+	 *
+	 * @return void
+	 */
 	public static function updateInfo($id, $dataArray) {
 		if(sizeof($dataArray) == 0) return;
 
@@ -490,8 +593,13 @@ class AddonManager {
 		$db->query($sql);
 	}
 
-	//returns an array of just the ids in order
-	//we should really be doing that more instead of caching entire objects in multiple places
+	/**
+	 * Returns `$count` of the latest add-ons
+	 *
+	 * @param int $count Number of add-ons to return
+	 *
+	 * @return int[] List of addon ids, sorted newest to oldest
+	 */
 	public static function getNewAddons($count = 10) {
 		$count += 0;
 
@@ -512,10 +620,14 @@ class AddonManager {
 		return $newestAddonIDs;
 	}
 
-	public static function getRecentAddons($time = null) {
-		if($time == null) {
-			$time = 60*24*7;
-		}
+	/**
+	 * Returns add-ons made after `$time`
+	 *
+	 * @param int $time Number of minutes ago to query (default 1 week)
+	 *
+	 * @return AddonObject[]
+	 */
+	public static function getRecentAddons($time = 10080) {
 		$db = new DatabaseManager();
 		$res = $db->query("SELECT `id` FROM `addon_addons` WHERE `uploadDate` > now() - INTERVAL " . $db->sanitize($time) . " MINUTE AND `approved`=1 ORDER BY `uploadDate` DESC");
 		echo($db->error());
@@ -526,10 +638,14 @@ class AddonManager {
 		return $arr;
 	}
 
-	public static function getRecentUpdates($time = null) {
-		if($time == null) {
-			$time = 60*24*7;
-		}
+	/**
+	 * Returns add-ons updates after `$time`
+	 *
+	 * @param int $time Number of minutes ago to query
+	 *
+	 * @return AddonUpdateObject[]
+	 */
+	public static function getRecentUpdates($time = 10080) {
 		$db = new DatabaseManager();
 		$res = $db->query("SELECT * FROM `addon_updates` WHERE `submitted` > now() - INTERVAL " . $db->sanitize($time) . " MINUTE AND `approved`=1 ORDER BY `submitted` DESC");
 		echo($db->error());
@@ -540,6 +656,13 @@ class AddonManager {
 		return $arr;
 	}
 
+	/**
+	 * Returns updates corresponding to an addon
+	 *
+	 * @param AddonObject $addon Addon object to get updates for
+	 *
+	 * @return AddonUpdateObject[]
+	 */
 	public static function getUpdates($addon) {
 		$database = new DatabaseManager();
 		AddonManager::verifyTable($database);
@@ -558,6 +681,11 @@ class AddonManager {
 		return $updates;
 	}
 
+	/**
+	 * Returns all pending updates
+	 *
+	 * @return AddonUpdateObject[]
+	 */
 	public static function getPendingUpdates() {
 		$database = new DatabaseManager();
 		AddonManager::verifyTable($database);
@@ -576,6 +704,13 @@ class AddonManager {
 		return $updates;
 	}
 
+	/**
+	 * Approve a pending update
+	 *
+	 * @param AddonUpdateObject $update Update to approve
+	 *
+	 * @return void
+	 */
 	public static function approveUpdate($update) {
 		$database = new DatabaseManager();
 		AddonManager::verifyTable($database);
@@ -612,6 +747,13 @@ class AddonManager {
 
 	}
 
+	/**
+	 * Soft-delete an add-on
+	 *
+	 * @param int $addon Add-on id to delete
+	 *
+	 * @return bool
+	 */
 	public static function deleteAddon($addon) {
 		if(!is_object($addon)) {
 			$addon = AddonManager::getFromId($addon);
@@ -630,6 +772,13 @@ class AddonManager {
 		}
 	}
 
+	/**
+	 * Get the local file path for an add-on. Downloads the file from AWS if it is not kept locally
+	 *
+	 * @param int $addon Add-on id to get path for
+	 *
+	 * @return string Add-on path
+	 */
 	public static function getLocalFile($addon) {
 		if(!is_object($addon)) {
 			$addon = AddonManager::getFromId($addon);
@@ -661,6 +810,13 @@ class AddonManager {
 		return realpath($file);
 	}
 
+	/**
+	 * Creates database tables
+	 *
+	 * @param DatabaseManager
+	 *
+	 * @return void
+	 */
 	public static function verifyTable($database) {
 		/*TO DO:
 			- screenshots

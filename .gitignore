@@ -13,6 +13,7 @@ vendor/
 
 local
 public/local
+public/sitedocs/phpdoc-cache-*
 
 composer.phar
 composer.lock

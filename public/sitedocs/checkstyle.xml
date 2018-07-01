@@ -1,32 +1,32 @@
 <?xml version="1.0"?>
 <checkstyle version="1.3.0">
   <file name="DigestAccessAuthentication.php">
-    <error line="29" severity="error" message="No summary for class \Glass\DigestAccessAuthentication" source="phpDocumentor.file.PPC:ERR-50005"/>
-    <error line="38" severity="error" message="Argument $realm is missing from the Docblock of __construct" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="38" severity="error" message="No summary for method __construct()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="44" severity="error" message="No summary for method generate()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="70" severity="error" message="Argument $nonce is missing from the Docblock of restore" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="70" severity="error" message="Argument $opaque is missing from the Docblock of restore" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="70" severity="error" message="Argument $nonceCount is missing from the Docblock of restore" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="70" severity="error" message="No summary for method restore()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="79" severity="error" message="Argument $obj is missing from the Docblock of validate" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="79" severity="error" message="Argument $method is missing from the Docblock of validate" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="79" severity="error" message="Argument $password is missing from the Docblock of validate" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="79" severity="error" message="No summary for method validate()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="163" severity="error" message="No summary for method getOpaque()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="169" severity="error" message="No summary for method getNonce()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="175" severity="error" message="No summary for method getNonceCount()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="185" severity="error" message="Argument $algo is missing from the Docblock of hashPassword" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="185" severity="error" message="Argument $realm is missing from the Docblock of hashPassword" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="185" severity="error" message="Argument $username is missing from the Docblock of hashPassword" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="185" severity="error" message="Argument $password is missing from the Docblock of hashPassword" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="185" severity="error" message="No summary for method hashPassword()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="191" severity="error" message="No summary for method generateSecure()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="31" severity="error" message="No summary for property $realm" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="32" severity="error" message="No summary for property $qop" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="33" severity="error" message="No summary for property $nonce" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="34" severity="error" message="No summary for property $nonceCount" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="35" severity="error" message="No summary for property $opaque" source="phpDocumentor.file.PPC:ERR-50007"/>
+    <error line="32" severity="error" message="No summary for class \Glass\DigestAccessAuthentication" source="phpDocumentor.file.PPC:ERR-50005"/>
+    <error line="41" severity="error" message="Argument $realm is missing from the Docblock of __construct" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="41" severity="error" message="No summary for method __construct()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="47" severity="error" message="No summary for method generate()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="73" severity="error" message="Argument $nonce is missing from the Docblock of restore" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="73" severity="error" message="Argument $opaque is missing from the Docblock of restore" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="73" severity="error" message="Argument $nonceCount is missing from the Docblock of restore" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="73" severity="error" message="No summary for method restore()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="82" severity="error" message="Argument $obj is missing from the Docblock of validate" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="82" severity="error" message="Argument $method is missing from the Docblock of validate" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="82" severity="error" message="Argument $password is missing from the Docblock of validate" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="82" severity="error" message="No summary for method validate()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="166" severity="error" message="No summary for method getOpaque()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="172" severity="error" message="No summary for method getNonce()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="178" severity="error" message="No summary for method getNonceCount()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="188" severity="error" message="Argument $algo is missing from the Docblock of hashPassword" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="188" severity="error" message="Argument $realm is missing from the Docblock of hashPassword" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="188" severity="error" message="Argument $username is missing from the Docblock of hashPassword" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="188" severity="error" message="Argument $password is missing from the Docblock of hashPassword" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="188" severity="error" message="No summary for method hashPassword()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="194" severity="error" message="No summary for method generateSecure()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="34" severity="error" message="No summary for property $realm" source="phpDocumentor.file.PPC:ERR-50007"/>
+    <error line="35" severity="error" message="No summary for property $qop" source="phpDocumentor.file.PPC:ERR-50007"/>
+    <error line="36" severity="error" message="No summary for property $nonce" source="phpDocumentor.file.PPC:ERR-50007"/>
+    <error line="37" severity="error" message="No summary for property $nonceCount" source="phpDocumentor.file.PPC:ERR-50007"/>
+    <error line="38" severity="error" message="No summary for property $opaque" source="phpDocumentor.file.PPC:ERR-50007"/>
   </file>
   <file name="ApiSessionManager.php">
     <error line="0" severity="error" message="No summary was found for this file" source="phpDocumentor.file.PPC:ERR-50000"/>
@@ -913,88 +913,22 @@
     <error line="9" severity="error" message="No summary for property $group" source="phpDocumentor.file.PPC:ERR-50007"/>
   </file>
   <file name="AddonManager.php">
-    <error line="0" severity="error" message="No summary was found for this file" source="phpDocumentor.file.PPC:ERR-50000"/>
-    <error line="13" severity="error" message="No summary for class \Glass\AddonManager" source="phpDocumentor.file.PPC:ERR-50005"/>
-    <error line="25" severity="error" message="Argument $addon is missing from the Docblock of submitUpdate" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="25" severity="error" message="Argument $version is missing from the Docblock of submitUpdate" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="25" severity="error" message="Argument $file is missing from the Docblock of submitUpdate" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="25" severity="error" message="Argument $changelog is missing from the Docblock of submitUpdate" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="25" severity="error" message="Argument $restart is missing from the Docblock of submitUpdate" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="25" severity="error" message="No summary for method submitUpdate()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="65" severity="error" message="Argument $id is missing from the Docblock of cancelUpdate" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="65" severity="error" message="No summary for method cancelUpdate()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="71" severity="error" message="Argument $id is missing from the Docblock of rejectUpdate" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="71" severity="error" message="No summary for method rejectUpdate()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="77" severity="error" message="Argument $user is missing from the Docblock of uploadNewAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="77" severity="error" message="Argument $boardId is missing from the Docblock of uploadNewAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="77" severity="error" message="Argument $name is missing from the Docblock of uploadNewAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="77" severity="error" message="Argument $file is missing from the Docblock of uploadNewAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="77" severity="error" message="Argument $filename is missing from the Docblock of uploadNewAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="77" severity="error" message="Argument $description is missing from the Docblock of uploadNewAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="77" severity="error" message="Argument $summary is missing from the Docblock of uploadNewAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="77" severity="error" message="Argument $version is missing from the Docblock of uploadNewAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="77" severity="error" message="No summary for method uploadNewAddon()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="163" severity="error" message="Argument $id is missing from the Docblock of approveAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="163" severity="error" message="Argument $board is missing from the Docblock of approveAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="163" severity="error" message="Argument $approver is missing from the Docblock of approveAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="163" severity="error" message="No summary for method approveAddon()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="187" severity="error" message="Argument $id is missing from the Docblock of rejectAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="187" severity="error" message="Argument $reason is missing from the Docblock of rejectAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="187" severity="error" message="Argument $rejecter is missing from the Docblock of rejectAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="187" severity="error" message="No summary for method rejectAddon()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="217" severity="error" message="Argument $id is missing from the Docblock of getFromID" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="217" severity="error" message="Argument $resource is missing from the Docblock of getFromID" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="217" severity="error" message="No summary for method getFromID()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="239" severity="error" message="Argument $aid is missing from the Docblock of moveBoard" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="239" severity="error" message="Argument $bid is missing from the Docblock of moveBoard" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="239" severity="error" message="No summary for method moveBoard()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="256" severity="error" message="Argument $search is missing from the Docblock of searchAddons" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="346" severity="error" message="Argument $id is missing from the Docblock of getFromBoardID" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="346" severity="error" message="Argument $offset is missing from the Docblock of getFromBoardID" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="346" severity="error" message="Argument $limit is missing from the Docblock of getFromBoardID" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="346" severity="error" message="No summary for method getFromBoardID()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="384" severity="error" message="Argument $blid is missing from the Docblock of getFromBLID" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="384" severity="error" message="Argument $param is missing from the Docblock of getFromBLID" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="384" severity="error" message="No summary for method getFromBLID()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="396" severity="error" message="No summary for method getAll()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="407" severity="error" message="No summary for method getUnapproved()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="418" severity="error" message="Argument $boardID is missing from the Docblock of getCountFromBoard" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="418" severity="error" message="No summary for method getCountFromBoard()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="432" severity="error" message="No summary for method clearSearchCache()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="436" severity="error" message="Argument $addon is missing from the Docblock of updateName" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="436" severity="error" message="Argument $name is missing from the Docblock of updateName" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="436" severity="error" message="No summary for method updateName()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="452" severity="error" message="Argument $addon is missing from the Docblock of updateDescription" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="452" severity="error" message="Argument $desc is missing from the Docblock of updateDescription" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="452" severity="error" message="No summary for method updateDescription()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="468" severity="error" message="Argument $id is missing from the Docblock of updateInfo" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="468" severity="error" message="Argument $dataArray is missing from the Docblock of updateInfo" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="468" severity="error" message="No summary for method updateInfo()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="495" severity="error" message="Argument $count is missing from the Docblock of getNewAddons" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="495" severity="error" message="No summary for method getNewAddons()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="515" severity="error" message="Argument $time is missing from the Docblock of getRecentAddons" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="515" severity="error" message="No summary for method getRecentAddons()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="529" severity="error" message="Argument $time is missing from the Docblock of getRecentUpdates" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="529" severity="error" message="No summary for method getRecentUpdates()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="543" severity="error" message="Argument $addon is missing from the Docblock of getUpdates" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="543" severity="error" message="No summary for method getUpdates()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="561" severity="error" message="No summary for method getPendingUpdates()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="579" severity="error" message="Argument $update is missing from the Docblock of approveUpdate" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="579" severity="error" message="No summary for method approveUpdate()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="615" severity="error" message="Argument $addon is missing from the Docblock of deleteAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="615" severity="error" message="No summary for method deleteAddon()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="633" severity="error" message="Argument $addon is missing from the Docblock of getLocalFile" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="633" severity="error" message="No summary for method getLocalFile()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="664" severity="error" message="Argument $database is missing from the Docblock of verifyTable" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="664" severity="error" message="No summary for method verifyTable()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="14" severity="error" message="No summary for property $indexCacheTime" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="15" severity="error" message="No summary for property $objectCacheTime" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="16" severity="error" message="No summary for property $searchCacheTime" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="18" severity="error" message="No summary for property $maxFileSize" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="20" severity="error" message="No summary for property $SORTNAMEASC" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="21" severity="error" message="No summary for property $SORTNAMEDESC" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="22" severity="error" message="No summary for property $SORTDOWNLOADASC" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="23" severity="error" message="No summary for property $SORTDOWNLOADDESC" source="phpDocumentor.file.PPC:ERR-50007"/>
+    <error line="425" severity="error" message="Argument $id is missing from the Docblock of getFromBoardID" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="425" severity="error" message="Argument $offset is missing from the Docblock of getFromBoardID" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="425" severity="error" message="Argument $limit is missing from the Docblock of getFromBoardID" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="425" severity="error" message="No summary for method getFromBoardID()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="547" severity="error" message="Name of argument $desc does not match with the DocBlock's name $description in updateDescription()" source="phpDocumentor.file.PPC:ERR-50014"/>
+    <error line="547" severity="notice" message="Parameter $description could not be found in updateDescription()" source="phpDocumentor.file.PPC:ERR-50013"/>
+    <error line="571" severity="error" message="Name of argument $id does not match with the DocBlock's name $addon in updateInfo()" source="phpDocumentor.file.PPC:ERR-50014"/>
+    <error line="571" severity="notice" message="Parameter $addon could not be found in updateInfo()" source="phpDocumentor.file.PPC:ERR-50013"/>
+    <error line="19" severity="error" message="No summary for property $indexCacheTime" source="phpDocumentor.file.PPC:ERR-50007"/>
+    <error line="20" severity="error" message="No summary for property $objectCacheTime" source="phpDocumentor.file.PPC:ERR-50007"/>
+    <error line="21" severity="error" message="No summary for property $searchCacheTime" source="phpDocumentor.file.PPC:ERR-50007"/>
+    <error line="23" severity="error" message="No summary for property $maxFileSize" source="phpDocumentor.file.PPC:ERR-50007"/>
+    <error line="25" severity="error" message="No summary for property $SORTNAMEASC" source="phpDocumentor.file.PPC:ERR-50007"/>
+    <error line="26" severity="error" message="No summary for property $SORTNAMEDESC" source="phpDocumentor.file.PPC:ERR-50007"/>
+    <error line="27" severity="error" message="No summary for property $SORTDOWNLOADASC" source="phpDocumentor.file.PPC:ERR-50007"/>
+    <error line="28" severity="error" message="No summary for property $SORTDOWNLOADDESC" source="phpDocumentor.file.PPC:ERR-50007"/>
   </file>
   <file name="DependencyObject.php">
     <error line="0" severity="error" message="No summary was found for this file" source="phpDocumentor.file.PPC:ERR-50000"/>
