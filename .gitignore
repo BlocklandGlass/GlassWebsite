@@ -5,6 +5,7 @@ private/class/key.json
 
 private/test.json
 private/config.json
+private/github_secret.txt
 
 filebin/*/*
 

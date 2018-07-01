@@ -1,5 +1,9 @@
 {
     "require": {
-        "aws/aws-sdk-php": "2.*"
+        "aws/aws-sdk-php": "2.*",
+        "erusev/parsedown": "*"
+    },
+    "require-dev": {
+        "phpdocumentor/phpdocumentor": "2.*"
     }
 }
