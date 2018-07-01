@@ -1,0 +1,278 @@
+<?php
+namespace Glass;
+
+require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
+require_once(realpath(dirname(__FILE__) . '/ScreenshotObject.php'));
+
+class ScreenshotManager {
+	private static $objectCacheTime = 3600; //1 hour
+	private static $userScreenshotsCacheTime = 180;
+	private static $buildScreenshotsCacheTime = 3600;
+	private static $addonScreenshotsCacheTime = 3600;
+
+	public static $maxFileSize = 3000000; //3MB
+
+	public static $thumbWidth = 128;
+	public static $thumbHeight = 128;
+
+	public static function getFromID($id, $resource = false) {
+
+		if($resource !== false) {
+			$ScreenshotObject = new ScreenshotObject($resource);
+		} else {
+			$database = new DatabaseManager();
+			ScreenshotManager::verifyTable($database);
+			$resource = $database->query("SELECT * FROM `screenshots` WHERE `id` = '" . $database->sanitize($id) . "' LIMIT 1");
+
+			if(!$resource) {
+				throw new \Exception("Database error: " . $database->error());
+			}
+
+			if($resource->num_rows == 0) {
+				$ScreenshotObject = false;
+			} else {
+				$ScreenshotObject = new ScreenshotObject($resource->fetch_object());
+			}
+			$resource->close();
+		}
+
+		return $ScreenshotObject;
+	}
+
+	public static function getScreenshotsFromBLID($id) {
+
+		$database = new DatabaseManager();
+		ScreenshotManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `screenshots` WHERE `blid` = '" . $database->sanitize($id) . "'");
+
+		if(!$resource) {
+			throw new \Exception("Database error: " . $database->error());
+		}
+		$userScreenshots = [];
+
+		while($row = $resource->fetch_object()) {
+			$userScreenshots[] = ScreenshotManager::getFromID($row->id, $row)->getID();
+		}
+		$resource->close();
+
+		return $userScreenshots;
+	}
+
+	public static function getScreenshotsFromAddon($id) {
+		$database = new DatabaseManager();
+		ScreenshotManager::verifyTable($database);
+		$resource = $database->query("SELECT `sid` FROM `addon_screenshotmap` WHERE `aid` = '" . $database->sanitize($id) . "'");
+
+		if(!$resource) {
+			throw new \Exception("Database error: " . $database->error());
+		}
+		$addonScreenshots = [];
+
+		while($row = $resource->fetch_object()) {
+			$addonScreenshots[] = $row->sid;
+		}
+		$resource->close();
+
+		return $addonScreenshots;
+	}
+
+	public static function uploadScreenshotForAddon($addon, $ext, $tempPath) {
+		$blid = $addon->getManagerBLID();
+		$tempThumb = ScreenshotManager::createTempThumbnail($tempPath, $ext);
+		$database = new DatabaseManager();
+		ScreenshotManager::verifyTable($database);
+
+		list($width, $height) = getimagesize($tempPath);
+
+		if(!$database->query("INSERT INTO `screenshots` (`blid`, `x`, `y`) VALUES ('" .
+			$database->sanitize($blid) . "'," .
+			"'" . $width . "','" . $height . "')")) {
+			throw new \Exception("Database error: " . $database->error());
+		}
+
+		$sid = $database->fetchMysqli()->insert_id;
+		require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
+
+		AWSFileManager::uploadNewScreenshot($sid, "screenshot." . $ext, $tempPath, $tempThumb);
+
+		return ScreenshotManager::addScreenshotToAddon($sid, $addon->getID());
+	}
+
+	public static function addScreenshotToAddon($sid, $bid) {
+		$database = new DatabaseManager();
+		ScreenshotManager::verifyTable($database);
+		$resource = $database->query("SELECT 1 FROM `addon_screenshotmap` WHERE
+			`sid` = '" . $database->sanitize($sid) . "' AND
+			`aid` = '" . $database->sanitize($bid) . "' LIMIT 1");
+
+		if(!$resource) {
+			throw new \Exception("Database error: " . $database->error());
+		}
+
+		if($resource->num_rows > 0 ) {
+			$resource->close();
+			return false;
+		}
+		$resource->close();
+
+		$res = $database->query("INSERT INTO `addon_screenshotmap` (sid, aid) VALUES ('" .
+			$database->sanitize($sid) . "', '" .
+			$database->sanitize($bid) . "')");
+
+		if($res === false) {
+			throw new \Exception("Failed to create new add-on screenshot entry: " . $database->error());
+		}
+
+		return $sid;
+	}
+
+	public static function deleteScreenshot($sid) {
+		$db = new DatabaseManager();
+		$db->query("DELETE FROM `screenshots` WHERE `id`='" . $db->sanitize($sid) . "'");
+	}
+
+	private static function createTempThumbnail($tempFile, $ext) {
+		//create thumbnail
+		//requires GD2 to be installed
+		//http://www.icant.co.uk/articles/phpthumbnails/
+		if($ext == "png") {
+			$img = imagecreatefrompng($tempFile);
+		} else {
+			$img = imagecreatefromjpeg($tempFile);
+		}
+		$oldx = imageSX($img);
+		$oldy = imageSY($img);
+		if($oldx > $oldy) {
+			$thumb_w = ScreenshotManager::$thumbWidth;
+			$thumb_h = $oldy * (ScreenshotManager::$thumbHeight / $oldx);
+		}
+		if($oldx < $oldy) {
+			$thumb_w = $oldx * (ScreenshotManager::$thumbWidth / $oldy);
+			$thumb_h = ScreenshotManager::$thumbHeight;
+		}
+		if($oldx == $oldy) {
+			$thumb_w = ScreenshotManager::$thumbWidth;
+			$thumb_h = ScreenshotManager::$thumbHeight;
+		}
+		$newimg = ImageCreateTrueColor($thumb_w, $thumb_h);
+		imagecopyresampled($newimg, $img, 0, 0, 0, 0, $thumb_w, $thumb_h, $oldx, $oldy);
+		$tempThumb = tempnam(sys_get_temp_dir(), "thb");
+		imagepng($newimg, $tempThumb);
+		imagedestroy($newimg);
+		imagedestroy($img);
+		return $tempThumb;
+	}
+
+	public static function generateColorsetImageFromFile($file, $target) {
+		$text = file_get_contents($file);
+		return ScreenshotManager::generateColorsetImage($text, $target);
+	}
+
+	public static function generateColorsetImage($text, $target) {
+		$text = str_replace("\r", '', $text);
+		$lines = explode("\n", $text);
+
+		$categories = array();
+		$colorArrays = array();
+		$currentColorArray = array();
+		$longest = 0;
+
+		foreach($lines as $line) {
+			if(strlen(trim($line)) === 0)
+				continue;
+
+			$line = trim($line);
+
+			if(strpos($line, "DIV:") === 0) {
+				$categories[] = substr($line, 4);
+
+				if(sizeof($currentColorArray) > $longest)
+					$longest = sizeof($currentColorArray);
+
+				$colorArrays[] = $currentColorArray;
+				$currentColorArray = array();
+			} else {
+				$words = explode(' ', $line);
+
+				//convert float to int
+				foreach($words as $i=>$word) {
+					if(strpos($word, ".") !== false) {
+						$words[$i] = $word*255;
+					}
+				}
+
+				$currentColorArray[] = $words;
+			}
+		}
+
+		$size = 16;
+
+		$im = imagecreate(sizeof($colorArrays)*$size, $longest*$size);
+		if(function_exists('imageantialias')) {
+			imageantialias($im, false);
+		}
+
+		foreach($colorArrays as $col=>$colors) {
+			foreach($colors as $row=>$color) {
+				$r = $color[0];
+				$g = $color[1];
+				$b = $color[2];
+				$a = 127-($color[3]/2);
+
+				$x1 = $col*$size;
+				$y1 = $row*$size;
+				$x2 = $x1 + $size;
+				$y2 = $y1 + $size;
+
+				$c = imagecolorallocatealpha($im, $r, $g, $b, $a);
+				imagefilledrectangle($im, $x1, $y1, $x2, $y2, $c);
+			}
+		}
+
+		imagepng($im, $target);
+	}
+
+	public static function verifyTable($database) {
+		require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
+		require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
+		UserManager::verifyTable($database); //we need users table to exist before we can create this one
+		AddonManager::verifyTable($database);
+
+		//we need to be able to build a url out of this data too
+		//	UNIQUE KEY (`filename`),
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `screenshots` (
+			`id` INT NOT NULL AUTO_INCREMENT,
+			`blid` INT NOT NULL,
+			`x` INT NOT NULL,
+			`y` INT NOT NULL,
+			`name` VARCHAR(60),
+			`filename` VARCHAR(60),
+			`description` TEXT,
+			FOREIGN KEY (`blid`)
+				REFERENCES users(`blid`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			KEY (`name`),
+			PRIMARY KEY (`id`))")) {
+			throw new \Exception("Error creating screenshots table: " . $database->error());
+		}
+
+		if(!$database->query("CREATE TABLE IF NOT EXISTS `addon_screenshotmap` (
+			`id` INT NOT NULL AUTO_INCREMENT,
+			`sid` INT NOT NULL,
+			`aid` INT NOT NULL,
+			FOREIGN KEY (`sid`)
+				REFERENCES screenshots(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			FOREIGN KEY (`aid`)
+				REFERENCES addon_addons(`id`)
+				ON UPDATE CASCADE
+				ON DELETE CASCADE,
+			PRIMARY KEY (`id`))")) {
+			throw new \Exception("Error creating addon_screenshotmap table: " . $database->error());
+		}
+	}
+}
+?>
+
