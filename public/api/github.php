@@ -3,7 +3,7 @@ header('Content-Type: text/plain');
 
 define('LOGFILE', '/tmp/github-webhook.log');
 
-$secret = file_get_contents(dirname(__FILE__) . '/../../private/github_secret.txt');
+$secret = trim(file_get_contents(dirname(__FILE__) . '/../../private/github_secret.txt'));
 
 $post_data = file_get_contents('php://input');
 $signature = hash_hmac('sha1', $post_data, $secret);
@@ -57,7 +57,7 @@ $headers_ok = array_matches($_SERVER, $required_headers, '$_SERVER');
 if ( $headers_ok ) {
   $res1 = shell_exec( $cmd1 = 'cd ' . realpath(dirname(__DIR__)) . ' && git reset --hard HEAD && git pull' );
 
-  $devPath = dirname(__DIR__) . '/../glassDev/';
+  $devPath = '/var/www/glassDev/';
   if(is_dir($devPath)) {
     $res2 = shell_exec( $cmd2 = 'cd ' . realpath($devPath) . ' && git reset --hard HEAD && git checkout development && git pull' );
   }
