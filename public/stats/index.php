@@ -1,7 +1,9 @@
 <?php
 	require dirname(__DIR__) . '/../private/autoload.php';
+	use Glass\AddonManager;
 	use Glass\CronStatManager;
 	use Glass\GroupManager;
+	use Glass\RTBAddonManager;
 	use Glass\StatManager;
 	use Glass\UserManager;
 	use Glass\UserLog;
@@ -14,6 +16,16 @@
 	$user = UserManager::getCurrent();
 
  	$csm = new CronStatManager();
+
+	if($user != false && $user->inGroup("Administrator")) {
+		if($_GET['clearCache'] ?? false != false) {
+			if(InstallationManager::isWindows()) { // future: migrate to apcu entirely?
+		    apcu_delete("stats_general");
+		  } else {
+		    apc_delete("stats_general");
+		  }
+		}
+	}
 
   if(InstallationManager::isWindows()) { // future: migrate to apcu entirely?
     $stats = apcu_fetch("stats_general", $success);
@@ -32,15 +44,29 @@
 		$users_online_glass = sizeof(UserLog::getRecentlyActive());
 		$users_total = UserLog::getUniqueCount();
 
+		$content_count = AddonManager::getCount();
+		$content_updates = AddonManager::getUpdateCount();
+		$content_rtb = RTBAddonManager::getCount();
+		$content_reclaims = RTBAddonManager::getReclaimedCount();
+		$content_creators = AddonManager::getCreatorCount();
+
 		$stats = new stdClass();
-		$stats->web = $web;
-		$stats->ingame = $ingame;
-		$stats->updates = $updates;
-		$stats->total = $total;
-		$stats->data = $data;
-		$stats->users_online_bl = $users_online_bl;
+
+		$stats->web                = $web;
+		$stats->ingame             = $ingame;
+		$stats->updates            = $updates;
+		$stats->total              = $total;
+		$stats->data               = $data;
+
+		$stats->users_online_bl    = $users_online_bl;
 		$stats->users_online_glass = $users_online_glass;
-		$stats->users_total = $users_total;
+		$stats->users_total        = $users_total;
+
+		$stats->content_count      = $content_count;
+		$stats->content_updates    = $content_updates;
+		$stats->content_rtb        = $content_rtb;
+		$stats->content_reclaims   = $content_reclaims;
+		$stats->content_creators   = $content_creators;
 
     if(InstallationManager::isWindows()) {
       apcu_store("stats_general", $stats, 600);
@@ -48,15 +74,21 @@
       apc_store("stats_general", $stats, 600);
     }
 	} else {
-		$web = $stats->web;
-		$ingame = $stats->ingame;
-		$updates = $stats->updates;
-		$total = $stats->total;
-		$data = $stats->data;
+		$web                = $stats->web;
+		$ingame             = $stats->ingame;
+		$updates            = $stats->updates;
+		$total              = $stats->total;
+		$data               = $stats->data;
 
-		$users_online_bl = $stats->users_online_bl;
+		$users_online_bl    = $stats->users_online_bl;
 		$users_online_glass = $stats->users_online_glass;
-		$users_total = $stats->users_total;
+		$users_total        = $stats->users_total;
+
+		$content_count      = $stats->content_count;
+		$content_updates    = $stats->content_updates;
+		$content_rtb        = $stats->content_rtb;
+		$content_reclaims   = $stats->content_reclaims;
+		$content_creators   = $stats->content_creators;
 	}
 
 ?>
@@ -290,7 +322,36 @@ td {
 				<i>At times, the number of users online Glass may be higher than users online Blockland. Only users in Blockland servers are counted, and there may be more players using Glass than actually in servers.</i>
 			</div>
 		</div>
-		<div style="background:none; height: 0;">
+		<div style="">
+			<h3>Content</h3>
+			<table class="list">
+				<tbody>
+					<tr>
+						<th style="width: 40%">Type</th>
+						<th>Number</th>
+					</tr>
+					<tr>
+						<td><strong>Glass Add-Ons:</strong></td>
+						<td><?php echo number_format($content_count); ?></td>
+					</tr>
+					<tr>
+						<td><strong>Updates Delivered:</strong></td>
+						<td><?php echo number_format($content_updates); ?></td>
+					</tr>
+					<tr>
+						<td><strong>RTB Add-Ons:</strong></td>
+						<td><?php echo number_format($content_rtb); ?></td>
+					</tr>
+					<tr>
+						<td><strong>RTB Add-Ons Reclaimed:</strong></td>
+						<td><?php echo number_format($content_reclaims); ?></td>
+					</tr>
+					<tr>
+						<td><strong>Content Creators:</strong></td>
+						<td><?php echo number_format($content_creators); ?></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>

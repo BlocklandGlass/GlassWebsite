@@ -136,6 +136,19 @@ class RTBAddonManager {
     return $obj->$val;
   }
 
+  /**
+   * The number of approved reclaims
+   * @return int
+   */
+  public static function getReclaimedCount() {
+    $db = new DatabaseManager();
+    $res = $db->query("SELECT COUNT(*) FROM `rtb_addons` WHERE `glass_id` != '' AND `approved`=1");
+
+    $obj = $res->fetch_object();
+    $val = "COUNT(*)";
+    return $obj->$val;
+  }
+
   public static function getTypeCount($name) {
     $db = new DatabaseManager();
     $res = $db->query("SELECT COUNT(*) FROM `rtb_addons` WHERE `type`='" . $db->sanitize($name) . "'");

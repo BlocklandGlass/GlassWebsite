@@ -484,6 +484,25 @@ class AddonManager {
 	}
 
 	/**
+	 * Gets the number of public add-ons (approved and not deleted)
+	 * @return int Number of add-ons
+	 */
+	public static function getCount()
+	{
+			$database = new DatabaseManager();
+			AddonManager::verifyTable($database);
+			$resource = $database->query("SELECT COUNT(*) FROM `addon_addons` WHERE deleted=0 AND approved=1");
+
+			if(!$resource) {
+				throw new \Exception("Database error: " . $database->error());
+			}
+			$count = $resource->fetch_row()[0];
+			$resource->close();
+
+			return $count;
+	}
+
+	/**
 	 * Get the number of add-ons in a board
 	 *
 	 * @param int $boardID The board id
@@ -501,6 +520,46 @@ class AddonManager {
 		$resource->close();
 
 		return $count;
+	}
+
+
+
+	/**
+	 * Gets the number of approved add-on updates
+	 * @return int Number of add-ons
+	 */
+	public static function getUpdateCount()
+	{
+			$database = new DatabaseManager();
+			AddonManager::verifyTable($database);
+			$resource = $database->query("SELECT COUNT(*) FROM `addon_updates` WHERE approved=1");
+
+			if(!$resource) {
+				throw new \Exception("Database error: " . $database->error());
+			}
+			$count = $resource->fetch_row()[0];
+			$resource->close();
+
+			return $count;
+	}
+
+	/**
+	 * Gets the number of add-on creators
+	 * @return int Number of add-ons
+	 */
+	public static function getCreatorCount()
+	{
+			$database = new DatabaseManager();
+			AddonManager::verifyTable($database);
+			$resource = $database->query("SELECT COUNT(distinct blid) FROM `addon_addons` WHERE approved=1");
+
+			if(!$resource) {
+				throw new \Exception("Database error: " . $database->error());
+			}
+			$count = $resource->fetch_row()[0];
+			$resource->close();
+
+			return $count;
 	}
 
 	/**

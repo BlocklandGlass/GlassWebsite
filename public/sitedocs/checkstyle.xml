@@ -829,10 +829,10 @@
     <error line="425" severity="error" message="Argument $offset is missing from the Docblock of getFromBoardID" source="phpDocumentor.file.PPC:ERR-50015"/>
     <error line="425" severity="error" message="Argument $limit is missing from the Docblock of getFromBoardID" source="phpDocumentor.file.PPC:ERR-50015"/>
     <error line="425" severity="error" message="No summary for method getFromBoardID()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="547" severity="error" message="Name of argument $desc does not match with the DocBlock's name $description in updateDescription()" source="phpDocumentor.file.PPC:ERR-50014"/>
-    <error line="547" severity="notice" message="Parameter $description could not be found in updateDescription()" source="phpDocumentor.file.PPC:ERR-50013"/>
-    <error line="571" severity="error" message="Name of argument $id does not match with the DocBlock's name $addon in updateInfo()" source="phpDocumentor.file.PPC:ERR-50014"/>
-    <error line="571" severity="notice" message="Parameter $addon could not be found in updateInfo()" source="phpDocumentor.file.PPC:ERR-50013"/>
+    <error line="606" severity="error" message="Name of argument $desc does not match with the DocBlock's name $description in updateDescription()" source="phpDocumentor.file.PPC:ERR-50014"/>
+    <error line="606" severity="notice" message="Parameter $description could not be found in updateDescription()" source="phpDocumentor.file.PPC:ERR-50013"/>
+    <error line="630" severity="error" message="Name of argument $id does not match with the DocBlock's name $addon in updateInfo()" source="phpDocumentor.file.PPC:ERR-50014"/>
+    <error line="630" severity="notice" message="Parameter $addon could not be found in updateInfo()" source="phpDocumentor.file.PPC:ERR-50013"/>
     <error line="19" severity="error" message="No summary for property $indexCacheTime" source="phpDocumentor.file.PPC:ERR-50007"/>
     <error line="20" severity="error" message="No summary for property $objectCacheTime" source="phpDocumentor.file.PPC:ERR-50007"/>
     <error line="21" severity="error" message="No summary for property $searchCacheTime" source="phpDocumentor.file.PPC:ERR-50007"/>
@@ -867,30 +867,30 @@
     <error line="116" severity="error" message="Argument $limit is missing from the Docblock of getAddons" source="phpDocumentor.file.PPC:ERR-50015"/>
     <error line="116" severity="error" message="No summary for method getAddons()" source="phpDocumentor.file.PPC:ERR-50008"/>
     <error line="130" severity="error" message="No summary for method getCount()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="139" severity="error" message="Argument $name is missing from the Docblock of getTypeCount" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="139" severity="error" message="No summary for method getTypeCount()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="148" severity="error" message="Argument $id is missing from the Docblock of getAddonFromId" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="148" severity="error" message="No summary for method getAddonFromId()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="155" severity="error" message="No summary for method getPendingReclaims()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="170" severity="error" message="No summary for method getReclaims()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="182" severity="error" message="Argument $type is missing from the Docblock of getBoardCount" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="182" severity="error" message="No summary for method getBoardCount()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="190" severity="error" message="Argument $id is missing from the Docblock of requestReclaim" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="190" severity="error" message="Argument $aid is missing from the Docblock of requestReclaim" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="190" severity="error" message="No summary for method requestReclaim()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="199" severity="error" message="Argument $id is missing from the Docblock of getReclaim" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="199" severity="error" message="No summary for method getReclaim()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="210" severity="error" message="Argument $id is missing from the Docblock of acceptReclaim" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="210" severity="error" message="Argument $bool is missing from the Docblock of acceptReclaim" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="210" severity="error" message="No summary for method acceptReclaim()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="219" severity="error" message="Argument $name is missing from the Docblock of searchByName" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="219" severity="error" message="No summary for method searchByName()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="232" severity="error" message="Argument $id is missing from the Docblock of incrementDownloads" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="232" severity="error" message="Argument $type is missing from the Docblock of incrementDownloads" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="232" severity="error" message="Argument $amount is missing from the Docblock of incrementDownloads" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="232" severity="error" message="No summary for method incrementDownloads()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="243" severity="error" message="Argument $database is missing from the Docblock of verifyTable" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="243" severity="error" message="No summary for method verifyTable()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="152" severity="error" message="Argument $name is missing from the Docblock of getTypeCount" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="152" severity="error" message="No summary for method getTypeCount()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="161" severity="error" message="Argument $id is missing from the Docblock of getAddonFromId" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="161" severity="error" message="No summary for method getAddonFromId()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="168" severity="error" message="No summary for method getPendingReclaims()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="183" severity="error" message="No summary for method getReclaims()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="195" severity="error" message="Argument $type is missing from the Docblock of getBoardCount" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="195" severity="error" message="No summary for method getBoardCount()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="203" severity="error" message="Argument $id is missing from the Docblock of requestReclaim" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="203" severity="error" message="Argument $aid is missing from the Docblock of requestReclaim" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="203" severity="error" message="No summary for method requestReclaim()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="212" severity="error" message="Argument $id is missing from the Docblock of getReclaim" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="212" severity="error" message="No summary for method getReclaim()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="223" severity="error" message="Argument $id is missing from the Docblock of acceptReclaim" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="223" severity="error" message="Argument $bool is missing from the Docblock of acceptReclaim" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="223" severity="error" message="No summary for method acceptReclaim()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="232" severity="error" message="Argument $name is missing from the Docblock of searchByName" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="232" severity="error" message="No summary for method searchByName()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="245" severity="error" message="Argument $id is missing from the Docblock of incrementDownloads" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="245" severity="error" message="Argument $type is missing from the Docblock of incrementDownloads" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="245" severity="error" message="Argument $amount is missing from the Docblock of incrementDownloads" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="245" severity="error" message="No summary for method incrementDownloads()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="256" severity="error" message="Argument $database is missing from the Docblock of verifyTable" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="256" severity="error" message="No summary for method verifyTable()" source="phpDocumentor.file.PPC:ERR-50008"/>
   </file>
   <file name="NewsManager.php">
     <error line="0" severity="error" message="No summary was found for this file" source="phpDocumentor.file.PPC:ERR-50000"/>
