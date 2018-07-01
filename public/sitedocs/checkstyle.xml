@@ -136,27 +136,7 @@
     <error line="9" severity="error" message="No summary for property $params" source="phpDocumentor.file.PPC:ERR-50007"/>
     <error line="10" severity="error" message="No summary for property $text" source="phpDocumentor.file.PPC:ERR-50007"/>
   </file>
-  <file name="AddonFileHandler.php">
-    <error line="0" severity="error" message="No summary was found for this file" source="phpDocumentor.file.PPC:ERR-50000"/>
-    <error line="7" severity="error" message="No summary for class \Glass\AddonFileHandler" source="phpDocumentor.file.PPC:ERR-50005"/>
-    <error line="8" severity="error" message="Argument $file is missing from the Docblock of validateAddon" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="8" severity="error" message="No summary for method validateAddon()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="38" severity="error" message="Argument $file is missing from the Docblock of validatePrint" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="38" severity="error" message="No summary for method validatePrint()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="68" severity="error" message="Argument $file is missing from the Docblock of validateColorset" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="68" severity="error" message="No summary for method validateColorset()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="101" severity="error" message="Argument $aid is missing from the Docblock of injectGlassFile" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="101" severity="error" message="Argument $file is missing from the Docblock of injectGlassFile" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="101" severity="error" message="No summary for method injectGlassFile()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="145" severity="error" message="Argument $aid is missing from the Docblock of injectVersionInfo" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="145" severity="error" message="Argument $branchId is missing from the Docblock of injectVersionInfo" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="145" severity="error" message="Argument $file is missing from the Docblock of injectVersionInfo" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="145" severity="error" message="No summary for method injectVersionInfo()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="200" severity="error" message="Argument $file is missing from the Docblock of getVersionInfo" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="200" severity="error" message="No summary for method getVersionInfo()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="245" severity="error" message="Argument $file is missing from the Docblock of getColorset" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="245" severity="error" message="No summary for method getColorset()" source="phpDocumentor.file.PPC:ERR-50008"/>
-  </file>
+  <file name="AddonFileHandler.php"/>
   <file name="GroupObject.php">
     <error line="0" severity="error" message="No summary was found for this file" source="phpDocumentor.file.PPC:ERR-50000"/>
     <error line="6" severity="error" message="No summary for class \Glass\GroupObject" source="phpDocumentor.file.PPC:ERR-50005"/>
@@ -334,51 +314,7 @@
     <error line="10" severity="error" message="No summary for property $userGroupsCacheTime" source="phpDocumentor.file.PPC:ERR-50007"/>
     <error line="11" severity="error" message="No summary for property $groupUsersCacheTime" source="phpDocumentor.file.PPC:ERR-50007"/>
   </file>
-  <file name="AddonObject.php">
-    <error line="0" severity="error" message="No summary was found for this file" source="phpDocumentor.file.PPC:ERR-50000"/>
-    <error line="11" severity="error" message="No summary for class \Glass\AddonObject" source="phpDocumentor.file.PPC:ERR-50005"/>
-    <error line="35" severity="error" message="Argument $resource is missing from the Docblock of __construct" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="35" severity="error" message="No summary for method __construct()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="56" severity="error" message="No summary for method getID()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="60" severity="error" message="No summary for method getBoard()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="64" severity="error" message="No summary for method getBLID()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="68" severity="error" message="No summary for method getAuthor()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="72" severity="error" message="No summary for method getName()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="76" severity="error" message="No summary for method getDescription()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="80" severity="error" message="No summary for method getApproved()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="84" severity="error" message="No summary for method isRejected()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="88" severity="error" message="No summary for method getRejectReason()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="96" severity="error" message="No summary for method hasBeta()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="100" severity="error" message="No summary for method getBetaVersion()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="104" severity="error" message="No summary for method getVersion()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="110" severity="error" message="No summary for method getRestartVersion()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="121" severity="error" message="No summary for method getManagerBLID()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="125" severity="error" message="No summary for method getFileName()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="129" severity="error" message="No summary for method getDeleted()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="133" severity="error" message="No summary for method getDependencies()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="137" severity="error" message="No summary for method getTotalDownloads()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="141" severity="error" message="Argument $type is missing from the Docblock of getDownloads" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="141" severity="error" message="No summary for method getDownloads()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="145" severity="error" message="No summary for method getUploadDate()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="149" severity="error" message="No summary for method getURL()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="153" severity="error" message="No summary for method getScreenshots()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="157" severity="error" message="No summary for method getDescriptionTML()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="161" severity="error" message="No summary for method getSummary()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="13" severity="error" message="No summary for property $id" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="14" severity="error" message="No summary for property $board" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="15" severity="error" message="No summary for property $blid" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="16" severity="error" message="No summary for property $name" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="17" severity="error" message="No summary for property $description" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="19" severity="error" message="No summary for property $approved" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="20" severity="error" message="No summary for property $version" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="21" severity="error" message="No summary for property $authorInfo" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="24" severity="error" message="No summary for property $uploadDate" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="25" severity="error" message="No summary for property $url" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="27" severity="error" message="No summary for property $filename" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="28" severity="error" message="No summary for property $deleted" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="32" severity="error" message="No summary for property $reviewInfo" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="33" severity="error" message="No summary for property $betaVersion" source="phpDocumentor.file.PPC:ERR-50007"/>
-  </file>
+  <file name="AddonObject.php"/>
   <file name="ForumTracker.php">
     <error line="0" severity="error" message="No summary was found for this file" source="phpDocumentor.file.PPC:ERR-50000"/>
     <error line="5" severity="error" message="No summary for class \Glass\ForumTracker" source="phpDocumentor.file.PPC:ERR-50005"/>
@@ -744,31 +680,7 @@
     <error line="11" severity="error" message="No summary for property $timestamp" source="phpDocumentor.file.PPC:ERR-50007"/>
     <error line="12" severity="error" message="No summary for property $lastedit" source="phpDocumentor.file.PPC:ERR-50007"/>
   </file>
-  <file name="AddonUpdateObject.php">
-    <error line="0" severity="error" message="No summary was found for this file" source="phpDocumentor.file.PPC:ERR-50000"/>
-    <error line="7" severity="error" message="No summary for class \Glass\AddonUpdateObject" source="phpDocumentor.file.PPC:ERR-50005"/>
-    <error line="16" severity="error" message="Argument $row is missing from the Docblock of __construct" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="16" severity="error" message="No summary for method __construct()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="27" severity="error" message="No summary for method getTimeSubmitted()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="31" severity="error" message="No summary for method getAddon()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="35" severity="error" message="No summary for method getId()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="39" severity="error" message="No summary for method getFile()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="43" severity="error" message="No summary for method getFileBin()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="49" severity="error" message="No summary for method getVersion()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="53" severity="error" message="No summary for method getChangeLog()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="57" severity="error" message="No summary for method isPending()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="61" severity="error" message="No summary for method isApproved()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="65" severity="error" message="No summary for method isRestart()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="69" severity="error" message="No summary for method getNewFiles()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="100" severity="error" message="No summary for method getRemovedFiles()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="132" severity="error" message="No summary for method getDiff()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="9" severity="error" message="No summary for property $id" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="10" severity="error" message="No summary for property $submitted" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="11" severity="error" message="No summary for property $status" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="12" severity="error" message="No summary for property $changelog" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="13" severity="error" message="No summary for property $version" source="phpDocumentor.file.PPC:ERR-50007"/>
-    <error line="14" severity="error" message="No summary for property $aid" source="phpDocumentor.file.PPC:ERR-50007"/>
-  </file>
+  <file name="AddonUpdateObject.php"/>
   <file name="ScreenshotManager.php">
     <error line="0" severity="error" message="No summary was found for this file" source="phpDocumentor.file.PPC:ERR-50000"/>
     <error line="7" severity="error" message="No summary for class \Glass\ScreenshotManager" source="phpDocumentor.file.PPC:ERR-50005"/>

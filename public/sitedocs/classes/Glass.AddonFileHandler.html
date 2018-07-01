@@ -114,7 +114,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">905</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">820</span>
                                 </a>
                             </li>
                             <li>
@@ -144,19 +144,19 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1736191102"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-569426668"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1736191102" class="accordion-body collapse in">
+            <div id="namespace-569426668" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1998355117"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-592213974"></a>
                                 <a href="../namespaces/Glass.html" style="margin-left: 30px; padding-left: 0">Glass</a>
             </div>
-            <div id="namespace-1998355117" class="accordion-body collapse ">
+            <div id="namespace-592213974" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -228,7 +228,7 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\Glass</small>AddonFileHandler</h1>
-                    <p><em></em></p>
+                    <p><em>Manages file operations on zipped add-on files</em></p>
                     
                     
                                         
@@ -325,21 +325,24 @@
             <article class="method">
                 <h3 class="public ">validateAddon()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">validateAddon(  <span class="argument">$file</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">validateAddon(string  <span class="argument">$file</span>) : boolean</pre>
+                <p><em>Checks add-on for needed files (server.cs/client.cs, description.txt)</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$file </td>
-                                <td></td>
+                                <td><p>Full path to file</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Whether the file contains needed files</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -360,21 +363,24 @@
             <article class="method">
                 <h3 class="public ">validatePrint()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">validatePrint(  <span class="argument">$file</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">validatePrint(string  <span class="argument">$file</span>) : boolean</pre>
+                <p><em>Checks file for needed print files</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$file </td>
-                                <td></td>
+                                <td><p>Full path to file</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Whether the file contains needed files</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -395,21 +401,24 @@
             <article class="method">
                 <h3 class="public ">validateColorset()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">validateColorset(  <span class="argument">$file</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">validateColorset(string  <span class="argument">$file</span>) : boolean</pre>
+                <p><em>Checks file for needed colorset files</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$file </td>
-                                <td></td>
+                                <td><p>Full path to file</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Whether the file contains needed files</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -430,26 +439,29 @@
             <article class="method">
                 <h3 class="public ">injectGlassFile()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">injectGlassFile(  <span class="argument">$aid</span>,   <span class="argument">$file</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">injectGlassFile(integer  <span class="argument">$aid</span>, string  <span class="argument">$file</span>) : boolean</pre>
+                <p><em>Adds glass.json file</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$aid </td>
-                                <td></td>
+                                <td><p>Add-on id</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$file </td>
-                                <td></td>
+                                <td><p>Full path to file</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Success</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -470,31 +482,34 @@
             <article class="method">
                 <h3 class="public ">injectVersionInfo()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">injectVersionInfo(  <span class="argument">$aid</span>,   <span class="argument">$branchId</span>,   <span class="argument">$file</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">injectVersionInfo(integer  <span class="argument">$aid</span>, integer  <span class="argument">$branchId</span>, string  <span class="argument">$file</span>) : boolean</pre>
+                <p><em>Adds version.json file</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$aid </td>
-                                <td></td>
+                                <td><p>Add-on id</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>integer</td>
                                 <td>$branchId </td>
-                                <td></td>
+                                <td><p>The branch id of the add-on (1 for stable, 2 for beta)</p></td>
                             </tr>
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$file </td>
-                                <td></td>
+                                <td><p>Full path to file</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Success</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -515,21 +530,24 @@
             <article class="method">
                 <h3 class="public ">getVersionInfo()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getVersionInfo(  <span class="argument">$file</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getVersionInfo(string  <span class="argument">$file</span>) : \Glass\stdClass</pre>
+                <p><em>Reads the file&#039;s version.txt or version.json file</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$file </td>
-                                <td></td>
+                                <td><p>Full path to file</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    \Glass\stdClass
+                                            &mdash; <p>Object containing <code>repo</code>, <code>channel</code>, and <code>version</code>. Returns false if none</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -550,21 +568,24 @@
             <article class="method">
                 <h3 class="public ">getColorset()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getColorset(  <span class="argument">$file</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getColorset(string  <span class="argument">$file</span>) : boolean</pre>
+                <p><em>Returns the contents colorset.txt</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string</td>
                                 <td>$file </td>
-                                <td></td>
+                                <td><p>Full path to file</p></td>
                             </tr>
                                             </table>
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>The contents of colorset.txt or false</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -629,7 +650,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on July 1st, 2018 at 06:12.
+                    on July 1st, 2018 at 19:22.
                 </section>
             </section>
         </section>

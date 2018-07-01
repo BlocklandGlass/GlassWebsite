@@ -114,7 +114,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">905</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">820</span>
                                 </a>
                             </li>
                             <li>
@@ -144,19 +144,19 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1213888737"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1382209069"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1213888737" class="accordion-body collapse in">
+            <div id="namespace-1382209069" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-975085145"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-810383729"></a>
                                 <a href="../namespaces/Glass.html" style="margin-left: 30px; padding-left: 0">Glass</a>
             </div>
-            <div id="namespace-975085145" class="accordion-body collapse ">
+            <div id="namespace-810383729" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -228,7 +228,7 @@
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
                     <h1><small>\Glass</small>AddonUpdateObject</h1>
-                    <p><em></em></p>
+                    <p><em>Data container for an add-on update</em></p>
                     
                     
                                         
@@ -337,13 +337,13 @@
             <a id="property_id" name="property_id" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$id</h3>
-                <pre class="signature">$id : </pre>
+                <pre class="signature">$id : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Update id                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -361,13 +361,13 @@
             <a id="property_submitted" name="property_submitted" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$submitted</h3>
-                <pre class="signature">$submitted : </pre>
+                <pre class="signature">$submitted : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Date submitted (MySQL datetime)                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -385,13 +385,13 @@
             <a id="property_status" name="property_status" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$status</h3>
-                <pre class="signature">$status : </pre>
+                <pre class="signature">$status : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Update status (0 = pending, 1 = approved, -1 = rejected)                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -409,13 +409,13 @@
             <a id="property_changelog" name="property_changelog" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$changelog</h3>
-                <pre class="signature">$changelog : </pre>
+                <pre class="signature">$changelog : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; Change-log (TML)                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -433,13 +433,13 @@
             <a id="property_version" name="property_version" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$version</h3>
-                <pre class="signature">$version : </pre>
+                <pre class="signature">$version : string</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string
+                &mdash; SemVer version                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -457,13 +457,13 @@
             <a id="property_aid" name="property_aid" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$aid</h3>
-                <pre class="signature">$aid : </pre>
+                <pre class="signature">$aid : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; Add-on id                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -489,16 +489,16 @@
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(  <span class="argument">$row</span>) </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">__construct(\Glass\stdClass  <span class="argument">$row</span>) </pre>
+                <p><em>Constructs AddonUpdateObject from an objectified MySQL result</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>\Glass\stdClass</td>
                                 <td>$row </td>
-                                <td></td>
+                                <td><p>Objectified MySQL result</p></td>
                             </tr>
                                             </table>
                 
@@ -523,13 +523,16 @@
             <article class="method">
                 <h3 class="public ">getTimeSubmitted()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getTimeSubmitted() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getTimeSubmitted() : string</pre>
+                <p><em>Gets the time the update was submitted</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Time submitted (MySQL datetime)</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -549,13 +552,15 @@
             <article class="method">
                 <h3 class="public ">getAddon()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getAddon() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getAddon() : \Glass\AddonObject</pre>
+                <p><em>Gets the AddonObject associated with the update</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    <a href="../classes/Glass.AddonObject.html">\Glass\AddonObject</a>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -575,13 +580,16 @@
             <article class="method">
                 <h3 class="public ">getId()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getId() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getId() : \Glass\[type]</pre>
+                <p><em>Gets the update&#039;s id</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    \Glass\[type]
+                                            &mdash; <p>[description]</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -601,13 +609,16 @@
             <article class="method">
                 <h3 class="public ">getFile()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getFile() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getFile() : string</pre>
+                <p><em>The local file location</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Full file path</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -627,13 +638,16 @@
             <article class="method">
                 <h3 class="public ">getFileBin()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getFileBin() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getFileBin() : string</pre>
+                <p><em>Gets the file relative to the filebin directory</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>File path relative to filebin</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -653,13 +667,16 @@
             <article class="method">
                 <h3 class="public ">getVersion()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getVersion() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getVersion() : string</pre>
+                <p><em>The version updating to</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>SemVer version</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -679,13 +696,16 @@
             <article class="method">
                 <h3 class="public ">getChangeLog()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getChangeLog() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getChangeLog() : string</pre>
+                <p><em>Gets the changelog</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>TML changelog</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -705,13 +725,15 @@
             <article class="method">
                 <h3 class="public ">isPending()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">isPending() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">isPending() : boolean</pre>
+                <p><em>Checks if the update is pending</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -731,13 +753,15 @@
             <article class="method">
                 <h3 class="public ">isApproved()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">isApproved() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">isApproved() : boolean</pre>
+                <p><em>Checks if the update is approved</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -757,13 +781,15 @@
             <article class="method">
                 <h3 class="public ">isRestart()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">isRestart() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">isRestart() : boolean</pre>
+                <p><em>Checks if the update requires a restart</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -783,13 +809,16 @@
             <article class="method">
                 <h3 class="public ">getNewFiles()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getNewFiles() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getNewFiles() : array&lt;mixed,string&gt;</pre>
+                <p><em>Gets a list of the new files in this version</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,string&gt;
+                                            &mdash; <p>List of new files</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -809,13 +838,16 @@
             <article class="method">
                 <h3 class="public ">getRemovedFiles()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getRemovedFiles() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getRemovedFiles() : array&lt;mixed,string&gt;</pre>
+                <p><em>Gets a list of the removed files in this version</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,string&gt;
+                                            &mdash; <p>List of removed files</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -835,13 +867,16 @@
             <article class="method">
                 <h3 class="public ">getDiff()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getDiff() </pre>
-                <p><em></em></p>
+                <pre class="signature" style="margin-right: 54px;">getDiff() : array&lt;mixed,string&gt;</pre>
+                <p><em>Gets the file differences in the update</em></p>
                 
 
                 
                 
-                				
+                                    <h4>Returns</h4>
+                    array&lt;mixed,string&gt;
+                                            &mdash; <p>Array of differences (added array, removed array, diff array)</p>
+                                    				
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -850,7 +885,14 @@
                                                                             </dl>
             <h2>Tags</h2>
             <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                    <tr>
+                        <th>
+                            depreciated
+                        </th>
+                        <td>
+                                                                                            
+                                                    </td>
+                    </tr>
                             </table>
         </aside>
     </div>
@@ -905,7 +947,7 @@
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on July 1st, 2018 at 06:12.
+                    on July 1st, 2018 at 19:22.
                 </section>
             </section>
         </section>

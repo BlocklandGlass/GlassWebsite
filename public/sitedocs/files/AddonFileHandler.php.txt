@@ -1,10 +1,22 @@
 <?php
+/**
+ * Contains the class definition of AddonFileHandler
+ */
 namespace Glass;
 
 require_once dirname(__FILE__) . '/AddonManager.php';
 require_once dirname(__FILE__) . '/AWSFileManager.php';
 
+/**
+ * Manages file operations on zipped add-on files
+ */
 class AddonFileHandler {
+
+  /**
+   * Checks add-on for needed files (server.cs/client.cs, description.txt)
+   * @param  string $file Full path to file
+   * @return bool         Whether the file contains needed files
+   */
   public static function validateAddon($file) {
     //$workingDir = dirname(__DIR__) . "/../addons/upload/files/";
 
@@ -35,6 +47,11 @@ class AddonFileHandler {
     return ($executable && $desc);
   }
 
+  /**
+   * Checks file for needed print files
+   * @param  string $file Full path to file
+   * @return bool         Whether the file contains needed files
+   */
   public static function validatePrint($file) {
     //$workingDir = dirname(__DIR__) . "/../addons/upload/files/";
 
@@ -65,6 +82,11 @@ class AddonFileHandler {
     return (!$executable && $desc);
   }
 
+  /**
+   * Checks file for needed colorset files
+   * @param  string $file Full path to file
+   * @return bool         Whether the file contains needed files
+   */
   public static function validateColorset($file) {
     $executable = false;
     $colors = false;
@@ -98,18 +120,13 @@ class AddonFileHandler {
     return ($colors && $desc && !$executable);
   }
 
+  /**
+   * Adds glass.json file
+   * @param  int    $aid  Add-on id
+   * @param  string $file Full path to file
+   * @return bool         Success
+   */
   public static function injectGlassFile($aid, $file) { //ideally, we create the addonObject and then do all the file work?
-    /*
-    OLD:
-    {
-    "formatVersion": 1,
-    "id": "24",
-    "board": "1",
-    "filename": "Weapon_asdf.zip",
-    "title": "Cry"
-    }
-    */
-
     $addonObject = AddonManager::getFromID($aid);
 
     $glassData = new \stdClass();
@@ -140,8 +157,17 @@ class AddonFileHandler {
     } else {
       return false;
     }
+
+    return true;
   }
 
+  /**
+   * Adds version.json file
+   * @param  int    $aid      Add-on id
+   * @param  int    $branchId The branch id of the add-on (1 for stable, 2 for beta)
+   * @param  string $file     Full path to file
+   * @return bool             Success
+   */
   public static function injectVersionInfo($aid, $branchId, $file) {
     $addonObject = AddonManager::getFromID($aid);
 
@@ -197,6 +223,11 @@ class AddonFileHandler {
     }
   }
 
+  /**
+   * Reads the file's version.txt or version.json file
+   * @param  string   $file Full path to file
+   * @return stdClass       Object containing `repo`, `channel`, and `version`. Returns false if none
+   */
   public static function getVersionInfo($file) {
     $zip = new \ZipArchive();
     $res = $zip->open($file);
@@ -242,6 +273,11 @@ class AddonFileHandler {
     return ($executable && $desc);
   }
 
+  /**
+   * Returns the contents colorset.txt
+   * @param  string $file Full path to file
+   * @return bool         The contents of colorset.txt or false
+   */
   public static function getColorset($file) {
     $zip = new \ZipArchive();
     $res = $zip->open($file);

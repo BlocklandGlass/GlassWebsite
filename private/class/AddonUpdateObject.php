@@ -1,18 +1,42 @@
 <?php
+/**
+ * Contains class definition AddonUpdateObject
+ */
+
 namespace Glass;
 
-require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
-require_once(realpath(dirname(__FILE__) . '/AWSFileManager.php'));
+use Glass\AddonManager;
+use Glass\AWSFileManager;
 require_once(realpath(dirname(__DIR__) . '/lib/class.Diff.php'));
+
+/**
+ * Data container for an add-on update
+ */
 class AddonUpdateObject {
-	//public fields are ones automatically converted to json
+
+	/** @var int Update id */
 	public $id;
+
+	/** @var string Date submitted (MySQL datetime) */
 	public $submitted;
+
+	/** @var int Update status (0 = pending, 1 = approved, -1 = rejected) */
 	public $status;
+
+	/** @var string Change-log (TML) */
 	public $changelog;
+
+	/** @var string SemVer version */
 	public $version;
+
+	/** @var int Add-on id */
 	public $aid;
 
+
+	/**
+	 * Constructs AddonUpdateObject from an objectified MySQL result
+	 * @param stdClass $row Objectified MySQL result
+	 */
   public function __construct($row) {
 		$this->id = $row->id;
 		$this->aid = $row->aid;
@@ -24,48 +48,92 @@ class AddonUpdateObject {
 		$this->restart = $row->restart;
   }
 
+	/**
+	 * Gets the time the update was submitted
+	 * @return string Time submitted (MySQL datetime)
+	 */
 	public function getTimeSubmitted() {
 		return $this->submitted;
 	}
 
+	/**
+	 * Gets the AddonObject associated with the update
+	 * @return AddonObject
+	 */
 	public function getAddon() {
 		return AddonManager::getFromId($this->aid);
 	}
 
+	/**
+	 * Gets the update's id
+	 * @return [type] [description]
+	 */
 	public function getId() {
 		return $this->id;
 	}
 
+	/**
+	 * The local file location
+	 * @return string Full file path
+	 */
 	public function getFile() {
 		return $this->file;
 	}
 
+	/**
+	 * Gets the file relative to the filebin directory
+	 * @return string File path relative to filebin
+	 */
 	public function getFileBin() {
 		$idx = strpos(realpath($this->file), "filebin/");
 		$bin = substr($this->file, $idx+8);
 		return $bin;
 	}
 
+	/**
+	 * The version updating to
+	 * @return string SemVer version
+	 */
 	public function getVersion() {
 		return $this->version;
 	}
 
+	/**
+	 * Gets the changelog
+	 * @return string TML changelog
+	 */
 	public function getChangeLog() {
 		return $this->changelog;
 	}
 
+	/**
+	 * Checks if the update is pending
+	 * @return boolean
+	 */
 	public function isPending() {
 		return $this->status == null;
 	}
 
+	/**
+	 * Checks if the update is approved
+	 * @return boolean
+	 */
 	public function isApproved() {
 		return $this->status == 1;
 	}
 
+	/**
+	 * Checks if the update requires a restart
+	 * @return boolean
+	 */
 	public function isRestart() {
 		return $this->restart;
 	}
 
+	/**
+	 * Gets a list of the new files in this version
+	 * @return string[] List of new files
+	 */
 	public function getNewFiles() {
 		$fileNew = $this->getFile();
     $fileOld = AddonManager::getLocalFile($this->aid);
@@ -97,6 +165,10 @@ class AddonUpdateObject {
     }
 	}
 
+	/**
+	 * Gets a list of the removed files in this version
+	 * @return string[] List of removed files
+	 */
 	public function getRemovedFiles() {
 		$fileNew = $this->getFile();
     $fileOld = AddonManager::getLocalFile($this->aid);
@@ -129,6 +201,11 @@ class AddonUpdateObject {
     }
 	}
 
+	/**
+	 * Gets the file differences in the update
+	 * @return string[] Array of differences (added array, removed array, diff array)
+	 * @depreciated
+	 */
 	public function getDiff() {
     $fileNew = realpath($this->getFile());
     $fileOld = dirname(__DIR__) . '/../addons/files/local/' . $this->aid . '.zip';
