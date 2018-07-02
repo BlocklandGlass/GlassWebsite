@@ -65,6 +65,7 @@
 	order: 1;
 	min-width: 400px;
 	min-width: 60%;
+	width: 60%;
 	flex-grow: 3;
 	flex-shrink: 3;
 
