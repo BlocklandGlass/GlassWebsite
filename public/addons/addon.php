@@ -205,7 +205,7 @@
 						<?php
 					}
 
-					echo '<div style=\"text-align: center\">';
+					echo '<div style="text-align: center">';
 					if($bug_count == 0) {
 						echo "<i>No bugs!</i>";
 					} else if($bug_count > 3) {
