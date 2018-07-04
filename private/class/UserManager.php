@@ -279,8 +279,14 @@ class UserManager {
 		return preg_match("/.{1,20}/", $username);
 	}
 
+	public static function invalidateResetKey($blid) {
+		$db = new DatabaseManager();
+		UserManager::verifyTable($db);
+		$db->query("UPDATE `users` SET `reset`='' WHERE `blid`='" . $db->sanitize($blid) . "'");
+	}
+
 	public static function sendPasswordResetEmail($user) {
-		$resetToken = substr(base64_encode(sha1(mt_rand())), 0, 16);
+		$resetToken = substr(base64_encode(md5(mt_rand())), 0, 20);
 		$db = new DatabaseManager();
 		UserManager::verifyTable($db);
 		$db->query("UPDATE `users` SET `reset`='" . $db->sanitize($resetToken . " " . time()) . "' WHERE `blid`='" . $db->sanitize($user->getBlid()) . "'");

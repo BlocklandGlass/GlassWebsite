@@ -25,13 +25,16 @@
 
       $userObj = UserManager::getFromBLID($blid);
       if($userObj->getResetKey() !== $token) {
+				UserManager::invalidateResetKey($userObj->getBLID());
         $response = [
-          "message" => "<strong>Invalid reset token.</strong> Did you request a password reset twice on accident?",
+          "message" => "<h3>Invalid Reset Token</h3><p>Your password reset has been cancelled. If you restart password recovery, be sure to only use the latest recovery email!</p>" .
+											 "<p style=\"font-size: 0.8em; text-align:center;\"><a href=\"/user/forgotPassword.php\">Password Recovery</a></p>",
           "form" => false
         ];
       } else if((time()-$userObj->getResetTime()) > 1800) {
         $response = [
-          "message" => "<strong>Your password reset has expired!</strong> Try resending the email. " . (time()-$userObj->getResetTime()),
+          "message" => "<h3>Reset Expired</h3><p>You only have half an hour to reset your password after receiving a recovery email! You'll need to restart the password recovery process.</p>" .
+											 "<p style=\"font-size: 0.8em; text-align:center;\"><a href=\"/user/forgotPassword.php\">Password Recovery</a></p>",
           "form" => false
         ];
       } else {
@@ -52,25 +55,29 @@
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
-	<div class="tile" style="width:50%; margin: 0 auto;">
+	<div class="tile" style="margin: 0 auto; max-width: 500px">
 	  <?php if($response["message"] !== null) {
 	    echo $response["message"];
 	  }
 
 	  if($response["form"]) {
 	  ?>
+		<h2>Password Recovery</h2>
+		<p>
+			Please enter a your new password for <strong><?php echo $userObj->getUsername() ?></strong> below.
+		</p>
 	  <form method="post" action="resetPassword.php?token=<?php echo urlencode($_REQUEST['token']); ?>&id=<?php echo ($_REQUEST['id']+0) ?>">
-	    <table class="formtable">
+	    <table class="formtable" style="width: 100%;">
 	      <tr>
 	        <td>Password</td>
 	        <td><input type="password" name="password" /></td>
 	      </tr>
 	      <tr>
-	        <td>Confirm</td>
+	        <td>Confirm Password</td>
 	        <td><input type="password" name="confirm" /></td>
 	      </tr>
 	      <tr>
-	        <td colspan="2"><input type="submit" value="Reset" /></td>
+	        <td colspan="2"><input type="submit" value="Update Password" /></td>
 	      </tr>
 	    </table>
 	  </form>

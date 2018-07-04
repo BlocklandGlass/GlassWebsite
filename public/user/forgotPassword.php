@@ -12,7 +12,7 @@
     if($user) {
       try {
         UserManager::sendPasswordResetEmail($user);
-        $message = "You've been sent an e-mail with instructions on how to reset your password.";
+        $message = "You've been sent an e-mail with instructions on how to reset your password.<br /><br />If you have triggered multiple reset attempts, only the latest will work!";
         $form = false;
       } catch(Exception $e) {
         $message = "There appears to be no e-mail address associated with your account! Message a Glass team member on the Blockland Forums for help!";
@@ -33,9 +33,9 @@
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
-  <div class="tile" style="width:50%; margin: 0 auto;">
+  <div class="tile" style="max-width:500px; margin: 0 auto;">
     <h2>Forgotten Password</h2>
-    <div style="background-color: #fafafa; color: #666; border-radius: 5px; padding: 1px; margin-bottom: 15px">
+    <div style="background-color: #f5f5f5; color: #333; border-radius: 5px; padding: 1px 10px; margin-bottom: 15px">
       <p style="text-align: center">
         <?php
           if($message) {
@@ -55,7 +55,7 @@
           <td><input type="text" name="blid" /></td>
         </tr>
         <tr>
-          <td colspan="2"><input type="submit" value="Reset" /></td>
+          <td colspan="2"><input type="submit" value="Send Recovery Email" /></td>
         </tr>
       </table>
     </form>
