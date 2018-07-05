@@ -10,6 +10,8 @@ class UserManager {
 	private static $cacheTime = 600;
 	private static $credentialsCacheTime = 60;
 
+	private static $verified_db = false;
+
 	public static function getFromID($id) {
 		return UserManager::getFromBLID($id);
 	}
@@ -146,6 +148,23 @@ class UserManager {
 		];
 	}
 
+	private static function setSessionLoggedIn($loginDetails) {
+		if(!isset($_SESSION)) {
+			session_start();
+		}
+
+		$_SESSION['loggedin'] = 1;
+
+		$_SESSION['blid']			= $loginDetails['blid'];
+		$_SESSION['email']		= $loginDetails['email'];
+		$_SESSION['username'] = $loginDetails['username'];
+	}
+
+	public static function setSessionLoggedInBlid($blid) {
+		$loginDetails = UserManager::getLoginDetailsFromBLID($blid);
+		UserManager::setSessionLoggedIn($loginDetails);
+	}
+
 	public static function updatePassword($blid, $password) {
 		$database = new DatabaseManager();
 		UserManager::verifyTable($database);
@@ -247,6 +266,15 @@ class UserManager {
 		$loginDetails = UserManager::buildLoginDetailsFromQuery($database, $query);
 
 		return $loginDetails;
+	}
+
+	public static function getCookieIdentifier($blid) {
+		$user_data = UserManager::getLoginDetailsFromBLID($blid);
+		if($user_data) {
+			return CookieManager::generateIdentifier($blid, $user_data['salt']);
+		} else {
+			return false;
+		}
 	}
 
 	private static function buildLoginDetailsFromQuery($database, $query) {
@@ -373,6 +401,11 @@ class UserManager {
 	//session last active should be moved to a new user_stats table
 	//I want to move 'volatile' data out of the *Manager classes and into the StatManager class
 	public static function verifyTable($database) {
+		if(UserManager::$verified_db)
+			return;
+
+		UserManager::$verified_db = true;
+
 		if(!$database->query("CREATE TABLE IF NOT EXISTS `users` (
 			`username` VARCHAR(20) NOT NULL,
 			`blid` INT NOT NULL DEFAULT '-1',

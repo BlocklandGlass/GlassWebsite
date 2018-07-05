@@ -1,7 +1,55 @@
 <?php
-	error_reporting(E_ALL);
+	use Glass\CookieManager;
+	use Glass\UserManager;
+
 	if(!isset($_SESSION)) {
 		session_start();
+	}
+
+	if(($_REQUEST['killsession'] ?? false) == 1) {
+		session_destroy();
+	}
+
+	$current_user = UserManager::getCurrent();
+	$cookie = CookieManager::getCurrentCookie();
+
+	if(!$current_user) {
+		// we're not logged in. we need to check for a cookie to revive the session
+		if($cookie) {
+			//echo "was cookie! ";
+			list($ident, $key) = explode(':', $cookie);
+
+			$cookie_info = CookieManager::isValid($ident, $key);
+			if($cookie_info) {
+				$last_cookie = $cookie_info['id'];
+				UserManager::setSessionLoggedInBlid($cookie_info['blid']);
+				//echo "Logged in via cookie! ";
+
+				// update
+				$current_user = UserManager::getCurrent();
+
+				// issue new cookie as this has expired
+				$success = CookieManager::giveCookie($current_user->getBLID(), $last_cookie ?? NULL);
+
+				if($success) {
+					//echo "gave cookie. predecessor $last_cookie. ";
+				}
+			} else {
+				//echo "Cookie was not valid! ";
+				CookieManager::clearCookie();
+			}
+		}
+	} else {
+		if($cookie) {
+			//echo "is logged with cookie, no cookie business. ";
+		} else {
+			$success = CookieManager::giveCookie($current_user->getBLID(), $last_cookie ?? NULL);
+			//echo "is logged but had no cookie, gave cookie. ";
+		}
+	}
+
+	if(($_REQUEST['killsession'] ?? false) == 2) {
+		session_destroy();
 	}
 ?>
 <!doctype html>
