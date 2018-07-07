@@ -58,8 +58,15 @@
 		 		$cookie_info = CookieManager::getId($blid, $key);
 
 				if(!$cookie_info || CookieManager::isExpired($cookie_info['id'])) {
-					CookieManager::
 					$needs_cookie = true; // they have a cookie but it's expired
+				}
+
+				if(CookieManager::isRevoked($cookie_info['id'])) {
+					//kick user off, probably a better way to do this
+					include(dirname(__DIR__) . '/public/logout.php');
+					session_destroy();
+					header("Location: /index.php");
+					die();
 				}
 			}
 		}

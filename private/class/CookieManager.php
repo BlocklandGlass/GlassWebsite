@@ -208,6 +208,23 @@ class CookieManager {
     }
   }
 
+  public static function isRevoked(int $id) {
+    $database = new DatabaseManager();
+    $id = $database->sanitize($id);
+
+    $res = $database->query("SELECT `revoked` FROM `user_cookies` WHERE id='$id'");
+    if($res) {
+      $obj = $res->fetch_row();
+      if($obj) {
+        return $obj['0'] == 1;
+      } else {
+        throw new \Exception("Invalid id cookie '$id'");
+      }
+    } else {
+      throw new \Exception("Unable to check if cookie is expired");
+    }
+  }
+
   /**
    * Checks if the give blid and key pair are valid for authentication
    * @param  int     $blid Account BLID
