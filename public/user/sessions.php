@@ -265,8 +265,8 @@
               $icon = "unknown";
               if($is_current) {
                 $icon = "person";
-              } else if($last_use) {
-                $icon = usage_icon($last_use);
+              } else if($usage) {
+                $icon = usage_icon($usage);
               }
               ?>
               <tr>
