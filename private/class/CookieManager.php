@@ -49,7 +49,7 @@ class CookieManager {
    */
   public static function activateKey(int $blid, string $key, int $predecessor = NULL) {
     $database = new DatabaseManager();
-
+    CookieManager::createTable($database);
     /*if($predecessor) {
       if(!CookieManager::isUsed($predecessor)) {
         //CookieManager::revokeKey($predecessor);
