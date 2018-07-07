@@ -133,6 +133,25 @@ class BugManager {
     return $bugs;
   }
 
+  public static function getAddonBugsOpen($aid) {
+		$db = new DatabaseManager();
+    BugManager::verifyTable($db);
+
+    $aid   = $db->sanitize($aid);
+
+    $res = $db->query("SELECT * FROM `addon_bugs` WHERE `aid`='$aid' AND open='1'");
+
+    if(!$res)
+      return false;
+
+    $bugs = [];
+    while($obj = $res->fetch_object()) {
+      $bugs[] = $obj;
+    }
+
+    return $bugs;
+  }
+
   public static function getFromId($id) {
 		$db = new DatabaseManager();
     BugManager::verifyTable($db);

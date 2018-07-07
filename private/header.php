@@ -16,14 +16,19 @@
 	if(!$current_user) {
 		// we're not logged in. we need to check for a cookie to revive the session
 		if($cookie) {
-			//echo "was cookie! ";
-			list($ident, $key) = explode(':', $cookie);
+			// echo "was cookie! ";
+			list($blid, $key) = explode(':', $cookie);
 
-			$cookie_info = CookieManager::isValid($ident, $key);
-			if($cookie_info) {
+
+			if(is_numeric($blid) &&
+				 $cookie_info = CookieManager::isValid($blid, $key)) {
+
+				CookieManager::useKey($cookie_info['id'],
+															$_SERVER['REMOTE_ADDR']);
+
 				$last_cookie = $cookie_info['id'];
 				UserManager::setSessionLoggedInBlid($cookie_info['blid']);
-				//echo "Logged in via cookie! ";
+				// echo "Logged in via cookie! ";
 
 				// update
 				$current_user = UserManager::getCurrent();
@@ -32,19 +37,36 @@
 				$success = CookieManager::giveCookie($current_user->getBLID(), $last_cookie ?? NULL);
 
 				if($success) {
-					//echo "gave cookie. predecessor $last_cookie. ";
+					// echo "gave cookie. predecessor $last_cookie. ";
 				}
 			} else {
-				//echo "Cookie was not valid! ";
+				// echo "Cookie was not valid! ";
 				CookieManager::clearCookie();
 			}
 		}
 	} else {
-		if($cookie) {
-			//echo "is logged with cookie, no cookie business. ";
+		$needs_cookie = false;
+
+		if(!$cookie) {
+			$needs_cookie = true; // they have no cookie
 		} else {
-			$success = CookieManager::giveCookie($current_user->getBLID(), $last_cookie ?? NULL);
-			//echo "is logged but had no cookie, gave cookie. ";
+			list($blid, $key) = explode(':', $cookie);
+
+			if(!is_numeric($blid)) {
+				$needs_cookie = true; // they have a cookie but its not formatted right
+			} else {
+		 		$cookie_info = CookieManager::getId($blid, $key);
+
+				if(!$cookie_info || CookieManager::isExpired($cookie_info['id'])) {
+					CookieManager::
+					$needs_cookie = true; // they have a cookie but it's expired
+				}
+			}
+		}
+
+		if($needs_cookie) {
+			// echo " giving signed in account a cookie, successor " . ($cookie_info['id'] ?? NULL);
+			$success = CookieManager::giveCookie($current_user->getBLID(), $cookie_info['id'] ?? NULL);
 		}
 	}
 

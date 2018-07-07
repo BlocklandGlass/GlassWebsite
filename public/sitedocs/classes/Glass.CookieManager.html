@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/Glass.html">\Glass</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">834</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">2</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1816940721"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-1816940721" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-528543518"></a>
+                                <a href="../namespaces/Glass.html" style="margin-left: 30px; padding-left: 0">Glass</a>
+            </div>
+            <div id="namespace-528543518" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Glass.AddonFileHandler.html">AddonFileHandler</a></li>
+                                                    <li class="class"><a href="../classes/Glass.AddonManager.html">AddonManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.AddonObject.html">AddonObject</a></li>
+                                                    <li class="class"><a href="../classes/Glass.AddonUpdateObject.html">AddonUpdateObject</a></li>
+                                                    <li class="class"><a href="../classes/Glass.ApiSessionManager.html">ApiSessionManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.AWSFileManager.html">AWSFileManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.BlocklandAuthenticate.html">BlocklandAuthenticate</a></li>
+                                                    <li class="class"><a href="../classes/Glass.BoardManager.html">BoardManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.BoardObject.html">BoardObject</a></li>
+                                                    <li class="class"><a href="../classes/Glass.BugManager.html">BugManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.BuildManager.html">BuildManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.BuildObject.html">BuildObject</a></li>
+                                                    <li class="class"><a href="../classes/Glass.CommentManager.html">CommentManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.CommentObject.html">CommentObject</a></li>
+                                                    <li class="class"><a href="../classes/Glass.CookieManager.html">CookieManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.CronStatManager.html">CronStatManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.DatabaseManager.html">DatabaseManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.DependencyManager.html">DependencyManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.DependencyObject.html">DependencyObject</a></li>
+                                                    <li class="class"><a href="../classes/Glass.DigestAccessAuthentication.html">DigestAccessAuthentication</a></li>
+                                                    <li class="class"><a href="../classes/Glass.ForumTracker.html">ForumTracker</a></li>
+                                                    <li class="class"><a href="../classes/Glass.GroupManager.html">GroupManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.GroupObject.html">GroupObject</a></li>
+                                                    <li class="class"><a href="../classes/Glass.InstallationManager.html">InstallationManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.NewsManager.html">NewsManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.NotificationManager.html">NotificationManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.NotificationObject.html">NotificationObject</a></li>
+                                                    <li class="class"><a href="../classes/Glass.RepositoryChecker.html">RepositoryChecker</a></li>
+                                                    <li class="class"><a href="../classes/Glass.RepositoryManager.html">RepositoryManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.RTBAddonManager.html">RTBAddonManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.ScreenshotManager.html">ScreenshotManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.ScreenshotObject.html">ScreenshotObject</a></li>
+                                                    <li class="class"><a href="../classes/Glass.SemVer.html">SemVer</a></li>
+                                                    <li class="class"><a href="../classes/Glass.ServerTracker.html">ServerTracker</a></li>
+                                                    <li class="class"><a href="../classes/Glass.StatManager.html">StatManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.StatObject.html">StatObject</a></li>
+                                                    <li class="class"><a href="../classes/Glass.StatUsageManager.html">StatUsageManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.TML.html">TML</a></li>
+                                                    <li class="class"><a href="../classes/Glass.UploadManager.html">UploadManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.UserLog.html">UserLog</a></li>
+                                                    <li class="class"><a href="../classes/Glass.UserManager.html">UserManager</a></li>
+                                                    <li class="class"><a href="../classes/Glass.UserObject.html">UserObject</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/Glass.html">\Glass</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\Glass</small>CookieManager</h1>
+                    <p><em>Uses cookies (instead of non-expiring PHP sessions) to
+provide session persistence</em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/Glass.CookieManager.html#method_generateKey" class="">generateKey()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_generateFamilyIdentifier" class="">generateFamilyIdentifier()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_activateKey" class="">activateKey()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_revokeFamily" class="">revokeFamily()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_revokeFamilyById" class="">revokeFamilyById()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_useKey" class="">useKey()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_isUsed" class="">isUsed()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_isExpired" class="">isExpired()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_isValid" class="">isValid()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_getId" class="">getId()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_getCurrentCookie" class="">getCurrentCookie()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_giveCookie" class="">giveCookie()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_clearCookie" class="">clearCookie()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_getAllChains" class="">getAllChains()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_getActiveChains" class="">getActiveChains()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_getUsageHistory" class="">getUsageHistory()</a><br />
+                                                                    <a href="../classes/Glass.CookieManager.html#method_createTable" class="">createTable()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Glass.CookieManager.html#property_EXPIRY_TIME" class="">$EXPIRY_TIME</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/CookieManager.html"><div class="path-wrapper">CookieManager.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\Glass\CookieManager</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_EXPIRY_TIME" name="property_EXPIRY_TIME" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$EXPIRY_TIME</h3>
+                <pre class="signature">$EXPIRY_TIME : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_generateKey" name="method_generateKey" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">generateKey()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">generateKey() : string</pre>
+                <p><em>Generates a random 32 byte (256 bit) key</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Random key</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_generateFamilyIdentifier" name="method_generateFamilyIdentifier" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">generateFamilyIdentifier()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">generateFamilyIdentifier() : string</pre>
+                <p><em>Generates a unique family identifier (4 byte/32 bit hex)</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Unique family identifier</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_activateKey" name="method_activateKey" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">activateKey()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">activateKey(integer  <span class="argument">$blid</span>, string  <span class="argument">$key</span>, integer  <span class="argument">$predecessor = NULL</span>) : integer</pre>
+                <p><em>Adds the blid/key pair to the database</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$blid </td>
+                                <td><p>BLID associated with the key</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td><p>Key</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$predecessor </td>
+                                <td><p>The key used to validate this one</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    integer
+                                            &mdash; <p>ID</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_revokeFamily" name="method_revokeFamily" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">revokeFamily()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">revokeFamily(integer  <span class="argument">$ident</span>) : void</pre>
+                <p><em>Revokes a family</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$ident </td>
+                                <td><p>Family ident to revoke</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_revokeFamilyById" name="method_revokeFamilyById" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">revokeFamilyById()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">revokeFamilyById(integer  <span class="argument">$id</span>) : void</pre>
+                <p><em>Revokes a family from the id of one of its&#039; members</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$id </td>
+                                <td><p>Family member to revoke</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_useKey" name="method_useKey" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">useKey()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">useKey(integer  <span class="argument">$id</span>, string  <span class="argument">$ip</span>, \Glass\[type]  <span class="argument">$time_used = NULL</span>) : \Glass\[type]</pre>
+                <p><em>Marks a key as used.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$id </td>
+                                <td><p>[description]</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$ip </td>
+                                <td><p>[description]</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Glass\[type]</td>
+                                <td>$time_used </td>
+                                <td><p>[description]</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \Glass\[type]
+                                            &mdash; <p>[description]</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_isUsed" name="method_isUsed" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">isUsed()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">isUsed(integer  <span class="argument">$id</span>) : boolean</pre>
+                <p><em>[isUsed description]</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$id </td>
+                                <td><p>[description]</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>[description]</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_isExpired" name="method_isExpired" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">isExpired()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">isExpired(\Glass\int  <span class="argument">$id</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Glass\int</td>
+                                <td>$id </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_isValid" name="method_isValid" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">isValid()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">isValid(integer  <span class="argument">$blid</span>, string  <span class="argument">$key</span>) : mixed</pre>
+                <p><em>Checks if the give blid and key pair are valid for authentication</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$blid </td>
+                                <td><p>Account BLID</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td><p>Authentication key</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                            &mdash; <p>False on failure, array of 'id' and 'blid' if success</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getId" name="method_getId" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getId()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getId(integer  <span class="argument">$blid</span>, string  <span class="argument">$key</span>) : mixed</pre>
+                <p><em>Replica of CookieManager::isValid, except without validity check</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$blid </td>
+                                <td><p>Account BLID</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td><p>Authentication key</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                            &mdash; <p>False on failure, array of 'id' and 'blid' if success</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getCurrentCookie" name="method_getCurrentCookie" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getCurrentCookie()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getCurrentCookie() : string</pre>
+                <p><em>Returns the value of the current requester&#039;s cookie</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Cookie string</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_giveCookie" name="method_giveCookie" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">giveCookie()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">giveCookie(integer  <span class="argument">$blid</span>, integer  <span class="argument">$predecessor = NULL</span>) : boolean</pre>
+                <p><em>Generates, actives, and gives the current requester a cookie</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$blid </td>
+                                <td><p>Account for cookie</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$predecessor </td>
+                                <td><p>Prior cookie in family</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Success</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_clearCookie" name="method_clearCookie" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">clearCookie()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">clearCookie() : void</pre>
+                <p><em>Clears and expires the current requester&#039;s cookie</em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getAllChains" name="method_getAllChains" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getAllChains()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getAllChains(integer  <span class="argument">$blid</span>, array  <span class="argument">$fields = NULL</span>) : \Glass\mixed&lt;boolean,</pre>
+                <p><em>Gets all cookies associated with a blid</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$blid </td>
+                                <td><p>BLID to query</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$fields </td>
+                                <td><p>Fields to return in results. default are <code>id</code> and <code>family</code>, available:
+<code>predecessor</code>, <code>created</code>, <code>expiry</code>, <code>used</code>, <code>ip</code>, <code>revoked</code></p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \Glass\mixed<boolean,
+                                            &mdash; <p>array&gt;   Associative array of cookies sorted by family id. 3D array.
+$result[family_hex][number][field]</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getActiveChains" name="method_getActiveChains" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getActiveChains()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getActiveChains(integer  <span class="argument">$blid</span>, array  <span class="argument">$fields = NULL</span>) : mixed</pre>
+                <p><em>Subset of getAllChains results, only containing live chains</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$blid </td>
+                                <td><p>BLID to query</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$fields </td>
+                                <td><p>Fields to return in results. default are <code>id</code> and <code>family</code>, available:
+<code>predecessor</code>, <code>created</code>, <code>expiry</code>, <code>used</code>, <code>ip</code>, <code>revoked</code></p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                            &mdash; <p>Associative array of cookies sorted by family id. 3D array.
+$result[family_hex][number][field]</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getUsageHistory" name="method_getUsageHistory" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getUsageHistory()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getUsageHistory(integer  <span class="argument">$blid</span>, array  <span class="argument">$fields = NULL</span>, integer  <span class="argument">$limit = NULL</span>, integer  <span class="argument">$minutes = NULL</span>) : array</pre>
+                <p><em>Gets a list of used cookies</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$blid </td>
+                                <td><p>BLID associated with cookies</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$fields </td>
+                                <td><p>Fields to query</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$limit </td>
+                                <td><p>Number to fetch (default infinite)</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$minutes </td>
+                                <td><p>Minutes to query (default infinite)</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Array of usage history</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_createTable" name="method_createTable" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">createTable()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">createTable() : void</pre>
+                <p><em>Creates the user_cookies and related tables</em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">CookieManager.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/CookieManager.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/Glass.html">\Glass</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on July 7th, 2018 at 00:48.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

@@ -1,7 +1,8 @@
 {
     "require": {
         "aws/aws-sdk-php": "2.*",
-        "erusev/parsedown": "*"
+        "erusev/parsedown": "*",
+        "donatj/phpuseragentparser": "*"
     },
     "require-dev": {
         "phpdocumentor/phpdocumentor": "2.*"

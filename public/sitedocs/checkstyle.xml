@@ -186,12 +186,14 @@
     <error line="108" severity="error" message="No summary for method closeBugReport()" source="phpDocumentor.file.PPC:ERR-50008"/>
     <error line="117" severity="error" message="Argument $aid is missing from the Docblock of getAddonBugs" source="phpDocumentor.file.PPC:ERR-50015"/>
     <error line="117" severity="error" message="No summary for method getAddonBugs()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="136" severity="error" message="Argument $id is missing from the Docblock of getFromId" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="136" severity="error" message="No summary for method getFromId()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="147" severity="error" message="Argument $id is missing from the Docblock of getCommentsFromId" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="147" severity="error" message="No summary for method getCommentsFromId()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="165" severity="error" message="Argument $database is missing from the Docblock of verifyTable" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="165" severity="error" message="No summary for method verifyTable()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="136" severity="error" message="Argument $aid is missing from the Docblock of getAddonBugsOpen" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="136" severity="error" message="No summary for method getAddonBugsOpen()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="155" severity="error" message="Argument $id is missing from the Docblock of getFromId" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="155" severity="error" message="No summary for method getFromId()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="166" severity="error" message="Argument $id is missing from the Docblock of getCommentsFromId" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="166" severity="error" message="No summary for method getCommentsFromId()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="184" severity="error" message="Argument $database is missing from the Docblock of verifyTable" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="184" severity="error" message="No summary for method verifyTable()" source="phpDocumentor.file.PPC:ERR-50008"/>
   </file>
   <file name="DatabaseManager.php">
     <error line="0" severity="error" message="No summary was found for this file" source="phpDocumentor.file.PPC:ERR-50000"/>
@@ -368,50 +370,59 @@
   <file name="UserManager.php">
     <error line="0" severity="error" message="No summary was found for this file" source="phpDocumentor.file.PPC:ERR-50000"/>
     <error line="9" severity="error" message="No summary for class \Glass\UserManager" source="phpDocumentor.file.PPC:ERR-50005"/>
-    <error line="13" severity="error" message="Argument $id is missing from the Docblock of getFromID" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="13" severity="error" message="No summary for method getFromID()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="17" severity="error" message="Argument $blid is missing from the Docblock of getFromBLID" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="17" severity="error" message="No summary for method getFromBLID()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="37" severity="error" message="Argument $username is missing from the Docblock of getFromUsername" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="37" severity="error" message="No summary for method getFromUsername()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="58" severity="error" message="Argument $blid is missing from the Docblock of getAllAccountsFromBLID" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="58" severity="error" message="No summary for method getAllAccountsFromBLID()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="77" severity="error" message="No summary for method getCurrent()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="89" severity="error" message="Argument $identifier is missing from the Docblock of login" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="89" severity="error" message="Argument $password is missing from the Docblock of login" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="89" severity="error" message="Argument $redirect is missing from the Docblock of login" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="89" severity="error" message="No summary for method login()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="149" severity="error" message="Argument $blid is missing from the Docblock of updatePassword" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="149" severity="error" message="Argument $password is missing from the Docblock of updatePassword" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="149" severity="error" message="No summary for method updatePassword()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="160" severity="error" message="Argument $blid is missing from the Docblock of generateHashDAA" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="160" severity="error" message="Argument $password is missing from the Docblock of generateHashDAA" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="160" severity="error" message="No summary for method generateHashDAA()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="172" severity="error" message="Argument $email is missing from the Docblock of register" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="172" severity="error" message="Argument $password1 is missing from the Docblock of register" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="172" severity="error" message="Argument $password2 is missing from the Docblock of register" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="172" severity="error" message="Argument $blid is missing from the Docblock of register" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="172" severity="error" message="No summary for method register()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="232" severity="error" message="Argument $email is missing from the Docblock of getLoginDetailsFromEmail" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="232" severity="error" message="No summary for method getLoginDetailsFromEmail()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="242" severity="error" message="Argument $blid is missing from the Docblock of getLoginDetailsFromBLID" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="242" severity="error" message="No summary for method getLoginDetailsFromBLID()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="252" severity="error" message="Argument $database is missing from the Docblock of buildLoginDetailsFromQuery" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="252" severity="error" message="Argument $query is missing from the Docblock of buildLoginDetailsFromQuery" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="252" severity="error" message="No summary for method buildLoginDetailsFromQuery()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="277" severity="error" message="Argument $username is missing from the Docblock of validUsername" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="277" severity="error" message="No summary for method validUsername()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="282" severity="error" message="Argument $user is missing from the Docblock of sendPasswordResetEmail" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="282" severity="error" message="No summary for method sendPasswordResetEmail()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="353" severity="error" message="Argument $user is missing from the Docblock of email" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="353" severity="error" message="Argument $subject is missing from the Docblock of email" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="353" severity="error" message="Argument $message is missing from the Docblock of email" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="353" severity="error" message="Argument $reply is missing from the Docblock of email" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="353" severity="error" message="No summary for method email()" source="phpDocumentor.file.PPC:ERR-50008"/>
-    <error line="369" severity="error" message="Argument $database is missing from the Docblock of verifyTable" source="phpDocumentor.file.PPC:ERR-50015"/>
-    <error line="369" severity="error" message="No summary for method verifyTable()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="15" severity="error" message="Argument $id is missing from the Docblock of getFromID" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="15" severity="error" message="No summary for method getFromID()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="19" severity="error" message="Argument $blid is missing from the Docblock of getFromBLID" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="19" severity="error" message="No summary for method getFromBLID()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="39" severity="error" message="Argument $username is missing from the Docblock of getFromUsername" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="39" severity="error" message="No summary for method getFromUsername()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="60" severity="error" message="Argument $blid is missing from the Docblock of getAllAccountsFromBLID" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="60" severity="error" message="No summary for method getAllAccountsFromBLID()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="79" severity="error" message="No summary for method getCurrent()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="91" severity="error" message="Argument $identifier is missing from the Docblock of login" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="91" severity="error" message="Argument $password is missing from the Docblock of login" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="91" severity="error" message="Argument $redirect is missing from the Docblock of login" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="91" severity="error" message="No summary for method login()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="151" severity="error" message="Argument $loginDetails is missing from the Docblock of setSessionLoggedIn" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="151" severity="error" message="No summary for method setSessionLoggedIn()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="163" severity="error" message="Argument $blid is missing from the Docblock of setSessionLoggedInBlid" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="163" severity="error" message="No summary for method setSessionLoggedInBlid()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="168" severity="error" message="Argument $blid is missing from the Docblock of updatePassword" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="168" severity="error" message="Argument $password is missing from the Docblock of updatePassword" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="168" severity="error" message="No summary for method updatePassword()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="179" severity="error" message="Argument $blid is missing from the Docblock of generateHashDAA" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="179" severity="error" message="Argument $password is missing from the Docblock of generateHashDAA" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="179" severity="error" message="No summary for method generateHashDAA()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="191" severity="error" message="Argument $email is missing from the Docblock of register" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="191" severity="error" message="Argument $password1 is missing from the Docblock of register" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="191" severity="error" message="Argument $password2 is missing from the Docblock of register" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="191" severity="error" message="Argument $blid is missing from the Docblock of register" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="191" severity="error" message="No summary for method register()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="251" severity="error" message="Argument $email is missing from the Docblock of getLoginDetailsFromEmail" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="251" severity="error" message="No summary for method getLoginDetailsFromEmail()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="261" severity="error" message="Argument $blid is missing from the Docblock of getLoginDetailsFromBLID" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="261" severity="error" message="No summary for method getLoginDetailsFromBLID()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="271" severity="error" message="Argument $blid is missing from the Docblock of getCookieIdentifier" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="271" severity="error" message="No summary for method getCookieIdentifier()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="280" severity="error" message="Argument $database is missing from the Docblock of buildLoginDetailsFromQuery" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="280" severity="error" message="Argument $query is missing from the Docblock of buildLoginDetailsFromQuery" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="280" severity="error" message="No summary for method buildLoginDetailsFromQuery()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="305" severity="error" message="Argument $username is missing from the Docblock of validUsername" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="305" severity="error" message="No summary for method validUsername()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="310" severity="error" message="Argument $blid is missing from the Docblock of invalidateResetKey" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="310" severity="error" message="No summary for method invalidateResetKey()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="316" severity="error" message="Argument $user is missing from the Docblock of sendPasswordResetEmail" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="316" severity="error" message="No summary for method sendPasswordResetEmail()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="387" severity="error" message="Argument $user is missing from the Docblock of email" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="387" severity="error" message="Argument $subject is missing from the Docblock of email" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="387" severity="error" message="Argument $message is missing from the Docblock of email" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="387" severity="error" message="Argument $reply is missing from the Docblock of email" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="387" severity="error" message="No summary for method email()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="403" severity="error" message="Argument $database is missing from the Docblock of verifyTable" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="403" severity="error" message="No summary for method verifyTable()" source="phpDocumentor.file.PPC:ERR-50008"/>
     <error line="10" severity="error" message="No summary for property $cacheTime" source="phpDocumentor.file.PPC:ERR-50007"/>
     <error line="11" severity="error" message="No summary for property $credentialsCacheTime" source="phpDocumentor.file.PPC:ERR-50007"/>
+    <error line="13" severity="error" message="No summary for property $verified_db" source="phpDocumentor.file.PPC:ERR-50007"/>
   </file>
   <file name="CronStatManager.php">
     <error line="0" severity="error" message="No summary was found for this file" source="phpDocumentor.file.PPC:ERR-50000"/>
@@ -902,5 +913,10 @@
     <error line="14" severity="error" message="No summary for method getNews()" source="phpDocumentor.file.PPC:ERR-50008"/>
     <error line="47" severity="error" message="Argument $database is missing from the Docblock of verifyTable" source="phpDocumentor.file.PPC:ERR-50015"/>
     <error line="47" severity="error" message="No summary for method verifyTable()" source="phpDocumentor.file.PPC:ERR-50008"/>
+  </file>
+  <file name="CookieManager.php">
+    <error line="175" severity="error" message="Argument $id is missing from the Docblock of isExpired" source="phpDocumentor.file.PPC:ERR-50015"/>
+    <error line="175" severity="error" message="No summary for method isExpired()" source="phpDocumentor.file.PPC:ERR-50008"/>
+    <error line="10" severity="error" message="No summary for property $EXPIRY_TIME" source="phpDocumentor.file.PPC:ERR-50007"/>
   </file>
 </checkstyle>

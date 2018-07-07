@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "7abbeb09f940057776a60ed055312955",
+    "content-hash": "1de5959dc0d9870e66761c9fa2c918ef",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -68,6 +68,57 @@
                 "sdk"
             ],
             "time": "2016-07-25T18:03:20+00:00"
+        },
+        {
+            "name": "donatj/phpuseragentparser",
+            "version": "v0.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/donatj/PhpUserAgent.git",
+                "reference": "9de58cc2a3e986bfee7f4cea3365c830b765cf65"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/donatj/PhpUserAgent/zipball/9de58cc2a3e986bfee7f4cea3365c830b765cf65",
+                "reference": "9de58cc2a3e986bfee7f4cea3365c830b765cf65",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "camspiers/json-pretty": "0.1.*",
+                "donatj/drop": "*",
+                "phpunit/phpunit": "~4.8"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "Source/UserAgentParser.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jesse G. Donat",
+                    "email": "donatj@gmail.com",
+                    "homepage": "http://donatstudios.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Simple, streamlined PHP user-agent parser",
+            "homepage": "http://donatstudios.com/PHP-Parser-HTTP_USER_AGENT",
+            "keywords": [
+                "browser",
+                "browser detection",
+                "parser",
+                "user agent",
+                "useragent"
+            ],
+            "time": "2018-06-21T15:54:46+00:00"
         },
         {
             "name": "erusev/parsedown",

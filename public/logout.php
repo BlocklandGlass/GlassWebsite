@@ -1,5 +1,16 @@
 <?php
 	require_once dirname(__DIR__) . '/private/autoload.php';
+
+	use Glass\CookieManager;
+	$cookie = CookieManager::getCurrentCookie();
+	if($cookie) {
+		list($blid, $key) = explode(":", $cookie);
+		if($info = CookieManager::isValid($blid, $key)) {
+			CookieManager::revokeFamilyById($info['id']);
+		}
+	}
+	CookieManager::clearCookie();
+
 	session_start();
 
 	if(!isset($_SESSION['csrftoken'])) {

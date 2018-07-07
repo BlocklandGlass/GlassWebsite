@@ -260,6 +260,15 @@ class AddonObject {
 	}
 
 	/**
+	 * Returns a list of updates for this add-on
+	 *
+	 * @return AddonUpdateObject[]
+	 */
+	public function getUpdates() {
+		return AddonManager::getUpdates($this);
+	}
+
+	/**
 	 * Returns the date uploaded
 	 * @return string Date string (MySQL formatted)
 	 */
