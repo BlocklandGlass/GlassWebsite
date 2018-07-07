@@ -17,11 +17,11 @@
 		// we're not logged in. we need to check for a cookie to revive the session
 		if($cookie) {
 			// echo "was cookie! ";
-			list($blid, $key) = explode(':', $cookie);
+			list($cookie_blid, $cookie_key) = explode(':', $cookie);
 
 
-			if(is_numeric($blid) &&
-				 $cookie_info = CookieManager::isValid($blid, $key)) {
+			if(is_numeric($cookie_blid) &&
+				 $cookie_info = CookieManager::isValid($cookie_blid, $cookie_key)) {
 
 				CookieManager::useKey($cookie_info['id'],
 															$_SERVER['REMOTE_ADDR']);
@@ -34,9 +34,9 @@
 				$current_user = UserManager::getCurrent();
 
 				// issue new cookie as this has expired
-				$success = CookieManager::giveCookie($current_user->getBLID(), $last_cookie ?? NULL);
+				$cookie_success = CookieManager::giveCookie($current_user->getBLID(), $last_cookie ?? NULL);
 
-				if($success) {
+				if($cookie_success) {
 					// echo "gave cookie. predecessor $last_cookie. ";
 				}
 			} else {
@@ -50,12 +50,12 @@
 		if(!$cookie) {
 			$needs_cookie = true; // they have no cookie
 		} else {
-			list($blid, $key) = explode(':', $cookie);
+			list($cookie_blid, $cookie_key) = explode(':', $cookie);
 
-			if(!is_numeric($blid)) {
+			if(!is_numeric($cookie_blid)) {
 				$needs_cookie = true; // they have a cookie but its not formatted right
 			} else {
-		 		$cookie_info = CookieManager::getId($blid, $key);
+		 		$cookie_info = CookieManager::getId($cookie_blid, $cookie_key);
 
 				if(!$cookie_info || CookieManager::isExpired($cookie_info['id'])) {
 					$needs_cookie = true; // they have a cookie but it's expired
@@ -73,13 +73,14 @@
 
 		if($needs_cookie) {
 			// echo " giving signed in account a cookie, successor " . ($cookie_info['id'] ?? NULL);
-			$success = CookieManager::giveCookie($current_user->getBLID(), $cookie_info['id'] ?? NULL);
+			$cookie_success = CookieManager::giveCookie($current_user->getBLID(), $cookie_info['id'] ?? NULL);
 		}
 	}
 
 	if(($_REQUEST['killsession'] ?? false) == 2) {
 		session_destroy();
 	}
+	$current_user = UserManager::getCurrent();
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
