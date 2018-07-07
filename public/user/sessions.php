@@ -149,10 +149,12 @@
                 $icon = usage_icon($last_use);
               }
 
+              $icon_width = $icon == "phone" ? "18" : "28";
+
               ?>
               <tr>
                 <td style="text-align: center">
-                  <img src="/img/icon_minimal/<?php echo $icon; ?>.svg" style="width: 28px;" />
+                  <img src="/img/icon_minimal/<?php echo $icon; ?>.svg" style="width: <?php echo $icon_width; ?>px;" />
                 </td>
               <?php
 
@@ -268,10 +270,12 @@
               } else if($usage) {
                 $icon = usage_icon($usage);
               }
+
+              $icon_width = $icon == "phone" ? "18" : "28";
               ?>
               <tr>
                 <td style="text-align: center">
-                  <img src="/img/icon_minimal/<?php echo $icon; ?>.svg" style="width: 28px;" />
+                  <img src="/img/icon_minimal/<?php echo $icon; ?>.svg" style="width: <?php echo $icon_width; ?>px;" />
                 </td>
                 <td>
                   <?php echo $is_current ? "Current Session" : date("F j, Y, g:i A T", strtotime($usage['used'])); ?>
