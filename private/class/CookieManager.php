@@ -512,7 +512,7 @@ class CookieManager {
                              WHERE `blid`='$blid'
                                AND `used` is not NULL
                                $where_query
-                             ORDER BY `id` DESC
+                             ORDER BY `used` DESC
                              $limit_query");
 
     if($res) {
