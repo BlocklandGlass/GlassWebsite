@@ -261,6 +261,7 @@
         </thead>
         <tbody>
           <?php
+            $usage_history = array_reverse($usage_history);
             foreach($usage_history as $usage) {
               $is_current = ($usage['id'] === ($cookie_info['id'] ?? false));
 
