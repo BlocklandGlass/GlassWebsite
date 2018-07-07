@@ -17,6 +17,13 @@
 		die();
 	}
 
+  if($_REQUEST['revoke'] ?? false) {
+    $revoke_ident = $_REQUEST['revoke'];
+    if(CookieManager::ownsFamily($userObject->getBLID(), $revoke_ident)) {
+      CookieManager::revokeFamily($revoke_ident);
+    }
+  }
+
   $active_chains = CookieManager::getActiveChains($userObject->getBLID(), ['created', 'used', 'ip', 'platform', 'browser'], 2);
   $usage_history = CookieManager::getUsageHistory($userObject->getBLID(), ['used', 'ip', 'platform', 'browser']);
 
@@ -226,10 +233,14 @@
               }
               ?>
                 <td style="text-align: center">
-                  <a href="#" style="font-size: 1em; padding: 4px 10px; margin: 5px 0 10px 0;" class="btn red">Revoke</button>
+                  <a href="?revoke=<?php echo htmlspecialchars($family); ?>" style="font-size: 1em; padding: 4px 10px; margin: 5px 0 10px 0;" class="btn red">Revoke</button>
                 </td>
               </tr>
               <?php
+            }
+
+            if(sizeof($active_chains) == 0) {
+              echo '<tr><td colspan="4" style="text-align: center">No Active Sessions!</td></tr>';
             }
           ?>
         </tbody>
@@ -299,6 +310,10 @@
                 </td>
               </tr>
               <?php
+            }
+
+            if(sizeof($usage_history) == 0) {
+              echo '<tr><td colspan="4" style="text-align: center">No Uasge History!</td></tr>';
             }
           ?>
         </tbody>

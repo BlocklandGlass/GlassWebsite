@@ -116,6 +116,25 @@ class CookieManager {
     }
   }
 
+  public static function ownsFamily(int $blid, string $ident) {
+    $database = new DatabaseManager();
+
+    $ident = $database->sanitize($ident);
+    $blid = $database->sanitize($blid);
+
+    $res = $database->query("SELECT EXISTS (
+                               SELECT 1 FROM `user_cookies`
+                               WHERE `family`=UNHEX('$ident')
+                               AND `blid`='$blid'
+                               LIMIT 1
+                             )");
+    if($res) {
+      return $res->fetch_row()[0] == 1;
+    } else {
+      return false;
+    }
+  }
+
   /**
    * Marks a key as used.
    * @param  int    $id        [description]
