@@ -326,10 +326,15 @@ class CookieManager {
   public static function giveCookie(int $blid, int $predecessor = NULL) {
     try {
       $key = CookieManager::generateKey();
+      $id = CookieManager::activateKey($blid, $key, $predecessor);
 
-      CookieManager::activateKey($blid, $key, $predecessor);
-
-      setcookie('authentication', "$blid:$key", time() + (CookieManager::$EXPIRY_TIME * 60));
+      if($predecessor == NULL) {
+        //use the first cookie of the chain to record session
+        CookieManager::useKey($id, $_SERVER['REMOTE_ADDR']);
+        CookieManager::giveCookie($blid, $id);
+      } else {
+        setcookie('authentication', "$blid:$key", time() + (CookieManager::$EXPIRY_TIME * 60));
+      }
     } catch(\Exception $e) {
       echo $e;
       error_log("Error giving cookie: " . $e);

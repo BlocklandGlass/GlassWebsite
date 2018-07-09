@@ -25,7 +25,7 @@
   }
 
   $active_chains = CookieManager::getActiveChains($userObject->getBLID(), ['created', 'used', 'ip', 'platform', 'browser'], 2);
-  $usage_history = CookieManager::getUsageHistory($userObject->getBLID(), ['used', 'ip', 'platform', 'browser']);
+  $usage_history = CookieManager::getUsageHistory($userObject->getBLID(), ['used', 'ip', 'platform', 'browser', 'predecessor']);
 
   function usage_icon($cookie) {
     $platform = $cookie['platform'];
@@ -290,6 +290,12 @@
                 </td>
                 <td>
                   <?php echo $is_current ? "Current Session" : date("F j, Y, g:i A T", strtotime($usage['used'])); ?>
+									<?php if($usage['predecessor']) { ?>
+                  <br />
+                  <span style="color: #999">
+                    New Session
+                  </span>
+									<?php } ?>
                 </td>
                 <td>
                   <?php echo $usage['browser']; ?>
