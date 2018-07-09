@@ -290,7 +290,7 @@
                 </td>
                 <td>
                   <?php echo $is_current ? "Current Session" : date("F j, Y, g:i A T", strtotime($usage['used'])); ?>
-									<?php if($usage['predecessor']) { ?>
+									<?php if(!$usage['predecessor']) { ?>
                   <br />
                   <span style="color: #999">
                     New Session
