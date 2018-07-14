@@ -136,7 +136,7 @@ foreach($comments as $comid) {
 
 $updates = AddonManager::getUpdates($addonObject);
 foreach($updates as $update) {
-  if(!$update->getApproved()) {
+  if(!$update->isApproved()) {
     continue;
   }
 
