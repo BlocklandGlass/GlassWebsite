@@ -318,7 +318,7 @@
             }
 
             if(sizeof($usage_history) == 0) {
-              echo '<tr><td colspan="4" style="text-align: center">No Uasge History!</td></tr>';
+              echo '<tr><td colspan="4" style="text-align: center">No usage history.</td></tr>';
             }
           ?>
         </tbody>

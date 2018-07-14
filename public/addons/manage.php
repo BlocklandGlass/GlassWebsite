@@ -49,6 +49,7 @@
 		<ul class="sidenav">
 			<li><a href="/addons/update.php?id=<?php echo $_GET['id'] ?>">Update</a></li>
 			<li><a href="?id=<?php echo $_GET['id'] ?>&tab=repo">Repository</a></li>
+      <li><a href="/addons/delete.php?id=<?php echo $_GET['id'] ?>">Delete</a></li>
 		</ul>
 		<br />
 		<ul class="sidenav">

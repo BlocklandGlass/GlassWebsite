@@ -35,7 +35,7 @@ if(!$addonObject->getApproved()) {
 
 if($addonObject->getDeleted()) {
   $ret->status = "deleted";
-  $ret->error = "Add-On deleted";
+  $ret->error = "Add-On no longer available";
   die(json_encode($ret, JSON_PRETTY_PRINT));
 }
 
@@ -136,6 +136,10 @@ foreach($comments as $comid) {
 
 $updates = AddonManager::getUpdates($addonObject);
 foreach($updates as $update) {
+  if(!$update->getApproved()) {
+    continue;
+  }
+
   $action = new \stdClass();
   $action->type = "update";
   $action->timestamp = $update->getTimeSubmitted();

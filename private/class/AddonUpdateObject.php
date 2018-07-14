@@ -123,6 +123,14 @@ class AddonUpdateObject {
 	}
 
 	/**
+	 * Checks if the update is rejected
+	 * @return boolean
+	 */
+	public function isRejected() {
+		return $this->status == -1;
+	}
+
+	/**
 	 * Checks if the update requires a restart
 	 * @return boolean
 	 */

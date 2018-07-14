@@ -183,7 +183,7 @@
 					}
 
 					if(sizeof($updates) == 0) {
-						echo "<div style=\"text-align: center\"><i>No updates</i></div>";
+						echo "<div style=\"text-align: center\"><i>No updates.</i></div>";
 					}
 				?>
 			</div>
@@ -207,7 +207,7 @@
 
 					echo '<div style="text-align: center">';
 					if($bug_count == 0) {
-						echo "<i>No bugs!</i>";
+						echo "<i>No bugs reported.</i>";
 					} else if($bug_count > 3) {
 						?>
 							<a href="bugs/?id=<?php echo $addonObject->getId()?>">View more on the Bug Tracker</a>
