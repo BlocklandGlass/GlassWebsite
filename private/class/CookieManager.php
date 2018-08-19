@@ -3,7 +3,6 @@
 namespace Glass;
 
 use \Glass\UserManager;
-require_once(realpath(dirname(__DIR__) . "/../private/lib/UserAgentParser.php"));
 
 /** Uses cookies (instead of non-expiring PHP sessions) to
  * provide session persistence */
