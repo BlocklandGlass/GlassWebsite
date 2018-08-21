@@ -11,7 +11,7 @@
 
 		header('Location: http://' . AWSFileManager::getBucket() . '/addons/' . $id);
   } else {
-    header('Status: 404');
-    header('Location: /error.php');
+    header("Location: /index.php");
+    die();
   }
 ?>

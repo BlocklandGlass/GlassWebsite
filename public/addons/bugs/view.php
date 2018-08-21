@@ -13,6 +13,14 @@
       $bug         = BugManager::getFromId($_GET['id']);
 			$addonObject = AddonManager::getFromId($bug->aid);
       $comments    = BugManager::getCommentsFromId($bug->id);
+
+      if($addonObject->getDeleted()) {
+        include(__DIR__ . "/../deleted.php");
+        die();
+      } else if($addonObject->isRejected()) {
+        include(__DIR__ . "/../rejected.php");
+        die();
+      }
 		} catch(Exception $e) {
 			//board doesn't exist
 			header('Location: /addons');

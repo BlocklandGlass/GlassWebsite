@@ -4,12 +4,18 @@
 	use Glass\UploadManager;
   use Glass\AddonManager;
 	use Glass\ScreenshotManager;
+  use Glass\UserManager;
 
 	$_PAGETITLE = "Blockland Glass | Screenshots";
 	include(__DIR__ . "/../../../private/header.php");
 
   $id = $_REQUEST['id'] ?? 0;
   $addon = AddonManager::getFromId($id);
+  $user = UserManager::getCurrent();
+
+  if($user === false || ($addon->getBLID() !== $user->getBLID() && !$user->inGroup("Administrator"))) {
+    die("You do not have permission to access this area.");
+  }
 
   if($_POST['delete'] ?? false) {
     ScreenshotManager::deleteScreenshot($_POST['sid']);
@@ -160,7 +166,7 @@
     include(__DIR__ . "/../../../private/navigationbar.php");
   ?>
   <div class="tile" style="text-align: left">
-    <h3>Screenshots</h3>
+    <h2>Screenshots</h2>
     <p>
       Now that you've uploaded <strong><?php echo htmlspecialchars($addon->getName()); ?></strong>, why don't you show us what its all about and upload some screenshots?
     </p>

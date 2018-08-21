@@ -111,9 +111,11 @@
 		echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . utf8_encode($boardObject->getName()) . "</a> >> ";
 		echo "<a href=\"#\">" . htmlspecialchars($addonObject->getName()) . "</a></span>";
 
+    $author = $addonObject->getAuthor();
+
 		if($current = UserManager::getCurrent()) {
-			if($current->inGroup("Moderator")) {
-				echo "<div class=\"tile\" style=\"background-color: #ed7669; padding: 10px; margin-top:10px; text-align:center\"><a href=\"moderate.php?id=" . $addonObject->getId() . "\">Moderation</a></div>";
+			if($current->inGroup("Reviewer") || $current->getManagerBLID() == $author->getBLID()) {
+				echo "<div class=\"tile\" style=\"background-color: #ed7669; padding: 10px; margin-top:10px; text-align:center\"><a href=\"manage.php?id=" . $addonObject->getId() . "\">Manage</a></div>";
 			}
 		}
 
@@ -123,8 +125,6 @@
 			<div class="tile" style="margin-bottom: 5px;">
 				<h2 style="margin-bottom: 0px;"><?php echo htmlspecialchars($addonObject->getName()) ?> </h2>
 				<?php
-			    $author = $addonObject->getAuthor();
-
 					echo "Uploaded by <a href=\"/user/view.php?blid=" . $author->getBLID() . "\">" . htmlspecialchars(utf8_encode($author->getUsername())) . "</a>";
 				?>
 				<div style="margin-top: 15px; margin-bottom: 10px; display: inline-block; width: 100%;">

@@ -1,5 +1,10 @@
 <?php
 	require dirname(__DIR__) . '/../../private/autoload.php';
+
+	if($user === false || ($addon->getManagerBLID() !== $user->getBLID())) {
+    die("You do not have permission to access this area.");
+	}
+
   use Glass\RepositoryManager;
   $repoInfo = RepositoryManager::getRepository($addon);
   if($repoInfo == false) {
@@ -79,7 +84,7 @@ td {
         <td><strong>Channel</strong></td>
       </tr>
       <tr>
-        <td><input type="text" name="url" value="<?php echo $url ?>"/></td>
+        <td><input type="text" name="url" style="width: 100%;" value="<?php echo $url ?>"/></td>
         <td>
           <select name="type">
             <?php

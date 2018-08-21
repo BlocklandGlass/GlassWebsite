@@ -29,7 +29,7 @@
 	//do we want to do this or just use session info?
 	$user = UserManager::getCurrent();
 
-	if($user === false || $addon->getBLID() !== $user->getBLID()) {
+	if($user === false || ($addon->getManagerBLID() !== $user->getBLID() && !$user->inGroup("Reviewer"))) {
 		$response = [
 			"redirect" => "/addons/index.php"
 		];

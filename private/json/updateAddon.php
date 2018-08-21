@@ -42,15 +42,23 @@ function codeToMessage($code) {
 	use Glass\UserManager;
 	use Glass\SemVer;
 	use Glass\AddonFileHandler;
-	$user = UserManager::getCurrent();
 
-	if($user === false || !isset($_REQUEST['id'])) {
+  if(!isset($_REQUEST['id'])) {
 		$response = [
 			"redirect" => "/index.php"
 		];
 		return $response;
-	} else {
-		$addonObject = AddonManager::getFromId($_REQUEST['id']);
+  } else {
+    $addonObject = AddonManager::getFromId($_REQUEST['id']);
+  }
+
+  $user = UserManager::getCurrent();
+
+  if($user === false || ($addonObject->getManagerBLID() !== $user->getBLID())) {
+		$response = [
+			"redirect" => "/index.php"
+		];
+		return $response;
 	}
 
 	if(!isset($_POST['submit'])) {
