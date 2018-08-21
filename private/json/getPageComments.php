@@ -4,7 +4,7 @@
 	}
 	use Glass\CommentManager;
 	$aid = $_GET['id'] + 0; //force it to be a number
-	$commentIDs = CommentManager::getCommentIDsFromAddon($aid);
+	$commentIDs = CommentManager::getCommentIDsFromAddon($aid, 0, 15, 1);
 	$comments = [];
 
 	foreach($commentIDs as $cid) {

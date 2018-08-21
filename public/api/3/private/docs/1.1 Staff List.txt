@@ -12,6 +12,7 @@
 <bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_orange> <font:verdana bold:12>Skill4Life<font:verdana:12> 4382
 <bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_orange> <font:verdana bold:12>DragonoidSlayer<font:verdana:12> 29131
 <bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_orange> <font:verdana bold:12>Ostinyo<font:verdana:12> 15269
+<bitmap:Add-Ons/System_BlocklandGlass/image/icon/bullet_orange> <font:verdana bold:12>GlassBot<font:verdana:12> BOT
 
 <font:verdana bold:13>Mod Reviewers<font:verdana:12>
 
