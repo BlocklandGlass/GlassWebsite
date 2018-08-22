@@ -9,9 +9,13 @@
 		$_SESSION['csrftoken'] = mt_rand();
 	}
 	use Glass\UserManager;
-	$user = UserManager::getCurrent();
+  use Glass\AddonManager;
 
-	if($user === false) {
+  $aid = $_GET['id'];
+
+	$user = UserManager::getCurrent();
+	$addonObject = AddonManager::getFromId($aid);
+	if($user === false || $addonObject === false || ($addonObject->getManagerBLID() !== $user->getBlid() && !$user->inGroup("Administrator"))) {
 		$response = [
 			"redirect" => "/index.php"
 		];
@@ -66,7 +70,7 @@
 	$tempPath = $_FILES['uploadfile']['tmp_name'];
 
 	if($_screenshotContext == "addon") {
-		ScreenshotManager::uploadScreenshotForAddon(AddonManager::getFromId($_GET['id']), $uploadExt, $tempPath);
+		ScreenshotManager::uploadScreenshotForAddon(AddonManager::getFromId($aid), $uploadExt, $tempPath);
 	}
 	$response = [
 		"message" => "idk"

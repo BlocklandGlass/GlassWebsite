@@ -1,4 +1,6 @@
 <?php
+return;
+
 $blid = $_GET['blid'];
 $header = $_GET['head'];
 $body = $_GET['body'];
