@@ -256,10 +256,10 @@ class GroupManager {
 		return true;
 	}
 
-	public static function createDefaultGroups() {
-		GroupManager::createGroupWithLeaderBLID("Administrator", "", "EB2B36", "crown_gold", 9789);
-		GroupManager::createGroupWithLeaderBLID("Moderator", "", "336699", "crown_silver", 9789);
-		GroupManager::createGroupWithLeaderBLID("Reviewer", "", "00ff00", "star", 9789);
+	public static function createDefaultGroups($blid) {
+		GroupManager::createGroupWithLeaderBLID("Administrator", "", "EB2B36", "crown_gold", $blid);
+		GroupManager::createGroupWithLeaderBLID("Moderator", "", "336699", "crown_silver", $blid);
+		GroupManager::createGroupWithLeaderBLID("Reviewer", "", "00ff00", "star", $blid);
 	}
 
 	public static function verifyTable($database) {

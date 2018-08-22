@@ -72,7 +72,7 @@
 			if($hasAccount) {
         $groups = GroupManager::getGroupsFromBLID($blid);
         if(sizeof($groups) > 0) {
-          echo "This user is part of the following roles:<br>";
+          echo "This user is part of the following groups:<br>";
           echo "<ul>";
 
           foreach($groups as $gid) {

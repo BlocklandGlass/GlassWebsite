@@ -131,6 +131,9 @@ class RTBAddonManager {
     $db = new DatabaseManager();
     $res = $db->query("SELECT COUNT(*) FROM `rtb_addons`");
 
+    if(!$res)
+      return 0;
+
     $obj = $res->fetch_object();
     $val = "COUNT(*)";
     return $obj->$val;
@@ -144,6 +147,9 @@ class RTBAddonManager {
     $db = new DatabaseManager();
     $res = $db->query("SELECT COUNT(*) FROM `rtb_addons` WHERE `glass_id` != '' AND `approved`=1");
 
+    if(!$res)
+      return 0;
+
     $obj = $res->fetch_object();
     $val = "COUNT(*)";
     return $obj->$val;
@@ -152,6 +158,9 @@ class RTBAddonManager {
   public static function getTypeCount($name) {
     $db = new DatabaseManager();
     $res = $db->query("SELECT COUNT(*) FROM `rtb_addons` WHERE `type`='" . $db->sanitize($name) . "'");
+
+    if(!$res)
+      return 0;
 
     $obj = $res->fetch_object();
     $val = "COUNT(*)";

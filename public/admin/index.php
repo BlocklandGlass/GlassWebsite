@@ -9,7 +9,7 @@
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 
   if(!GroupManager::getFromName("Administrator")) {
-    GroupManager::createDefaultGroups();
+    GroupManager::createDefaultGroups(9789); // need to be able to change this during installation
   }
 
 	if(!$user || !$user->inGroup("Administrator")) {

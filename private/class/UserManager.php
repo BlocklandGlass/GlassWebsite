@@ -418,7 +418,6 @@ class UserManager {
 			`banned` TINYINT NOT NULL DEFAULT 0,
 			`admin` TINYINT NOT NULL DEFAULT 0,
 			`reset` TEXT,
-			`profile` TEXT,
 			`daaHash` TEXT,
 			KEY (`blid`),
 			UNIQUE KEY (`email`))")) {

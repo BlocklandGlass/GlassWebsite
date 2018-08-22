@@ -12,7 +12,6 @@ class UserObject {
 	private $email;
 
 	private $daaHash;
-	//private $profile;
 
 	public function __construct($resource) {
 		$this->username = $resource->username;
@@ -27,7 +26,6 @@ class UserObject {
 		} else {
 			$this->reset = null;
 		}
-		//$this->profile = $resource->profile;
 	}
 
 	public function getResetKey() {

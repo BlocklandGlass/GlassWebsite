@@ -232,7 +232,7 @@ class AddonManager {
 	}
 
 	/**
-	 * Rejected a pending add-on
+	 * Rejects a pending add-on
 	 *
 	 * @param int $id The add-on id (aid)
 	 * @param int $reason The reason for rejection (unused)
@@ -912,7 +912,6 @@ class AddonManager {
 			`approved` TINYINT NOT NULL DEFAULT 0,
 			`betaVersion` TEXT DEFAULT NULL,
 			`uploadDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-			`type` TEXT NOT NULL,
 
 			`summary` VARCHAR(255) NOT NULL,
 			FOREIGN KEY (`board`)

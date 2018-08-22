@@ -7,6 +7,7 @@
 	//header("Content-Type: application/json");
 	//echo(json_encode(include(realpath(dirname(__DIR__) . "/../private/json/getComments.php"))));
 	use Glass\UserManager;
+  use Glass\GroupManager;
 	$response = include(realpath(dirname(__DIR__) . "/../private/json/getPageCommentsWithUsers.php"));
 
 	$user = UserManager::getCurrent();
@@ -44,14 +45,20 @@
         if($user->getBanned()) {
 					echo("<span style=\"color: gray\">Banned</span>");
 				} else {
+          $foundGroup = false;
+
           if($user->getBLID() == $addonObject->getAuthor()->getBLID()) {
             echo("<span style=\"font-weight: bold\">Uploader</span>");
           } elseif($user->inGroup("Administrator")) {
-            echo("<span style=\"color: red\">Administrator</span>");
+            $foundGroup = GroupManager::getFromName("Administrator");
           } elseif($user->inGroup("Reviewer")) {
-            echo("<span style=\"color: green\">Mod Reviewer</span>");
+            $foundGroup = GroupManager::getFromName("Reviewer");
           } elseif($user->inGroup("Moderator")) {
-            echo("<span style=\"color: orange\">Chat Moderator</span>");
+            $foundGroup = GroupManager::getFromName("Moderator");
+          }
+
+          if($foundGroup) {
+            echo("<span style=\"color: #" . $foundGroup->getColor() . ";\">" . htmlspecialchars($foundGroup->getName()) . "</span>");
           }
         }
 
