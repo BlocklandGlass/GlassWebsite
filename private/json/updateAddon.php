@@ -125,7 +125,6 @@ function codeToMessage($code) {
 
 	if(isset($_POST['addonversion']) && $_POST['addonversion'] != "") {
 		//trim .bls from end of file name if it exists
-		//$uploadBuildName = preg_replace("/\\.bls$/", "", $_POST['buildname']);
 		$uploadVersion = $_POST['addonversion'];
 		$newVersion = new SemVer($uploadVersion);
 		$oldVersion = new SemVer($addonObject->getVersion());

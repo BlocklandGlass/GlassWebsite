@@ -61,7 +61,6 @@
 
 	if(isset($_POST['addonname']) && $_POST['addonname'] != "") {
 		//trim .bls from end of file name if it exists
-		//$uploadBuildName = preg_replace("/\\.bls$/", "", $_POST['buildname']);
 		$uploadAddonName = $_POST['addonname'];
 	}
 

@@ -125,7 +125,6 @@ $(document).ready(function () {
 		//var data = $(this).serialize();
 		var data = new FormData(this);
 		//console.log(data);
-		//$.post("/ajax/uploadBuild.php", data, function (response) {
 		$.ajax({
 			url: "/ajax/updateAddon.php",
 			type: "POST",

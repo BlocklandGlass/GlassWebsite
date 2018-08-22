@@ -9,8 +9,6 @@
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 	use Glass\UserManager;
 	use Glass\AddonManager;
-	use Glass\BuildManager;
-	use Glass\BuildObject;
 	use Glass\BoardObject;
 	use Glass\NotificationManager;
 	use Glass\NotificationObject;

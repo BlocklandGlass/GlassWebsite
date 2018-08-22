@@ -7,7 +7,6 @@ namespace Glass;
 // etc
 
 require_once dirname(__FILE__) . '/AddonManager.php';
-require_once dirname(__FILE__) . '/BuildManager.php';
 require_once dirname(__FILE__) . '/DatabaseManager.php';
 
 class CronStatManager {
@@ -35,8 +34,6 @@ class CronStatManager {
 
       $result->addons->cumulative_downloads[$aid] = $dow;
     }
-
-    //Builds
 
     //Master
     $result->master = new \stdClass();
@@ -111,18 +108,6 @@ class CronStatManager {
       $addons->usage_total[$addon->getId()] = $total;
     }
     $stats->addons = $addons;
-
-    //Builds
-    $builds = new \stdClass();
-    $buildArray = BuildManager::getAll();
-    $builds->count = sizeof($buildArray);
-    $builds->cumulative_downloads = array();
-    foreach($buildArray as $build) {
-      // TODO this isn't done either...
-      //$builds->cumulative_downloads[$build->getId()] = $build->getDownloads();
-    }
-    $stats->builds = $builds;
-
 
     //Master Server
     $stats->master = new \stdClass();

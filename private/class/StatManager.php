@@ -4,7 +4,6 @@ namespace Glass;
 require_once(realpath(dirname(__FILE__) . '/DatabaseManager.php'));
 require_once(realpath(dirname(__FILE__) . '/StatObject.php'));
 require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));
-require_once(realpath(dirname(__FILE__) . '/BuildManager.php'));
 require_once(realpath(dirname(__FILE__) . '/GroupManager.php'));
 
 class StatManager {

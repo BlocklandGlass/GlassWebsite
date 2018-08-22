@@ -7,7 +7,6 @@ require_once(realpath(dirname(__FILE__) . '/ScreenshotObject.php'));
 class ScreenshotManager {
 	private static $objectCacheTime = 3600; //1 hour
 	private static $userScreenshotsCacheTime = 180;
-	private static $buildScreenshotsCacheTime = 3600;
 	private static $addonScreenshotsCacheTime = 3600;
 
 	public static $maxFileSize = 3000000; //3MB
