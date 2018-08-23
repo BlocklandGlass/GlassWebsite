@@ -114,7 +114,7 @@
     $author = $addonObject->getAuthor();
 
 		if($current = UserManager::getCurrent()) {
-			if($current->inGroup("Reviewer") || $current->getManagerBLID() == $author->getBLID()) {
+			if($current->inGroup("Reviewer") || $addonObject->getManagerBLID() == $current->getBLID()) {
 				echo "<div class=\"tile\" style=\"background-color: #ed7669; padding: 10px; margin-top:10px; text-align:center\"><a href=\"manage.php?id=" . $addonObject->getId() . "\">Manage</a></div>";
 			}
 		}
