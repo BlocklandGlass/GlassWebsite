@@ -34,10 +34,5 @@ if($ident) {
 $json   = file_get_contents('php://input');
 $object = json_decode($json);
 
-$user = UserManager::getFromBLID($client->getBlid());
-if(!$user) {
-  unauthorized();
-}
-
-$key = DiscordKeyManager::newKey($user->getBlid());
+$key = DiscordKeyManager::newKey($client->getBlid());
 echo $key;
