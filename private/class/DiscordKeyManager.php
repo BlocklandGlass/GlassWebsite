@@ -44,7 +44,19 @@ class DiscordKeyManager {
     $blid    = $database->sanitize($blid);
     $discord = $database->sanitize($discord);
 
-    return $database->query("INSERT INTO `user_discord_map` (`blid`, `discord`) VALUES ('$blid', '$discord')");
+    $res = $database->query("INSERT INTO `user_discord_map` (`blid`, `discord`) VALUES ('$blid', '$discord')");
+
+    if($res === false) {
+      $result = $database->query("SELECT `discord` FROM `user_discord_map` WHERE `blid`='$blid'");
+      if($result && $result->num_rows > 0) {
+        $row = $result->fetch_row();
+        return $row[0];
+      }
+    } else {
+      return true;
+    }
+
+    return false;
   }
 
   public static function verifyTable($database) {

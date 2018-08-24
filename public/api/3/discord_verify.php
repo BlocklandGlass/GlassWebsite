@@ -20,11 +20,19 @@ if(!$blid) {
   die(json_encode($ret));
 }
 
-$res = DiscordKeyManager::linkDiscordBlid($blid, $discord);
+$linkRes = DiscordKeyManager::linkDiscordBlid($blid, $discord);
 
-if($res === false) {
-  $ret->status = "already-linked";
-  die(json_encode($ret));
+if($linkRes !== true) {
+
+  if($linkRes === false) {
+    $ret->status = "link-failed";
+    die(json_encode($ret));
+  } else if(is_numeric($linkRes)) {
+    $ret->status = "already-linked";
+    $ret->discord = $linkRes;
+    die(json_encode($ret));
+  }
+
 }
 
 $ret->status = "success";
