@@ -6,8 +6,14 @@ use Glass\DiscordKeyManager;
 header('Content-Type: text/json');
 $key  = $_REQUEST['key'] ?? false;
 $discord = $_REQUEST['discord'] ?? false;
+$secret = $_REQUEST['secret'] ?? false;
 
-if($key === false || $discord === false) {
+if($key === false || $discord === false || $secret === false) {
+  return;
+}
+
+if(!DiscordKeyManager::checkSecret($secret)) {
+  http_response_code(403);
   return;
 }
 

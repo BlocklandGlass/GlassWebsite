@@ -59,6 +59,39 @@ class DiscordKeyManager {
     return false;
   }
 
+  public static function getDiscord($blid) {
+    $database = new DatabaseManager();
+
+    $blid = $database->sanitize($blid);
+    $res = $database->query("SELECT `discord` FROM `user_discord_map` WHERE `blid`='$blid'");
+
+    if($res && $res->num_rows > 0) {
+      $row = $res->fetch_row();
+      return $row[0];
+    }
+
+    return false;
+  }
+
+  public static function getBlid($discord) {
+    $database = new DatabaseManager();
+
+    $discord = $database->sanitize($discord);
+    $res = $database->query("SELECT `blid` FROM `user_discord_map` WHERE `discord`='$discord'");
+
+    if($res && $res->num_rows > 0) {
+      $row = $res->fetch_row();
+      return $row[0];
+    }
+
+    return false;
+  }
+
+  public static function checkSecret($secret) {
+    $keyData = json_decode(file_get_contents(dirname(__DIR__) . "/config.json"));
+    return hash_equals($keyData->discord_secret, $secret);
+  }
+
   public static function verifyTable($database) {
 		if(DiscordKeyManager::$verified_db)
 			return;
