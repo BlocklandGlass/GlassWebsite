@@ -1,6 +1,7 @@
 <?php
 	require dirname(__DIR__) . '/../private/autoload.php';
   $_PAGETITLE = "Blockland Glass | " . utf8_encode($addonObject->getName());
+  $_PAGEDESCRIPTION = "This add-on is no longer available.";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 ?>
