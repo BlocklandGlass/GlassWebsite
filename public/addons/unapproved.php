@@ -1,7 +1,7 @@
 <?php
 	require dirname(__DIR__) . '/../private/autoload.php';
   $_PAGETITLE = "Blockland Glass | " . utf8_encode($addonObject->getName());
-  $_PAGEDESCRIPTION = "This add-on has not been approved by a Mod Reviewer yet.";
+  $_PAGEDESCRIPTION = "This add-on has not been inspected by a mod reviewer yet.";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 ?>
@@ -17,7 +17,7 @@
       ?>
       <div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em; background-color: #ffcccc; text-align:center; padding: 10px; font-size: 1em">
         <span style="float: left"><img src="/img/icons32/hourglass.png"></span>
-        <strong>This add-on has not been approved by a Mod Reviewer yet.</strong><br />
+        <strong>This add-on has not been inspected by a mod reviewer yet.</strong><br />
       </div>
     </div>
 </div>

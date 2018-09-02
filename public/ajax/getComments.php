@@ -48,7 +48,7 @@
           $foundGroup = false;
 
           if($user->getBLID() == $addonObject->getAuthor()->getBLID()) {
-            echo("<span style=\"font-weight: bold\">Uploader</span>");
+            echo("<span style=\"font-weight: bold;\">Uploader</span>");
           } elseif($user->inGroup("Administrator")) {
             $foundGroup = GroupManager::getFromName("Administrator");
           } elseif($user->inGroup("Reviewer")) {
@@ -58,7 +58,7 @@
           }
 
           if($foundGroup) {
-            echo("<span style=\"color: #" . $foundGroup->getColor() . ";\">" . htmlspecialchars($foundGroup->getName()) . "</span>");
+            echo("<span style=\"color: #" . $foundGroup->getColor() . "; font-weight: bold;\">" . htmlspecialchars($foundGroup->getName()) . "</span>");
           }
         }
 

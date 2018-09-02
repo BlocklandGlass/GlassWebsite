@@ -81,8 +81,12 @@
           foreach($addons as $ao) {
             $board = BoardManager::getFromId($ao->getBoard());
             echo '<tr>';
-            if(!$ao->getApproved()) {
+            if($ao->approved == 0) {
               echo '<td><img style="width: 1.2em;" src="https://blocklandglass.com/img/icons32/hourglass.png" alt="Under Review"/></td>';
+            } else if($ao->getDeleted()) {
+              echo '<td><img style="width: 1.2em;" src="https://blocklandglass.com/img/icons32/warning.png" alt="Deleted"/></td>';
+            } else if($ao->isRejected()) {
+              echo '<td><img style="width: 1.2em;" src="https://blocklandglass.com/img/icons32/cancel.png" alt="Rejected"/></td>';
             } else {
               echo '<td><img style="width: 1.2em;" src="https://blocklandglass.com/img/icons32/' . $board->getIcon() . '.png"/></td>';
             }

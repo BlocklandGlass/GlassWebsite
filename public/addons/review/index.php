@@ -56,7 +56,7 @@
 						$name = $addon->getManagerBLID();
 					}
 	        echo "<tr>";
-	        echo "<td><a href=\"inspect.php?id=" . $addon->getId() . "\">" . $addon->getName() . "</a></td>";
+	        echo "<td><a href=\"/addons/addon.php?id=" . $addon->getId() . "\">" . $addon->getName() . "</a></td>";
 	        echo "<td>" . htmlspecialchars(utf8_encode($name)) . "</td>";
 	        echo "<td>" . date("M jS Y, g:i A", strtotime($addon->getUploadDate())) . "</td>";
 	        echo "</tr>";

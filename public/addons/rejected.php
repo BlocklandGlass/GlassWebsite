@@ -1,7 +1,7 @@
 <?php
 	require dirname(__DIR__) . '/../private/autoload.php';
   $_PAGETITLE = "Blockland Glass | " . utf8_encode($addonObject->getName());
-  $_PAGEDESCRIPTION = "This add-on was rejected by a Mod Reviewer.";
+  $_PAGEDESCRIPTION = "This add-on was rejected by a mod reviewer.";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 ?>
@@ -17,7 +17,7 @@
       ?>
       <div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em; background-color: #ffcccc; text-align:center; padding: 10px; font-size: 1em">
         <span style="float: left"><img src="/img/icons32/cancel.png"></span>
-        <strong>This add-on was rejected by a Mod Reviewer.</strong><br />
+        <strong>This add-on was rejected by a mod reviewer.</strong><br />
       </div>
     </div>
 </div>

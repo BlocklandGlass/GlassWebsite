@@ -113,6 +113,20 @@ class CommentManager {
 		return $addonComments;
 	}
 
+	public static function deleteCommentsFromAddon($aid) {
+		$database = new DatabaseManager();
+		CommentManager::verifyTable($database);
+		$query = "DELETE FROM `addon_comments` WHERE `aid` = '" . $database->sanitize($aid) . "'";
+
+		$resource = $database->query($query);
+
+		if(!$resource) {
+			throw new \Exception("Database error: " . $database->error());
+		}
+
+		return true;
+	}
+
 	public static function verifyTable($database) {
 		require_once(realpath(dirname(__FILE__) . '/UserManager.php'));
 		require_once(realpath(dirname(__FILE__) . '/AddonManager.php'));

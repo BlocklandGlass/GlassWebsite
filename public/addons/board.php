@@ -126,7 +126,7 @@
 				}
 
 				if(sizeof($addonIDs) == 0) {
-					echo '<tr><td colspan="4">No Add-Ons!</td></tr>';
+					echo '<tr><td colspan="4">No add-ons.</td></tr>';
 				}
 				//TO DO: page number links should also appear at the bottom, probably inside of the grey footer
 			?>

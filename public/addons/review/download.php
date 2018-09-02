@@ -2,6 +2,21 @@
 require dirname(__DIR__) . '/../../private/autoload.php';
 //requirements
 use Glass\AddonManager;
+use Glass\UserManager;
+
+$current = UserManager::getCurrent();
+
+if(!$current) {
+  $result->status = "error";
+  $result->error = "Not logged in.";
+  die(json_encode($result, JSON_PRETTY_PRINT));
+}
+
+if(!$current->inGroup("Reviewer")) {
+  $result->status = "error";
+  $result->error = "Access denied.";
+  die(json_encode($result, JSON_PRETTY_PRINT));
+}
 
 $file = $_REQUEST['file'] ?? "";
 

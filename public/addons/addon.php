@@ -15,29 +15,34 @@
 	//to do: use ajax/json to build data for page
 	//this php file should just format the data nicely
 	if(isset($_GET['id'])) {
-		try {
-			$addonObject = AddonManager::getFromId($_GET['id'] + 0);
-			$boardObject = BoardManager::getFromID($addonObject->getBoard());
-		} catch(Exception $e) {
-			//board doesn't exist
-			header('Location: /addons');
-			die("addon doesnt exist");
-		}
+    $addonObject = AddonManager::getFromId($_GET['id'] + 0);
+    if($addonObject) {
+      $boardObject = BoardManager::getFromID($addonObject->getBoard());
+    } else {
+      header('Location: /addons');
+			die();
+    }
 	} else {
 		header('Location: /addons');
 		die();
 	}
 
-  if($addonObject->getDeleted()) {
-		include 'deleted.php';
-		die();
-	} else if($addonObject->isRejected()) {
-		include 'rejected.php';
-		die();
-	} else if(!$addonObject->getApproved()) {
-		include 'unapproved.php';
-		die();
-	}
+  $current = UserManager::getCurrent();
+
+  if(!$current || ($addonObject->getDeleted() && !$current->inGroup("Administrator"))) {
+    include 'deleted.php';
+    die();
+  }
+
+  if(!$current || (!$current->inGroup("Reviewer") && $addonObject->getManagerBLID() != $current->getBLID())) {
+    if($addonObject->isRejected()) {
+      include 'rejected.php';
+      die();
+    } else if(!$addonObject->getApproved()) {
+      include 'unapproved.php';
+      die();
+    }
+  }
 
 	if(isset($_POST['comment'])) {
 		CommentManager::submitComment($addonObject->getId(), UserManager::getCurrent()->getBLID(), $_POST['comment']);
@@ -113,9 +118,35 @@
 
     $author = $addonObject->getAuthor();
 
-		if($current = UserManager::getCurrent()) {
-			if($current->inGroup("Reviewer") || $addonObject->getManagerBLID() == $current->getBLID()) {
-				echo "<div class=\"tile\" style=\"background-color: #ed7669; padding: 10px; margin-top:10px; text-align:center\"><a href=\"manage.php?id=" . $addonObject->getId() . "\">Manage</a></div>";
+    if($addonObject->getDeleted()) {
+      echo '
+      <div class="tile" style="background-color: #ffcccc; padding: 10px; margin-top: 10px; text-align: center;">
+        <strong style="font-size: 2rem;">Deleted Add-On</strong><br>
+        This add-on is not available to the public because it has been deleted.<br>
+        <strong>Only administrators can view this page.</strong>
+      </div>
+      ';
+    } else if($addonObject->isRejected()) {
+      echo '
+      <div class="tile" style="background-color: #ffcccc; padding: 10px; margin-top: 10px; text-align: center;">
+        <strong style="font-size: 2rem;">Rejected Add-On</strong><br>
+        This add-on is not available to the public because it has been rejected.<br>
+        <strong>Only mod reviewers and the add-on uploader can view this page.</strong>
+      </div>
+      ';
+    } else if(!$addonObject->getApproved()) {
+      echo '
+      <div class="tile" style="background-color: #ffcccc; padding: 10px; margin-top: 10px; text-align: center;">
+        <strong style="font-size: 2rem;">Unapproved Add-On</strong><br>
+        This add-on is not currently available to the public because it has not been inspected yet.<br>
+        <strong>Only mod reviewers and the add-on uploader can view this page.</strong>
+      </div>
+      ';
+    }
+
+		if($current) {
+			if((($current->inGroup("Reviewer") && $addonObject->getApproved()) || $addonObject->getManagerBLID() == $current->getBLID()) && !$addonObject->isRejected() && !$addonObject->getDeleted()) {
+				echo '<div class="tile" style="padding: 10px; margin-top: 10px; text-align: center;"><a href="manage.php?id=' . $addonObject->getId() . '">Manage</a></div>';
 			}
 		}
 
@@ -168,23 +199,29 @@
 		</div>
 		<div class="addon-info-side">
 			<div class="tile" style="margin-bottom: 10px;">
-				<h3>Recent Updates</h3>
+				<h3>Updates</h3>
 				<?php
-					$updates = ($addonObject->getUpdates());
+					$updates = $addonObject->getUpdates();
 					$updates = array_splice($updates, 0, 3, true);
+          $updateCount = 0;
 
-					foreach($updates as $update) {
-						?>
-						<div style="background-color: #f5f5f5; padding: 10px; margin: 5px">
-							<h4 style="padding: 0; margin: 0">Version <?php echo $update->getVersion();?></h4>
-							<span style="font-size: 0.8em; color: #666"><?php echo date("F j, Y", strtotime($update->getTimeSubmitted())); ?></span>
-						</div>
-						<?php
-					}
+					if(sizeof($updates) > 0) {
+            foreach($updates as $update) {
+              if($update->isApproved()) {
+                $updateCount++;
+                ?>
+                <div style="background-color: #f5f5f5; padding: 10px; margin: 5px">
+                  <h4 style="padding: 0; margin: 0">Version <?php echo $update->getVersion();?></h4>
+                  <span style="font-size: 0.8em; color: #666"><?php echo date("F j, Y", strtotime($update->getTimeSubmitted())); ?></span>
+                </div>
+                <?php
+              }
+            }
+          }
 
-					if(sizeof($updates) == 0) {
-						echo "<div style=\"text-align: center\"><i>No updates.</i></div>";
-					}
+          if($updateCount == 0) {
+            echo "<div style=\"text-align: center\"><i>No updates approved.</i></div>";
+          }
 				?>
 			</div>
 			<div class="tile">
@@ -224,12 +261,21 @@
 		$version = $addonObject->getVersion();
 		$id = "stable";
 		$class = "green";
-		echo '<a href="/addons/download.php?id=' . $addonObject->getId() . '&beta=0" class="btn dlbtn ' . $class . '"><strong>' . ucfirst($id) . '</strong><span style="font-size:9pt"><br />v' . $version . '</span></a>';
-		if($addonObject->hasBeta()) {
-			$id = "beta";
-			$class = "red";
-			echo '<a href="/addons/download.php?id=' . $addonObject->getId() . '&beta=1" class="btn dlbtn ' . $class . '"><strong>' . ucfirst($id) . '</strong><span style="font-size:9pt"><br />v' . $addonObject->getBetaVersion() . '</span></a>';
-		}
+
+    $url = ($addonObject->getApproved() ? "/addons/download.php?id=" : "/addons/review/download.php?file=aws_sync/");
+
+    if($addonObject->getApproved() || $current->inGroup("Reviewer")) {
+      echo '<a href="' . $url . $addonObject->getId() . '" class="btn dlbtn ' . $class . '"><strong>' . ucfirst($id) . '</strong><span style="font-size:9pt"><br />v' . $version . '</span></a>';
+    }
+
+    // unfinished, hasn't been made available for everybody.
+
+		// echo '<a href="/addons/download.php?id=' . $addonObject->getId() . '&beta=0" class="btn dlbtn ' . $class . '"><strong>' . ucfirst($id) . '</strong><span style="font-size:9pt"><br />v' . $version . '</span></a>';
+		// if($addonObject->hasBeta()) {
+			// $id = "beta";
+			// $class = "red";
+			// echo '<a href="/addons/download.php?id=' . $addonObject->getId() . '&beta=1" class="btn dlbtn ' . $class . '"><strong>' . ucfirst($id) . '</strong><span style="font-size:9pt"><br />v' . $addonObject->getBetaVersion() . '</span></a>';
+		// }
 		?>
 	</div>
 	<div class="screenshots" style="text-align:center;margin: 0 auto">
@@ -260,7 +306,18 @@
 			}
 			echo "</div>";
 		}
+
+    if(!$addonObject->getApproved()) {
+      echo '
+      <div class="tile" style="background-color: #ffcccc; padding: 10px; margin-top: 10px;">
+        <strong style="font-size: 1.5rem;">Review Discussion</strong><br>
+        The comments section is available for cross-communication between the add-on uploader and the mod reviewers.<br>
+        All comments will be cleared if the add-on is approved.
+      </div>
+      ';
+    }
 	?>
+
 	<div class="tile">
 		<div class="comments" id="commentSection">
 			<form action="" method="post">
@@ -268,5 +325,49 @@
 			</form>
 		</div>
 	</div>
+
+  <?php
+    if($current && $current->inGroup("Reviewer") && $addonObject->approved == 0) {
+      echo '
+      <div class="tile" style="background-color: #ffcccc; text-align: center;" >
+        <strong style="font-size: 1.5rem;">Inspection</strong><br>
+        <form action="/addons/review/approve.php" method="post"><br>
+          Approve to board:<br>
+          <select name="board">
+          <option value="" disabled>Choose One</option>
+          <option value="" disabled></option>
+          ';
+          $boards = BoardManager::getAllBoards();
+          foreach($boards as $board) {
+            if($board->getId() == $addonObject->getBoard()) {
+              $selected = true;
+            } else {
+              $selected = false;
+            }
+
+            echo '<option value="' . $board->getId() . '"' . ($selected ? ' selected' : '') .'>' . $board->getName() . '</option>';
+          }
+          echo '
+          </select><br><br>
+          Please sign below before approving or rejecting this add-on:<br>
+          <input type="checkbox" id="confirm" name="confirmed" value="1" />
+          <label for="confirm"><strong>I have inspected this add-on and I am ready to make a decision.</strong></label><br><br>
+          <table style="width: 100%;">
+            <tr>
+              <td>
+                <input type="submit" name="action" value="Approve" />
+              </td>
+              <td>
+                <input type="submit" name="action" value="Reject" />
+              </td>
+            </tr>
+          </table>
+          <input type="hidden" name="aid" value="' . $_GET['id'] . '">
+          <input type="hidden" name="reason" value="Rejection reasons not available.">
+        </form>
+      </div>
+      ';
+    }
+  ?>
 </div>
 <?php include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>

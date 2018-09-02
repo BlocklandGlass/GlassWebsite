@@ -36,7 +36,7 @@
     <h2>Success!</h2>
     <p>
       Your add-on was uploaded successfully.<br>
-      It will now be carefully reviewed by our mod reviewers and hopefully approved.
+      It will now be carefully inspected by our mod reviewers.
     </p>
     <p>
       <a href="/user/">View your content.</a>
