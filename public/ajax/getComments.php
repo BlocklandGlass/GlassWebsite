@@ -8,6 +8,7 @@
 	//echo(json_encode(include(realpath(dirname(__DIR__) . "/../private/json/getComments.php"))));
 	use Glass\UserManager;
   use Glass\GroupManager;
+  use Glass\AddonManager;
 	$response = include(realpath(dirname(__DIR__) . "/../private/json/getPageCommentsWithUsers.php"));
 
 	$user = UserManager::getCurrent();
@@ -22,9 +23,12 @@
 		$comments = $response['comments'];
 
 		if($user) {
+      if(isset($addonObject)) {
+        $rejected = $addonObject->isRejected();
+      }
 			echo("<tr style=\"vertical-align:top\">");
 			echo("<td>Leave a comment:</td>");
-			echo("<td style=\"text-align:center\"><textarea name=\"comment\" style=\"font-size:0.6em;\"></textarea><input type=\"submit\" value=\"Post\">");
+			echo("<td style=\"text-align:center\"><textarea name=\"comment\" style=\"font-size:0.6em;\"" . ($rejected ? " disabled" : "") . "></textarea><input type=\"submit\" value=\"Post\"" . ($rejected ? " disabled" : "") . ">");
 			echo("</td></tr>");
 		}
 
