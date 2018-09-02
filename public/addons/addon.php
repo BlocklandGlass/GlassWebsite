@@ -29,9 +29,11 @@
 
   $current = UserManager::getCurrent();
 
-  if(!$current || ($addonObject->getDeleted() && !$current->inGroup("Administrator"))) {
-    include 'deleted.php';
-    die();
+  if(!$current || ($current && !$current->inGroup("Administrator"))) {
+    if($addonObject->getDeleted()) {
+      include 'deleted.php';
+      die();
+    }
   }
 
   if(!$current || (!$current->inGroup("Reviewer") && $addonObject->getManagerBLID() != $current->getBLID())) {
