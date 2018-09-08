@@ -2,6 +2,10 @@
   require_once dirname(__DIR__) . '/../private/autoload.php';
   use Glass\DatabaseManager;
 
+  if(isset($_GET['q'])) {
+    $_REQUEST['query'] = $_GET['q'];
+  }
+
   if(!isset($_REQUEST['query'])) {
     $query = "";
   } else {

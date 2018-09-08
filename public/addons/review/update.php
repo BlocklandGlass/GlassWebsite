@@ -1,6 +1,6 @@
 <?php
 	require dirname(__DIR__) . '/../../private/autoload.php';
-	$_PAGETITLE = "Blockland Glass | Inspect Update";
+	$_PAGETITLE = "Inspect Update | Blockland Glass";
 
 	use Glass\AddonManager;
 	use Glass\BoardManager;

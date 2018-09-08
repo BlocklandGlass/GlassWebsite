@@ -46,7 +46,7 @@
     $lastseen = "Never";
   }
 
-  $_PAGETITLE = "Blockland Glass | " . $name;
+  $_PAGETITLE = $name . "'s Profile | Blockland Glass";
   $_PAGEDESCRIPTION = "BL_ID: $blid\r\nLast Seen: $lastseen";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));

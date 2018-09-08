@@ -11,7 +11,7 @@
 
   use Glass\RTBAddonManager;
 
-	$_PAGETITLE = "Blockland Glass | RTB Archive";
+	$_PAGETITLE = "RTB Archive | Blockland Glass";
 	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
 ?>
 

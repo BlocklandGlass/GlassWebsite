@@ -21,7 +21,7 @@
     die();
   }
 
-	$_PAGETITLE = "Blockland Glass | Add-On Update";
+	$_PAGETITLE = "Add-On Update | Blockland Glass";
 	include dirname(__DIR__) . "/../private/header.php";
 ?>
 <div class="maincontainer" style="text-align:center">

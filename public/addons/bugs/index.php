@@ -39,7 +39,7 @@
   }
 
 
-	$_PAGETITLE = "Blockland Glass | Bugs";
+	$_PAGETITLE = "Bugs | Blockland Glass";
 
 	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
 ?>

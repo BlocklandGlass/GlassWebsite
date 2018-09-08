@@ -4,7 +4,7 @@
 	use Glass\UserManager;
   use Glass\RTBAddonManager;
 
-	$_PAGETITLE = "Blockland Glass | RTB Reclaim";
+	$_PAGETITLE = "RTB Reclaim | Blockland Glass";
 	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
 
   $user = UserManager::getCurrent();

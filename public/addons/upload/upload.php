@@ -10,7 +10,7 @@
 		header("Location: " . $status['redirect']);
 		die();
 	}
-	$_PAGETITLE = "Blockland Glass | Add-On Upload";
+	$_PAGETITLE = "Add-On Upload | Blockland Glass";
 	include(__DIR__ . "/../../../private/header.php");
 
 	$message = "";

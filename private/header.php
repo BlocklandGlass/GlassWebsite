@@ -98,11 +98,11 @@
 			}
 
       if(isset($_PAGETITLE)) {
-        echo '<meta name="og:title" content="' . htmlspecialchars(str_replace("Blockland Glass | ", "", $_PAGETITLE)) . '" />';
+        echo '<meta name="og:title" content="' . htmlspecialchars(str_replace(" | Blockland Glass", "", $_PAGETITLE)) . '" />';
       }
 
       if(isset($_PAGEDESCRIPTION)) {
-        echo '<meta name="og:description" content="' .  htmlspecialchars(mb_strimwidth($_PAGEDESCRIPTION, 0, 140, "...")) . '" />';
+        echo '<meta name="og:description" content="' .  htmlspecialchars(mb_strimwidth($_PAGEDESCRIPTION, 0, 200, "...")) . '" />';
       } else {
         echo '<meta name="og:description" content="Social and content platform for Blockland." />';
       }

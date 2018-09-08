@@ -1,6 +1,6 @@
 <?php
 	require dirname(__DIR__) . '/../../private/autoload.php';
-	$_PAGETITLE = "Blockland Glass | Update List";
+	$_PAGETITLE = "Update List | Blockland Glass";
 	include(realpath(dirname(__DIR__) . "/../../private/header.php"));
 	use Glass\AddonManager;
 	use Glass\UserManager;

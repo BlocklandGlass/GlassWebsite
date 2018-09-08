@@ -5,7 +5,7 @@
 	use Glass\UserLog;
 	use Glass\StatUsageManager;
 
-	$_PAGETITLE = "Blockland Glass | Current Users";
+	$_PAGETITLE = "Current Users | Blockland Glass";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 

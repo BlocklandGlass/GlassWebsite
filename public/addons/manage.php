@@ -23,7 +23,7 @@
     die();
   }
 
-	$_PAGETITLE = "Blockland Glass | Manage Add-On";
+	$_PAGETITLE = "Manage Add-On | Blockland Glass";
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 
 	if(!isset($_GET['tab']) || $_GET['tab'] == "") {

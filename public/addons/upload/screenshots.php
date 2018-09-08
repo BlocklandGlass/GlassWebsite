@@ -6,7 +6,7 @@
 	use Glass\ScreenshotManager;
   use Glass\UserManager;
 
-	$_PAGETITLE = "Blockland Glass | Screenshots";
+	$_PAGETITLE = "Screenshots | Blockland Glass";
 	include(__DIR__ . "/../../../private/header.php");
 
   $id = $_REQUEST['id'] ?? 0;
@@ -27,8 +27,6 @@
 
 	  padding: 7px;
 	  background-color:#cecece;
-
-	  border-radius: 5px;
 	}
 
 	#drop-box {
@@ -37,7 +35,6 @@
 	  padding: 15px;
 	  background-color:#cecece;
 	  border: 2px dashed #55acee;
-	  border-radius: 5px;
 
 	  text-align: center;
 	  cursor: pointer;
@@ -66,8 +63,6 @@
 	}
 
 	.image-preview img {
-		border-radius: 2px;
-
 		-webkit-transition: all 0.5s ease;
 	  -moz-transition: all 0.5s ease;
 	  -o-transition: all 0.5s ease;
@@ -134,7 +129,6 @@
 
 		background-color: #eee;
 
-		border-radius: 10px 10px 0 0;
 		min-width: 300px;
 		text-align: center;
 
@@ -183,7 +177,7 @@
       </form>
     </div>
 		<div style="text-align: center">
-			<a href="success.php?id=<?php echo $addon->getId(); ?>" type="submit" id="continue" class="btn red">Not Right Now</a>
+			<a href="success.php?id=<?php echo $addon->getId(); ?>" type="submit" id="continue" class="btn blue">Not Right Now</a>
 		</div>
   </div>
 

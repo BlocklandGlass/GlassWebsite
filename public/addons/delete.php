@@ -19,7 +19,7 @@
     die();
   }
 
-	$_PAGETITLE = "Blockland Glass | Delete Add-On";
+	$_PAGETITLE = "Delete Add-On | Blockland Glass";
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 
   $confirm = $_REQUEST['confirm'] ?? false;

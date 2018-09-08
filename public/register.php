@@ -7,7 +7,7 @@
 		header("Location: " . $registerStatus['redirect']);
 		die();
 	}
-	$_PAGETITLE = "Blockland Glass | Register";
+	$_PAGETITLE = "Register | Blockland Glass";
 	include realpath(dirname(__DIR__) . "/private/header.php");
 ?>
 <div class="maincontainer">

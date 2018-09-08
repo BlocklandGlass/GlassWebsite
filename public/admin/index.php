@@ -5,7 +5,7 @@
 	
 	$user = UserManager::getCurrent();
 
-	$_PAGETITLE = "Blockland Glass | Control Panel";
+	$_PAGETITLE = "Control Panel | Blockland Glass";
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 
   if(!GroupManager::getFromName("Administrator")) {

@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Blockland Glass | ToS</title>
+    <title>Terms of Service | Blockland Glass</title>
     <style>
     html {
       font-family: 'Times New Roman', serif;

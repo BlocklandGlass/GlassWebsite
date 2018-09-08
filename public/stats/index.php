@@ -9,7 +9,7 @@
 	use Glass\UserLog;
   use Glass\InstallationManager;
 
-	$_PAGETITLE = "Blockland Glass | Statistics";
+	$_PAGETITLE = "Statistics | Blockland Glass";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 

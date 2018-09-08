@@ -21,7 +21,7 @@
 		header('Location: /addons');
 		die();
 	}
-	$_PAGETITLE = "Blockland Glass | " . $boardObject->getName();
+	$_PAGETITLE = $boardObject->getName() . " | Blockland Glass";
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 ?>
 <div class="maincontainer">

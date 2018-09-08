@@ -2,7 +2,7 @@
 	require dirname(__DIR__) . '/../private/autoload.php';
 	use Glass\BoardManager;
 
-	$_PAGETITLE = "Blockland Glass | Boards";
+	$_PAGETITLE = "Boards | Blockland Glass";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 ?>

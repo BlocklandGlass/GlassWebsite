@@ -4,7 +4,7 @@
   use Glass\AddonFileHandler;
   $user = UserManager::getCurrent();
 
-  $_PAGETITLE = "Blockland Glass | Upload Success";
+  $_PAGETITLE = "Upload Success";
 
   include(realpath(dirname(dirname(__DIR__)) . "/../private/header.php"));
 ?>

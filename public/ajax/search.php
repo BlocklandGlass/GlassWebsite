@@ -11,7 +11,7 @@
 
 	foreach($addons as $addon) {
 		//to do: include "by <a>user</a>"
-		echo "<p style=\"margin: 0; padding: 5px; background-color: #ddd;\"><strong><a href=\"addon.php?id=" . $addon->getId() . "\">" . utf8_encode($addon->getName()) . "</a></strong><br />";
+		echo "<p style=\"margin: 0; padding: 5px; background-color: #ddd;\"><strong><a href=\"addon.php?id=" . $addon->getId() . "\">" . htmlspecialchars($addon->getName()) . "</a></strong><br />";
 
 		if(strlen($addon->description) > 200) {
 			$desc = substr($addon->description, 0, 196) . " ...";

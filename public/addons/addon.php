@@ -19,7 +19,7 @@
     if($addonObject) {
       $boardObject = BoardManager::getFromID($addonObject->getBoard());
     } else {
-      header('Location: /addons');
+      include 'notfound.php';
 			die();
     }
 	} else {
@@ -50,7 +50,7 @@
 		CommentManager::submitComment($addonObject->getId(), UserManager::getCurrent()->getBLID(), $_POST['comment']);
 	}
 
-	$_PAGETITLE = "Blockland Glass | " . $addonObject->getName();
+	$_PAGETITLE = $addonObject->getName() . " - " . $boardObject->getName() . " | Blockland Glass";
   $_PAGEDESCRIPTION = $addonObject->getDescription();
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));

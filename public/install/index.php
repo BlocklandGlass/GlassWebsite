@@ -16,7 +16,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Blockland Glass Installation</title>
+    <title>Installation | Blockland Glass</title>
   </head>
   <body>
     <h2>Site Setup</h2>

@@ -4,7 +4,9 @@
 
 	if(isset($_POST['query'])) {
 		$searchArray['name'] = $_POST['query'];
-	}
+	} else if(isset($_GET['q'])) {
+    $searchArray['name'] = $_GET['q'];
+  }
 
 	if(isset($_POST['blid'])) {
 		$searchArray['blid'] = intval($_POST['blid']);

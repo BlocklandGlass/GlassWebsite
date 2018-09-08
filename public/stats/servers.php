@@ -4,7 +4,7 @@
 	use Glass\UserManager;
 	use Glass\ServerTracker;
 
-	$_PAGETITLE = "Blockland Glass | Current Servers";
+	$_PAGETITLE = "Current Servers | Blockland Glass";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 

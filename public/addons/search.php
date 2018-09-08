@@ -3,7 +3,7 @@
 	//use Glass\DatabaseManager;
 	//require_once(realpath(dirname(__DIR__) . "/../private/lib/Parsedown.php"));
 
-	$_PAGETITLE = "Blockland Glass | Search Results";
+	$_PAGETITLE = "Search Results | Blockland Glass";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 ?>

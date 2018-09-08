@@ -5,7 +5,7 @@
 	use Glass\AddonManager;
 	use Glass\RTBAddonManager;
 
-	$_PAGETITLE = "Blockland Glass | Add-Ons";
+	$_PAGETITLE = "Add-Ons | Blockland Glass";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 

@@ -11,7 +11,7 @@
 
   $redirect = $_REQUEST['redirect'] ?? ($_REQUEST['rd'] ?? false);
 
-	$_PAGETITLE = "Blockland Glass | Log In";
+	$_PAGETITLE = "Log In | Blockland Glass";
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 ?>
 <div class="maincontainer">
