@@ -28,7 +28,11 @@
 				?>
 				<br />
 				<br />
-				Are you the former owner of this add-on? You can regain your former userbase by reclaiming the add-on! <a href="reclaim.php?id=<?php echo $_GET['id'] ?>">Click here!</a>
+        <?php
+        if($addonData->glass_id == 0 || $addonData->approved != 1) {
+          echo 'Are you the former owner of this add-on? You can regain your former userbase by reclaiming the add-on! <a href="reclaim.php?id=' . $_GET['id'] . '">Click here!</a>';
+        }
+        ?>
 			</div>
 		</div>
 		<hr />

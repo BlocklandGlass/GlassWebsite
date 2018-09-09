@@ -10,9 +10,14 @@
   $user = UserManager::getCurrent();
   if($user == false) {
     header('Location: /login.php');
+    die();
   }
 
   $addonData = RTBAddonManager::getAddonFromId($_GET['id']);
+
+  if($addonData->glass_id != 0 || $addonData->approved == 1) {
+    die('Add-on already imported.');
+  }
 
   $ret = null;
   if(isset($_REQUEST['action'])) {
@@ -27,9 +32,9 @@
   ?>
 	<div class="tile">
 	  <?php if($ret === true) {
-	    echo "<strong>Your reclaim request has been submitted for approval</strong>";
+	    echo "<strong>Your reclaim request has been submitted for approval.</strong>";
 	  } else if($ret === false) {
-	    echo "<strong>Your reclaim request has failed</strong>";
+	    echo "<strong>Your reclaim request has failed.</strong>";
 	  }
 	  ?>
 	  <h1 style="text-align:center"><img src="/img/rtb_logo.gif"><br /><?php echo $addonData->title ?></h1>
