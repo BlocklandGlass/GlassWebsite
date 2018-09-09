@@ -21,10 +21,11 @@ if($id === false) {
   return;
 }
 
-$json = file_get_contents(dirname(__FILE__) . '/config.json');
-if($json === false) {
+if(!file_exists(dirname(__FILE__) . '/config.json')) {
   die('Config Missing');
 }
+
+$json = file_get_contents(dirname(__FILE__) . '/config.json');
 
 $config = json_decode($json);
 if($config === false) {
@@ -89,19 +90,30 @@ if($content !== false) {
       case "join":
         $blid = $data->params[0];
         $un = $data->params[1];
-        $string = $blid . " ($un, " . $usernames[$blid] . ") joined";
+        $un2 = htmlspecialchars($usernames[$blid]);
+        if($un != $un2) {
+          $string = $blid . " ($un, $un2) joined";
+        } else {
+          $string = $blid . " ($un) joined";
+        }
         break;
 
       case "msg":
         $blid = $data->params[0];
         $msg = $data->params[1];
-        $string = $blid . " (" . $usernames[$blid] . "): $msg";
+        $un2 = htmlspecialchars($usernames[$blid]);
+        $string = $blid . " ($un2): $msg";
         break;
 
       case "exit":
         $blid = $data->params[0];
         $un = $data->params[1];
-        $string = $blid . " ($un, " . $usernames[$blid] . ") exited";
+        $un2 = htmlspecialchars($usernames[$blid]);
+        if($un != $un2) {
+          $string = $blid . " ($un, $un2) exited";
+        } else {
+          $string = $blid . " ($un) exited";
+        }
         break;
 
       default:
@@ -115,7 +127,7 @@ if($content !== false) {
 ?>
 <html>
   <head>
-    <title>Room Log</title>
+    <title>Room Log | Blockland Glass</title>
     <style>
       th {
         font-weight: bold;
@@ -160,7 +172,7 @@ if($content !== false) {
     <table>
       <thead>
         <tr>
-          <th>Time</th><th>Type</th><th>Params</th>
+          <th>Time</th><th>Type</th><th>Log Entry</th>
         </tr>
       </thead>
       <tbody>

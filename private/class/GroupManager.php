@@ -11,7 +11,6 @@ class GroupManager {
 	private static $groupUsersCacheTime = 3600;
 
 	public static function getFromID($id, $resource = false) {
-
 		if($resource !== false) {
 			$groupObject = new GroupObject($resource);
 		} else {
@@ -35,7 +34,6 @@ class GroupManager {
 	}
 
 	public static function getFromName($name, $resource = false) {
-
 		if($resource !== false) {
 			$groupObject = new GroupObject($resource);
 		} else {
@@ -59,7 +57,6 @@ class GroupManager {
 	}
 
 	public static function getGroupsFromBLID($id) {
-
 		$database = new DatabaseManager();
 		GroupManager::verifyTable($database);
 		$resource = $database->query("SELECT * FROM `group_usermap` WHERE `blid` = '" . $database->sanitize($id) . "'");
@@ -78,7 +75,6 @@ class GroupManager {
 	}
 
 	public static function getUsersFromGroupID($id) {
-
 		$database = new DatabaseManager();
 		GroupManager::verifyTable($database);
 		$resource = $database->query("SELECT * FROM `group_usermap` WHERE `gid` = '" . $database->sanitize($id) . "'");
@@ -97,7 +93,6 @@ class GroupManager {
 	}
 
 	public static function getMemberCountByID($id) {
-
 		$database = new DatabaseManager();
 		GroupManager::verifyTable($database);
 		$resource = $database->query("SELECT COUNT(*) FROM `group_usermap` WHERE `gid` = '" . $database->sanitize($id) . "'");
@@ -128,6 +123,24 @@ class GroupManager {
 
 		return $members;
 	}
+
+  public static function getGroups() {
+		$database = new DatabaseManager();
+		GroupManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `group_groups`");
+
+		if(!$resource) {
+			throw new \Exception("Database error: " . $database->error());
+		}
+		$groups = [];
+
+		while($row = $resource->fetch_object()) {
+			$groups[] = $row;
+		}
+		$resource->close();
+
+    return $groups;
+  }
 
 	//modifiers
 	public static function createGroupWithLeaderBLID($name, $description, $color, $icon, $blid) {
@@ -261,6 +274,40 @@ class GroupManager {
 		GroupManager::createGroupWithLeaderBLID("Moderator", "", "336699", "crown_silver", $blid);
 		GroupManager::createGroupWithLeaderBLID("Reviewer", "", "00ff00", "star", $blid);
 	}
+
+  public static function editGroupByGroupID($gid, $attribute, $data) {
+		$database = new DatabaseManager();
+		GroupManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `group_groups` WHERE `id` = '" . $database->sanitize($gid) . "' LIMIT 1");
+
+		if(!$resource) {
+			throw new \Exception("Database error: " . $database->error());
+		}
+
+    switch($attribute) {
+      case "id": // no.
+        return false;
+      case "name": // not a good idea since site relies on inGroup(<name>).
+        return false;
+      case "desc":
+        $attribute = "description";
+        break;
+      case "color":
+        break;
+      case "icon":
+        break;
+      case "leader": // unfinished.
+        return false;
+      default:
+        throw new \Exception("Invalid attribute provided.");
+    }
+
+    $database->query("UPDATE `group_groups` SET `" . $database->sanitize($attribute) . "` = '" . $database->sanitize($data) . "' WHERE `id` = '" . $database->sanitize($gid) . "'");
+
+    $resource->close();
+
+    return true;
+  }
 
 	public static function verifyTable($database) {
 		UserManager::verifyTable($database);

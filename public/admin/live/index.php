@@ -13,10 +13,11 @@ if(!$user || !$allowed) {
   return;
 }
 
-$json = file_get_contents(dirname(__FILE__) . '/config.json');
-if($json === false) {
+if(!file_exists(dirname(__FILE__) . '/config.json')) {
   die('Config Missing');
 }
+
+$json = file_get_contents(dirname(__FILE__) . '/config.json');
 
 $config = json_decode($json);
 if($config === false) {
@@ -44,10 +45,10 @@ function scanRooms() {
 <!doctype html>
 <html>
   <head>
-    <title>Glass Live Logs</title>
+    <title>Glass Live Logs | Blockland Glass</title>
   </head>
   <body>
-    <h2>Glass Live Archives</h2>
+    <h2>Glass Live Logs</h2>
     <hr />
     <h3>Rooms</h3>
 
@@ -67,8 +68,8 @@ function scanRooms() {
     <h3>User Lookup</h3>
     Enter BL_ID:
     <form>
-      <input type="text" />
-      <input type="submit" value="Search"/>
+      <input type="text" placeholder="Not finished." disabled />
+      <input type="submit" value="Search" disabled />
     </form>
   </body>
 </html>

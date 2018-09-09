@@ -148,7 +148,7 @@
 
 		if($current) {
 			if((($current->inGroup("Reviewer") && $addonObject->getApproved()) || $addonObject->getManagerBLID() == $current->getBLID()) && !$addonObject->isRejected() && !$addonObject->getDeleted()) {
-				echo '<div class="tile" style="padding: 10px; margin-top: 10px; text-align: center;"><a href="manage.php?id=' . $addonObject->getId() . '">Manage</a></div>';
+				echo '<div class="tile" style="padding: 10px; margin-top: 10px; text-align: center;"><a href="manage.php?id=' . $addonObject->getId() . '">Manage This Add-On</a></div>';
 			}
 		}
 

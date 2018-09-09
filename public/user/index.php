@@ -1,5 +1,6 @@
 <?php
 	require_once dirname(__DIR__) . '/../private/autoload.php';
+  $_PAGETITLE = "Your Account | Blockland Glass";
 	session_start();
 
 	if(!isset($_SESSION['loggedin']) || !$_SESSION['loggedin']) {
@@ -18,7 +19,6 @@
 		header('Location: verifyAccount.php');
 		die();
 	}
-
 ?>
 
 <div class="maincontainer">
@@ -82,13 +82,13 @@
             $board = BoardManager::getFromId($ao->getBoard());
             echo '<tr>';
             if($ao->approved == 0) {
-              echo '<td><img style="width: 1.2em;" src="https://blocklandglass.com/img/icons32/hourglass.png" alt="Under Review"/></td>';
+              echo '<td><img src="https://blocklandglass.com/img/icons32/hourglass.png" alt="Under Review"/></td>';
             } else if($ao->getDeleted()) {
-              echo '<td><img style="width: 1.2em;" src="https://blocklandglass.com/img/icons32/warning.png" alt="Deleted"/></td>';
+              echo '<td><img src="https://blocklandglass.com/img/icons32/warning.png" alt="Deleted"/></td>';
             } else if($ao->isRejected()) {
-              echo '<td><img style="width: 1.2em;" src="https://blocklandglass.com/img/icons32/cancel.png" alt="Rejected"/></td>';
+              echo '<td><img src="https://blocklandglass.com/img/icons32/cancel.png" alt="Rejected"/></td>';
             } else {
-              echo '<td><img style="width: 1.2em;" src="https://blocklandglass.com/img/icons32/' . $board->getIcon() . '.png"/></td>';
+              echo '<td><img src="https://blocklandglass.com/img/icons32/' . $board->getIcon() . '.png"/></td>';
             }
 
             echo '<td style="text-align: left !important"><a href="/addons/addon.php?id=' . $ao->getId() . '"><span style="font-size: 1.2em; font-weight:bold;">' . $ao->getName() . '</span></a></td>';
@@ -100,7 +100,7 @@
             } else if($ao->isRejected()) {
               echo '<td>Rejected</td>';
             } else {
-              echo '<td>Under Review</td>';
+              echo '<td>Awaiting Review</td>';
             }
 
             echo '<td>' . ($ao->getDownloads('web')+$ao->getDownloads('ingame')) . '</td>';

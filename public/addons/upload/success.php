@@ -2,9 +2,15 @@
 	require dirname(__DIR__) . '/../../private/autoload.php';
   use Glass\UserManager;
   use Glass\AddonFileHandler;
+  
+  if(!isset($_GET['id'])) {
+    header('Location: /addons');
+    die();
+  }
+  
   $user = UserManager::getCurrent();
 
-  $_PAGETITLE = "Upload Success";
+  $_PAGETITLE = "Upload Successful";
 
   include(realpath(dirname(dirname(__DIR__)) . "/../private/header.php"));
 ?>
@@ -33,13 +39,14 @@
     include(realpath(dirname(dirname(__DIR__)) . "/../private/navigationbar.php"));
   ?>
   <div class="tile">
-    <h2>Success!</h2>
+    <h2>Upload Successful</h2>
     <p>
       Your add-on was uploaded successfully.<br>
       It will now be carefully inspected by our mod reviewers.
     </p>
     <p>
-      <a href="/user/">View your content.</a>
+      <a href="/addons/addon.php?id=<?php echo $_GET['id']; ?>">View your add-on.</a><br>
+      <a href="/user/">View all your content.</a>
     </p>
   </div>
 </div>

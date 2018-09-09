@@ -12,11 +12,9 @@
     GroupManager::createDefaultGroups(9789); // need to be able to change this during installation
   }
 
-	if(!$user || !$user->inGroup("Administrator")) {
+	if(!$user || !$user->inGroup("Administrator") || !$user->inGroup("Moderator")) {
     header('Location: /login.php?redirect=' . urlencode("/admin/index.php"));
     return;
-  } else {
-    $_adminAuthed = true;
   }
 ?>
 
@@ -26,22 +24,25 @@
   ?>
 	<div class="tile" style="width: 185px; float: left;">
 		<ul class="sidenav">
-			<li><a href="?tab=board">Boards</a></li>
-			<li><a href="?tab=user">Users</a></li>
+			<li><a href="?tab=boards">Boards</a></li>
+      <hr>
 			<li><a href="?tab=groups">Groups</a></li>
-			<li><a href="?tab=bans">Bans</a></li>
+			<li><a href="?tab=users">Users</a></li>
+      <hr>
+      <li><a href="/admin/live">Chatroom Logs</a></li>
     </ul>
 	</div>
 	<div class="tile" style="width: 1010px; padding: 15px; float: right;">
 		<?php
       if(!isset($_GET['tab'])) {
+        echo "<h1>Control Panel</h1>";
         echo "Select a tab on the left to continue.";
       } else {
         $path = dirname(__FILE__) . "/tab/" . $_GET['tab'] . ".php";
         if(is_file($path)) {
           include($path);
         } else {
-          echo "Invalid tab!";
+          echo "Invalid tab.";
         }
       }
 		?>

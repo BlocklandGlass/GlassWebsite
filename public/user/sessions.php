@@ -1,5 +1,6 @@
 <?php
 	require_once dirname(__DIR__) . '/../private/autoload.php';
+  $_PAGETITLE = "Your Sessions and Usage | Blockland Glass";
 	session_start();
 
 	if(!isset($_SESSION['loggedin']) || !$_SESSION['loggedin']) {
@@ -120,7 +121,6 @@
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
-  <h2>Sessions and Usage - <?php echo $userObject->getUsername(); ?></h2>
   <div class="flex-container">
   	<div>
       <h3>Active Sessions</h3>
