@@ -31,11 +31,10 @@ $ret->users = [];
 foreach($users as $discord=>$blid) {
   $user = $ret->users[$discord] ?? new stdClass();
 
-  $user->name = $usernames[$blid] ?? false;
+  $user->name = utf8_encode($usernames[$blid] ?? false);
   $user->blid = $blid;
 
   $ret->users[$discord] = $user;
 }
-
 
 die(json_encode($ret, JSON_PRETTY_PRINT | JSON_FORCE_OBJECT) . "\n");
