@@ -52,6 +52,9 @@ class UserLog {
 
 	// returns blid and username pairs for a given array of blids, $blids
 	public static function getUsernames($blids) {
+    if(!$blids || sizeof($blids) == 0)
+      return [];
+      
 		$blidStr = "";
 		foreach($blids as $blid) {
 			if(!is_numeric($blid)) {
@@ -68,6 +71,10 @@ class UserLog {
     UserLog::verifyTable($db);
 
     $resource = $db->query("SELECT `blid`,`username` FROM `user_log` WHERE `blid` IN (" . $db->sanitize($blidStr) . ")");
+
+    if($resource == false) {
+      return [];
+    }
 
 		$ret = [];
     while(($obj = $resource->fetch_object()) != null) {

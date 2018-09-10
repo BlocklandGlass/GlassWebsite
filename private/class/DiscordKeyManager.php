@@ -87,6 +87,62 @@ class DiscordKeyManager {
     return false;
   }
 
+  public static function getBlids($discords) {
+    if(sizeof($discords) == 0)
+      return [];
+
+    $str = "";
+		foreach($discords as $discord) {
+			if(!is_numeric($discord)) {
+				continue;
+			}
+
+			if($str === "")
+				$str = $discord;
+			else
+				$str .= "," . $discord;
+		}
+
+    $db = new DatabaseManager();
+
+    $resource = $db->query("SELECT `blid`,`discord` FROM `user_discord_map` WHERE `discord` IN (" . $db->sanitize($str) . ")");
+
+		$ret = [];
+    while(($obj = $resource->fetch_object()) != null) {
+			$ret[$obj->discord] = $obj->blid;
+		}
+
+		return $ret;
+  }
+
+  public static function getDiscords($blids) {
+    if(sizeof($blids) == 0)
+      return [];
+
+    $str = "";
+		foreach($blids as $blid) {
+			if(!is_numeric($blid)) {
+				continue;
+			}
+
+			if($str === "")
+				$str = $blid;
+			else
+				$str .= "," . $blid;
+		}
+
+    $db = new DatabaseManager();
+
+    $resource = $db->query("SELECT `blid`,`discord` FROM `user_discord_map` WHERE `blid` IN (" . $db->sanitize($str) . ")");
+
+		$ret = [];
+    while(($obj = $resource->fetch_object()) != null) {
+			$ret[$obj->blid] = $obj->discord;
+		}
+
+		return $ret;
+  }
+
   public static function checkSecret($secret) {
     $keyData = json_decode(file_get_contents(dirname(__DIR__) . "/config.json"));
     return hash_equals($keyData->discord_secret, $secret);
