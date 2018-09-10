@@ -73,14 +73,12 @@
         $groups = GroupManager::getGroupsFromBLID($blid);
         if(sizeof($groups) > 0) {
           echo "This user is part of the following groups:<br>";
-          echo "<ul>";
-
+          echo "<div style=\"margin-left: 15px;\">";
           foreach($groups as $gid) {
             $group = GroupManager::getFromId($gid);
-            echo "<li><strong style=\"color: #" . $group->getColor() . ";\">" . $group->getName() . ($group->getLeader() == $blid ? " (Leader)" : "") . "</strong></li>";
+            echo "<img src=\"/img/icons16/" . $group->getIcon() . ".png\"> <span style=\"font-weight: bold; color: #" . $group->getColor() . ";\" title=\"" . $group->getDescription() . "\">" . $group->getName() . ($group->getLeader() == $blid ? " (Leader)" : "") . "</strong><br>";
           }
-
-          echo "</ul>";
+          echo "</div>";
         }
 			}
 

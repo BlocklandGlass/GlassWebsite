@@ -162,7 +162,7 @@
 				?>
 				<div style="margin-top: 15px; margin-bottom: 10px; display: inline-block; width: 100%;">
 					<div class="addoninfoleft">
-						<image style="height:1.5em" src="https://blocklandglass.com/img/icons32/tag.png" />
+						<image style="height:1.5em" src="https://blocklandglass.com/img/icons32/category.png" />
 						<?php
 							echo htmlspecialchars($boardObject->getName());
 						?>
@@ -172,7 +172,7 @@
 							echo $addonObject->getFilename();
 						?>
 						<br />
-						<image style="height:1.5em" src="https://blocklandglass.com/img/icons32/time.png" />
+						<image style="height:1.5em" src="https://blocklandglass.com/img/icons32/date.png" />
 						<?php echo date("M jS Y, g:i A", strtotime($addonObject->getUploadDate())); ?>
 						<br />
 					</div>
@@ -265,6 +265,7 @@
 		$class = "green";
 
     $url = ($addonObject->getApproved() ? "/addons/download.php?id=" : "/addons/review/download.php?file=aws_sync/");
+    // $url = "/addons/download.php?id=";
 
     if($addonObject->getApproved() || $current->inGroup("Reviewer")) {
       echo '<a href="' . $url . $addonObject->getId() . '" class="btn dlbtn ' . $class . '"><strong>' . ucfirst($id) . '</strong><span style="font-size:9pt"><br />v' . $version . '</span></a>';

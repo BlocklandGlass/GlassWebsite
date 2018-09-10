@@ -1,4 +1,5 @@
 <?php
+  use Glass\UserManager;
   use Glass\GroupManager;
 
 	if(!$user->inGroup("Administrator")) {
@@ -22,18 +23,18 @@
     // GroupManager::editGroupByGroupID($gid, "name", $_POST['name']);
   // }
 
-  if(isset($_POST['icon'])) {
+  if(isset($_POST['icon']) && $group->icon != $_POST['icon']) {
     GroupManager::editGroupByGroupID($gid, "icon", $_POST['icon']);
     $dirty = true;
   }
 
-  if(isset($_POST['color'])) {
+  if(isset($_POST['color']) && $group->color != $_POST['color']) {
     GroupManager::editGroupByGroupID($gid, "color", $_POST['color']);
     $dirty = true;
   }
 
-  if(isset($_POST['description'])) {
-    GroupManager::editGroupByGroupID($gid, "description", $_POST['description']);
+  if(isset($_POST['desc']) && $group->description != $_POST['desc']) {
+    GroupManager::editGroupByGroupID($gid, "desc", $_POST['desc']);
     $dirty = true;
   }
 
@@ -44,6 +45,17 @@
 
 <h1>Group Management</h1>
 
+<ul>
+  <?php
+    $users = GroupManager::getUsersFromGroupID($gid);
+    
+    foreach($users as $blid) {
+      $user = UserManager::getFromBlid($blid);
+      echo "<li>" . $user->getUsername() . "</li>";
+    }
+  ?>
+</ul>
+
 <hr>
 
 <form method="post">
@@ -53,8 +65,8 @@
       <tr><td>Name:</td><td><input type="text" name="name" id="name" value="<?php echo $group->name; ?>" disabled></td></tr>
       <tr><td>Icon:</td><td><input type="text" name="icon" id="icon" value="<?php echo $group->icon; ?>"></td></tr>
       <tr><td>Color:</td><td><input type="text" name="color" id="color" value="<?php echo $group->color; ?>"></td></tr>
-      <tr><td>Description:</td><td><textarea name="desc" id="desc" value="<?php echo $group->description; ?>"></textarea></tr>
-      <tr><td class="center" colspan="2"><input type="submit"></td></tr>
+      <tr><td>Description:</td><td><textarea name="desc" id="desc"><?php echo $group->description; ?></textarea></tr>
+      <tr><td class="center" colspan="2"><input class="yellow" type="submit"></td></tr>
     </tbody>
   </table>
   <input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">

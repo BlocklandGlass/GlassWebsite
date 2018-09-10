@@ -40,7 +40,7 @@
       <tr><td>Icon:</td><td><input type="text" name="icon" id="icon" disabled></td></tr>
       <tr><td>Color:</td><td><textarea name="desc" id="desc" disabled></textarea></tr>  
       <tr><td>Description:</td><td><textarea name="desc" id="desc" disabled></textarea></tr>
-      <tr><td class="center" colspan="2"><input type="submit" disabled></td></tr>
+      <tr><td class="center" colspan="2"><input class="green" type="submit" disabled></td></tr>
     </tbody>
   </table>
   <input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">

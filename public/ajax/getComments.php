@@ -47,12 +47,12 @@
 				echo("<br />" . date("M jS Y, g:i A", strtotime($comment->getTimeStamp())) . "<br />");
 
         if($user->getBanned()) {
-					echo("<span style=\"color: gray\">Banned</span>");
+					echo("<img src=\"/img/icons16/list_suspended_accounts.png\"> <span style=\"color: gray;\">Banned</span>");
 				} else {
           $foundGroup = false;
 
           if($user->getBLID() == $addonObject->getAuthor()->getBLID()) {
-            echo("<span style=\"font-weight: bold;\">Uploader</span>");
+            echo("<img src=\"/img/icons16/vhs.png\"> <span style=\"font-weight: bold;\" title=\"This user uploaded the current add-on.\">Uploader</span>");
           } elseif($user->inGroup("Administrator")) {
             $foundGroup = GroupManager::getFromName("Administrator");
           } elseif($user->inGroup("Reviewer")) {
@@ -62,7 +62,7 @@
           }
 
           if($foundGroup) {
-            echo("<span style=\"color: #" . $foundGroup->getColor() . "; font-weight: bold;\">" . htmlspecialchars($foundGroup->getName()) . "</span>");
+            echo("<img src=\"/img/icons16/" . $foundGroup->getIcon() . ".png\"> <span style=\"color: #" . $foundGroup->getColor() . "; font-weight: bold;\" title=\"" . $foundGroup->getDescription() . "\">" . htmlspecialchars($foundGroup->getName()) . "</span>");
           }
         }
 

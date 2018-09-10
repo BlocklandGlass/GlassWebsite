@@ -26,37 +26,24 @@ if(strpos($file, "..") !== false) {
   die(json_encode($result, JSON_PRETTY_PRINT));
 }
 
+$filepath = dirname(__DIR__) . "/../../filebin/" . $file;
 
-$fp = fopen(dirname(__DIR__) . "/../../filebin/" . $file, 'r');
-if(!$fp) {
+$fo = fopen($filepath, 'r');
+if(!$fo) {
   $result->status = "error";
-  $result->error = "Failed to open resource " . (dirname(__DIR__) . "/../../filebin/" . $file);
+  $result->error = "Failed to open resource " . $filepath;
   die(json_encode($result, JSON_PRETTY_PRINT));
 }
 
-$contents = '';
-while(!feof($fp)) {
-  $contents .= fread($fp, 2);
-}
-fclose($fp);
+$filesize = filesize($filepath);
+$contents = fread($fo, $filesize);
+fclose($fo);
 
-$ext = substr($file, strrpos($file, ".")+1);
-$contentTypes = [
-  "png" => "image/png",
-  "jpg" => "image/jpeg",
-  "jpeg" => "image/jpeg",
-];
-
-if(isset($contentTypes[$ext])) {
-  header('Content-Type: ' . $contentTypes[$ext]);
-  echo($contents);
-} else {
-  if(!ctype_print($contents)) {
-    header('Content-Type: application/ocelot-stream');
-    header('Content-Disposition: attachment; filename=' . substr($file, strrpos($file, "/")+1) . '.zip');
-  }
-  echo($contents);
-  //$result->status = "error";
-  //$result->error = "Unsupported filetype";
-  die(json_encode($result, JSON_PRETTY_PRINT));
+if(!ctype_print($contents)) {
+  // header('Content-Type: application/octet-stream');
+  header('Content-Type: application/zip');
+  header('Content-Length: ' . $filesize);
+  header('Content-Disposition: attachment; filename=' . substr($file, strrpos($file, "/")+1) . '.zip');
 }
+
+echo($contents);
