@@ -24,7 +24,7 @@
   }
 
   if(!isset($_POST['confirmed'])) {
-    die('Inspection action was not confirmed.');
+    die('Approval action was not confirmed.');
   }
 
   $addonObject = AddonManager::getFromId($_POST['aid']);

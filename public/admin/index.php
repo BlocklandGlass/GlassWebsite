@@ -12,7 +12,7 @@
     GroupManager::createDefaultGroups(9789); // need to be able to change this during installation
   }
 
-	if(!$user || !$user->inGroup("Administrator") || !$user->inGroup("Moderator")) {
+	if(!$user || (!$user->inGroup("Administrator") && !$user->inGroup("Moderator"))) {
     header('Location: /login.php?redirect=' . urlencode("/admin/index.php"));
     return;
   }
@@ -29,7 +29,7 @@
 			<li><a href="?tab=groups">Groups</a></li>
 			<li><a href="?tab=users">Users</a></li>
       <hr>
-      <li><a href="/admin/live">Chatroom Logs</a></li>
+      <li><a href="?tab=rooms">Room Logs</a></li>
     </ul>
 	</div>
 	<div class="tile" style="width: 1010px; padding: 15px; float: right;">

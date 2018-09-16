@@ -1,3 +1,5 @@
+<h1>Group Management</h1>
+
 <?php
   use Glass\GroupManager;
 
@@ -5,8 +7,6 @@
     die('You do not have permission to access this area.');
   }
 ?>
-
-<h1>Group Management</h1>
 
 <table style="width: 100%" class="listTable">
   <thead>
@@ -38,7 +38,7 @@
       <tr><td class="center" colspan="2"><h3>Create Group</h3></td></tr>
       <tr><td>Name:</td><td><input type="text" name="group" id="group" disabled></td></tr>
       <tr><td>Icon:</td><td><input type="text" name="icon" id="icon" disabled></td></tr>
-      <tr><td>Color:</td><td><textarea name="desc" id="desc" disabled></textarea></tr>  
+      <tr><td>Color:</td><td><textarea name="desc" id="desc" disabled></textarea></tr>
       <tr><td>Description:</td><td><textarea name="desc" id="desc" disabled></textarea></tr>
       <tr><td class="center" colspan="2"><input class="green" type="submit" disabled></td></tr>
     </tbody>

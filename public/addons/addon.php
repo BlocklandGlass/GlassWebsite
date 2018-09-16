@@ -333,7 +333,7 @@
     if($current && $current->inGroup("Reviewer") && $addonObject->approved == 0) {
       echo '
       <div class="tile" style="background-color: #ffcccc; text-align: center;" >
-        <strong style="font-size: 1.5rem;">Inspection</strong><br>
+        <strong style="font-size: 1.5rem;">Approval</strong><br>
         <form action="/addons/review/approve.php" method="post"><br>
           Approve to board:<br>
           <select name="board">

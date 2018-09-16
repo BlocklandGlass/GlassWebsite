@@ -76,7 +76,7 @@
           echo "<div style=\"margin-left: 15px;\">";
           foreach($groups as $gid) {
             $group = GroupManager::getFromId($gid);
-            echo "<img src=\"/img/icons16/" . $group->getIcon() . ".png\"> <span style=\"font-weight: bold; color: #" . $group->getColor() . ";\" title=\"" . $group->getDescription() . "\">" . $group->getName() . ($group->getLeader() == $blid ? " (Leader)" : "") . "</strong><br>";
+            echo "<img src=\"/img/icons16/" . $group->getIcon() . ".png\"> <span style=\"font-weight: bold; color: #" . $group->getColor() . ";\" title=\"" . $group->getDescription() . "\">" . $group->getName() . ($group->getLeader() == $blid ? " (Leader)" : "") . "</span><br>";
           }
           echo "</div>";
         }

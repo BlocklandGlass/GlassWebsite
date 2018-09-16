@@ -1,3 +1,5 @@
+<h1>Group Management</h1>
+
 <?php
   use Glass\UserManager;
   use Glass\GroupManager;
@@ -43,15 +45,16 @@
   }
 ?>
 
-<h1>Group Management</h1>
+<h2><?php echo $group->name . (substr($group->name, strlen($group->name) - 1, 1) == "s" ? "" : "s"); ?></h2>
 
 <ul>
   <?php
     $users = GroupManager::getUsersFromGroupID($gid);
-    
+
     foreach($users as $blid) {
       $user = UserManager::getFromBlid($blid);
-      echo "<li>" . $user->getUsername() . "</li>";
+      $blid = $user->getBLID();
+      echo "<li><a href=\"/user/view.php?blid=" . $blid . "\">" . $user->getUsername() . "</a> (" . $blid . ")</li>";
     }
   ?>
 </ul>
@@ -64,7 +67,7 @@
       <tr><td class="center" colspan="2"><h3>Edit Group</h3></td></tr>
       <tr><td>Name:</td><td><input type="text" name="name" id="name" value="<?php echo $group->name; ?>" disabled></td></tr>
       <tr><td>Icon:</td><td><input type="text" name="icon" id="icon" value="<?php echo $group->icon; ?>"></td></tr>
-      <tr><td>Color:</td><td><input type="text" name="color" id="color" value="<?php echo $group->color; ?>"></td></tr>
+      <tr><td>Color:</td><td><input style="background-color: #<?php echo $group->color; ?>" type="text" name="color" id="color" value="<?php echo $group->color; ?>"></td></tr>
       <tr><td>Description:</td><td><textarea name="desc" id="desc"><?php echo $group->description; ?></textarea></tr>
       <tr><td class="center" colspan="2"><input class="yellow" type="submit"></td></tr>
     </tbody>

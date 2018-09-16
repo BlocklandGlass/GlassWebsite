@@ -47,7 +47,7 @@
 				echo("<br />" . date("M jS Y, g:i A", strtotime($comment->getTimeStamp())) . "<br />");
 
         if($user->getBanned()) {
-					echo("<img src=\"/img/icons16/list_suspended_accounts.png\"> <span style=\"color: gray;\">Banned</span>");
+					echo("<img src=\"/img/icons16/list_suspended_accounts.png\"> <span style=\"color: gray;\" title=\"This user has been banned from the Glass site.\">Banned</span>");
 				} else {
           $foundGroup = false;
 

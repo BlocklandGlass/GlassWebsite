@@ -51,17 +51,29 @@ form {
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
-	<table class="list">
-    <tbody>
-      <tr>
-        <td>Username</td>
-        <td>BL_ID</td>
-        <td>Version</td>
-      </tr>
-			<?php foreach($users as $u) {
-				$username = utf8_encode(UserLog::getCurrentUsername($u->blid));
-				echo "<tr><td><strong>" . $username . "</strong></td><td>" . $u->blid . "</td><td>" . StatUsageManager::getVersionUsed($u->blid, 11) . "</td></tr>";
-			} ?>
-		</tbody>
-	</table>
+
+  <p>This page displays a list of users on Blockland running Blockland Glass right now, it is not indicative of the entire Glass or Blockland userbase.</p>
+
+  <?php
+  if(sizeof($users) > 0) {
+    echo '
+    <table class="list">
+      <tbody>
+        <tr>
+          <td>Username</td>
+          <td>BL_ID</td>
+          <td>Version</td>
+        </tr>';
+          foreach($users as $u) {
+            $username = utf8_encode(UserLog::getCurrentUsername($u->blid));
+            echo "<tr><td><strong>" . $username . "</strong></td><td>" . $u->blid . "</td><td>" . StatUsageManager::getVersionUsed($u->blid, 11) . "</td></tr>";
+          }
+      echo '
+      </tbody>
+    </table>
+    ';
+  } else {
+    echo '<p><strong>No users are currently online running Blockland Glass.</strong></p>';
+  }
+  ?>
 </div>

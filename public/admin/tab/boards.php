@@ -1,3 +1,5 @@
+<h1>Board Management</h1>
+
 <?php
   use Glass\DatabaseManager;
   use Glass\BoardManager;
@@ -11,8 +13,6 @@
     $db->query("INSERT INTO `addon_boards` (`id`, `group`, `name`, `icon`, `description`) VALUES (NULL, '" . $db->sanitize($_POST['group']) . "', '" . $db->sanitize($_POST['name']) . "', '" . $db->sanitize($_POST['icon']) . "', '" . $db->sanitize($_POST['desc']) . "');");
   }
 ?>
-
-<h1>Board Management</h1>
 
 <table style="width: 100%" class="listTable">
   <thead>
