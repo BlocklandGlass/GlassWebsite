@@ -9,11 +9,18 @@ header('Content-Type: text/json');
 $post_data = file_get_contents('php://input');
 
 $ret  = new stdClass();
+$secret = $_GET['secret'] ?? false;
 $data = json_decode($post_data);
 
 if(!$data && !is_array($data->blids ?? false) && !is_array($data->discords ?? false)) {
-  $ret->status = "bad_request";
+  $ret->status = "bad-request";
   die(json_encode($ret));
+}
+
+if($secret === false || !DiscordKeyManager::checkSecret($secret)) {
+  $ret->status = "bad-secret";
+  die(json_encode($ret));
+  return;
 }
 
 $blids = $data->blids ?? [];
@@ -36,5 +43,7 @@ foreach($users as $discord=>$blid) {
 
   $ret->users[$discord] = $user;
 }
+
+$ret->status = "success";
 
 die(json_encode($ret, JSON_PRETTY_PRINT | JSON_FORCE_OBJECT) . "\n");
