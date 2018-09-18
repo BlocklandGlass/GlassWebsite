@@ -22,7 +22,7 @@
 			if(InstallationManager::isWindows()) { // future: migrate to apcu entirely?
 		    apcu_delete("stats_general");
 		  } else {
-		    apc_delete("stats_general");
+		    apcu_delete("stats_general");
 		  }
 		}
 	}
@@ -30,7 +30,7 @@
   if(InstallationManager::isWindows()) { // future: migrate to apcu entirely?
     $stats = apcu_fetch("stats_general", $success);
   } else {
-    $stats = apc_fetch("stats_general", $success);
+    $stats = apcu_fetch("stats_general", $success);
   }
 
 	if(!$success || !$stats) {
@@ -71,7 +71,7 @@
     if(InstallationManager::isWindows()) {
       apcu_store("stats_general", $stats, 600);
     } else {
-      apc_store("stats_general", $stats, 600);
+      apcu_store("stats_general", $stats, 600);
     }
 	} else {
 		$web                = $stats->web;

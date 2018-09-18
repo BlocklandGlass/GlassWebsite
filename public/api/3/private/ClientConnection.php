@@ -26,7 +26,7 @@ class ClientConnection {
 
 
   public static function loadFromIdentifier($ident) {
-    $obj = apc_fetch("clientConnection_" . $ident, $success);
+    $obj = apcu_fetch("clientConnection_" . $ident, $success);
 
     if($success && is_object($obj)) {
 
@@ -57,7 +57,7 @@ class ClientConnection {
       $unique = false;
       while(!$unique) { //avoiding the extremely rare case of a random id being non-unique
         $ident = base64_encode(rand());
-        if(apc_fetch("clientConnection_" . $ident) === false) {
+        if(apcu_fetch("clientConnection_" . $ident) === false) {
           $unique = true;
         }
       }
@@ -66,7 +66,7 @@ class ClientConnection {
   }
 
   function __destruct() {
-    apc_store("clientConnection_" . $this->identifier, $this);
+    apcu_store("clientConnection_" . $this->identifier, $this);
   }
 
   function setDigestAccessAuth($bool) {

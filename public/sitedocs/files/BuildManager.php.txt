@@ -81,7 +81,7 @@ class BuildManager {
 	//do we actually want to enforce unique file names?
 	//nah
 //	public static function getIDFromFileName($name) {
-//		$buildID = apc_fetch('buildByFileName_' . $name, $success);
+//		$buildID = apcu_fetch('buildByFileName_' . $name, $success);
 //
 //		if($success === false) {
 //			$database = new DatabaseManager();
@@ -99,7 +99,7 @@ class BuildManager {
 //				$buildID = BuildManager::getFromID($row->id, $row)->getID();
 //			}
 //			$resource->close();
-//			apc_store('buildByFileName_' . $name, $buildID, BuildManager::$objectCacheTime);
+//			apcu_store('buildByFileName_' . $name, $buildID, BuildManager::$objectCacheTime);
 //		}
 //		return $buildID;
 //	}
@@ -341,7 +341,7 @@ class BuildManager {
 	}
 
 	public static function updateBuild($build, $buildname, $description) {
-		//to do: apc_delete and update existing object
+		//to do: apcu_delete and update existing object
 		$changed = false;
 
 		if($buildname !== $build->name) {
@@ -392,7 +392,7 @@ class BuildManager {
 		//		throw new \Exception("Database error: " . $database->error());
 		//	}
 		//	$build->filename = $filename;
-		//	apc_store('buildObject_' . $build->id, $build, BuildManager::$objectCacheTime);
+		//	apcu_store('buildObject_' . $build->id, $build, BuildManager::$objectCacheTime);
 		//	$changed = true;
 		//}
 
