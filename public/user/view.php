@@ -5,11 +5,15 @@
 	use Glass\UserManager;
 	use Glass\UserLog;
 
-	$blid = $_GET['blid'] ?? false;
+	$blid = htmlspecialchars($_GET['blid']) ?? false;
+
+  if(!is_numeric($blid) || $blid < 0) {
+    die('Invalid BLID.');
+  }
 
 	$hasAccount = true;
 
-	if($blid) {
+	if($blid > -1) {
 		try {
 			$userObject = UserManager::getFromBLID($blid);
 			if($userObject) {
@@ -27,26 +31,28 @@
 		} else {
 			$failed = false;
 		}
+    
+
+    $history = UserLog::getHistory($blid);
+    if($hasAccount) {
+      $name = htmlspecialchars(utf8_encode($userObject->getName()));
+    } else {
+      $name = htmlspecialchars(utf8_encode($userLog));
+    }
+
+    $lastseen = UserLog::getLastSeen($blid);
+    if($lastseen) {
+      $time = strtotime($lastseen);
+      $lastseen = date("F j, Y, g:i a", $time);
+    } else {
+      $lastseen = "Never";
+    }
 	} else {
 		$failed = true;
+    $lastseen = "Never";
 	}
 
-  $history = UserLog::getHistory($blid);
-  if($hasAccount) {
-    $name = htmlspecialchars(utf8_encode($userObject->getName()));
-  } else {
-    $name = htmlspecialchars(utf8_encode($userLog));
-  }
-
-  $lastseen = UserLog::getLastSeen($blid);
-  if($lastseen) {
-    $time = strtotime($lastseen);
-    $lastseen = date("F j, Y, g:i a", $time);
-  } else {
-    $lastseen = "Never";
-  }
-
-  $_PAGETITLE = $name . "'s Profile | Blockland Glass";
+  $_PAGETITLE = ($failed ? "Unknown Profile | Blockland Glass" : $name . "'s Profile | Blockland Glass");
   $_PAGEDESCRIPTION = "BL_ID: $blid\r\nLast Seen: $lastseen";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
