@@ -62,7 +62,7 @@
 					</tr>
 					<tr>
 						<td><strong>Summary</strong></td>
-						<td><input type="text" name="summary" id="summary" style="width: 400px" placeholder="A short one-liner description." value="<?php echo $_REQUEST['summary'] ?? ""; ?>" required /></td>
+						<td><input type="text" name="summary" id="summary" style="width: 400px" placeholder="A short one-liner description." maxlength="150" value="<?php echo $_REQUEST['summary'] ?? ""; ?>" required /></td>
 					</tr>
 					<tr>
 						<td><strong>Board</strong></td>
@@ -94,8 +94,6 @@
 					<tr>
 						<td>
 							<p><strong>File</strong></p>
-							<!--<span style="font-size: 0.7em;">You can find your saves in your Blockland folder!</span>
-							<p class="description">You can find your saves in your Blockland folder!</p>-->
 						</td>
 						<td style="vertical-align: middle; text-align:left">
 							<input type="file" name="uploadfile" id="uploadfile">

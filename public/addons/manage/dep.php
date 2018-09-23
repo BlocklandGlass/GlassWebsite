@@ -21,7 +21,7 @@ use Glass\AddonManager;
 if(isset($_REQUEST['action'])) {
   if($_REQUEST['action'] == "add") {
     DependencyManager::addDependencyByID($_GET['id'], $_REQUEST['aid']);
-  } else if($_REQUEST['action'] == "delete") {
+  } else if($_REQUEST['action'] == "remove") {
     DependencyManager::removeDependencyByAddonID($_GET['id'], $_REQUEST['aid']);
   }
 }
@@ -31,11 +31,11 @@ $dep = DependencyManager::getDependenciesFromAddonID($_GET['id']);
 if(sizeof($dep) == 0) {
   $html = "<strong>No Dependencies!</strong>";
 } else {
-  $html = "<form action=\"\" method=\"post\"><input type=\"hidden\" name=\"action\" value=\"delete\" />";
+  $html = "<form action=\"\" method=\"post\"><input type=\"hidden\" name=\"action\" value=\"remove\" />";
   $html .= "<table><tbody><tr><td colspan=\"2\"><strong>Dependencies:</strong></td></tr>";
   foreach($dep as $did) {
     $d = DependencyManager::getFromId($did);
-    $html = $html . "<td>" . AddonManager::getFromId($d->getRequired())->getName() . "</td><td><button name=\"aid\" value=\"" . $d->getRequired() . "\">Delete</button></td></tr>";
+    $html = $html . "<td>" . AddonManager::getFromId($d->getRequired())->getName() . "</td><td><button name=\"aid\" value=\"" . $d->getRequired() . "\">Remove</button></td></tr>";
   }
 
   $html = $html . "</tbody></table></form>";

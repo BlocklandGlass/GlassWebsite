@@ -620,6 +620,34 @@ class AddonManager {
 	}
 
 	/**
+	 * Update an add-on's summary
+	 *
+	 * @param AddonObject $addon The AddonObject to modify
+	 * @param string $summary The summary to change to
+	 *
+	 * @return string[] Results of the update
+	 */
+	public static function updateSummary($addon, $summary) {
+    if(strlen($summary) > 150) {
+      $summary = substr($summary, 0, 150);
+    }
+
+		if($addon->getSummary() !== $summary) {
+			$database = new DatabaseManager();
+			AddonManager::verifyTable($database);
+			$resource = $database->query("UPDATE `addon_addons` SET `summary`='" . $database->sanitize($summary) . "' WHERE `id`='" . $database->sanitize($addon->getId()) . "';");
+
+			$res = [
+				"message" => "Updated summary",
+				"addon" => $addon,
+				"summary" => $summary
+			];
+
+			return $res;
+		}
+	}
+
+	/**
 	 * Update an add-on's information
 	 *
 	 * @param AddonObject $addon The AddonObject to modify

@@ -1,4 +1,6 @@
 <?php
+  // intentional ambiguity
+
   include 'notfound.php';
   die();
 ?>

@@ -9,6 +9,10 @@ $dat = require dirname(__DIR__) . "/../../private/json/manageAddon.php";
       <td><input type="text" name="addonname" value="<?php echo $dat['addon']->name; ?>"/></td>
     </tr>
     <tr>
+      <td><strong>Summary</strong></td>
+      <td><input type="text" name="summary" maxlength="150" value="<?php echo $dat['addon']->summary; ?>"/></td>
+    </tr>
+    <tr>
       <td><strong>Description</strong></td>
       <td><textarea name="description" style="font-size: 0.9em; width: 800px; height: 300px"><?php echo $dat['addon']->description; ?></textarea></td>
     </tr>

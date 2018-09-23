@@ -2,7 +2,7 @@
 	require dirname(__DIR__) . '/../private/autoload.php';
   use Glass\UserManager;
   use Glass\GroupManager;
-	
+
 	$user = UserManager::getCurrent();
 
 	$_PAGETITLE = "Control Panel | Blockland Glass";
@@ -17,36 +17,66 @@
     return;
   }
 ?>
+<style>
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 
+  .flex-container > div {
+    background-color: #eee;
+    padding: 10px;
+    margin: 5px;
+    flex-basis: calc(400px);
+    flex-grow: 1;
+
+    overflow: hidden;
+  }
+
+  .tile.auto {
+    max-width: 200px;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .tile.auto {
+      max-width: 100%;
+    }
+  }
+</style>
 <div class="maincontainer">
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
-	<div class="tile" style="width: 185px; float: left;">
-		<ul class="sidenav">
-			<li><a href="?tab=boards">Boards</a></li>
-      <hr>
-			<li><a href="?tab=groups">Groups</a></li>
-			<li><a href="?tab=users">Users</a></li>
-      <hr>
-      <li><a href="?tab=rooms">Room Logs</a></li>
-    </ul>
-	</div>
-	<div class="tile" style="width: 1010px; padding: 15px; float: right;">
-		<?php
-      if(!isset($_GET['tab'])) {
-        echo "<h1>Control Panel</h1>";
-        echo "Select a tab on the left to continue.";
-      } else {
-        $path = dirname(__FILE__) . "/tab/" . $_GET['tab'] . ".php";
-        if(is_file($path)) {
-          include($path);
+  <div class="flex-container">
+    <div class="tile auto">
+      <ul class="sidenav">
+        <li><a href="?tab=maintenance">Maintenance</a></li>
+        <hr>
+        <li><a href="?tab=boards">Boards</a></li>
+        <hr>
+        <li><a href="?tab=groups">Groups</a></li>
+        <li><a href="?tab=users">Users</a></li>
+        <hr>
+        <li><a href="?tab=rooms">Room Logs</a></li>
+      </ul>
+    </div>
+    <div class="tile">
+      <?php
+        if(!isset($_GET['tab'])) {
+          echo "<h1>Control Panel</h1>";
+          echo "Select a tab on the left to continue.";
         } else {
-          echo "Invalid tab.";
+          $path = dirname(__FILE__) . "/tab/" . $_GET['tab'] . ".php";
+          if(is_file($path)) {
+            include($path);
+          } else {
+            echo "Invalid tab.";
+          }
         }
-      }
-		?>
-	</div>
+      ?>
+    </div>
+  </div>
 </div>
 <?php
 	include(realpath(dirname(__DIR__) . "/../private/footer.php"));

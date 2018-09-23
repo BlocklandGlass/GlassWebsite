@@ -18,6 +18,19 @@
 
   $addonObject = AddonManager::getFromId($_GET['id']);
 
+  if(!$user || !$user->inGroup("Administrator")) {
+    if($addonObject->getDeleted()) {
+      include(__DIR__ . "/../addons/deleted.php");
+      die();
+    } else if($addonObject->isRejected()) {
+      include(__DIR__ . "/../addons/rejected.php");
+      die();
+    } else if(!$addonObject->getApproved()) {
+      include(__DIR__ . "/../addons/unapproved.php");
+      die();
+    }
+  }
+
   $csm = new CronStatManager();
   //$data = $csm->getRecentAddonUsage($addonObject->getId());
 

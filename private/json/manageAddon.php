@@ -114,6 +114,10 @@
 		$subResponse[] = AddonManager::updateName($addon, $_POST['addonname']);
 	}
 
+  if(isset($_POST['summary'])) {
+    $subResponse[] = AddonManager::updateSummary($addon, $_POST['summary']);
+  }
+
 	if(isset($_POST['description'])) {
 		$subResponse[] = AddonManager::updateDescription($addon, $_POST['description']);
 	}

@@ -20,7 +20,30 @@
 		die();
 	}
 ?>
+<style>
+  .status {
+    background-color: white;
+    display: inline-block;
+    width: 7rem;
+    padding: 10px;
+  }
 
+  .status.deleted {
+    background-color: lightgray;
+  }
+
+  .status.approved {
+    background-color: yellowgreen;
+  }
+
+  .status.rejected {
+    background-color: coral;
+  }
+
+  .status.awaiting-review {
+    background-color: gold;
+  }
+</style>
 <div class="maincontainer">
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
@@ -28,7 +51,7 @@
 	<div class="tile">
 
 		<h2 style="width: 50%; display:inline-block; float:left;">Your Content</h3>
-		<a class="btn green" href="/addons/upload/upload.php" style="font-size: 1em; float:right; margin: 0; margin-bottom: 20px; padding: 10px 15px;">
+		<a class="btn blue" href="/addons/upload/upload.php" style="font-size: 1em; float:right; margin: 0; margin-bottom: 20px; padding: 10px 15px;">
 			Upload New Add-On
 		</a>
 		<table class="listTable" style="width: 100%">
@@ -81,26 +104,19 @@
           foreach($addons as $ao) {
             $board = BoardManager::getFromId($ao->getBoard());
             echo '<tr>';
-            if($ao->approved == 0) {
-              echo '<td><img src="https://blocklandglass.com/img/icons32/hourglass.png" alt="Under Review"/></td>';
-            } else if($ao->getDeleted()) {
-              echo '<td><img src="https://blocklandglass.com/img/icons32/warning.png" alt="Deleted"/></td>';
-            } else if($ao->isRejected()) {
-              echo '<td><img src="https://blocklandglass.com/img/icons32/cancel.png" alt="Rejected"/></td>';
-            } else {
-              echo '<td><img src="https://blocklandglass.com/img/icons32/' . $board->getIcon() . '.png"/></td>';
-            }
+
+            echo '<td><img src="https://blocklandglass.com/img/icons32/' . $board->getIcon() . '.png"/></td>';
 
             echo '<td style="text-align: left !important"><a href="/addons/addon.php?id=' . $ao->getId() . '"><span style="font-size: 1.2em; font-weight:bold;">' . $ao->getName() . '</span></a></td>';
 
             if($ao->getDeleted()) {
-              echo '<td>Deleted</td>';
+              echo '<td><div class="status deleted">Deleted</div></td>';
             } else if($ao->getApproved()) {
-              echo '<td>Approved</td>';
+              echo '<td><div class="status approved">Approved</div></td>';
             } else if($ao->isRejected()) {
-              echo '<td>Rejected</td>';
+              echo '<td><div class="status rejected">Rejected</div></td>';
             } else {
-              echo '<td>Awaiting Review</td>';
+              echo '<td><div class="status awaiting-review">Awaiting Review</div></td>';
             }
 
             echo '<td>' . ($ao->getDownloads('web')+$ao->getDownloads('ingame')) . '</td>';

@@ -122,7 +122,7 @@
 
     if($addonObject->getDeleted()) {
       echo '
-      <div class="tile" style="background-color: #ffcccc; padding: 10px; margin-top: 10px; text-align: center;">
+      <div class="tile" style="background-color: lightgray; padding: 10px; margin-top: 10px; text-align: center;">
         <strong style="font-size: 2rem;">Deleted Add-On</strong><br>
         This add-on is not available to the public because it has been deleted.<br>
         <strong>Only administrators can view this page.</strong>
@@ -130,7 +130,7 @@
       ';
     } else if($addonObject->isRejected()) {
       echo '
-      <div class="tile" style="background-color: #ffcccc; padding: 10px; margin-top: 10px; text-align: center;">
+      <div class="tile" style="background-color: coral; padding: 10px; margin-top: 10px; text-align: center;">
         <strong style="font-size: 2rem;">Rejected Add-On</strong><br>
         This add-on is not available to the public because it has been rejected.<br>
         <strong>Only mod reviewers and the add-on uploader can view this page.</strong>
@@ -138,7 +138,7 @@
       ';
     } else if(!$addonObject->getApproved()) {
       echo '
-      <div class="tile" style="background-color: #ffcccc; padding: 10px; margin-top: 10px; text-align: center;">
+      <div class="tile" style="background-color: gold; padding: 10px; margin-top: 10px; text-align: center;">
         <strong style="font-size: 2rem;">Unapproved Add-On</strong><br>
         This add-on is not currently available to the public because it has not been inspected yet.<br>
         <strong>Only mod reviewers and the add-on uploader can view this page.</strong>
@@ -358,10 +358,10 @@
           <table style="width: 100%;">
             <tr>
               <td>
-                <input type="submit" name="action" value="Approve" />
+                <input class="btn green" type="submit" name="action" value="Approve" />
               </td>
               <td>
-                <input type="submit" name="action" value="Reject" />
+                <input class="btn red" type="submit" name="action" value="Reject" />
               </td>
             </tr>
           </table>
