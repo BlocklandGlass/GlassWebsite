@@ -99,7 +99,14 @@ class UploadManager {
     } else if(pathinfo($file['name'], PATHINFO_EXTENSION) != "zip") {
   		$problems[] = "Only .zip files are allowed.";
   	}
-
+      
+    if(!is_file($file['tmp_name'])) {
+      return [
+        "message" => "There was an internal error processing your file (1)",
+        "values" => $submission
+      ];
+    }
+      
     if(sizeof($problems) > 0) {
       return [
         "message" => "There were issues with your upload",
@@ -117,6 +124,13 @@ class UploadManager {
 
     move_uploaded_file($tempPath, $newPath);
     chmod($newPath, 0777);
+      
+    if(!is_file($newPath)) {
+      return [
+        "message" => "There was an internal error processing your file (2)",
+        "values" => $submission
+      ];
+    }
 
     //================================
     // Add-On Validation
