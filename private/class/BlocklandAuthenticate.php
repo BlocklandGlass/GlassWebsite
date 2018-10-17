@@ -18,7 +18,20 @@ class BlocklandAuthenticate {
 		$opts = array('http' => array('method' => 'POST', 'header' => "Connection: keep-alive\r\nUser-Agent: Blockland-r1986\r\nContent-type: application/x-www-form-urlencoded\r\nContent-Length: ". strlen($postData) . "\r\n", 'content' => $postData));
 
 		$context  = stream_context_create($opts);
-		$result = file_get_contents('http://auth.blockland.us/authQuery.php', false, $context);
+		//$result = file_get_contents('http://auth.blockland.us/authQuery.php', false, $context);
+
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, "http://auth.blockland.us/authQuery.php");
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $result = curl_exec($ch);
+
+    curl_close ($ch);
+
 		$parsedResult = explode(' ', trim($result));
 
 		if($parsedResult[0] == "NO")

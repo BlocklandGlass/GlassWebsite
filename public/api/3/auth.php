@@ -37,12 +37,6 @@ function daaHashMissing() {
 
 header('Content-Type: text/json');
 
-if(rand(0, 10) != 0) {
-    sleep(15);
-    http_response_code(500);
-    die();
-}
-
 $isServer = ($_REQUEST['server'] ?? false) != false;
 
 if($isServer) {
