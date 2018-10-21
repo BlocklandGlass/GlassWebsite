@@ -42,12 +42,12 @@
 				$user = $users[$comment->blid];
 				echo("<tr style=\"vertical-align:top\">");
 				echo("<td style=\"width: 150px;\">");
-				echo("<a href=\"/user/view.php?blid=" . $user->getBLID() . "\">" . htmlspecialchars($user->getUsername()) . "</a>");
+				echo("<a href=\"/user/view.php?blid=" . $user->getBLID() . "\">" . htmlspecialchars(utf8_encode($user->getUsername())) . "</a>");
 				echo("<br /><span style=\"font-size: .8em;\">" . $user->getBLID());
 				echo("<br />" . date("M jS Y, g:i A", strtotime($comment->getTimeStamp())) . "<br />");
 
         if($user->getBanned()) {
-					echo("<img src=\"/img/icons16/list_suspended_accounts.png\"> <span style=\"color: gray;\" title=\"This user has been banned from the Glass site.\">Banned</span>");
+					echo("<img src=\"/img/icons16/list_suspended_accounts.png\"> <span style=\"color: gray;\" title=\"This user has been banned from the Glass website.\">Banned</span>");
 				} else {
           $foundGroup = false;
 
@@ -62,7 +62,7 @@
           }
 
           if($foundGroup) {
-            echo("<img src=\"/img/icons16/" . $foundGroup->getIcon() . ".png\"> <span style=\"color: #" . $foundGroup->getColor() . "; font-weight: bold;\" title=\"" . $foundGroup->getDescription() . "\">" . htmlspecialchars($foundGroup->getName()) . "</span>");
+            echo("<img src=\"/img/icons16/" . $foundGroup->getIcon() . ".png\"> <span style=\"color: #" . $foundGroup->getColor() . "; font-weight: bold;\" title=\"" . $foundGroup->getDescription() . "\">" . htmlspecialchars(utf8_encode($foundGroup->getName())) . "</span>");
           }
         }
 
