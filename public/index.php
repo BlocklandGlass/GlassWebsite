@@ -93,7 +93,7 @@ setInterval(nextImage, 5000);
 	    </p>
 		</div>
 		<div style="float:right; overflow:none; max-width: 100%">
-			<img src="http://i.imgur.com/V1qsgpl.png" style="margin: 10px;  max-width: 100%;">
+			<img src="/img/index_img_1.png" style="margin: 10px;  max-width: 100%;">
 		</div>
 		<div>
 			<h3 style="display: inline-block; margin: 0">Mod Manager</h3>
