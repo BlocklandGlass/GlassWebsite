@@ -68,8 +68,7 @@ setInterval(nextImage, 5000);
 		<div style="padding-top: 50px;">
 			<image style="margin: 10px 0px 5px 0px; max-width: 100%" src="https://blocklandglass.com/img/logoWhite.png" />
 			<h2 style="font-weight: normal">A service for the community, by the community</h2>
-			<a href="dl.php" class="btn blue"><strong>Download</strong></a><br />
-			<a href="https://host.blocklandglass.com/" class="btn green" style="width: 150px">Hosting</a>
+			<a href="dl.php" class="btn blue"><strong>Download</strong></a>
 			<a href="addons" class="btn yellow" style="width: 150px">Add-Ons</a><br /><br />
 		</div>
 	</div>
