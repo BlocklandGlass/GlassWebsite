@@ -120,7 +120,7 @@ class AddonManager {
     // Validation
     //================================
 
-		$rsc = $database->query("SELECT * FROM `addon_addons` WHERE `name` = '" . $database->sanitize($name) . "' AND `approved` != '-1' LIMIT 1");
+		$rsc = $database->query("SELECT * FROM `addon_addons` WHERE `name` = '" . $database->sanitize($name) . "' AND `approved` != '-1' AND `deleted` != '1' LIMIT 1");
 
 		if($rsc->num_rows > 0) {
 			$response = [
@@ -131,7 +131,7 @@ class AddonManager {
 		}
 		$rsc->close();
 
-		$rsc = $database->query("SELECT * FROM `addon_addons` WHERE `filename` = '" . $database->sanitize($filename) . "'");
+		$rsc = $database->query("SELECT * FROM `addon_addons` WHERE `filename` = '" . $database->sanitize($filename) . "' AND `deleted` != '1'");
 		if($rsc->num_rows > 0) {
 			$response = [
 				"message" => "An add-on with this filename already exists!"
