@@ -9,6 +9,10 @@
   }
 
   if(isset($_POST['name']) && isset($_POST['icon']) && isset($_POST['desc'])) {
+    if(!isset($_POST['csrftoken']) || $_POST['csrftoken'] != $_SESSION['csrftoken']) {
+      throw new \Exception("Cross site request forgery attempt blocked");
+    }
+    
     $db = new DatabaseManager();
     $db->query("INSERT INTO `addon_boards` (`id`, `group`, `name`, `icon`, `description`) VALUES (NULL, '" . $db->sanitize($_POST['group']) . "', '" . $db->sanitize($_POST['name']) . "', '" . $db->sanitize($_POST['icon']) . "', '" . $db->sanitize($_POST['desc']) . "');");
   }
@@ -52,9 +56,4 @@
     </tbody>
   </table>
   <input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
-  <?php
-    if(isset($_POST['redirect'])) {
-      echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($_POST['redirect']) . "\">");
-    }
-  ?>
 </form>

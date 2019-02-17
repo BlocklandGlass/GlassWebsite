@@ -117,7 +117,7 @@ class UserManager {
 		if(!$loginDetails) {
 			//username not found
 			return [
-				"message" => "Incorrect login credentials."
+				"message" => "Incorrect username or password."
 			];
 		}
 		$hash = $loginDetails['hash'];
@@ -144,7 +144,7 @@ class UserManager {
 			}
 		}
 		return [
-			"message" => "Incorrect login credentials."
+			"message" => "Incorrect username or password."
 		];
 	}
 

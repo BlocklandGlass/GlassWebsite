@@ -26,16 +26,28 @@
   // }
 
   if(isset($_POST['icon']) && $group->icon != $_POST['icon']) {
+    if(!isset($_POST['csrftoken']) || $_POST['csrftoken'] != $_SESSION['csrftoken']) {
+      throw new \Exception("Cross site request forgery attempt blocked");
+    }
+
     GroupManager::editGroupByGroupID($gid, "icon", $_POST['icon']);
     $dirty = true;
   }
 
   if(isset($_POST['color']) && $group->color != $_POST['color']) {
+    if(!isset($_POST['csrftoken']) || $_POST['csrftoken'] != $_SESSION['csrftoken']) {
+      throw new \Exception("Cross site request forgery attempt blocked");
+    }
+
     GroupManager::editGroupByGroupID($gid, "color", $_POST['color']);
     $dirty = true;
   }
 
   if(isset($_POST['desc']) && $group->description != $_POST['desc']) {
+    if(!isset($_POST['csrftoken']) || $_POST['csrftoken'] != $_SESSION['csrftoken']) {
+      throw new \Exception("Cross site request forgery attempt blocked");
+    }
+
     GroupManager::editGroupByGroupID($gid, "desc", $_POST['desc']);
     $dirty = true;
   }
@@ -73,9 +85,4 @@
     </tbody>
   </table>
   <input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
-  <?php
-    if(isset($_POST['redirect'])) {
-      echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($_POST['redirect']) . "\">");
-    }
-  ?>
 </form>
