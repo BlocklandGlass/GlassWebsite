@@ -147,12 +147,10 @@
 <div id="image-viewer">
 	<img id="image-view" class="center" />
 	<div id="image-bar">
-
 		<form target="" method="post">
 	    <input type="hidden" id="image-view-ssid" name="sid" value="" />
 	    <input type="submit" class="btn red" name="delete" value="Delete" />
     </form>
-
 	</div>
 </div>
 <div class="maincontainer" style="text-align:center">

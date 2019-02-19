@@ -90,7 +90,7 @@
 
 		if($_FILES['screenshots']['size'] > ScreenshotManager::$maxFileSize) {
 			$response = [
-				"message" => "File too large - The maximum Screenshot file size is 3 MB",
+				"message" => "File too large - The maximum screenshot file size is 3 MB",
 				"addon" => $addon,
 				"user" => $user
 			];

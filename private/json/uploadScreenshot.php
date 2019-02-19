@@ -63,7 +63,7 @@
 
 	if($_FILES['uploadfile']['size'] > ScreenshotManager::$maxFileSize) {
 		$response = [
-			"message" => "File too large - The maximum build file size is 3 MB"
+			"message" => "File too large - The maximum screenshot file size is 3 MB"
 		];
 		return $response;
 	}

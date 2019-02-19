@@ -11,7 +11,6 @@ $(function(){
   });
 
   $("#image-viewer").click(function(evt) {
-    console.log(evt);
     if(evt.target == this || evt.target.id == 'image-view') {
       $(this).hide();
     }
