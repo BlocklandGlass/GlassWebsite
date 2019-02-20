@@ -127,7 +127,8 @@ class AddonUpdateObject {
 	 * @return boolean
 	 */
 	public function isRejected() {
-		return $this->status == -1;
+    return $this->status == 0;
+		//return $this->status == -1;
 	}
 
 	/**

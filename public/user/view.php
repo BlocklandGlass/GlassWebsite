@@ -7,13 +7,13 @@
 
 	$blid = htmlspecialchars($_GET['blid']) ?? false;
 
-  if(!is_numeric($blid) || $blid < 0) {
+  if(!is_numeric($blid) || $blid < 1) {
     die('Invalid BLID.');
   }
 
 	$hasAccount = true;
 
-	if($blid > -1) {
+	if($blid > 0) {
 		try {
 			$userObject = UserManager::getFromBLID($blid);
 			if($userObject) {
@@ -31,7 +31,6 @@
 		} else {
 			$failed = false;
 		}
-    
 
     $history = UserLog::getHistory($blid);
     if($hasAccount) {
@@ -59,71 +58,99 @@
 	use Glass\AddonManager;
 	use Glass\StatUsageManager;
 ?>
+<style>
+  .user-group {
+    padding: 1rem;
+    width: 220px;
+    background-color: #ddd;
+    display: inline-block;
+    cursor: pointer;
+    margin: 5px;
+  }
+
+  .user-group div:nth-of-type(1) {
+    display: inline-block;
+  }
+
+  .user-group div:nth-of-type(2) {
+    margin-left: 10px;
+    display: inline-block;
+    font-weight: bold;
+  }
+</style>
 <div class="maincontainer">
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
-	<div class="tile">
-		<?php
-			if($failed) {
-				$msg  = "<h2>Uh Oh</h2>";
-				$msg .= "<p>We've never seen that user before. Sorry!</p>";
-				echo $msg;
-				return;
-			}
+  <?php
+    if($failed) {
+      $msg = "<div class=\"tile\">";
+      $msg .= "<h2>Uh Oh</h2>";
+      $msg .= "<p>We've never seen that user before. Sorry!</p>";
+      $msg .= "</div>";
+      echo $msg;
+      return;
+    }
 
-			echo "<h2>$name</h2>";
-			echo "<p>";
+    echo "<div class=\"tile\">";
+    echo "<span style=\"font-size: 3rem; font-weight: bold;\">$name</span>";
+    echo "</div>";
+    echo "<div class=\"tile\">";
+    echo "<h2>Info</h2>";
 
-			if($hasAccount) {
-        $groups = GroupManager::getGroupsFromBLID($blid);
-        if(sizeof($groups) > 0) {
-          echo "This user is part of the following groups:<br>";
-          echo "<div style=\"margin-left: 15px;\">";
-          foreach($groups as $gid) {
-            $group = GroupManager::getFromId($gid);
-            echo "<img src=\"/img/icons16/" . $group->getIcon() . ".png\"> <span style=\"font-weight: bold; color: #" . $group->getColor() . ";\" title=\"" . $group->getDescription() . "\">" . $group->getName() . ($group->getLeader() == $blid ? " (Leader)" : "") . "</span><br>";
-          }
-          echo "</div>";
+    echo "<p><strong>BL_ID:</strong> $blid";
+    echo "<br /><strong>Last Seen:</strong> $lastseen</p>";
+
+    if($hasAccount) {
+      $groups = GroupManager::getGroupsFromBLID($blid);
+      if(sizeof($groups) > 0) {
+        echo "<p>Additionally, this user is part of the following group(s):</p>";
+        foreach($groups as $gid) {
+          $group = GroupManager::getFromId($gid);
+          echo "<div class=\"user-group\" title=\"" . $group->getDescription() . "\"><div><img src=\"/img/icons32/" . $group->getIcon() . ".png\"></div><div style=\"color: #" . $group->getColor() . ";\">" . $group->getName() . ($group->getLeader() == $blid ? " (Leader)" : "") . "</div></div>";
         }
-			}
+      }
+    }
+    echo "</p>";
+    echo "</div>";
 
-			echo "<p><strong>BL_ID:</strong> $blid";
-			echo "<br /><strong>Last Seen:</strong> $lastseen";
-			echo "</p>";
-			//echo("<a href=\"/addons/search.php?blid=" . htmlspecialchars($userObject->getBLID()) . "\"><strong>Find Add-Ons by this user</strong></a>");
-			?>
-		<hr />
-		<table class="listTable" style="width: 100%">
-			<thead>
-				<tr>
-					<th style="width: 50%">Username</th>
-					<th>Date Changed</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php
-				foreach($history as $namedata) {
-					echo "<tr>";
-					echo "<td>" . htmlspecialchars(utf8_encode($namedata->username)) . "</td>";
-					echo "<td>" . $namedata->date . "</td>";
-					echo "</tr>";
-				}
+    // echo "<div class=\"tile\">";
+    // echo "<h2>Recent Activity</h2>";
+    // echo "<p>..?</p>";
+    // echo "</div>";
+  ?>
+  <div class="tile">
+    <h2>Previous Names</h2>
+    <table class="listTable" style="width: 100%">
+      <thead>
+        <tr>
+          <th style="width: 50%">Username</th>
+          <th>Date Changed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        foreach($history as $namedata) {
+          echo "<tr>";
+          echo "<td>" . htmlspecialchars(utf8_encode($namedata->username)) . "</td>";
+          echo "<td>" . $namedata->date . "</td>";
+          echo "</tr>";
+        }
 
-				if(sizeof($history) == 0) {
-					echo "<tr><td colspan=\"2\" style=\"text-align: center\">";
-					echo "No recorded name changes.";
-					echo "</td></tr>";
-				}
-				?>
-			</tbody>
-		</table>
-	</div>
+        if(sizeof($history) == 0) {
+          echo "<tr><td colspan=\"2\" style=\"text-align: center\">";
+          echo "No name changes on record.";
+          echo "</td></tr>";
+        }
+        ?>
+      </tbody>
+    </table>
+  </div>
 	<?php
 	if($hasAccount) {
 	?>
-
 	<div class="tile">
+    <h2>Content</h2>
 		<table class="listTable" style="width: 100%">
 			<thead>
 				<tr>

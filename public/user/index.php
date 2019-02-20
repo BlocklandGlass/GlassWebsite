@@ -23,9 +23,9 @@
 <style>
   .status {
     background-color: white;
-    display: inline-block;
-    width: 7rem;
-    padding: 10px;
+    padding: 6px;
+    height: 100%;
+    font-style: italic;
   }
 
   .status.deleted {
@@ -48,6 +48,12 @@
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
+	<div class="tile">
+    <h2>Your Account</h2>
+    <ul>
+      <li><a href="sessions.php">View Account Activity.</a></li>
+    </ul>
+	</div>
 	<div class="tile">
 
 		<h2 style="width: 50%; display:inline-block; float:left;">Your Content</h3>
@@ -109,14 +115,30 @@
 
             echo '<td style="text-align: left !important"><a href="/addons/addon.php?id=' . $ao->getId() . '"><span style="font-size: 1.2em; font-weight:bold;">' . $ao->getName() . '</span></a></td>';
 
+            $up = AddonManager::getUpdates($ao);
+            
+            if(count($up) > 0) {
+              $up = $up[0];
+            }
+
             if($ao->getDeleted()) {
               echo '<td><div class="status deleted">Deleted</div></td>';
             } else if($ao->getApproved()) {
-              echo '<td><div class="status approved">Approved</div></td>';
+              if($up != null) {
+                if($up->isPending()) {
+                  echo '<td><div class="status awaiting-review">Update Pending Approval</div></td>';
+                } else if($up->isRejected()) {
+                  echo '<td><div class="status rejected">Latest Update Rejected</div></td>';
+                } else {
+                  echo '<td><div class="status approved">Latest Update Approved</div></td>';
+                }
+              } else {
+                echo '<td><div class="status approved">Approved</div></td>';
+              }
             } else if($ao->isRejected()) {
               echo '<td><div class="status rejected">Rejected</div></td>';
             } else {
-              echo '<td><div class="status awaiting-review">Awaiting Review</div></td>';
+              echo '<td><div class="status awaiting-review">Pending Review</div></td>';
             }
 
             echo '<td>' . ($ao->getDownloads('web')+$ao->getDownloads('ingame')) . '</td>';
@@ -136,10 +158,6 @@
 
 			</tbody>
 		</table>
-	</div>
-
-	<div class="tile" style="text-align: center">
-		<a href="sessions.php">View Account Activity</a>
 	</div>
 </div>
 

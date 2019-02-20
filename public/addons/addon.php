@@ -46,7 +46,7 @@
     }
   }
 
-  if(isset($_POST['comment'])) {
+  if(isset($_POST['comment']) && strlen(trim($_POST['comment'])) > 0) {
     CommentManager::submitComment($addonObject->getId(), UserManager::getCurrent()->getBLID(), $_POST['comment']);
   }
 
@@ -101,7 +101,6 @@
 
   .addon-info h3 {
     margin: 0px 5px 10px 5px;
-    border-bottom: 2px solid #ddd;
   }
 
   .addon-info .tile {
@@ -212,7 +211,7 @@
       echo '
       <div class="tile" style="background-color: gold; padding: 10px; margin-top: 10px; text-align: center;">
         <strong style="font-size: 2rem;">Unapproved Add-On</strong><br>
-        This add-on is not currently available to the public because it has not been inspected yet.<br>
+        This add-on has not been inspected by the add-on moderation team.<br>
         <strong>Only mod reviewers and the add-on uploader can view this page.</strong>
       </div>
       ';
@@ -356,9 +355,6 @@
   <div class="screenshots" style="text-align:center;margin: 0 auto">
     <?php
     $screenshots = ScreenshotManager::getScreenshotsFromAddon($_GET['id']);
-    if(sizeof($screenshots) > 0) {
-      echo "<hr />";
-    }
     foreach($screenshots as $sid) {
       $ss = ScreenshotManager::getFromId($sid);
       echo "<div class=\"image-preview\" style=\"padding: 5px; margin: 10px 10px; background-color: #eee; display:inline-block; width: 128px; vertical-align: middle\" ssid=\"" . $sid . "\">";
@@ -371,13 +367,13 @@
   <?php
     $deps = DependencyManager::getDependenciesFromAddonID($_GET['id']);
     if(sizeof($deps) > 0) {
-      echo "<hr /><div style=\"text-align:center\">";
+      echo "<div class=\"tile\" style=\"text-align:center\">";
       echo "<strong>This add-on has some dependencies or add-ons that it requires to run:</strong><br/><br/>";
       foreach($deps as $did) {
         $dep = DependencyManager::getFromId($did);
         $rid = $dep->getRequired();
         $requiredAddon = AddonManager::getFromId($rid);
-        echo "<div style=\"margin-bottom: 20px; padding: 10px; background-color: #ffbbbb; display: inline-block;\"><a href=\"addon.php?id=" . $requiredAddon->getId() . "\">" . $requiredAddon->getName() . "</a></div>";
+        echo "<div style=\"margin-bottom: 10px; padding: 10px; background-color: #ffbbbb; display: inline-block;\"><a href=\"addon.php?id=" . $requiredAddon->getId() . "\">" . $requiredAddon->getName() . "</a></div>";
       }
       echo "</div>";
     }

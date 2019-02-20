@@ -146,7 +146,6 @@ td {
 
 .flex-container > div > h3 {
 	margin: 0px 10px 10px 10px;
-	border-bottom: 2px solid #ddd;
 }
 
 .stat-info {

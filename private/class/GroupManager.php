@@ -275,7 +275,7 @@ class GroupManager {
 		GroupManager::createGroupWithLeaderBLID("Reviewer", "", "00ff00", "star", $blid);
 	}
 
-  public static function editGroupByGroupID($gid, $attribute, $data) {
+  public static function editGroupByGroupID($gid, $attribute, $data, $blid = -1) {
 		$database = new DatabaseManager();
 		GroupManager::verifyTable($database);
 		$resource = $database->query("SELECT * FROM `group_groups` WHERE `id` = '" . $database->sanitize($gid) . "' LIMIT 1");
@@ -286,20 +286,45 @@ class GroupManager {
 
     switch($attribute) {
       case "id": // no.
-        return false;
-      case "name": // not a good idea since site relies on inGroup(<name>).
-        return false;
+        throw new \Exception("Invalid attribute provided.");
+      case "name": // not a good idea since site relies on inGroup(<name>). also need to implement if name already exists.
+        throw new \Exception("Invalid attribute provided.");
+      case "description":
+        break;
       case "desc":
         $attribute = "description";
         break;
       case "color":
+        if(!ctype_xdigit($data) || (strlen($data) != 6 && strlen($data) != 3)) {
+          throw new \Exception("Invalid value provided for color attribute.");
+        }
+
         break;
       case "icon":
         break;
-      case "leader": // unfinished.
-        return false;
+      case "leader":
+        if($data < 0) {
+          throw new \Exception("Invalid value provided for leader attribute.");
+        }
+
+        if($blid > 0) {
+          $user = UserManager::getFromID($blid);
+
+          if(!$user->inGroup("Administrator")) {
+            return false;
+          }
+
+          $group = GroupManager::getFromID($gid);
+          $leader = $group->getLeader();
+
+          if($group->getName() == "Administrator" && $leader != $blid) {
+            return false;
+          }
+        }
+
+        break;
       default:
-        throw new \Exception("Invalid attribute provided.");
+        throw new \Exception("Unknown attribute provided.");
     }
 
     $database->query("UPDATE `group_groups` SET `" . $database->sanitize($attribute) . "` = '" . $database->sanitize($data) . "' WHERE `id` = '" . $database->sanitize($gid) . "'");

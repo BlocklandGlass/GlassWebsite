@@ -44,7 +44,7 @@
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
 	<div class="tile" style="width:calc(100%-15px); font-size: 1.8em">
-		Statistics <strong><?php echo htmlspecialchars($addonObject->getName()) ?></strong>
+		<strong><?php echo htmlspecialchars($addonObject->getName()) ?></strong>
 	</div>
 	<div class="tile" style="width: calc(50% - 40px); float:left; display: inline-block">
 		<strong>Version Usage Chart</strong>

@@ -34,7 +34,7 @@
 		} else {
 			if(isset($_POST['justregistered']) && $_POST['justregistered'] == 1) {
 				$response = [
-					"message" => "Thank you for registering!  Please log in to continue."
+					"message" => "Thank you for registering! Please log in to continue."
 				];
 			} else {
 				$response = [

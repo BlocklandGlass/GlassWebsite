@@ -59,17 +59,28 @@
 
 <h2><?php echo $group->name . (substr($group->name, strlen($group->name) - 1, 1) == "s" ? "" : "s"); ?></h2>
 
-<ul>
-  <?php
-    $users = GroupManager::getUsersFromGroupID($gid);
+<table style="width: 100%" class="listTable">
+  <thead>
+    <th>User</th>
+    <th>BL_ID</th>
+    <th>Options</th>
+  </thead>
+  <tbody>
+    <?php
+      $users = GroupManager::getUsersFromGroupID($gid);
 
-    foreach($users as $blid) {
-      $user = UserManager::getFromBlid($blid);
-      $blid = $user->getBLID();
-      echo "<li><a href=\"/user/view.php?blid=" . $blid . "\">" . $user->getUsername() . "</a> (" . $blid . ")</li>";
-    }
-  ?>
-</ul>
+      foreach($users as $blid) {
+        $user = UserManager::getFromBlid($blid);
+        $blid = $user->getBLID();
+        echo "<tr>";
+        echo "<td><a href=\"/user/view.php?blid=" . $blid . "\">" . $user->getName() . "</a></td>";
+        echo "<td>" . $user->getBLID() . "</td>";
+        echo "<td><a href=\"#\">Make Leader</a> | <a href=\"#\">Remove</a></td>";
+        echo "</tr>";
+      }
+    ?>
+  </tbody>
+</table>
 
 <hr>
 

@@ -45,15 +45,16 @@ class AddonManager {
 
 		//remove pre-existing updates, merge changelogs
 
-		$db = new DatabaseManager();
 		$ups = AddonManager::getUpdates($addon);
 		foreach($ups as $up) {
 			if($up->isPending()) {
 				return array(
-					"message" => "Update already pending. Wait for approval or cancel previous update."
+					"message" => "An update is already pending. Wait for approval by the add-on moderation team or cancel the currently pending update."
 				);
 			}
 		}
+
+    $db = new DatabaseManager();
 
 		$db->query("INSERT INTO `addon_updates` (`id`, `aid`, `version`, `tempfile`, `changelog`, `submitted`, `restart`, `approved`) VALUES (NULL, " .
 			"'" . $addon->getId() . "'," .

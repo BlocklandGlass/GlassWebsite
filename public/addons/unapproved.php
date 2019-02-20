@@ -7,7 +7,7 @@
   }
 
   $_PAGETITLE = $addonObject->getName() . " - " . $boardObject->getName() . " | Blockland Glass";
-  $_PAGEDESCRIPTION = "This add-on has not been inspected by a mod reviewer yet.";
+  $_PAGEDESCRIPTION = "This add-on has not been inspected by the add-on moderation team yet.";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 ?>
@@ -26,7 +26,7 @@
       ?>
       <div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em; background-color: gold; text-align:center; padding: 10px; font-size: 1em">
         <span style="float: left"><img src="/img/icons32/hourglass.png"></span>
-        <strong>This add-on has not been inspected by a mod reviewer yet.</strong><br />
+        <strong>This add-on has not been inspected by the add-on moderation team yet.</strong><br />
       </div>
     </div>
 </div>

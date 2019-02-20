@@ -42,7 +42,7 @@
     <h2>Upload Successful</h2>
     <p>
       Your add-on was uploaded successfully.<br>
-      It will now be carefully inspected by our mod reviewers.
+      It will now be carefully inspected by the add-on moderation team.
     </p>
     <p>
       <a href="/addons/addon.php?id=<?php echo $_GET['id']; ?>">View your add-on.</a><br>

@@ -6,7 +6,7 @@
 ?>
 <div class="searchcontainer">
 	<form action="search.php" method="get">
-		<input class="searchbar" type="text" name="q" placeholder="Search..." style="font-size: inherit; margin-right: 5px; height: 30px;"/>
+		<input class="searchbar" type="text" name="q" placeholder="Search..."/>
 	</form>
 </div>
 <div style="clear:both;"></div>

@@ -74,7 +74,7 @@
 	}
 
 	#previews {
-	  overflow-x: scroll;
+	  overflow-x: auto;
 		word-wrap: none;
 	}
 
@@ -159,9 +159,8 @@
   ?>
   <div class="tile" style="text-align: left">
     <h2>Screenshots</h2>
-    <p>
-      Now that you've uploaded <strong><?php echo htmlspecialchars($addon->getName()); ?></strong>, why don't you show us what its all about and upload some screenshots?
-    </p>
+    <p>You can upload screenshots for <strong><?php echo htmlspecialchars($addon->getName()); ?></strong> here, why don't you show us what its all about and upload some?<br>
+    It is highly recommended that you upload screenshots for add-ons which have a visual presence e.g. vehicles, weapons, particles, etc.</p>
     <div style="text-align: center">
       <form>
         <div id="drop-box-box">

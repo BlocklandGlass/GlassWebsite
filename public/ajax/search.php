@@ -11,7 +11,8 @@
 
 	foreach($addons as $addon) {
 		//to do: include "by <a>user</a>"
-		echo "<p style=\"margin: 0; padding: 5px; background-color: #ddd;\"><strong><a href=\"addon.php?id=" . $addon->getId() . "\">" . htmlspecialchars($addon->getName()) . "</a></strong><br />";
+    echo "<div class=\"searchresult\">";
+		echo "<p style=\"font-weight: bold; margin: 0; padding: 0.5rem; background-color: #2ecc71; color: white;\"><a href=\"addon.php?id=" . $addon->getId() . "\">" . htmlspecialchars($addon->getName()) . "</a></p>";
 
 		if(strlen($addon->description) > 200) {
 			$desc = substr($addon->description, 0, 196) . " ...";
@@ -22,9 +23,10 @@
 		$Parsedown->setBreaksEnabled(true);
 		$Parsedown->setMarkupEscaped(true);
 
-		echo '<div style="font-size: 0.8em; padding:10px; background-color: #eee; display:block;">';
+		echo '<div style="font-size: 0.8em; padding: 0.5rem; background-color: white;">';
 		echo $Parsedown->text($desc);
-		echo "</div></p>";
+		echo "</div>";
+    echo "</div>";
 	}
 
 

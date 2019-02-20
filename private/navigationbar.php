@@ -9,6 +9,7 @@ use Glass\UserManager;
 		<ul>
 			<li><a href="/addons" class="navbtn">Add-Ons</a></li>
 			<li><a href="/stats" class="navbtn">Statistics</a></li>
+      <!-- <li><a href="#" class="navbtn">User Lookup</a></li> -->
 			<?php
 				if($user = UserManager::getCurrent()) {
 					if($user->inGroup("Administrator")) {

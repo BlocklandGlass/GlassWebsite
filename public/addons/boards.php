@@ -8,11 +8,15 @@
 ?>
 
 <div class="maincontainer">
-  <?php
+	<?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
-    include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
   ?>
-  <div style="margin-left: 20px;">
+  <ul class="addonnav tile">
+    <?php
+      include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
+    ?>
+  </ul>
+  <div style="margin-top: 20px; margin-left: 20px;">
 		<a href="/addons/">Add-Ons</a> >> <a href="#">Boards</a>
 	</div>
 	<div class="tile">

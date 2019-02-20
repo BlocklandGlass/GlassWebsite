@@ -104,22 +104,24 @@ td {
 			<a class="btn blue" href="download.php?file=<?php echo $update->getFileBin() ?>">Download</a>
 		</p>
 	</div>
-  <form action="approveUpdate.php" method="post">
-		<input type="hidden" name="aid" value="<?php echo $addonObject->getId() ?>" />
-		<?php if($owner) { ?>
-		<input type="submit" name="action" value="Cancel Update" />
-		<?php }
-		if($user->inGroup("Reviewer")) {
-      if($addonObject->getDeleted() || $addonObject->isRejected()) {
-    ?>
-    <input type="submit" name="action" value="Reject" />
-		<?php } else { ?>
-    <input type="submit" name="action" value="Approve" />
-		<input type="submit" name="action" value="Reject" />
-    <?php }
-    }
-    ?>
-  </form>
+  <div class="tile">
+    <form action="approveUpdate.php" method="post">
+      <input type="hidden" name="aid" value="<?php echo $addonObject->getId() ?>" />
+      <?php if($owner) { ?>
+      <input class="btn yellow" type="submit" name="action" value="Cancel Update" />
+      <?php }
+      if($user->inGroup("Reviewer")) {
+        if($addonObject->getDeleted() || $addonObject->isRejected()) {
+      ?>
+      <input class="btn red" type="submit" name="action" value="Reject" />
+      <?php } else { ?>
+      <input class="btn green" type="submit" name="action" value="Approve" />
+      <input class="btn red" type="submit" name="action" value="Reject" />
+      <?php }
+      }
+      ?>
+    </form>
+  </div>
 </div>
 
 <?php

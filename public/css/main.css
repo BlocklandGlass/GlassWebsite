@@ -10,23 +10,38 @@
    Base styles: opinionated defaults
    ========================================================================== */
 
-@font-face {
-   font-family: Coolvetica;
-   src: url('/css/coolvetica.regular.ttf');
-}
+/* @font-face { */
+   /* font-family: Coolvetica; */
+   /* src: url('/css/coolvetica.regular.ttf'); */
+/* } */
 
-@font-face {
-   font-family: Geneva;
-   src: url('/css/Geneva.ttf');
-}
+/* @font-face { */
+   /* font-family: Geneva; */
+   /* src: url('/css/Geneva.ttf'); */
+/* } */
 
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans');
 
 html {
     color: rgba(0,0,0,0.87);
     font-size: 1em;
     line-height: 1.4;
-    font-family: Geneva, sans-serif;
+    font-family: 'Noto Sans', sans-serif;
     /*background-color: #ddd;*/
+}
+
+body {
+  background-image: url('/img/background.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: auto;
 }
 
 .tile {
@@ -272,8 +287,6 @@ input[type="submit"]:active {
   color: #fff;
 
   z-index: 99;
-
-  margin-bottom: 20px;
 }
 
 .navcontent {
@@ -428,6 +441,11 @@ input[type="submit"]:active {
   font-size: 14pt;
   background-color: #fff;
   height: 100%;
+  overflow: auto;
+}
+
+.maincontainer::-webkit-scrollbar {
+  display: none;
 }
 
 .maincontainer > p {
@@ -435,12 +453,11 @@ input[type="submit"]:active {
 }
 
 .searchcontainer {
-	margin-top: -8px;
 	float: right;
 }
 
 .searchbar {
-  display: block;
+  display: inline-block;
   font-size: 16pt;
   border: 1px solid #ccc;
 }
@@ -709,14 +726,14 @@ input[type="submit"]:active {
   border-radius: 10px;
 }
 
-.commenttable tr {
-  margin-bottom: 50px;
-  border-bottom: 1px solid #bbb;
+.commenttable tr.comment {
+  border: 1px solid #999;
+  background-color: white;
 }
 
-.commenttable tr:last-child {
-  border-bottom: none;
-}
+/* .commenttable tr:last-child { */
+  /* border-bottom: none; */
+/* } */
 
 .commenttable td {
   padding: 10px;
@@ -725,7 +742,7 @@ input[type="submit"]:active {
 }
 
 .commenttable td:first-child {
-  width: 25%;
+  width: 20%;
 }
 
 .commenttable textarea {
@@ -747,40 +764,6 @@ input[type="submit"]:active {
   width: 100%
 }
 
-.videomask {
-	position: relative;
-	width: 320px;
-	-webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
-	border-radius: 10px;
-	overflow: hidden;
-	margin: 8px;
-}
-
-.videooverlay {
-	position: absolute;
-	border-radius: 10px;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-
-	-webkit-transition: all ease 0.5s;
-	-moz-transition: all ease 0.5s;
-	-o-transition: all ease 0.5s;
-	-ms-transition: all ease 0.5s ;
-	transition: all ease 0.5s ;
-
-	-webkit-box-shadow: inset 0px 0px 12px 0px rgba(0,0,0,0.2);
-	-moz-box-shadow: inset 0px 0px 12px 0px rgba(0,0,0,0.2);
-	box-shadow: inset 0px 0px 12px 0px rgba(0,0,0,0.2);
-}
-
-.videooverlay:hover {
-	-webkit-box-shadow: inset 0px 0px 12px 8px rgba(0,0,0,0.4);
-	-moz-box-shadow: inset 0px 0px 12px 8px rgba(0,0,0,0.4);
-	box-shadow: inset 0px 0px 12px 8px rgba(0,0,0,0.4);
-}
-
 .boardtitle {
 	width: 100%;
 	text-align: center;
@@ -794,51 +777,6 @@ input[type="submit"]:active {
 	-webkit-font-smoothing: antialiased;
 }
 
-.videooverlay .boarddesc {
-	width: 100%;
-	text-align: center;
-	color: #fff;
-	opacity: 0.0;
-	font-weight: normal;
-	font-size: 100%;
-	text-shadow:
-		#000 0px 0px 4px,
-		#000 0px 0px 4px,
-		#000 0px 0px 4px;
-	-webkit-font-smoothing: antialiased;
-
-	-webkit-transition: all ease 1s;
-	-moz-transition: all ease 1s;
-	-o-transition: all ease 1s;
-	-ms-transition: all ease 1s ;
-	transition: all ease 1s ;
-}
-
-.videooverlay:hover .boarddesc {
-	opacity: 1.0;
-}
-
-.background_video {
-  -webkit-filter:contrast(.5);
-
-
-	-webkit-transition: all ease 0.5s;
-	-moz-transition: all ease 0.5s;
-	-o-transition: all ease 0.5s;
-	-ms-transition: all ease 0.5s ;
-	transition: all ease 0.5s ;
-}
-
-.videomask:hover video {
-  -webkit-filter:contrast(1);
-
-  -webkit-transition: all ease 1s;
-	-moz-transition: all ease 1s;
-	-o-transition: all ease 1s;
-	-ms-transition: all ease 1s ;
-	transition: all ease 1s ;
-}
-
 .description {
 	line-height: 1em;
 	position: relative;
@@ -847,9 +785,9 @@ input[type="submit"]:active {
 }
 
 .addonnav {
-  display: block;
   background-color: #eee;
   padding: 5px;
+  margin: 0;
 }
 
 .addonnavmod {
@@ -893,6 +831,13 @@ input[type="submit"]:active {
   margin: 0 1px;
 }
 
+::selection {
+  background: #80ffb5;
+}
+
+::-moz-selection {
+  background: #80ffb5;
+}
 
 /* ==========================================================================
    Helper classes

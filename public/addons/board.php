@@ -27,8 +27,12 @@
 <div class="maincontainer">
 	<?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
-    include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
   ?>
+  <ul class="addonnav tile">
+    <?php
+      include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
+    ?>
+  </ul>
 	<h1 style="text-align:center"><?php echo $boardObject->getName(); ?></h1>
 	<div style="margin-left: 20px; display: inline-block;">
 		<a href="/addons">Add-Ons</a> >> <a href="/addons/boards.php">Boards</a> >> <a href="#"><?php echo $boardObject->getName() ?></a>

@@ -135,7 +135,8 @@ setInterval(nextImage, 5000);
 		<div>
 			<h3>Want to get involved?</h3>
 	    <p>
-	      Blockland Glass is an open-source project open to any contributions. If you're interested, please contribute on <a href="https://github.com/BlocklandGlass">GitHub</a> and check out the <a href="https://forum.blockland.us/index.php?topic=284376.0">Blockland Glass Topic</a> over on the Blockland Forums!
+	      Blockland Glass is an open-source project open to any contributions.<br>
+        If you're interested, please contribute on <a href="https://github.com/BlocklandGlass">GitHub</a> and check out the <a href="https://forum.blockland.us/index.php?topic=284376.0">Blockland Glass Topic</a> over on the Blockland Forums!
 	    </p>
 		</div>
   </div>

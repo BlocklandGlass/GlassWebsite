@@ -40,7 +40,7 @@
 		} else {
 			foreach($comments as $comment) {
 				$user = $users[$comment->blid];
-				echo("<tr style=\"vertical-align:top\">");
+				echo("<tr class=\"comment\" style=\"vertical-align:top\">");
 				echo("<td style=\"width: 150px;\">");
 				echo("<a href=\"/user/view.php?blid=" . $user->getBLID() . "\">" . htmlspecialchars(utf8_encode($user->getUsername())) . "</a>");
 				echo("<br /><span style=\"font-size: .8em;\">" . $user->getBLID());
