@@ -183,8 +183,16 @@
 <div class="maincontainer">
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
-
-    echo "<span style=\"font-size: 0.8em; padding-left: 10px\"><a href=\"/addons/\">Add-Ons</a> >> ";
+  ?>
+  <div class="navcontainer darkgreen">
+    <div class="navcontent">
+      <?php
+        include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
+      ?>
+    </div>
+  </div>
+  <?php
+    echo "<span style=\"font-size: 0.8em; margin-left: 5px; padding: 5px;\"><a href=\"/addons/\">Add-Ons</a> >> ";
     echo "<a href=\"/addons/boards.php\">Boards</a> >> ";
     echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . utf8_encode($boardObject->getName()) . "</a> >> ";
     echo "<a href=\"#\">" . htmlspecialchars($addonObject->getName()) . "</a></span>";
@@ -203,8 +211,8 @@
       echo '
       <div class="tile" style="background-color: coral; padding: 10px; margin-top: 10px; text-align: center;">
         <strong style="font-size: 2rem;">Rejected Add-On</strong><br>
-        This add-on is not available to the public because it has been rejected.<br>
-        <strong>Only mod reviewers and the add-on uploader can view this page.</strong>
+        This add-on is not available to the public because it has been rejected by the add-on moderation team.<br>
+        <strong>Only the add-on moderation team and the add-on uploader can view this page.</strong>
       </div>
       ';
     } else if(!$addonObject->getApproved()) {
@@ -212,7 +220,7 @@
       <div class="tile" style="background-color: gold; padding: 10px; margin-top: 10px; text-align: center;">
         <strong style="font-size: 2rem;">Unapproved Add-On</strong><br>
         This add-on has not been inspected by the add-on moderation team.<br>
-        <strong>Only mod reviewers and the add-on uploader can view this page.</strong>
+        <strong>Only the add-on moderation team and the add-on uploader can view this page.</strong>
       </div>
       ';
     }
@@ -339,7 +347,8 @@
     // $url = "/addons/download.php?id=";
 
     if($addonObject->getApproved() || $current->inGroup("Reviewer")) {
-      echo '<a href="' . $url . $addonObject->getId() . '" class="btn dlbtn ' . $class . '"><strong>' . ucfirst($id) . '</strong><span style="font-size:9pt"><br />v' . $version . '</span></a>';
+      // echo '<a href="' . $url . $addonObject->getId() . '" class="btn dlbtn ' . $class . '"><strong>' . ucfirst($id) . '</strong><span style="font-size:9pt"><br />v' . $version . '</span></a>';
+      echo '<a href="' . $url . $addonObject->getId() . '" class="btn dlbtn ' . $class . '"><strong>Download</strong><span style="font-size:9pt"><br />v' . $version . '</span></a>';
     }
 
     // unfinished, hasn't been made available for everybody.

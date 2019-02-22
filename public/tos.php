@@ -5,17 +5,14 @@
     <style>
     html {
       font-family: 'Times New Roman', serif;
+      background-color: white;
     }
 
-    </p>
-    <p>
-        h1 {
+    h1 {
       text-align: center;
     }
 
-    </p>
-    <p>
-        h2 {
+    h2 {
       font-size: 1.2em;
       margin:0;
       padding:0;

@@ -32,7 +32,7 @@
     <h3><image style="height: 1.4em" src="/img/icons32/roadworks.png" /> Quality</h3>
     <p>Ensure the add-on being imported is not an add-on of which came from RTB's Bargain Bin.</p>
 	</div>
-  <div class="tile" style="margin-top: 15px">
+  <div class="tile">
     <table style="width: 100%" class="listTable">
       <thead>
         <tr><th>RTB Add-On</th><th>Glass Add-On</th><th>User</th><th> </th></tr>

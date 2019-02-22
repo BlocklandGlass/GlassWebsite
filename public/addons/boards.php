@@ -11,11 +11,13 @@
 	<?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
-  <ul class="addonnav tile">
-    <?php
-      include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
-    ?>
-  </ul>
+  <div class="navcontainer darkgreen">
+    <div class="navcontent">
+      <?php
+        include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
+      ?>
+    </div>
+  </div>
   <div style="margin-top: 20px; margin-left: 20px;">
 		<a href="/addons/">Add-Ons</a> >> <a href="#">Boards</a>
 	</div>

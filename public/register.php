@@ -17,7 +17,7 @@
 	<div class="center" id="registerStatus" style="display: none;">
 		<?php echo("<p>" . utf8_encode($registerStatus['message']) . "</p>"); ?>
 	</div>
-	<div class="tile" style="max-width: 50%; margin: 0 auto;">
+	<div class="tile" style="width: 50%; margin: 5px auto; text-align: center;">
 		<form action="/register.php" method="post" id="mainRegisterForm">
 			<table class="formtable">
 				<tbody>
@@ -30,11 +30,11 @@
 				</tbody>
 			</table>
 			<p>
-			By registering an account, you are agreeing to the <a href="/tos.php">Terms of Service.</a>
+        By registering an account, you are agreeing to the <a target="_blank" href="/tos.php">Terms of Service.</a>
 			</p>
 			<?php
 			if(isset($_POST['redirect'])) {
-			echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($_POST['redirect']) . "\">");
+        echo("<input type=\"hidden\" name=\"redirect\" value=\"" . htmlspecialchars($_POST['redirect']) . "\">");
 			}
 			?>
 		</form>

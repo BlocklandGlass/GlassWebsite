@@ -64,7 +64,6 @@
     width: 220px;
     background-color: #ddd;
     display: inline-block;
-    cursor: pointer;
     margin: 5px;
   }
 
@@ -76,6 +75,10 @@
     margin-left: 10px;
     display: inline-block;
     font-weight: bold;
+  }
+
+  .user-group:hover {
+    background-color: #ccc;
   }
 </style>
 <div class="maincontainer">
@@ -107,7 +110,7 @@
         echo "<p>Additionally, this user is part of the following group(s):</p>";
         foreach($groups as $gid) {
           $group = GroupManager::getFromId($gid);
-          echo "<div class=\"user-group\" title=\"" . $group->getDescription() . "\"><div><img src=\"/img/icons32/" . $group->getIcon() . ".png\"></div><div style=\"color: #" . $group->getColor() . ";\">" . $group->getName() . ($group->getLeader() == $blid ? " (Leader)" : "") . "</div></div>";
+          echo "<a href=\"#\" class=\"user-group\" title=\"" . $group->getDescription() . "\"><div><img src=\"/img/icons32/" . $group->getIcon() . ".png\"></div><div style=\"color: #" . $group->getColor() . ";\">" . $group->getName() . ($group->getLeader() == $blid ? " (Leader)" : "") . "</div></a>";
         }
       }
     }

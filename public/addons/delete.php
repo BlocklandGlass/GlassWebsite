@@ -54,8 +54,10 @@
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
+  <div class="tile" style="font-size: 3rem;">
+    Delete <strong><?php echo htmlspecialchars($addonObject->getName()) ?></strong>
+  </div>
   <div class="tile">
-    <h1>Delete <?php echo htmlspecialchars($addonObject->getName()) ?></h1>
     <p>
       Are you sure you want to delete <a href="/addons/addon.php?id=<?php echo $id; ?>"><?php echo htmlspecialchars($addonObject->getName()); ?></a>?<br>
       <span style="color:red">This action cannot be undone.</span>

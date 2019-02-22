@@ -20,8 +20,9 @@
     include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
   ?>
   <h1 style="text-align:center"><img style="max-width: 100%;" src="/img/rtb_logo.gif"><br />Archive</h1>
-  <a href="/addons/">Add-Ons</a> >> <a href="#">RTB Archive</a>
-
+  <div style="margin-left: 20px; display: inline-block;">
+    <a href="/addons/">Add-Ons</a> >> <a href="#">RTB Archive</a>
+  </div>
 	<div class="tile">
 		<table class="boardtable">
 			<tbody>

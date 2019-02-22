@@ -52,7 +52,7 @@
           $foundGroup = false;
 
           if($user->getBLID() == $addonObject->getAuthor()->getBLID()) {
-            echo("<img src=\"/img/icons16/vhs.png\"> <span style=\"font-weight: bold;\" title=\"This user uploaded the current add-on.\">Uploader</span>");
+            echo("<a href=\"#\"><img src=\"/img/icons16/vhs.png\"> <span style=\"font-weight: bold;\" title=\"This user uploaded the current add-on.\">Uploader</span></a>");
           } elseif($user->inGroup("Administrator")) {
             $foundGroup = GroupManager::getFromName("Administrator");
           } elseif($user->inGroup("Reviewer")) {
@@ -62,7 +62,7 @@
           }
 
           if($foundGroup) {
-            echo("<img src=\"/img/icons16/" . $foundGroup->getIcon() . ".png\"> <span style=\"color: #" . $foundGroup->getColor() . "; font-weight: bold;\" title=\"" . $foundGroup->getDescription() . "\">" . htmlspecialchars(utf8_encode($foundGroup->getName())) . "</span>");
+            echo("<a href=\"#\"><img src=\"/img/icons16/" . $foundGroup->getIcon() . ".png\"> <span style=\"color: #" . $foundGroup->getColor() . "; font-weight: bold;\" title=\"" . $foundGroup->getDescription() . "\">" . htmlspecialchars(utf8_encode($foundGroup->getName())) . "</span></a>");
           }
         }
 

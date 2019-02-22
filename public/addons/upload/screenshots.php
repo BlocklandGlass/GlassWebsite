@@ -159,8 +159,8 @@
   ?>
   <div class="tile" style="text-align: left">
     <h2>Screenshots</h2>
-    <p>You can upload screenshots for <strong><?php echo htmlspecialchars($addon->getName()); ?></strong> here, why don't you show us what its all about and upload some?<br>
-    It is highly recommended that you upload screenshots for add-ons which have a visual presence e.g. vehicles, weapons, particles, etc.</p>
+    <p>You can upload and manage current screenshots for <strong><?php echo htmlspecialchars($addon->getName()); ?></strong> here, why don't you show us what its all about and upload some?<br>
+    It is highly recommended that you upload screenshots for add-ons which have an in-game visual presence such as vehicles, weapons, particles and more.</p>
     <div style="text-align: center">
       <form>
         <div id="drop-box-box">
@@ -174,7 +174,13 @@
       </form>
     </div>
 		<div style="text-align: center">
-			<a href="success.php?id=<?php echo $addon->getId(); ?>" type="submit" id="continue" class="btn blue">Not Right Now</a>
+      <?php
+        if(isset($_GET['up'])) {
+          echo '<a href="success.php?id=' . $id . '" type="submit" id="continue" class="btn blue">Not Right Now</a>';
+        } else {
+          echo '<a href="/addons/manage.php?id=' . $id . '" type="submit" id="continue" class="btn blue">Go Back</a>';
+        }
+      ?>
 		</div>
   </div>
 

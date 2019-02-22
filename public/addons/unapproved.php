@@ -15,6 +15,13 @@
     <?php
       include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
     ?>
+    <div class="navcontainer darkgreen">
+      <div class="navcontent">
+        <?php
+          include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
+        ?>
+      </div>
+    </div>
     <div class="reviewbody">
       <?php
         echo "<span style=\"font-size: 0.8em;\"><a href=\"/addons/\">Add-Ons</a> >> ";
@@ -24,9 +31,9 @@
         
         echo "<h2>" . htmlspecialchars($addonObject->getName()) . "</h2>";
       ?>
-      <div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em; background-color: gold; text-align:center; padding: 10px; font-size: 1em">
-        <span style="float: left"><img src="/img/icons32/hourglass.png"></span>
-        <strong>This add-on has not been inspected by the add-on moderation team yet.</strong><br />
+      <div style="display: block; background-color: gold; text-align: center; padding: 10px; overflow: hidden;">
+        <div style="float: left;"><img src="/img/icons32/hourglass.png"></div>
+        <strong style="vertical-align: middle;">This add-on has not been inspected by the add-on moderation team yet.</strong>
       </div>
     </div>
 </div>

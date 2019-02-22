@@ -51,7 +51,8 @@
 	<div class="tile">
     <h2>Your Account</h2>
     <ul>
-      <li><a href="sessions.php">View Account Activity.</a></li>
+      <li><a href="view.php?blid=<?php echo $userObject->getBLID(); ?>">View your public profile.</a></li>
+      <li><a href="sessions.php">View your account activity.</a></li>
     </ul>
 	</div>
 	<div class="tile">
@@ -116,7 +117,7 @@
             echo '<td style="text-align: left !important"><a href="/addons/addon.php?id=' . $ao->getId() . '"><span style="font-size: 1.2em; font-weight:bold;">' . $ao->getName() . '</span></a></td>';
 
             $up = AddonManager::getUpdates($ao);
-            
+
             if(count($up) > 0) {
               $up = $up[0];
             }

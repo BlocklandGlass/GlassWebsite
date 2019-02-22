@@ -16,6 +16,13 @@
     <?php
       include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
     ?>
+    <div class="navcontainer darkgreen">
+      <div class="navcontent">
+        <?php
+          include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
+        ?>
+      </div>
+    </div>
     <div class="reviewbody">
       <?php
         echo "<span style=\"font-size: 0.8em;\"><a href=\"/addons/\">Add-Ons</a> >> ";
@@ -28,9 +35,9 @@
         // echo "<h2>" . htmlspecialchars($addonObject->getName()) . "</h2>";
       ?>
       <h2>Rejected Add-On</h2>
-      <div style="margin-bottom: 15px; display: inline-block; width: 100%; font-size: 0.8em; background-color: coral; text-align:center; padding: 10px; font-size: 1em">
-        <span style="float: left"><img src="/img/icons32/cancel.png"></span>
-        <strong>This add-on was rejected by the add-on moderation team and is no longer available.</strong><br />
+      <div style="display: block; background-color: coral; text-align: center; padding: 10px; overflow: hidden;">
+        <div style="float: left;"><img src="/img/icons32/cancel.png"></div>
+        <strong style="vertical-align: middle;">This add-on was rejected by the add-on moderation team and is no longer available.</strong>
       </div>
     </div>
 </div>

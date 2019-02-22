@@ -17,65 +17,37 @@
     return;
   }
 ?>
-<style>
-  .flex-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .flex-container > div {
-    background-color: #eee;
-    padding: 10px;
-    margin: 5px;
-    flex-basis: calc(400px);
-    flex-grow: 1;
-
-    overflow: hidden;
-  }
-
-  .tile.auto {
-    max-width: 200px;
-  }
-
-  @media only screen and (max-width: 768px) {
-    .tile.auto {
-      max-width: 100%;
-    }
-  }
-</style>
 <div class="maincontainer">
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
-  <div class="flex-container">
-    <div class="tile auto">
-      <ul class="sidenav">
-        <li><a href="?tab=maintenance">Maintenance</a></li>
-        <hr>
-        <li><a href="?tab=boards">Boards</a></li>
-        <hr>
-        <li><a href="?tab=groups">Groups</a></li>
-        <li><a href="?tab=users">Users</a></li>
-        <hr>
-        <li><a href="?tab=rooms">Room Logs</a></li>
+  <div class="navcontainer darkgreen">
+    <div class="navcontent">
+      <ul>
+        <li><a class="navbtn" href="?tab=maintenance">Maintenance</a></li>
+        <li><a class="navbtn" href="?tab=boards">Boards</a></li>
+        <li><a class="navbtn" href="?tab=groups">Groups</a></li>
+        <li><a class="navbtn" href="?tab=users">Users</a></li>
+        <li><a class="navbtn" href="?tab=rooms">Room Logs</a></li>
       </ul>
     </div>
-    <div class="tile">
-      <?php
-        if(!isset($_GET['tab'])) {
-          echo "<h1>Control Panel</h1>";
-          echo "Select a tab on the left to continue.";
+  </div>
+  <div class="tile" style="font-size: 3rem;">
+    Control Panel
+  </div>
+  <div class="tile">
+    <?php
+      if(!isset($_GET['tab'])) {
+        echo "Select a tab above to continue.";
+      } else {
+        $path = dirname(__FILE__) . "/tab/" . $_GET['tab'] . ".php";
+        if(is_file($path)) {
+          include($path);
         } else {
-          $path = dirname(__FILE__) . "/tab/" . $_GET['tab'] . ".php";
-          if(is_file($path)) {
-            include($path);
-          } else {
-            echo "Invalid tab.";
-          }
+          echo "Invalid tab.";
         }
-      ?>
-    </div>
+      }
+    ?>
   </div>
 </div>
 <?php

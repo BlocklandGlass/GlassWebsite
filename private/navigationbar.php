@@ -2,9 +2,8 @@
 require dirname(__FILE__) . '/autoload.php';
 use Glass\UserManager;
 ?>
-<div id="navcontainer" class="navcontainer">
-	<div id="navcontent" class="navcontent">
-		<!-- temporary nav -->
+<div class="navcontainer green">
+	<div class="navcontent">
 		<a class="homebtn" href="/"><img style="height: 38px" src="https://blocklandglass.com/img/logoWhite.png" /></a>
 		<ul>
 			<li><a href="/addons" class="navbtn">Add-Ons</a></li>

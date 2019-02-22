@@ -194,7 +194,7 @@ class AddonManager {
 		rename($file, $newPath);
 
 		$response = [
-			"redirect" => "/addons/upload/screenshots.php?id=" . $id
+			"redirect" => "/addons/upload/screenshots.php?id=" . $id . "&up"
 		];
 		return $response;
 	}

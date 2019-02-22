@@ -125,7 +125,8 @@ setInterval(nextImage, 5000);
 	      echo number_format(StatManager::getMasterServerStats()['servers']);
 	      ?></strong> Blockland servers online with <strong><?php
 	      echo $ct = number_format(StatManager::getMasterServerStats()['users']);
-	      ?></strong> <?php echo ($ct == 1 ? "user" : "users") ?>. Glass has delivered a total of <a href="stats/"><?php
+	      ?></strong> <?php echo ($ct == 1 ? "user" : "users") ?>. <sup title="Blockland servers with Glass installed are also included in the users statistic.">(disclaimer)</sup><br>
+        Glass has delivered a total of <a href="stats/"><?php
 	      $web = StatManager::getAllAddonDownloads("web")+0;
 	      $ingame = StatManager::getAllAddonDownloads("ingame")+0;
 	      $updates = StatManager::getAllAddonDownloads("updates")+0;
@@ -136,7 +137,7 @@ setInterval(nextImage, 5000);
 			<h3>Want to get involved?</h3>
 	    <p>
 	      Blockland Glass is an open-source project open to any contributions.<br>
-        If you're interested, please contribute on <a href="https://github.com/BlocklandGlass">GitHub</a> and check out the <a href="https://forum.blockland.us/index.php?topic=284376.0">Blockland Glass Topic</a> over on the Blockland Forums!
+        If you're interested, please contribute on <a href="https://github.com/BlocklandGlass">GitHub</a> and check out the <a href="https://forum.blockland.us/index.php?topic=284376.0">Blockland Glass Topic</a> over on the Blockland Forums.
 	    </p>
 		</div>
   </div>

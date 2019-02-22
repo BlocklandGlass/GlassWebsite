@@ -27,7 +27,7 @@ html {
     font-size: 1em;
     line-height: 1.4;
     font-family: 'Noto Sans', sans-serif;
-    /*background-color: #ddd;*/
+    background-color: #fff;
 }
 
 body {
@@ -280,13 +280,20 @@ input[type="submit"]:active {
   font-size: 1.1em;
   margin: none;
 
-  background-color: #2ecc71;
   width: 100%;
 
   text-align: center;
   color: #fff;
 
   z-index: 99;
+}
+
+.navcontainer.green {
+  background-color: #2ecc71;
+}
+
+.navcontainer.darkgreen {
+  background-color: #15B358;
 }
 
 .navcontent {
@@ -316,49 +323,6 @@ input[type="submit"]:active {
   display: inline-block;
 }
 
-.navmenu {
-	display: inline-block;
-}
-
-.sidenav {
-  padding: 0;
-  margin: 0;
-  padding-left: 10px;
-}
-
-.sidenav li {
-  font-size: 1em;
-  list-style-type: none;
-}
-
-.sidenav a:hover {
-  text-decoration: none;
-}
-
-#mobilemenubutton {
-	display: inline-block;
-	float: right;
-	font-size: 1.5em;
-	margin-right: 8px;
-	text-decoration: none;
-	color: #fff;
-}
-
-.navcontent .mobilemenu {
-	display: none;
-	background-color: #2ecc71;
-	z-index: 100;
-	clear: right;
-	height: auto;
-	padding: 8px;
-	margin: 0px;
-}
-
-.navcontent .mobilemenu > li {
-	display: block;
-	padding: 8px;
-}
-
 .navbtn {
   color: #fff;
   text-decoration: none;
@@ -366,8 +330,8 @@ input[type="submit"]:active {
   padding: 5px 15px;
 
   transition: 0.2s linear;
-   -webkit-transition: 0.2s linear;
-   -moz-transition: 0.2s linear;
+  -webkit-transition: 0.2s linear;
+  -moz-transition: 0.2s linear;
 }
 
 .navbtn:hover {
@@ -457,18 +421,12 @@ input[type="submit"]:active {
 }
 
 .searchbar {
-  display: inline-block;
+  float: left;
   font-size: 16pt;
   border: 1px solid #ccc;
-}
-
-.searchbar:hover {
-  background-color: #eee;
-}
-
-.searchbar:active {
-  background-color: #eee;
-  border: 1px solid #ccf;
+  width: 100% !important;
+  max-width: 200px;
+  color: black;
 }
 
 .addontable {
@@ -641,57 +599,57 @@ input[type="submit"]:active {
   box-shadow: 0px 1px 0px 0px;
 }
 
-.blue {
+.btn.blue {
   background-color: #55acee !important;
   box-shadow: 0px 5px 0px 0px #3C93D5 !important;
 }
 
-.blue:hover {
+.btn.blue:hover {
   background-color: #6FC6FF !important;
 }
 
-.green {
+.btn.green {
   background-color: #2ecc71 !important;
   box-shadow: 0px 5px 0px 0px #15B358 !important;
 }
 
-.green:hover {
+.btn.green:hover {
   background-color: #48E68B !important;
 }
 
-.red {
+.btn.red {
   background-color: #e74c3c !important;
   box-shadow: 0px 5px 0px 0px #CE3323 !important;
 }
 
-.red:hover {
+.btn.red:hover {
   background-color: #FF6656 !important;
 }
 
-.purple {
+.btn.purple {
   background-color: #9b59b6 !important;
   box-shadow: 0px 5px 0px 0px #82409D !important;
 }
 
-.purple:hover {
+.btn.purple:hover {
   background-color: #B573D0 !important;
 }
 
-.orange {
+.btn.orange {
   background-color: #e67e22 !important;
   box-shadow: 0px 5px 0px 0px #CD6509 !important;
 }
 
-.orange:hover {
+.btn.orange:hover {
   background-color: #FF983C !important;
 }
 
-.yellow {
+.btn.yellow {
   background-color: #f1c40f !important;
   box-shadow: 0px 5px 0px 0px #D8AB00 !important;
 }
 
-.yellow:hover {
+.btn.yellow:hover {
   background-color: #FFDE29 !important;
 }
 
@@ -726,14 +684,14 @@ input[type="submit"]:active {
   border-radius: 10px;
 }
 
-.commenttable tr.comment {
-  border: 1px solid #999;
-  background-color: white;
+.commenttable tr:nth-of-type(2) {
+  border-top: 1px solid #ccc;
 }
 
-/* .commenttable tr:last-child { */
-  /* border-bottom: none; */
-/* } */
+.commenttable tr.comment {
+  border-bottom: 1px solid #ccc;
+  background-color: white;
+}
 
 .commenttable td {
   padding: 10px;
@@ -919,8 +877,41 @@ input[type="submit"]:active {
    Modify as content requires.
    ========================================================================== */
 
-@media only screen and (min-width: 35em) {
-    /* Style adjustments for viewports that meet the condition */
+
+@media only screen and (max-width: 768px) {
+  .navbtn {
+    padding: 5px 20px;
+  }
+
+  .navcontainer {
+    max-height: none;
+  }
+
+  .navcontent > ul {
+    float: none;
+    height: auto;
+    display: block;
+    text-align: center;
+  }
+
+  .navcontent > ul > li {
+    margin: 15px;
+    display: block;
+  }
+
+  .searchbar {
+    display: block;
+    float: none;
+    margin: 0 auto !important;
+    margin-top: 15px !important;
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+  .maincontainer,
+  .navcontent {
+    max-width: 1024px;
+  }
 }
 
 @media print,

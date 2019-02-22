@@ -17,12 +17,13 @@
 	<?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
-  <ul class="addonnav tile">
-    <?php
-      include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
-    ?>
-  </ul>
-	<div class="tile" id="searchResults">
+  <div class="navcontainer darkgreen">
+    <div class="navcontent">
+      <?php
+        include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
+      ?>
+    </div>
+  </div>	<div class="tile" id="searchResults">
 		<?php include(realpath(dirname(__DIR__) . "/ajax/search.php")); ?>
 	</div>
 </div>

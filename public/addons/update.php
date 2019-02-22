@@ -29,7 +29,7 @@
     include dirname(__DIR__) . "/../private/navigationbar.php";
   ?>
 	<form action="update.php?id=<?php echo $_REQUEST['id'] ?>" method="post" enctype="multipart/form-data">
-		<div class="tile" style="display: inline-block; margin: auto 0; width: 590px; text-align:center">
+		<div class="tile" style="display: inline-block; margin: 5px auto; width: 50%; text-align:center">
 			<table class="formtable">
 				<tbody>
 					<tr>

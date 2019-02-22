@@ -159,6 +159,9 @@ td {
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
+  <div class="tile" style="font-size: 3rem;">
+    Statistics
+  </div>
 	<div class="flex-container">
 		<div>
 			<h3>File Downloads</h3>

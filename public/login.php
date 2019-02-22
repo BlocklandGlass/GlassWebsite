@@ -18,7 +18,7 @@
   <?php
     include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
   ?>
-	<div class="tile" style="width:50%; margin: 0 auto;">
+	<div class="tile" style="width:50%; margin: 5px auto;">
 		<div class="center" id="loginStatus">
 			<?php echo("<p>" . utf8_encode($loginStatus['message']) . "</p>"); ?>
 		</div>

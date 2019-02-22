@@ -35,7 +35,7 @@
 		//}
 	?>
 	<form action="" method="post" enctype="multipart/form-data">
-		<div class="tile" style="display: inline-block; margin: 10px 0; width: 590px; text-align:left">
+		<div class="tile" style="display: inline-block; margin: 5px auto; width: 50%; text-align:left">
 			<h2>Add-On Upload</h2>
 			<p>
 				Blockland Glass provides easy add-on browsing for our users, ensuring safety and usability. We ask that you, the developer, only upload age-appropriate and safe content. All add-ons are reviewed before becoming publically available.
@@ -47,8 +47,7 @@
 				<a href="https://daringfireball.net/projects/markdown/syntax">Markdown</a> is supported for descriptions. Glass uses the <a href="http://semver.org">SemVer</a> versioning system
 			</p>
 		</div>
-		<br />
-		<div class="tile" style="display: inline-block; margin: auto 0; width: 590px; text-align:center">
+		<div class="tile" style="display: inline-block; margin: 0 auto; width: 50%; text-align:center">
 			<table class="formtable">
 				<tbody>
 					<tr>
@@ -58,11 +57,11 @@
 					</tr>
 					<tr>
 						<td><strong>Name</strong></td>
-						<td><input type="text" name="addonname" id="addonname" style="width: 400px" placeholder="Give your add-on a title." value="<?php echo $_REQUEST['addonname'] ?? ""; ?>" required /></td>
+						<td><input type="text" name="addonname" id="addonname" placeholder="Give your add-on a title." value="<?php echo $_REQUEST['addonname'] ?? ""; ?>" required /></td>
 					</tr>
 					<tr>
 						<td><strong>Summary</strong></td>
-						<td><input type="text" name="summary" id="summary" style="width: 400px" placeholder="A short one-liner description." maxlength="150" value="<?php echo $_REQUEST['summary'] ?? ""; ?>" required /></td>
+						<td><input type="text" name="summary" id="summary" placeholder="A short one-liner description." maxlength="150" value="<?php echo $_REQUEST['summary'] ?? ""; ?>" required /></td>
 					</tr>
 					<tr>
 						<td><strong>Board</strong></td>
@@ -81,15 +80,15 @@
 					</tr>
 					<tr>
 						<td style="vertical-align:top"><strong>Description</strong></td>
-						<td><textarea style="font-size:0.8em;width:400px;height:200px" name="description" placeholder="How does it work? Markdown is supported." required /><?php echo $_REQUEST['description'] ?? ""; ?></textarea></td>
+						<td><textarea style="font-size:0.8em;" name="description" placeholder="How does it work? Markdown is supported." rows="10" cols="100" required /><?php echo $_REQUEST['description'] ?? ""; ?></textarea></td>
 					</tr>
 					<tr>
 						<td style="vertical-align:top"><strong>Filename</strong></td>
-						<td><input type="text" name="filename" style="width: 400px" placeholder="Weapon_Example"  value="<?php echo $_REQUEST['filename'] ?? ""; ?>" required /></td>
+						<td><input type="text" name="filename" placeholder="Weapon_Example"  value="<?php echo $_REQUEST['filename'] ?? ""; ?>" required /></td>
 					</tr>
 					<tr>
 						<td style="vertical-align:top"><strong>Current Version</strong></td>
-						<td><input type="text" name="version" style="width: 400px" placeholder="Probably 1.0.0"  value="<?php echo $_REQUEST['version'] ?? "1.0.0"; ?>" required /></td>
+						<td><input type="text" name="version" placeholder="Probably 1.0.0"  value="<?php echo $_REQUEST['version'] ?? "1.0.0"; ?>" required /></td>
 					</tr>
 					<tr>
 						<td>
