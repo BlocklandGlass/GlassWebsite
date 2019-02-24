@@ -14,16 +14,11 @@
   }
 </style>
 <div class="maincontainer">
-	<?php
+  <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
+    include(realpath(dirname(__DIR__) . "/../private/subnavigationbar.php"));
   ?>
-  <div class="navcontainer darkgreen">
-    <div class="navcontent">
-      <?php
-        include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
-      ?>
-    </div>
-  </div>	<div class="tile" id="searchResults">
+  <div class="tile" id="searchResults">
 		<?php include(realpath(dirname(__DIR__) . "/ajax/search.php")); ?>
 	</div>
 </div>
@@ -32,4 +27,5 @@
 	//TO DO:
 	//add script to bottom of page to prevent refresh on search
 
-	include(realpath(dirname(__DIR__) . "/../private/footer.php")); ?>
+	include(realpath(dirname(__DIR__) . "/../private/footer.php"));
+?>

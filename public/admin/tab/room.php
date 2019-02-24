@@ -1,4 +1,4 @@
-<h1>Room Logs</h1>
+<h2>Room Logs</h2>
 
 <?php
   use Glass\UserLog;
@@ -137,9 +137,13 @@
     font-style: italic;
     color: rgb(200, 0, 0);
   }
+
+  table td:nth-child(3) {
+    word-break: break-word;
+  }
 </style>
 
-<h2>Room <?php echo $id; ?></h2>
+<h3>Room <?php echo $id; ?></h3>
 <p>Displaying room log for the date of <?php echo $date; ?>.</p>
 
 <?php

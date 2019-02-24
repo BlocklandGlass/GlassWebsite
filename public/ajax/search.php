@@ -7,6 +7,7 @@
 
 	if(empty($addons)) {
 		echo "<p>We couldn't find anything. Sorry about that.</p>";
+    return;
 	}
 
 	foreach($addons as $addon) {

@@ -3,6 +3,7 @@
 
   use Glass\BoardManager;
   use Glass\AddonManager;
+  use Glass\RTBAddonManager;
   use Glass\AddonObject;
   use Glass\BugManager;
   use Glass\CommentManager;
@@ -183,19 +184,13 @@
 <div class="maincontainer">
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
+    include(realpath(dirname(__DIR__) . "/../private/subnavigationbar.php"));
   ?>
-  <div class="navcontainer darkgreen">
-    <div class="navcontent">
-      <?php
-        include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
-      ?>
-    </div>
-  </div>
   <?php
-    echo "<span style=\"font-size: 0.8em; margin-left: 5px; padding: 5px;\"><a href=\"/addons/\">Add-Ons</a> >> ";
+    echo "<div style=\"font-size: 0.8em; margin-top: 10px; margin-left: 10px; margin-bottom: 5px;\"><a href=\"/addons/\">Add-Ons</a> >> ";
     echo "<a href=\"/addons/boards.php\">Boards</a> >> ";
     echo "<a href=\"board.php?id=" . $boardObject->getID() . "\">" . utf8_encode($boardObject->getName()) . "</a> >> ";
-    echo "<a href=\"#\">" . htmlspecialchars($addonObject->getName()) . "</a></span>";
+    echo "<a href=\"#\">" . htmlspecialchars($addonObject->getName()) . "</a></div>";
 
     $author = $addonObject->getAuthor();
 
@@ -227,7 +222,7 @@
 
     if($current) {
       if((($current->inGroup("Reviewer") && $addonObject->getApproved()) || $addonObject->getManagerBLID() == $current->getBLID()) && !$addonObject->isRejected() && !$addonObject->getDeleted()) {
-        echo '<div class="tile" style="padding: 10px; margin-top: 10px; text-align: center;"><a href="manage.php?id=' . $addonObject->getId() . '">Manage This Add-On</a></div>';
+        echo '<div class="tile" style="margin-top: 10px; padding: 10px; text-align: center;"><a href="manage.php?id=' . $addonObject->getId() . '">Manage This Add-On</a></div>';
       }
     }
 

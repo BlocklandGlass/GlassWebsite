@@ -14,14 +14,8 @@
 <div class="maincontainer">
     <?php
       include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
+      include(realpath(dirname(__DIR__) . "/../private/subnavigationbar.php"));
     ?>
-    <div class="navcontainer darkgreen">
-      <div class="navcontent">
-        <?php
-          include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
-        ?>
-      </div>
-    </div>
     <div class="reviewbody">
       <?php
         echo "<span style=\"font-size: 0.8em;\"><a href=\"/addons/\">Add-Ons</a> >> ";

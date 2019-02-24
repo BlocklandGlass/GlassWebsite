@@ -62,7 +62,7 @@
           }
 
           if($foundGroup) {
-            echo("<a href=\"#\"><img src=\"/img/icons16/" . $foundGroup->getIcon() . ".png\"> <span style=\"color: #" . $foundGroup->getColor() . "; font-weight: bold;\" title=\"" . $foundGroup->getDescription() . "\">" . htmlspecialchars(utf8_encode($foundGroup->getName())) . "</span></a>");
+            echo("<a href=\"/user/group.php?name=" . $foundGroup->getName() . "\"><img src=\"/img/icons16/" . $foundGroup->getIcon() . ".png\"> <span style=\"color: #" . $foundGroup->getColor() . "; font-weight: bold;\" title=\"" . $foundGroup->getDescription() . "\">" . $foundGroup->getName() . "</span></a>");
           }
         }
 

@@ -48,8 +48,11 @@
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
+  <div class="tile" style="font-size: 3rem;">
+    Your Account
+  </div>
 	<div class="tile">
-    <h2>Your Account</h2>
+    <h2>Info</h2>
     <ul>
       <li><a href="view.php?blid=<?php echo $userObject->getBLID(); ?>">View your public profile.</a></li>
       <li><a href="sessions.php">View your account activity.</a></li>
@@ -57,7 +60,7 @@
 	</div>
 	<div class="tile">
 
-		<h2 style="width: 50%; display:inline-block; float:left;">Your Content</h3>
+		<h2 style="width: 50%; display:inline-block; float:left;">Uploaded Content</h2>
 		<a class="btn blue" href="/addons/upload/upload.php" style="font-size: 1em; float:right; margin: 0; margin-bottom: 20px; padding: 10px 15px;">
 			Upload New Add-On
 		</a>

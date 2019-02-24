@@ -29,21 +29,8 @@
 <div class="maincontainer">
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
+    include(realpath(dirname(__DIR__) . "/../private/subnavigationbar.php"));
   ?>
-  <div class="navcontainer darkgreen">
-    <div class="navcontent">
-      <ul>
-        <li><a class="navbtn" href="?id=<?php echo $_GET['id'] ?>&tab=desc">Description</a></li>
-        <!-- <li><a href="?id=<?php echo $_GET['id'] ?>&tab=ss">Screenshots</a></li> -->
-        <li><a class="navbtn" href="/addons/upload/screenshots.php?id=<?php echo $_GET['id'] ?>">Screenshots</a></li>
-        <li><a class="navbtn" href="?id=<?php echo $_GET['id'] ?>&tab=dep">Dependencies</a></li>
-        <li><a class="navbtn" href="/addons/update.php?id=<?php echo $_GET['id'] ?>">Update</a></li>
-        <li><a class="navbtn" href="?id=<?php echo $_GET['id'] ?>&tab=repo">Repository</a></li>
-        <li><a class="navbtn" href="/stats/addon.php?id=<?php echo $_GET['id'] ?>">Statistics</a></li>
-        <li><a class="navbtn" href="/addons/delete.php?id=<?php echo $_GET['id'] ?>">Delete</a></li>
-      </ul>
-    </div>
-  </div>
 	<div class="tile" style="font-size: 3rem;">
 		Managing <strong><?php echo htmlspecialchars($addonObject->getName()) ?></strong>
 	</div>

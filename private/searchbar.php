@@ -4,6 +4,6 @@
 	//	attach this to more pages
 	//	attach hidden parameters such as board and author depending on location
 ?>
-<form action="search.php" method="get">
+<form action="/addons/search.php" method="get">
   <input class="searchbar" type="text" name="q" placeholder="Search..."/>
 </form>

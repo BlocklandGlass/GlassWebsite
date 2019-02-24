@@ -14,8 +14,11 @@
 <div class="maincontainer">
   <?php
     include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
+    include(realpath(dirname(__DIR__) . "/../../private/subnavigationbar.php"));
   ?>
-	<span style="font-size: 9pt;"><a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archive</a> >> <a href="board.php?name=<?php echo $addonData->type; ?>"><?php echo $addonData->type; ?></a> >> <a href="#"><?php echo htmlspecialchars($addonData->title); ?></a></span>
+  <div style="margin-top: 20px; margin-left: 20px;">
+    <span style="font-size: 9pt;"><a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archive</a> >> <a href="board.php?name=<?php echo $addonData->type; ?>"><?php echo $addonData->type; ?></a> >> <a href="#"><?php echo htmlspecialchars($addonData->title); ?></a></span>
+  </div>
 		<div class="tile">
 		<?php
 			echo "<h2>" . htmlspecialchars($addonData->title) . "</h2>";
@@ -30,7 +33,7 @@
 				<br />
         <?php
         if($addonData->glass_id == 0 || $addonData->approved != 1) {
-          echo 'Are you the former owner of this add-on? You can regain your former userbase by reclaiming the add-on! <a href="reclaim.php?id=' . $_GET['id'] . '">Click here!</a>';
+          echo 'Are you the former owner of this add-on?<br>You can regain your former userbase by reclaiming the add-on!<a href="reclaim.php?id=' . $_GET['id'] . '">Click here!</a>';
         }
         ?>
 			</div>
@@ -44,7 +47,8 @@
 			<?php
 			$id = "RTB";
 			$class = "red";
-			echo '<a href="http://' . AWSFileManager::getBucket() . '/rtb/' . $addonData->filename .  '" class="btn dlbtn ' . $class . '"><strong>' . ucfirst($id) . '</strong><span style="font-size:9pt"><br />Imported Archive</span></a>';
+			// echo '<a href="http://' . AWSFileManager::getBucket() . '/rtb/' . $addonData->filename .  '" class="btn dlbtn ' . $class . '"><strong>' . ucfirst($id) . '</strong><span style="font-size:9pt"><br />Imported Archive</span></a>';
+      echo '<a href="http://' . AWSFileManager::getBucket() . '/rtb/' . $addonData->filename .  '" class="btn dlbtn ' . $class . '"><strong>Download</strong><span style="font-size:9pt"><br />RTB Imported Archive</span></a>';
 			?>
 		</div>
 		<?php } else {

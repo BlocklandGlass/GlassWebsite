@@ -8,6 +8,10 @@
     $searchArray['name'] = $_GET['q'];
   }
 
+  if(strlen(trim($searchArray['name'])) < 1) {
+    return [];
+  }
+
 	if(isset($_POST['blid'])) {
 		$searchArray['blid'] = intval($_POST['blid']);
 	}

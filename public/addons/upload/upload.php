@@ -44,7 +44,7 @@
 				<strong><div style="font-size: 1.2rem; color: red; text-align: center;">Do not upload content that you did not make.</div></strong>
 			</p>
 			<p>
-				<a href="https://daringfireball.net/projects/markdown/syntax">Markdown</a> is supported for descriptions. Glass uses the <a href="http://semver.org">SemVer</a> versioning system
+				<a href="https://daringfireball.net/projects/markdown/syntax">Markdown</a> is supported for descriptions. Glass uses the <a href="http://semver.org">SemVer</a> versioning system.
 			</p>
 		</div>
 		<div class="tile" style="display: inline-block; margin: 0 auto; width: 50%; text-align:center">

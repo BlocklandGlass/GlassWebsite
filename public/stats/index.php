@@ -159,6 +159,14 @@ td {
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
+  <div class="navcontainer darkgreen">
+    <div class="navcontent">
+      <ul>
+        <li><a class="navbtn" href="/stats/servers.php">Current Servers</a></li>
+        <li><a class="navbtn" href="/stats/users.php">Current Users</a></li>
+      </ul>
+    </div>
+  </div>
   <div class="tile" style="font-size: 3rem;">
     Statistics
   </div>

@@ -1,4 +1,4 @@
-<h1>Group Management</h1>
+<h2>Group Management</h2>
 
 <?php
   use Glass\UserManager;
@@ -57,7 +57,7 @@
   }
 ?>
 
-<h2><?php echo $group->name . (substr($group->name, strlen($group->name) - 1, 1) == "s" ? "" : "s"); ?></h2>
+<h2><?php echo "<span style=\"color: #" . $group->color . ";\">" . $group->name . "</span>"; ?></h2>
 
 <table style="width: 100%" class="listTable">
   <thead>

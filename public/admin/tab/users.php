@@ -1,4 +1,4 @@
-<h1>User Management</h1>
+<h2>User Management</h2>
 
 <?php
 	if(!$user->inGroup("Administrator")) {

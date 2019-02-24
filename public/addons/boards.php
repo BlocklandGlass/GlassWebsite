@@ -1,6 +1,8 @@
 <?php
 	require dirname(__DIR__) . '/../private/autoload.php';
 	use Glass\BoardManager;
+  use Glass\AddonManager;
+  use Glass\RTBAddonManager;
 
 	$_PAGETITLE = "Boards | Blockland Glass";
 
@@ -8,16 +10,11 @@
 ?>
 
 <div class="maincontainer">
-	<?php
+  <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
+    include(realpath(dirname(__DIR__) . "/../private/subnavigationbar.php"));
   ?>
-  <div class="navcontainer darkgreen">
-    <div class="navcontent">
-      <?php
-        include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
-      ?>
-    </div>
-  </div>
+  <h1 style="text-align:center"><img style="max-width: 100%;" src="/img/logo.png"></h1>
   <div style="margin-top: 20px; margin-left: 20px;">
 		<a href="/addons/">Add-Ons</a> >> <a href="#">Boards</a>
 	</div>

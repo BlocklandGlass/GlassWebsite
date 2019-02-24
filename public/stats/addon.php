@@ -10,7 +10,7 @@
 
 	use Glass\SemVer;
 
-	$_PAGETITLE = "Add-On Stats | Blockland Glass";
+	$_PAGETITLE = "Add-On Statistics | Blockland Glass";
 
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 

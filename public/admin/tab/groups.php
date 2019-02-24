@@ -1,4 +1,4 @@
-<h1>Group Management</h1>
+<h2>Group Management</h2>
 
 <?php
   use Glass\GroupManager;

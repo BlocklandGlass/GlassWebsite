@@ -1,4 +1,4 @@
-<h1>Maintenance</h1>
+<h2>Maintenance</h2>
 
 <?php
   use Glass\GroupManager;

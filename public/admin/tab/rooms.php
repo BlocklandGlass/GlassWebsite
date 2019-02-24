@@ -1,4 +1,4 @@
-<h1>Room Logs</h1>
+<h2>Room Logs</h2>
 
 <?php
 	if(!$user->inGroup("Administrator") && !$user->inGroup("Moderator")) {
@@ -34,7 +34,7 @@
   }
 ?>
 
-<h2>Rooms</h2>
+<h3>Rooms</h3>
 
 <ul>
   <?php

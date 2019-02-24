@@ -120,6 +120,9 @@
   <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
   ?>
+  <div class="tile" style="font-size: 3rem;">
+    Sessions
+  </div>
   <div class="flex-container">
   	<div>
       <h3>Active Sessions</h3>

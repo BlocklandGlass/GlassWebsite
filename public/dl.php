@@ -30,7 +30,7 @@
 	</div>
   <div style="text-align: center">
     <?php
-    echo '<a href="/addons/download.php?id=' . $glassAddonId . '&beta=0" class="btn dlbtn ' . $class . '"><strong>Download</strong><span style="font-size:9pt"><br />v' . $version . '</span></a>';
+    echo '<a href="/addons/download.php?id=' . $glassAddonId . '" class="btn dlbtn ' . $class . '"><strong>Download</strong><span style="font-size:9pt"><br />v' . $version . '</span></a>';
     ?>
   </div>
 </div>

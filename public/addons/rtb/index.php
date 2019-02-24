@@ -2,9 +2,7 @@
 	require dirname(__DIR__) . '/../../private/autoload.php';
 	use Glass\BoardManager;
 	use Glass\AddonManager;
-	//use Glass\AddonObject;
 	use Glass\UserManager;
-	//use Glass\UserHandler;
 
 	//TO DO: rewrite this page to use /private/json/getBoardAddonsWithUsers.php
 	//	And probably an ajax page to go with it
@@ -18,6 +16,7 @@
 <div class="maincontainer">
   <?php
     include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
+    include(realpath(dirname(__DIR__) . "/../../private/subnavigationbar.php"));
   ?>
   <h1 style="text-align:center"><img style="max-width: 100%;" src="/img/rtb_logo.gif"><br />Archive</h1>
   <div style="margin-left: 20px; display: inline-block;">

@@ -95,8 +95,8 @@
       return;
     }
 
-    echo "<div class=\"tile\">";
-    echo "<span style=\"font-size: 3rem; font-weight: bold;\">$name</span>";
+    echo "<div class=\"tile\" style=\"font-size: 3rem;\">";
+    echo "$name";
     echo "</div>";
     echo "<div class=\"tile\">";
     echo "<h2>Info</h2>";
@@ -110,7 +110,7 @@
         echo "<p>Additionally, this user is part of the following group(s):</p>";
         foreach($groups as $gid) {
           $group = GroupManager::getFromId($gid);
-          echo "<a href=\"#\" class=\"user-group\" title=\"" . $group->getDescription() . "\"><div><img src=\"/img/icons32/" . $group->getIcon() . ".png\"></div><div style=\"color: #" . $group->getColor() . ";\">" . $group->getName() . ($group->getLeader() == $blid ? " (Leader)" : "") . "</div></a>";
+          echo "<a href=\"/user/group.php?name=" . $group->getName() . "\" class=\"user-group\" title=\"" . $group->getDescription() . "\"><div><img src=\"/img/icons32/" . $group->getIcon() . ".png\"></div><div style=\"color: #" . $group->getColor() . ";\">" . $group->getName() . ($group->getLeader() == $blid ? " (Leader)" : "") . "</div></a>";
         }
       }
     }
@@ -153,7 +153,7 @@
 	if($hasAccount) {
 	?>
 	<div class="tile">
-    <h2>Content</h2>
+    <h2>Uploaded Content</h2>
 		<table class="listTable" style="width: 100%">
 			<thead>
 				<tr>

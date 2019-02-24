@@ -2,9 +2,8 @@
 	require dirname(__DIR__) . '/../private/autoload.php';
 	use Glass\BoardManager;
 	use Glass\AddonManager;
-	//use Glass\AddonObject;
+  use Glass\RTBAddonManager;
 	use Glass\UserManager;
-	//use Glass\UserHandler;
 
 	//TO DO: rewrite this page to use /private/json/getBoardAddonsWithUsers.php
 	//	And probably an ajax page to go with it
@@ -25,17 +24,11 @@
 	include(realpath(dirname(__DIR__) . "/../private/header.php"));
 ?>
 <div class="maincontainer">
-	<?php
+  <?php
     include(realpath(dirname(__DIR__) . "/../private/navigationbar.php"));
+    include(realpath(dirname(__DIR__) . "/../private/subnavigationbar.php"));
   ?>
-  <div class="navcontainer darkgreen">
-    <div class="navcontent">
-      <?php
-        include(realpath(dirname(__DIR__) . "/../private/searchbar.php"));
-      ?>
-    </div>
-  </div>
-	<h1 style="text-align:center"><?php echo $boardObject->getName(); ?></h1>
+  <h1 style="text-align:center"><img style="max-width: 100%;" src="/img/logo.png"><br><?php echo $boardObject->getName(); ?></h1>
 	<div style="margin-left: 20px; display: inline-block;">
 		<a href="/addons">Add-Ons</a> >> <a href="/addons/boards.php">Boards</a> >> <a href="#"><?php echo $boardObject->getName() ?></a>
 	</div>

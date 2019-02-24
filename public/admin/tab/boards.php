@@ -1,4 +1,4 @@
-<h1>Board Management</h1>
+<h2>Board Management</h2>
 
 <?php
   use Glass\DatabaseManager;
