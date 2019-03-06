@@ -54,7 +54,7 @@ function codeToMessage($code) {
 
   $user = UserManager::getCurrent();
 
-  if($user === false || ($addonObject->getManagerBLID() !== $user->getBLID())) {
+  if($user === false || ($addonObject->getManagerBLID() !== $user->getBLID() && !$user->inGroup("Administrator"))) {
 		$response = [
 			"redirect" => "/index.php"
 		];

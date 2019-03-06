@@ -181,7 +181,7 @@
       </div>
     </div>
     <?php
-      if($user && $addonObject->getManagerBLID() == $user->getBLID() && $bug->open) {
+      if($user && ($addonObject->getManagerBLID() == $user->getBLID() || $user->inGroup("Administrator")) && $bug->open) {
       ?>
       <div style="text-align: right">
         <a href="javascript:markDuplicate();" class="btn yellow" style="font-size: 0.8em; padding: 5px 10px; margin: 5px; display: none">Mark Duplicate</a>

@@ -17,7 +17,7 @@
     $bug  = BugManager::getFromId($id);
     if($bug) {
       $addon = AddonManager::getFromId($bug->aid);
-      if($addon->getManagerBLID() == $user->getBLID()) {
+      if($addon->getManagerBLID() == $user->getBLID() || $user->inGroup("Administrator")) {
         BugManager::closeBugReport($id, $open);
       }
     }

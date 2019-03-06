@@ -15,14 +15,14 @@
   }
 
   if(!file_exists(dirname(__FILE__) . '/../live/config.json')) {
-    die('Config missing.');
+    die('config.json is missing.');
   }
 
   $json = file_get_contents(dirname(__FILE__) . '/../live/config.json');
 
   $config = json_decode($json);
   if($config === false) {
-    die('Config invalid.');
+    die('config.json is invalid.');
   }
 
   $path = $config->dir . 'room/' . $id . '/';
@@ -68,7 +68,7 @@
       $datas[] = $data;
 
       // scan for blids
-      if($type == "join" || $type == "leave" || $type == "msg") {
+      if($type == "join" || $type == "exit" || $type == "msg") {
         $blids[] = $data->params[0];
       }
     }
@@ -83,7 +83,7 @@
         case "join":
           $blid = $data->params[0];
           $un = $data->params[1];
-          $un2 = htmlspecialchars($usernames[$blid]);
+          $un2 = htmlspecialchars(utf8_encode($usernames[$blid]));
           if($un != $un2) {
             $string = $blid . " ($un, $un2) joined";
           } else {
@@ -94,14 +94,14 @@
         case "msg":
           $blid = $data->params[0];
           $msg = $data->params[1];
-          $un2 = htmlspecialchars($usernames[$blid]);
+          $un2 = htmlspecialchars(utf8_encode($usernames[$blid]));
           $string = $blid . " ($un2): $msg";
           break;
 
         case "exit":
           $blid = $data->params[0];
           $un = $data->params[1];
-          $un2 = htmlspecialchars($usernames[$blid]);
+          $un2 = htmlspecialchars(utf8_encode($usernames[$blid]));
           if($un != $un2) {
             $string = $blid . " ($un, $un2) exited";
           } else {
@@ -109,8 +109,21 @@
           }
           break;
 
+        case "sys":
+          $string = $data->params[0];
+          break;
+
+        case "mod":
+          $string = $data->params[0];
+          break;
+
+        case "bot":
+          $msg = $data->params[0];
+          $string = "$msg";
+          break;
+
         default:
-          $string = "soon (tm)";
+          $string = "Unhandled type.";
           break;
       }
       $data->string = $string;
@@ -119,31 +132,62 @@
 ?>
 
 <style>
-  th {
+  table {
+    background-color: white;
+    width: 100%;
+  }
+
+  table th {
     font-weight: bold;
-    padding: 0 20px;
+    padding: 5px;
   }
 
-  td {
+  table td {
     font-family: monospace;
-  }
-
-  .params-join {
-    font-style: italic;
-    color: rgb(0, 150, 0);
-  }
-
-  .params-exit {
-    font-style: italic;
-    color: rgb(200, 0, 0);
+    text-align: center;
   }
 
   table td:nth-child(3) {
+    text-align: left;
     word-break: break-word;
+  }
+
+  table tr td.type {
+    font-style: italic;
+  }
+
+  table tr td.params-msg {
+    font-style: normal;
+  }
+
+  table tr td.params-join {
+    color: rgb(0, 150, 0);
+  }
+
+  table tr td.params-exit {
+    color: rgb(200, 0, 0);
+  }
+
+  table tr td.params-sys {
+    font-weight: bold;
+    color: rgb(0, 0, 150);
+  }
+
+  table tr td.params-mod {
+    font-weight: bold;
+    color: rgb(175, 100, 0);
+  }
+
+  table tr td.params-bot {
+    color: rgb(150, 0, 150);
+  }
+
+  table tr td.params-unhandled {
+    color: rgb(150, 150, 150);
   }
 </style>
 
-<h3>Room <?php echo $id; ?></h3>
+<h3>Room <?php echo "#" . $id; ?></h3>
 <p>Displaying room log for the date of <?php echo $date; ?>.</p>
 
 <?php
@@ -173,8 +217,13 @@
         $type = $data->type;
         $string = $data->string;
 
-        $class = "params-$type";
-        echo "<tr><td>$time</td><td>$type</td><td class=\"$class\">$string</td></tr>";
+        if($string == "Unhandled type.") {
+          $class = "params-unhandled";
+        } else {
+          $class = "params-$type";
+        }
+
+        echo "<tr><td>$time</td><td>$type</td><td class=\"type $class\">$string</td></tr>";
       }
     ?>
   </tbody>

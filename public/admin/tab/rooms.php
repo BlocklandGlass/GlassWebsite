@@ -6,14 +6,14 @@
   }
 
   if(!file_exists(dirname(__FILE__) . '/../live/config.json')) {
-    die('Config missing.');
+    die('config.json is missing.');
   }
 
   $json = file_get_contents(dirname(__FILE__) . '/../live/config.json');
 
   $config = json_decode($json);
   if($config === false) {
-    die('Config invalid.');
+    die('config.json is invalid.');
   }
 
   function scanRooms() {
@@ -40,7 +40,7 @@
   <?php
     $rooms = scanRooms();
     foreach($rooms as $room) {
-      $name = $config->rooms->$room ?? "Room $room";
+      $name = $config->rooms->$room ?? "Room #$room";
       echo "<li><a href=\"?tab=room&id=$room\">$name</a></li>";
     }
   ?>

@@ -1,7 +1,7 @@
 <?php
 	require dirname(__DIR__) . '/../../private/autoload.php';
 
-	if($user === false || ($addon->getManagerBLID() !== $user->getBLID())) {
+	if($user === false || ($addon->getManagerBLID() !== $user->getBLID() && !$user->inGroup("Administrator"))) {
     die("You do not have permission to access this area.");
 	}
 

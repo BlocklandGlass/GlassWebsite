@@ -30,7 +30,7 @@
     include(realpath(dirname(__DIR__) . "/../../private/subnavigationbar.php"));
   ?>
   <h1 style="text-align:center"><img src="/img/rtb_logo.gif"><br /><?php echo $_GET['name']; ?></h1>
-  <div style="margin-top: 20px; margin-left: 20px;">
+  <div style="display: inline; margin-top: 20px; margin-left: 20px;">
     <a href="/addons/">Add-Ons</a> >> <a href="/addons/rtb/">RTB Archive</a> >> <a href="#"><?php echo $_GET['name']; ?></a>
   </div>
 	<div class="pagenav" style="margin-right: 20px">
