@@ -31,11 +31,12 @@ html {
 }
 
 body {
-  background-image: url('/img/background.jpg');
+  /* background-image: url('/img/background.jpg');
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
+  background-image: linear-gradient(#333, #222)
 }
 
 html,
@@ -403,8 +404,8 @@ input[type="submit"]:active {
   margin: 0 auto;
   font-size: 14pt;
   background-color: #fff;
-  height: 100%;
   overflow: auto;
+  min-height: 100%;
 }
 
 .maincontainer::-webkit-scrollbar {
