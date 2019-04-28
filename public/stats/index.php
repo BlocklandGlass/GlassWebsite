@@ -132,6 +132,7 @@ td {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+  margin: 5px;
 }
 
 .flex-container > div {
@@ -167,7 +168,7 @@ td {
       </ul>
     </div>
   </div>
-  <div class="tile" style="font-size: 3rem;">
+  <div class="tile" style="font-size: 3rem; margin: 10px">
     Statistics
   </div>
 	<div class="flex-container">
