@@ -18,7 +18,7 @@
   <?php
     include(realpath(dirname(__DIR__) . "/private/navigationbar.php"));
   ?>
-	<div class="tile" style="width:50%; margin: 5px auto;">
+	<div class="tile" style="max-width: 600px; margin: 5px auto;">
 		<div class="center" id="loginStatus">
 			<?php echo("<p>" . utf8_encode($loginStatus['message']) . "</p>"); ?>
 		</div>
@@ -26,8 +26,8 @@
 			<table class="formtable">
 				<tbody>
 					<tr><td class="center" colspan="2"><h2>Log In</h2></td></tr>
-					<tr><td>E-mail or BL_ID:</td><td><input type="text" name="username" id="username" required autofocus></td></tr>
-					<tr><td>Password:</td><td><input type="password" name="password" id="password" required></td></tr>
+					<tr><td>E-mail or BL_ID:</td><td><input style="max-width: 300px" type="text" name="username" id="username" required autofocus></td></tr>
+					<tr><td>Password:</td><td><input style="max-width: 300px" type="password" name="password" id="password" required></td></tr>
 					<tr><td class="center" colspan="2"><input type="submit"></td></tr>
 				</tbody>
 			</table>

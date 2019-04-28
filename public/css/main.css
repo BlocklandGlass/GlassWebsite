@@ -49,6 +49,7 @@ body {
   padding: 15px;
   font-size: 0.8em;
   background-color: #ebebeb;
+  border-radius: .1em;
 }
 
 .tile h1,h2,h3,h4 {
@@ -307,13 +308,11 @@ input[type="submit"]:active {
 }
 
 .navcontent > ul {
-  height: 38px;
   vertical-align: middle;
   position: relative;
   display: inline-block;
   float: right;
   margin: 5px;
-  margin-bottom: 0px;
   padding: 5px;
 }
 
@@ -422,11 +421,11 @@ input[type="submit"]:active {
 
 .searchbar {
   float: left;
-  font-size: 16pt;
+  font-size: 0.8em !important;
   border: 1px solid #ccc;
-  width: 100% !important;
-  max-width: 200px;
+  max-width: 250px;
   color: black;
+  margin: 7px !important;
 }
 
 .addontable {
@@ -887,6 +886,12 @@ input[type="submit"]:active {
     max-height: none;
   }
 
+  .navcontent {
+    font-size: 0.6em;
+    text-align: center;
+    padding: 0;
+  }
+
   .navcontent > ul {
     float: none;
     height: auto;
@@ -894,16 +899,38 @@ input[type="submit"]:active {
     text-align: center;
   }
 
-  .navcontent > ul > li {
-    margin: 15px;
-    display: block;
+  .homebtn {
+    width: 100%;
+    padding: 8px 0;
   }
+
+  /* .navcontent > ul > li {
+    margin: 0.2em;
+    padding: 0 .5em;
+  } */
 
   .searchbar {
     display: block;
     float: none;
-    margin: 0 auto !important;
+    margin: 0 10px !important;
     margin-top: 15px !important;
+    max-width: none;
+    width: calc(100% - 32px) !important;
+  }
+
+  .tile {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 5px !important;
+  }
+
+  .listTable {
+    font-size: 0.8em;
+  }
+
+  .formtable {
+    width: 100%;
+    margin: 0;
   }
 }
 
