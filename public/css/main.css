@@ -33,10 +33,14 @@ html {
 body {
   /* background-image: url('/img/background.jpg');
   background-attachment: fixed;
-  background-position: center;
+
   background-repeat: no-repeat;
   background-size: cover; */
-  background-image: linear-gradient(#333, #222)
+  /* background-image: linear-gradient(#333, #222); */
+  background-image: linear-gradient(to bottom, rgba(34, 34, 34, 0.8), rgba(0, 0, 0, 1)),
+    url('/img/stud.png');
+  background-size: 40px;
+  background-position: center;
 }
 
 html,
@@ -51,6 +55,37 @@ body {
   font-size: 0.8em;
   background-color: #ebebeb;
   border-radius: .1em;
+}
+
+.footer {
+  background-color: #222;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  max-width: 1280px;
+  font-size: 0.7em;
+  text-align: center;
+  color: #ccc
+}
+
+.footer ul {
+  padding: 0;
+}
+
+.footer li {
+  list-style-type: none;
+  display: inline-block;
+  width: 100px;
+  padding: 0 5px;
+}
+
+.footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: inherit;
+  text-decoration: underline;
 }
 
 .tile h1,h2,h3,h4 {
@@ -405,7 +440,8 @@ input[type="submit"]:active {
   font-size: 14pt;
   background-color: #fff;
   overflow: auto;
-  min-height: 100%;
+  /* padding-bottom: 10px; */
+  /* min-height: 100%; */
 }
 
 .maincontainer::-webkit-scrollbar {
@@ -880,7 +916,11 @@ input[type="submit"]:active {
 
 @media only screen and (max-width: 768px) {
   .navbtn {
-    padding: 5px 20px;
+    padding: 5px 15px;
+  }
+
+  .navcontent > ul > li {
+    margin: 5px;
   }
 
   .navcontainer {
@@ -937,7 +977,8 @@ input[type="submit"]:active {
 
 @media only screen and (max-width: 1280px) {
   .maincontainer,
-  .navcontent {
+  .navcontent,
+  .footer {
     max-width: 1024px;
   }
 }

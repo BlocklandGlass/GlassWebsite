@@ -1,10 +1,17 @@
-		<script>
-			(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-			function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-			e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-			e.src='https://www.google-analytics.com/analytics.js';
-			r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-			ga('create','UA-68935420-1','auto');ga('send','pageview');
-		</script>
+		<div class="footer">
+      <div style="padding: 10px;">
+        <ul>
+          <li>
+            <a href="/tos.php">Terms of Service</a>
+          </li>
+          <!-- <li>
+            Privacy Policy
+          </li> -->
+          <li>
+            <a href="mailto:support@blocklandglass.com">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
 	</body>
 </html>

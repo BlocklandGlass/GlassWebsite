@@ -80,3 +80,6 @@
   }
   ?>
 </div>
+<?php
+	include(realpath(dirname(__DIR__) . "/../private/footer.php"));
+?>

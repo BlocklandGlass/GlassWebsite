@@ -16,6 +16,7 @@
     display: flex;
 
     flex-flow: row wrap;
+    margin: 5px;
   }
 
   .flex-body {
@@ -31,6 +32,7 @@
   @media only screen and (max-width: 768px) {
     .flex-container {
       flex-flow: column wrap;
+      margin: 0;
     }
 
     .flex-body {
