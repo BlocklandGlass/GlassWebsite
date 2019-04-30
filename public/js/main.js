@@ -12,3 +12,16 @@ function escapeHtml(text) {
 	});
 }
 
+$(document).ready(function() {
+  $('#cookie-consent-btn').click(function(e) {
+    $('.cookieconsent').hide();
+    Cookies.set('allow-cookies', '1');
+    e.preventDefault();
+  });
+
+  if(Cookies.get('allow-cookies') !== '1') {
+    $('.cookieconsent').show();
+  } else {
+    Cookies.set('allow-cookies', '1');
+  }
+});

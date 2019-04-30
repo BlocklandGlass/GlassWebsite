@@ -64,7 +64,8 @@ body {
   max-width: 1280px;
   font-size: 0.7em;
   text-align: center;
-  color: #ccc
+  color: #ccc;
+  box-shadow: 0px 4px 10px 0px rgba(50, 50, 50, 0.8);
 }
 
 .footer ul {
@@ -442,6 +443,7 @@ input[type="submit"]:active {
   overflow: auto;
   /* padding-bottom: 10px; */
   /* min-height: 100%; */
+  -webkit-overflow-scrolling: touch;
 }
 
 .maincontainer::-webkit-scrollbar {
@@ -565,6 +567,10 @@ input[type="submit"]:active {
   text-align: left !important;
 }
 
+.listTable {
+
+}
+
 .listTable > thead > tr > th {
   font-size: 1.1em;
   padding: 5px 10px 5px 10px;
@@ -583,8 +589,18 @@ input[type="submit"]:active {
   text-align: left;
 }
 
+.listTable tr {
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ddd;
+}
+
+.listTable tr:last-child {
+  border-bottom: none;
+}
+
 .listTable tr:nth-child(2n+1) {
-  background-color: #f5f5f5;
+  /* background-color: #f5f5f5; */
+  /* border-bottom: 1px solid rgba(0,0,0,0.2); */
 }
 
 .list tr td:first-child {
@@ -833,6 +849,34 @@ input[type="submit"]:active {
   background: #80ffb5;
 }
 
+.cookieconsent {
+  position: absolute;
+  bottom: 0;
+  background-image: linear-gradient(to bottom, rgba(51, 51, 51, 0.9), rgba(51, 51, 51, 1));
+  color: #eee;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 0.8em;
+
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  align-content: stretch;
+}
+
+.cookieconsent > div {
+
+}
+
+.cookieconsent a {
+  white-space: nowrap;
+}
+
 /* ==========================================================================
    Helper classes
    ========================================================================== */
@@ -973,6 +1017,10 @@ input[type="submit"]:active {
     width: 100%;
     margin: 0;
   }
+
+  .cookieconsent {
+    flex-direction: column;
+  }
 }
 
 @media only screen and (max-width: 1280px) {
@@ -980,6 +1028,7 @@ input[type="submit"]:active {
   .navcontent,
   .footer {
     max-width: 1024px;
+    margin-bottom: 0;
   }
 }
 

@@ -25,7 +25,10 @@
 	  $glassAddonId = 11; //this needs to be changed before going live, or we need a "find addon by name"
 	  $class = "green";
 	  $ao = AddonManager::getFromId($glassAddonId);
-	  $version = $ao->getVersion();
+    if($ao)
+      $version = $ao->getVersion();
+    else
+      $version = "[missing]";
 	  ?>
 	</div>
   <div style="text-align: center">
