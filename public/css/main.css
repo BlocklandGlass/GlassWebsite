@@ -39,7 +39,7 @@ body {
   /* background-image: linear-gradient(#333, #222); */
   background-image: linear-gradient(to bottom, rgba(34, 34, 34, 0.8), rgba(0, 0, 0, 1)),
     url('/img/stud.png');
-  background-size: 40px;
+  background-size: auto 100%, 40px;
   background-position: center;
 }
 
@@ -443,7 +443,6 @@ input[type="submit"]:active {
   overflow: auto;
   /* padding-bottom: 10px; */
   /* min-height: 100%; */
-  -webkit-overflow-scrolling: touch;
 }
 
 .maincontainer::-webkit-scrollbar {
@@ -850,7 +849,8 @@ input[type="submit"]:active {
 }
 
 .cookieconsent {
-  position: absolute;
+  position: fixed;
+  z-index: 9999;
   bottom: 0;
   background-image: linear-gradient(to bottom, rgba(51, 51, 51, 0.9), rgba(51, 51, 51, 1));
   color: #eee;
@@ -959,6 +959,23 @@ input[type="submit"]:active {
 
 
 @media only screen and (max-width: 768px) {
+  html {
+    height: auto;
+    height: 100%;
+    /* background-color: #222; */
+  }
+
+  body {
+    height: auto;
+    min-height: 100%;
+    background-image: linear-gradient(to bottom, rgba(34, 34, 34, 0.8), rgba(0, 0, 0, 0.9)),
+      url('/img/stud.png');
+  }
+
+  .maincontainer {
+    overflow-y: auto;
+  }
+
   .navbtn {
     padding: 5px 15px;
   }
