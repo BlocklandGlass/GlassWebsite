@@ -13,13 +13,13 @@ function escapeHtml(text) {
 }
 
 $(document).ready(function() {
-  $('#cookie-consent-btn').click(function(e) {
+  $('#cookie-consent-btn').on('click touch', function(e) {
     $('.cookieconsent').hide();
     Cookies.set('allow-cookies', '1');
     e.preventDefault();
   });
 
-  if(Cookies.get('allow-cookies') !== '1') {
+  if(Cookies.get('allow-cookies') != '1') {
     $('.cookieconsent').show();
   } else {
     Cookies.set('allow-cookies', '1');

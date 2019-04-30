@@ -13,7 +13,7 @@
         </ul>
       </div>
     </div>
-    <div class="cookieconsent" style="display: hidden;">
+    <div class="cookieconsent" style="display: none;">
       <div style="text-align: center">
         We use cookies to keep you logged in between visits. By continuing to use this website, you are agreeing to our use of cookies.
       </div>
