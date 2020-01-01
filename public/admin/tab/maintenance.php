@@ -83,11 +83,11 @@
     <p>The following button will remove all duplicate comments in the database.<br>
     <strong>Duplicate comments are defined as comments which are exactly the same, appear more than once in an add-on page and are made by the same user.</strong><br>
     This will preserve the first comment of any deleted duplicate set of comments.</p>
-    <button type="submit" name="cleanup_duplicate_comments">Cleanup Duplicate Comments</button>
+    <input type="submit" name="cleanup_duplicate_comments" value="Cleanup Duplicate Comments">
   </fieldset>
   <fieldset>
     <legend>Empty Comments Cleanup</legend>
     <p>The following button will remove all empty comments in the database.</p>
-    <button type="submit" name="cleanup_empty_comments">Cleanup Empty Comments</button>
+    <input type="submit" name="cleanup_empty_comments" value="Cleanup Empty Comments">
   </fieldset>
 </form>

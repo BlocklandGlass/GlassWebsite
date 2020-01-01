@@ -103,7 +103,7 @@
 			</table>
 		</div>
 		<div style="text-align:center">
-			<input type="submit" value="Upload File" name="submit">
+			<input class="btn blue" type="submit" value="Upload File" name="submit">
 		</div>
 		<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
   </form>

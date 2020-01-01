@@ -188,7 +188,7 @@ class GroupManager {
 	}
 
 	public static function addBLIDToGroupID($blid, $gid) {
-		//make sure addon exists
+		//make sure user exists
 		$user = UserManager::getFromBLID($blid);
 
 		if($user === false) {
@@ -262,17 +262,17 @@ class GroupManager {
 		}
 		$resource->close();
 
-		if(!$database->query("DELETE FROM `group_usermap` WHERE `blid` = '" . $database->sanitize($user->getBLID()) . "' `gid` = '" . $database->sanitize($group->getID()) . "'")) {
+		if(!$database->query("DELETE FROM `group_usermap` WHERE `blid` = '" . $database->sanitize($user->getBLID()) . "' AND `gid` = '" . $database->sanitize($group->getID()) . "'")) {
 			throw new \Exception("Error removing usermap entry: " . $database->error());
 		}
-		$resource->close();
+
 		return true;
 	}
 
 	public static function createDefaultGroups($blid) {
-		GroupManager::createGroupWithLeaderBLID("Administrator", "", "EB2B36", "crown_gold", $blid);
-		GroupManager::createGroupWithLeaderBLID("Moderator", "", "336699", "crown_silver", $blid);
-		GroupManager::createGroupWithLeaderBLID("Reviewer", "", "00ff00", "star", $blid);
+		GroupManager::createGroupWithLeaderBLID("Administrator", "Glass Developer.", "e74c3c", "key", $blid);
+		GroupManager::createGroupWithLeaderBLID("Moderator", "Granted abilities to moderate Glass Live.", "e67e22", "user_police_female", $blid);
+		GroupManager::createGroupWithLeaderBLID("Reviewer", "Granted abilities to approve and reject add-ons.", "7de260", "document_mark_as_final", $blid);
 	}
 
   public static function editGroupByGroupID($gid, $attribute, $data, $blid = -1) {

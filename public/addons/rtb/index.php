@@ -34,7 +34,7 @@
           $boards = RTBAddonManager::getBoards();
 
           if($boards === false) {
-            echo '<tr><td colspan="3" style="text-align:center; padding: 15px">No RTB imports found.</td></tr>';
+            echo '<tr><td colspan="3" style="text-align:center; padding: 15px">No boards found.</td></tr>';
           } else {
             foreach($boards as $board) {
               ?>

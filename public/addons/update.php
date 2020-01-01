@@ -72,7 +72,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="2"><input type="submit" value="Upload File" name="submit"></td>
+						<td colspan="2"><input class="btn blue" type="submit" value="Upload File" name="submit"></td>
 					</tr>
 				</tbody>
 			</table>

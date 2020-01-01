@@ -33,26 +33,31 @@
     $boards = BoardManager::getAllBoards();
     foreach($boards as $board) {
       echo "<tr>";
-      echo "<td><img src=\"/img/icons16/" . $board->icon . ".png\"></td>";
+      echo "<td><img src=\"/img/icons32/" . $board->icon . ".png\"></td>";
       echo "<td>" . $board->getName() . "</td>";
       echo "<td>" . $board->getCount() . "</td>";
       echo "<td>" . $board->getGroup() . "</td>";
-      echo "<td><a href=\"#\">Manage</a> | <a href=\"#\">Delete</a></td>";
+      echo "<td>";
+      echo "<a href=\"#\" class=\"btn small blue\">Manage</a>";
+      echo "<a href=\"#\" class=\"btn small red\">Remove</a>";
+      echo "</td>";
       echo "</tr>";
     }
     ?>
   </tbody>
 </table>
-<hr />
-<form action="?tab=board" method="post">
+
+<hr>
+
+<form method="post">
   <table class="formtable">
     <tbody>
       <tr><td class="center" colspan="2"><h3>Create Board</h3></td></tr>
-      <tr><td>Board Name:</td><td><input type="text" name="name" id="name"></td></tr>
-      <tr><td>Group Name:</td><td><input type="text" name="group" id="group"></td></tr>
-      <tr><td>Icon:</td><td><input type="text" name="icon" id="icon"></td></tr>
-      <tr><td>Description:</td><td><textarea name="desc" id="desc"></textarea></tr>
-      <tr><td class="center" colspan="2"><input class="green" type="submit"></td></tr>
+      <tr><td>Board Name:</td><td><input type="text" name="name"></td></tr>
+      <tr><td>Group Name:</td><td><input type="text" name="group"></td></tr>
+      <tr><td>Icon:</td><td><input type="text" name="icon"></td></tr>
+      <tr><td>Description:</td><td><textarea name="desc"></textarea></tr>
+      <tr><td class="center" colspan="2"><input class="btn green" type="submit" value="Create"></td></tr>
     </tbody>
   </table>
   <input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">

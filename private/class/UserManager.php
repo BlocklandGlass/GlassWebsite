@@ -97,12 +97,12 @@ class UserManager {
 
 				if(!$loginDetails) {
 					return [
-						"message" => "This BL_ID has not been verified yet, please use your E-mail instead."
+						"message" => "This BL_ID has not been verified yet, please use your e-mail instead."
 					];
 				}
 			} else {
 				return [
-					"message" => "Invalid BL_ID."
+					"message" => "Invalid e-mail/BL_ID or password."
 				];
 			}
 		} elseif(filter_var($identifier, FILTER_VALIDATE_EMAIL)) {
@@ -110,14 +110,14 @@ class UserManager {
 			$loginDetails = UserManager::getLoginDetailsFromEmail($email);
 		} else {
 			return [
-				"message" => "Invalid E-mail/BL_ID."
+				"message" => "Invalid e-mail/BL_ID or password."
 			];
 		}
 
 		if(!$loginDetails) {
 			//username not found
 			return [
-				"message" => "Incorrect username or password."
+				"message" => "Invalid e-mail/BL_ID or password."
 			];
 		}
 		$hash = $loginDetails['hash'];
@@ -144,7 +144,7 @@ class UserManager {
 			}
 		}
 		return [
-			"message" => "Incorrect username or password."
+			"message" => "Invalid e-mail/BL_ID or password."
 		];
 	}
 

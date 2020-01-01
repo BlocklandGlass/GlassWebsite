@@ -17,7 +17,7 @@ $dat = require dirname(__DIR__) . "/../../private/json/manageAddon.php";
       <td><textarea name="description" style="font-size: 0.9em; width: 800px; height: 300px"><?php echo $dat['addon']->description; ?></textarea></td>
     </tr>
     <tr>
-      <td colspan="2" style="text-align:center"><input type="submit" name="submit"/></td>
+      <td colspan="2" style="text-align:center"><input class="btn blue" type="submit" name="submit"/></td>
     </tr>
   </tbody>
 </table>

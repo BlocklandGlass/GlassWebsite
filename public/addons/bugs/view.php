@@ -264,7 +264,7 @@
             </td>
             <td style="text-align: center">
               <textarea name="body" style="display:block; width:calc(100% - 30px); height: 170px;"></textarea>
-              <input type="submit" />
+              <input class="btn blue" type="submit" />
             </td>
           </tr>
           <?php
