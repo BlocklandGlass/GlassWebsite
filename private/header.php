@@ -120,7 +120,7 @@
 		<!-- Place favicon.ico in the root directory -->
 
 		<link rel="stylesheet" href="/css/normalize.css">
-		<link rel="stylesheet" href="/css/main.css?rev=3">
+		<link rel="stylesheet" href="/css/main.css?rev=4">
 
 		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Quicksand" />
 

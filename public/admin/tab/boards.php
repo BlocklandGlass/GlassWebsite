@@ -38,8 +38,10 @@
       echo "<td>" . $board->getCount() . "</td>";
       echo "<td>" . $board->getGroup() . "</td>";
       echo "<td>";
-      echo "<a href=\"#\" class=\"btn small blue\">Manage</a>";
-      echo "<a href=\"#\" class=\"btn small red\">Remove</a>";
+      // echo "<a href=\"#\" class=\"btn small blue\">Manage</a>";
+      // echo "<a href=\"#\" class=\"btn small red\">Remove</a>";
+      echo "<input class=\"btn small blue\" type=\"submit\" value=\"Manage\" disabled>";
+      echo "<input class=\"btn small red\" type=\"submit\" value=\"Remove\" disabled>";
       echo "</td>";
       echo "</tr>";
     }

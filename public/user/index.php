@@ -115,7 +115,7 @@
             $board = BoardManager::getFromId($ao->getBoard());
             echo '<tr>';
 
-            echo '<td><img src="https://blocklandglass.com/img/icons32/' . $board->getIcon() . '.png"/></td>';
+            echo '<td><img src="/img/icons32/' . $board->getIcon() . '.png"/></td>';
 
             echo '<td style="text-align: left !important"><a href="/addons/addon.php?id=' . $ao->getId() . '"><span style="font-size: 1.2em; font-weight:bold;">' . $ao->getName() . '</span></a></td>';
 
@@ -147,14 +147,24 @@
 
             echo '<td>' . ($ao->getDownloads('web')+$ao->getDownloads('ingame')) . '</td>';
 
-            ?>
-            <td style="font-size: 0.8em;">
-              <a href="/addons/update.php?id=<?php echo $ao->getId(); ?>">Update</a> |
-              <a href="/addons/manage.php?id=<?php echo $ao->getId(); ?>">Manage</a> |
-              <a href="/stats/addon.php?id=<?php echo $ao->getId(); ?>">Stats</a> |
-              <a href="/addons/delete.php?id=<?php echo $ao->getId(); ?>">Delete</a>
+            echo '
+            <td style="font-size: 0.8em;">';
+            
+            if($ao->isRejected()) {
+              // todo: resubmission
+              // echo '<a href="#" class="btn small green">Resubmit</a>';
+              echo '<a href="/addons/update.php?id=' . $ao->getId() . '" class="btn small green">Update</a>';
+            } else {
+              echo '<a href="/addons/update.php?id=' . $ao->getId() . '" class="btn small green">Update</a>';
+            }
+            
+            echo '
+              <a href="/addons/manage.php?id=' . $ao->getId() . '" class="btn small blue">Manage</a>
+              <a href="/stats/addon.php?id=' . $ao->getId() . '" class="btn small purple">Stats</a>
+              <a href="/addons/delete.php?id=' . $ao->getId() . '" class="btn small red">Delete</a>
             </td>
-            <?php
+            ';
+
             echo '</tr>';
           }
         }

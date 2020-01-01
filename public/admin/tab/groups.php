@@ -25,7 +25,8 @@
         echo "<td>" . GroupManager::getMemberCountByID($group->id) . "</td>";
         echo "<td>";
         echo "<a href=\"?tab=group&id=" . $group->id . "\" class=\"btn small blue\">Manage</a>";
-        echo "<a href=\"#\" class=\"btn small red\">Remove</a>";
+        // echo "<a href=\"#\" class=\"btn small red\">Remove</a>";
+        echo "<input class=\"btn small red\" type=\"submit\" value=\"Remove\" disabled>";
         echo "</td>";
         echo "</tr>";
       }

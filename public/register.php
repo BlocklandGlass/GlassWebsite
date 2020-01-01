@@ -26,7 +26,7 @@
 					<tr><td>BL_ID:</td><td><input type="text" name="blid" id="blid" required></td></tr>
 					<tr><td>Password:</td><td><input type="password" name="password" id="password" required></td></tr>
 					<tr><td>Verify Password:</td><td><input type="password" name="verify" id="verify" required></td></tr>
-					<tr><td class="center" colspan="2"><input type="submit"></td></tr>
+					<tr><td class="center" colspan="2"><input class="btn blue" type="submit"></td></tr>
 				</tbody>
 			</table>
 			<p>

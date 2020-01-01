@@ -28,7 +28,7 @@
       }
 			echo("<tr style=\"vertical-align:top\">");
 			echo("<td>Leave a comment:</td>");
-			echo("<td style=\"text-align:center\"><textarea name=\"comment\" style=\"font-size:0.6em;\"" . ($rejected ? " disabled" : "") . "></textarea><input type=\"submit\" value=\"Post\"" . ($rejected ? " disabled" : "") . ">");
+			echo("<td style=\"text-align:center\"><textarea name=\"comment\" style=\"font-size:0.6em;\"" . ($rejected ? " disabled" : "") . "></textarea><input class=\"btn blue\" type=\"submit\" value=\"Post\"" . ($rejected ? " disabled" : "") . ">");
 			echo("</td></tr>");
 		}
 

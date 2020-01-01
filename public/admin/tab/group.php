@@ -27,10 +27,17 @@
     }
 
     if(isset($_POST['blid']) && isset($_POST['action'])) {
-      if($_POST['action'] == "Make Leader") {
+      $blid = $_POST['blid'];
+      $action = $_POST['action'];
+      
+      if($action == "Make Leader") {
         // do nothing
-      } else if($_POST['action'] == "Remove") {
-        GroupManager::removeBLIDFromGroupID($_POST['blid'], $gid);
+      } else if($action == "Remove") {
+        if($group->leader == $blid) {
+          die('The active leader of a group cannot be removed.');
+        }
+
+        GroupManager::removeBLIDFromGroupID($blid, $gid);
         $dirty = true;
       }
     }

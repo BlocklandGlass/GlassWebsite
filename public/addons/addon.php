@@ -236,17 +236,17 @@
         ?>
         <div style="margin-top: 15px; margin-bottom: 10px; display: inline-block; width: 100%;">
           <div class="addoninfoleft">
-            <image style="height:1.5em" src="https://blocklandglass.com/img/icons32/category.png" />
+            <image style="height:1.5em" src="/img/icons32/category.png" />
             <?php
               echo htmlspecialchars($boardObject->getName());
             ?>
             <br />
-            <image style="height:1.5em" src="https://blocklandglass.com/img/icons32/folder_vertical_zipper.png" />
+            <image style="height:1.5em" src="/img/icons32/folder_vertical_zipper.png" />
             <?php
               echo $addonObject->getFilename();
             ?>
             <br />
-            <image style="height:1.5em" src="https://blocklandglass.com/img/icons32/date.png" />
+            <image style="height:1.5em" src="/img/icons32/date.png" />
             <?php echo date("M jS Y, g:i A", strtotime($addonObject->getUploadDate())); ?>
             <br />
           </div>
@@ -254,7 +254,7 @@
             <?php
             echo ($addonObject->getDownloads("web") + $addonObject->getDownloads("ingame"));
             ?>
-             <image style="height:1.5em" src="https://blocklandglass.com/img/icons32/inbox_download.png" /><br />
+             <image style="height:1.5em" src="/img/icons32/inbox_download.png" /><br />
             <br />
           </div>
         </div>
