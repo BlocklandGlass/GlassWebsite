@@ -67,7 +67,9 @@
         }
 
 				echo("</span></td><td>");
-				echo(htmlspecialchars($comment->getComment()));
+        $commentBody = htmlspecialchars($comment->getComment());
+        $commentBody = str_replace("\r\n", "<br>", $commentBody);
+				echo($commentBody);
 				echo("</td></tr>");
 			}
 		}

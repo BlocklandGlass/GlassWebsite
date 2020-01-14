@@ -319,19 +319,19 @@ class UserManager {
 		UserManager::verifyTable($db);
 		$db->query("UPDATE `users` SET `reset`='" . $db->sanitize($resetToken . " " . time()) . "' WHERE `blid`='" . $db->sanitize($user->getBlid()) . "'");
 
-		$body = "Greetings " . $user->getUsername() . ",\r\n\r\n
+		$body = "Greetings " . $user->getUsername() . "
 
-    A request has been made to reset your password on the Blockland Glass website.\r\n\r\n
+    A request has been made to reset your password on the Blockland Glass website.
 
-    If you did not send this request, please ignore this e-mail.\r\n\r\n
+    If you did not send this request, please ignore this e-mail.
 
-    If you wish to continue with the password reset, follow the link below:\r\n\r\n
+    If you wish to continue with the password reset, follow the link below:
 
-    https://blocklandglass.com/user/resetPassword.php?token=" . urlencode($resetToken) . "&id=" . $user->getBLID() . "\r\n\r\n
+    https://blocklandglass.com/user/resetPassword.php?token=" . urlencode($resetToken) . "&id=" . $user->getBLID() . "
 
-    Please note: This request is only valid for 30 minutes.\r\n\r\n
+    Please note: This request is only valid for 30 minutes.
 
-    Regards,\r\n
+    Regards,
     The BLG Team
     ";
 

@@ -22,26 +22,36 @@
 ?>
 <style>
   .status {
-    background-color: white;
-    padding: 6px;
-    height: 100%;
+    background-color: black;
+    color: white;
+    padding: 4px;
     font-style: italic;
+    border-radius: 8px;
+    border-bottom: 2px solid black;
+    margin: 0 auto;
+    width: 110px;
+    font-size: 0.9em;
   }
 
   .status.deleted {
     background-color: lightgray;
+    border-bottom: 2px solid gray;
   }
 
   .status.approved {
     background-color: yellowgreen;
+    border-bottom: 2px solid green;
   }
 
   .status.rejected {
-    background-color: coral;
+    background-color: red;
+    border-bottom: 2px solid darkred;
   }
 
   .status.awaiting-review {
     background-color: gold;
+    border-bottom: 2px solid orange;
+    color: black;
   }
 </style>
 <div class="maincontainer">
@@ -129,12 +139,14 @@
               echo '<td><div class="status deleted">Deleted</div></td>';
             } else if($ao->getApproved()) {
               if($up != null) {
+                $version = $up->getVersion();
+                
                 if($up->isPending()) {
-                  echo '<td><div class="status awaiting-review">Update Pending Approval</div></td>';
+                  echo '<td><div class="status awaiting-review">Pending Review (v' . $version . ')</div></td>';
                 } else if($up->isRejected()) {
-                  echo '<td><div class="status rejected">Latest Update Rejected</div></td>';
+                  echo '<td><div class="status rejected">Rejected (v' . $version . ')</div></td>';
                 } else {
-                  echo '<td><div class="status approved">Latest Update Approved</div></td>';
+                  echo '<td><div class="status approved">Approved (v' . $version . ')</div></td>';
                 }
               } else {
                 echo '<td><div class="status approved">Approved</div></td>';
