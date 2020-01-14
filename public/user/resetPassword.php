@@ -15,7 +15,7 @@
         return;
       } else {
         $response = [
-          "message" => "Passwords dont match!",
+          "message" => "Passwords don't match.",
           "form" => true
         ];
       }
@@ -27,14 +27,14 @@
       if($userObj->getResetKey() !== $token) {
 				UserManager::invalidateResetKey($userObj->getBLID());
         $response = [
-          "message" => "<h3>Invalid Reset Token</h3><p>Your password reset has been cancelled. If you restart password recovery, be sure to only use the latest recovery email!</p>" .
-											 "<p style=\"font-size: 0.8em; text-align:center;\"><a href=\"/user/forgotPassword.php\">Password Recovery</a></p>",
+          "message" => "<h3>Invalid Reset Request</h3><p>This password reset request is not valid. If multiple password reset requests have been sent, please use the latest one only.</p>" .
+											 "<p style=\"font-size: 0.8em; text-align:center;\"><a href=\"/user/forgotPassword.php\">Forgotten Password</a></p>",
           "form" => false
         ];
       } else if((time()-$userObj->getResetTime()) > 1800) {
         $response = [
-          "message" => "<h3>Reset Expired</h3><p>You only have half an hour to reset your password after receiving a recovery email! You'll need to restart the password recovery process.</p>" .
-											 "<p style=\"font-size: 0.8em; text-align:center;\"><a href=\"/user/forgotPassword.php\">Password Recovery</a></p>",
+          "message" => "<h3>Reset Request Expired</h3><p>Password reset requests are only valid 30 minutes from the time of issue. You will need to restart the password recovery process.</p>" .
+											 "<p style=\"font-size: 0.8em; text-align:center;\"><a href=\"/user/forgotPassword.php\">Forgotten Password</a></p>",
           "form" => false
         ];
       } else {
@@ -46,7 +46,7 @@
     }
   } else {
     $response = [
-      "message" => "Reset token/id missing",
+      "message" => "Missing token or BL_ID.",
       "form" => false
     ];
   }

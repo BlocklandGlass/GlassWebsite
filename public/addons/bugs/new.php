@@ -104,7 +104,7 @@
 			    </tr>
 			    <tr>
 			      <td colspan="2">
-			        <input class="btn blue" type="submit" />
+			        <input class="btn blue" type="submit" value="Submit" />
 			      </td>
 			    </tr>
 				</tbody>

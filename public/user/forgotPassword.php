@@ -56,7 +56,7 @@
           <td><input type="text" name="blid" /></td>
         </tr>
         <tr>
-          <td colspan="2"><input type="submit" value="Send Recovery Email" /></td>
+          <td colspan="2"><input class="btn blue" type="submit" value="Send Recovery Email" /></td>
         </tr>
       </table>
     </form>

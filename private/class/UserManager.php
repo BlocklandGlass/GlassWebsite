@@ -319,68 +319,22 @@ class UserManager {
 		UserManager::verifyTable($db);
 		$db->query("UPDATE `users` SET `reset`='" . $db->sanitize($resetToken . " " . time()) . "' WHERE `blid`='" . $db->sanitize($user->getBlid()) . "'");
 
-		$body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-			<html>
-			  <head>
-			    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-			    <title>Password Reset | Blockland Glass</title>
-			    <meta name="description" content="" />
-			    <meta name="keywords" content="" />
-			    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1" />
-			    <style type="text/css">
-				    h1 {
-				      margin-top: 0;
-				    }
+		$body = "Greetings " . $user->getUsername() . ",\r\n\r\n
 
-				    td {
-				      width: 600px;
-				      padding: 20px;
-				      font-family: Verdana;
-				      border-radius: 15px;
-				      border: 1px solid #aaa;
-				      background-color: #ccc;
-				    }
+    A request has been made to reset your password on the Blockland Glass website.\r\n\r\n
 
-				    td[class=footer] {
-				      background-color: #333;
-				      color: #fff;
-				      font-weight: bold;
-				      padding:10px;
-				    }
+    If you did not send this request, please ignore this e-mail.\r\n\r\n
 
-				    table {
-				      width: 600px;
-				      margin: 15px auto;
-				    }
+    If you wish to continue with the password reset, follow the link below:\r\n\r\n
 
-						.tile {
-						  margin: 5px;
-						  padding: 15px;
-						  font-size: 0.8em;
-						  background-color: #ebebeb;
-						  border-radius: 2px;
-						  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.1);
-						}
-			    </style>
-			  </head>
-			  <body>
-			    <table class="content">
-			      <tr>
-			        <td class="tile">
-			          <h1>Blockland Glass</h1>
-								<p>
-				          You seem to have forgotten your password! Please click <a href="/user/resetPassword.php?token=' . urlencode($resetToken) . '&id=' . $user->getBLID() . '">here to reset your password</a>.<br /><br />
-									If you were not the one who requested a password reset, you may disregard this message.
-								</p>
-			        </td>
-			      </tr>
-			      <tr>
-			        <td class="tile" style="background-color:#333;color:#fff;font-weight: bold;padding:10px;font-size:0.6em; text-align:center;border: 1px solid black;">Email sent ' . date('H:i:s M-d-y') . '</td>
-			      </tr>
-			    </table>
-			  </body>
-			</html>';
+    https://blocklandglass.com/user/resetPassword.php?token=" . urlencode($resetToken) . "&id=" . $user->getBLID() . "\r\n\r\n
+
+    Please note: This request is only valid for 30 minutes.\r\n\r\n
+
+    Regards,\r\n
+    The BLG Team
+    ";
+
 		UserManager::email($user, "Password Reset", $body);
 	}
 
@@ -390,7 +344,7 @@ class UserManager {
     	'Reply-To: ' . $reply . '@blocklandglass.com' . "\r\n" .
     	'X-Mailer: PHP/' . phpversion() . "\r\n" .
 			"MIME-Version: 1.0" . "\r\n" .
-			"Content-Type: text/html; charset=UTF-8" . "\r\n";
+			"Content-Type: text/plain; charset=UTF-8" . "\r\n";
 
 			mail($user->getEmail(), $subject, $message, $headers, '-fnoreply@blocklandglass.com');
 		} else {

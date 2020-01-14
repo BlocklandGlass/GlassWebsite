@@ -11,7 +11,7 @@
 
   $redirect = $_REQUEST['redirect'] ?? ($_REQUEST['rd'] ?? false);
 
-	$_PAGETITLE = "Log In | Blockland Glass";
+	$_PAGETITLE = "Login | Blockland Glass";
 	include(realpath(dirname(__DIR__) . "/private/header.php"));
 ?>
 <div class="maincontainer">
@@ -25,10 +25,10 @@
 		<form action="login.php" method="post" id="mainLoginForm">
 			<table class="formtable">
 				<tbody>
-					<tr><td class="center" colspan="2"><h2>Log In</h2></td></tr>
+					<tr><td class="center" colspan="2"><h2>Login</h2></td></tr>
 					<tr><td>E-mail or BL_ID:</td><td><input style="max-width: 300px" type="text" name="username" id="username" required autofocus></td></tr>
 					<tr><td>Password:</td><td><input style="max-width: 300px" type="password" name="password" id="password" required></td></tr>
-					<tr><td class="center" colspan="2"><input class="btn blue" type="submit"></td></tr>
+					<tr><td class="center" colspan="2"><input class="btn blue" type="submit" value="Login"></td></tr>
 				</tbody>
 			</table>
 			<div style="text-align: center; font-size:0.8em">
