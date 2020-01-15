@@ -52,10 +52,8 @@
   }
 
   $screenshots = ScreenshotManager::getScreenshotsFromAddon($addonObject->getId());
-  
   if(count($screenshots) > 0) {
-    $sid = ScreenshotManager::getFromId($screenshots[0]);
-    $ss = ScreenshotManager::getFromId($sid);
+    $ss = ScreenshotManager::getFromId($screenshots[0]);
     $_PAGEIMAGE = $ss->getThumbUrl();
   }
 
