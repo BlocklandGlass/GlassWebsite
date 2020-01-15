@@ -1,4 +1,6 @@
 <?php
+  $_PAGETITLE = "Forgotten Password | Blockland Glass";
+
 	require_once dirname(__DIR__) . '/../private/autoload.php';
 
   use Glass\UserManager;
@@ -56,7 +58,7 @@
           <td><input type="text" name="blid" /></td>
         </tr>
         <tr>
-          <td colspan="2"><input class="btn blue" type="submit" value="Send Recovery Email" /></td>
+          <td colspan="2"><input class="btn blue" type="submit" value="Send Recovery E-Mail" /></td>
         </tr>
       </table>
     </form>

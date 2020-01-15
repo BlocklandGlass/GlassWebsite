@@ -51,6 +51,14 @@
     CommentManager::submitComment($addonObject->getId(), UserManager::getCurrent()->getBLID(), $_POST['comment']);
   }
 
+  $screenshots = ScreenshotManager::getScreenshotsFromAddon($addonObject->getId());
+  
+  if(count($screenshots) > 0) {
+    $sid = ScreenshotManager::getFromId($screenshots[0]);
+    $ss = ScreenshotManager::getFromId($sid);
+    $_PAGEIMAGE = $ss->getThumbUrl();
+  }
+
   $_PAGETITLE = $addonObject->getName() . " - " . $boardObject->getName() . " | Blockland Glass";
   $_PAGEDESCRIPTION = $addonObject->getDescription();
 
@@ -358,14 +366,13 @@
   </div>
   <div class="screenshots" style="text-align:center;margin: 0 auto">
     <?php
-    $screenshots = ScreenshotManager::getScreenshotsFromAddon($_GET['id']);
-    foreach($screenshots as $sid) {
-      $ss = ScreenshotManager::getFromId($sid);
-      echo "<div class=\"image-preview\" style=\"padding: 5px; margin: 10px 10px; background-color: #eee; display:inline-block; width: 128px; vertical-align: middle\" ssid=\"" . $sid . "\">";
-      //echo "<a target=\"_blank\" href=\"/addons/screenshot.php?id=" . $sid . "\">";
-      echo "<img src=\"" . $ss->getThumbUrl() . "\" /></a>";
-      echo "</div>";
-    }
+      foreach($screenshots as $sid) {
+        $ss = ScreenshotManager::getFromId($sid);
+        echo "<div class=\"image-preview\" style=\"padding: 5px; margin: 10px 10px; background-color: #eee; display:inline-block; width: 128px; vertical-align: middle\" ssid=\"" . $sid . "\">";
+        //echo "<a target=\"_blank\" href=\"/addons/screenshot.php?id=" . $sid . "\">";
+        echo "<img src=\"" . $ss->getThumbUrl() . "\" /></a>";
+        echo "</div>";
+      }
     ?>
   </div>
   <?php

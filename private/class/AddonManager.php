@@ -96,6 +96,8 @@ class AddonManager {
 	 * @param int $id The update id to reject
 	 */
 	public static function rejectUpdate($id) {
+    AddonManager::sendRejectedUpdateEmail($id);
+    
 		$db = new DatabaseManager();
 		$id = $db->sanitize($id);
 		$db->query("UPDATE `addon_updates` SET `approved`=b'0' WHERE `id`='$id'");
@@ -209,9 +211,6 @@ class AddonManager {
 	 * @return void
 	 */
 	public static function approveAddon($id, $board, $approver) {
-		$database = new DatabaseManager();
-		$database->query("UPDATE `addon_addons` SET `approved`='1', `board`='" . $database->sanitize($board) . "' WHERE `id`='" . $database->sanitize($id) . "'");
-
 		$manager = AddonManager::getFromId($id)->getManagerBLID();
 
 		$params = new \stdClass();
@@ -228,8 +227,12 @@ class AddonManager {
 		$params->vars[] = $user;
 		$params->vars[] = $addon;
 		NotificationManager::createNotification($manager, '$2 was approved by $1', $params);
+    AddonManager::sendAcceptedAddonEmail($id);
 
 		StatManager::addStatsToAddon($id);
+
+		$database = new DatabaseManager();
+		$database->query("UPDATE `addon_addons` SET `approved`='1', `board`='" . $database->sanitize($board) . "' WHERE `id`='" . $database->sanitize($id) . "'");
 	}
 
 	/**
@@ -248,11 +251,6 @@ class AddonManager {
 
 		var_dump($revInf);
 
-		$database = new DatabaseManager();
-		//$database->query("UPDATE `addon_addons` SET `approved`='-1', `reviewInfo`='" . $database->sanitize(json_encode($revInf)) . "' WHERE `id`='" . $database->sanitize($id) . "'");
-		$database->query("UPDATE `addon_addons` SET `approved`='-1' WHERE `id`='" . $database->sanitize($id) . "'");
-
-
 		$manager = AddonManager::getFromId($id)->getManagerBLID();
 
 		$params = new \stdClass();
@@ -269,7 +267,90 @@ class AddonManager {
 		$params->vars[] = $user;
 		$params->vars[] = $addon;
 		NotificationManager::createNotification($manager, '$2 was rejected by $1', $params);
+    AddonManager::sendRejectedAddonEmail($id);
+
+		$database = new DatabaseManager();
+		//$database->query("UPDATE `addon_addons` SET `approved`='-1', `reviewInfo`='" . $database->sanitize(json_encode($revInf)) . "' WHERE `id`='" . $database->sanitize($id) . "'");
+		$database->query("UPDATE `addon_addons` SET `approved`='-1' WHERE `id`='" . $database->sanitize($id) . "'");
 	}
+
+  public static function sendAcceptedAddonEmail($id) {
+    $addon = AddonManager::getFromId($id);
+    $user = UserManager::getFromId($addon->getManagerBLID());
+
+		$body = "Greetings " . $user->getUsername() . ",";
+    $body .= "\r\n\r\n";
+    $body .= "Your submitted add-on  \"" . $addon->getName() . "\" has been approved by a member of our add-on moderation team.";
+    $body .= "\r\n\r\n";
+    $body .= "Add-on page: https://blocklandglass.com/addons/addon.php?id=" . $id;
+    $body .= "\r\n\r\n";
+    $body .= "Regards,";
+    $body .= "\r\n";
+    $body .= "The BLG Team";
+
+		UserManager::email($user, ("Add-On Approved: " . $addon->getName()), $body);
+  }
+
+  public static function sendAcceptedUpdateEmail($id) {
+    $addon = AddonManager::getFromId($id);
+    $user = UserManager::getFromId($addon->getManagerBLID());
+
+		$body = "Greetings " . $user->getUsername() . ",";
+    $body .= "\r\n\r\n";
+    $body .= "Your submitted add-on update for \"" . $addon->getName() . "\" has been approved by a member of our add-on moderation team.";
+    $body .= "\r\n\r\n";
+    $body .= "Add-on page: https://blocklandglass.com/addons/addon.php?id=" . $id;
+    $body .= "\r\n\r\n";
+    $body .= "Regards,";
+    $body .= "\r\n";
+    $body .= "The BLG Team";
+
+		UserManager::email($user, ("Update Approved: " . $addon->getName()), $body);
+  }
+
+  public static function sendRejectedAddonEmail($id) {
+    $addon = AddonManager::getFromId($id);
+    $user = UserManager::getFromId($addon->getManagerBLID());
+
+		$body = "Greetings " . $user->getUsername() . ",";
+    $body .= "\r\n\r\n";
+    if(!$addon->getApproved()) {
+      $body .= "Your submitted add-on \"" . $addon->getName() . "\" has been rejected by a member of our add-on moderation team.";
+    } else {
+      $body .= "Your previously approved add-on \"" . $addon->getName() . "\" has been changed to rejected by a member of our add-on moderation team.";
+    }
+    $body .= "\r\n\r\n";
+    $body .= "You may be able to find more information about this rejection by visiting your add-on's page below (you must be signed in to view this page):";
+    $body .= "\r\n\r\n";
+    $body .= "Add-on page: https://blocklandglass.com/addons/addon.php?id=" . $id;
+    $body .= "\r\n\r\n";
+    $body .= "Regards,";
+    $body .= "\r\n";
+    $body .= "The BLG Team";
+
+		UserManager::email($user, ("Add-On Rejected: " . $addon->getName()), $body);
+  }
+
+  public static function sendRejectedUpdateEmail($id) {
+    $addon = AddonManager::getFromId($id);
+    $user = UserManager::getFromId($addon->getManagerBLID());
+
+		$body = "Greetings " . $user->getUsername() . ",";
+    $body .= "\r\n\r\n";
+    $body .= "Your submitted add-on update for \"" . $addon->getName() . "\" has been rejected by a member of our add-on moderation team.";
+    $body .= "\r\n\r\n";
+    $body .= "It is very rare for an add-on update to be rejected without good reason.";
+    $body .= "\r\n";
+    $body .= "Expect to be contacted soon with more information.";
+    $body .= "\r\n\r\n";
+    $body .= "Add-on page: https://blocklandglass.com/addons/addon.php?id=" . $id;
+    $body .= "\r\n\r\n";
+    $body .= "Regards,";
+    $body .= "\r\n";
+    $body .= "The BLG Team";
+
+		UserManager::email($user, ("Update Rejected: " . $addon->getName()), $body);
+  }
 
 	/**
 	 * Returns an AddonObject by addon id
@@ -807,6 +888,8 @@ class AddonManager {
 		if($update->status !== null) {
 			throw new \Exception("Attempted to approve already approved update");
 		}
+    
+    AddonManager::sendAcceptedUpdateEmail($id);
 
 		$update->status = true;
 

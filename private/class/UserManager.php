@@ -319,21 +319,21 @@ class UserManager {
 		UserManager::verifyTable($db);
 		$db->query("UPDATE `users` SET `reset`='" . $db->sanitize($resetToken . " " . time()) . "' WHERE `blid`='" . $db->sanitize($user->getBlid()) . "'");
 
-		$body = "Greetings " . $user->getUsername() . "
-
-    A request has been made to reset your password on the Blockland Glass website.
-
-    If you did not send this request, please ignore this e-mail.
-
-    If you wish to continue with the password reset, follow the link below:
-
-    https://blocklandglass.com/user/resetPassword.php?token=" . urlencode($resetToken) . "&id=" . $user->getBLID() . "
-
-    Please note: This request is only valid for 30 minutes.
-
-    Regards,
-    The BLG Team
-    ";
+		$body = "Greetings " . $user->getUsername() . ",";
+    $body .= "\r\n\r\n";
+    $body .= "A request has been made to reset your password on the Blockland Glass website.";
+    $body .= "\r\n\r\n";
+    $body .= "If you did not send this request, please ignore this e-mail.";
+    $body .= "\r\n\r\n";
+    $body .= "If you wish to continue with the password reset, follow the link below:";
+    $body .= "\r\n\r\n";
+    $body .= "https://blocklandglass.com/user/resetPassword.php?token=" . urlencode($resetToken) . "&id=" . $user->getBLID();
+    $body .= "\r\n\r\n";
+    $body .= "Please note: This request is only valid for 30 minutes.";
+    $body .= "\r\n\r\n";
+    $body .= "Regards,";
+    $body .= "\r\n";
+    $body .= "The BLG Team";
 
 		UserManager::email($user, "Password Reset", $body);
 	}

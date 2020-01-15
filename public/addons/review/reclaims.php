@@ -7,7 +7,7 @@
 	use Glass\UserManager;
 
 	$user = UserManager::getCurrent();
-	if(!$user || !$user->inGroup("Reviewer")) {
+	if(!$user || !$user->inGroup("Administrator")) {
     header('Location: /addons');
     return;
   }
@@ -16,10 +16,10 @@
     $action = $_POST['action'];
     $id = $_POST['id'];
 
-    if($action == "accept") {
-      RTBAddonManager::acceptReclaim($id, true);
-    } elseif($action == "reject") {
-      RTBAddonManager::acceptReclaim($id, false);
+    if($action == "Accept") {
+      RTBAddonManager::acceptReclaim($id);
+    } elseif($action == "Reject") {
+      RTBAddonManager::rejectReclaim($id);
     }
   }
 ?>
@@ -28,14 +28,6 @@
     include(realpath(dirname(__DIR__) . "/../../private/navigationbar.php"));
     include(realpath(dirname(__DIR__) . "/../../private/subnavigationbar.php"));
   ?>
-  <div class="tile">
-    <h2><image style="height: 1.5em" src="/img/icons32/document_info.png" /> Mod Reviewer Information <span style="font-size: 0.5em; color: gray">(As of 11/3/2016)</span></h2>
-    <p><i>If you would like to suggest amendments to the following information, contact an administrator.</i></p>
-    <h3><image style="height: 1.4em" src="/img/icons32/creative_commons.png" /> Ownership</h3>
-    <p>Ensure that the user trying to reclaim the add-on is the original author and not a third party or impersonator.</p>
-    <h3><image style="height: 1.4em" src="/img/icons32/roadworks.png" /> Quality</h3>
-    <p>Ensure the add-on being imported is not an add-on of which came from RTB's Bargain Bin.</p>
-	</div>
   <div class="tile">
     <table style="width: 100%" class="listTable">
       <thead>
@@ -72,8 +64,8 @@
 
               echo "<td>";
               echo "<form method=\"post\">";
-              echo "<input name=\"action\" value=\"accept\" type=\"image\" src=\"/img/icons16/accept_button.png\"> ";
-              echo "<input name=\"action\" value=\"reject\" type=\"image\" src=\"/img/icons16/delete.png\">";
+              echo "<input class=\"btn small green\"name=\"action\" value=\"Accept\" type=\"submit\"> ";
+              echo "<input class=\"btn small red\" name=\"action\" value=\"Reject\" type=\"submit\">";
               echo "<input type=\"hidden\" name=\"id\" value=\"" . $rec->id . "\">";
               echo "</form>";
               echo "</td>";

@@ -685,8 +685,8 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focu
 }
 
 .btn:disabled {
-  background-color: #666666;
-  box-shadow: 0px 5px 0px 0px #888888;
+  background-color: #888888;
+  box-shadow: 0px 5px 0px 0px #666666;
 }
 
 .btn:disabled:hover {

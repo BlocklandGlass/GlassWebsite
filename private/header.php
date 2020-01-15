@@ -89,8 +89,13 @@
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="og:site_name" content="Blockland Glass" />
     <meta name="og:type" content="website" />
-    <meta name="og:image" content="/img/logo2.png" />
 		<?php
+      if(isset($_PAGEIMAGE)) {
+        echo '<meta name="og:image" content="' . $_PAGEIMAGE . '" />';
+      } else {
+        echo '<meta name="og:image" content="/img/logo2.png" />';
+      }
+
 			if(isset($_PAGETITLE)) {
 				echo '<title>' . htmlspecialchars($_PAGETITLE) . '</title>';
 			} else {
@@ -120,7 +125,7 @@
 		<!-- Place favicon.ico in the root directory -->
 
 		<link rel="stylesheet" href="/css/normalize.css">
-		<link rel="stylesheet" href="/css/main.css?rev=4">
+		<link rel="stylesheet" href="/css/main.css?rev=5">
 
 		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Quicksand" />
 

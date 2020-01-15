@@ -1,5 +1,8 @@
 <?php
 	require_once dirname(__DIR__) . '/../private/autoload.php';
+
+  $_PAGETITLE = "Account Verification | Blockland Glass";
+
 	require_once(realpath(dirname(__DIR__) . "/../private/header.php"));
 	use Glass\AddonManager;
 	?>

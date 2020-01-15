@@ -73,7 +73,12 @@ class DatabaseManager {
 			} else {
 				$first = false;
 			}
-			$sql .= "`$key`='" . $this->sanitize($value) . "'";
+
+      if($value == null) {
+        $sql .= "`$key`=NULL";
+      } else {
+        $sql .= "`$key`='" . $this->sanitize($value) . "'";
+      }
 		}
 
 		if($time != null) {
@@ -91,7 +96,8 @@ class DatabaseManager {
 			} else {
 				$first = false;
 			}
-			$sql .= "`$key` = '" . $this->sanitize($value) . "'";
+
+      $sql .= "`$key` = '" . $this->sanitize($value) . "'";
 		}
 
 		return $this->query($sql);

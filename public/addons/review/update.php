@@ -52,7 +52,8 @@ td {
         if($owner) {
           echo '
           Your update is currently pending review by the add-on moderation team.<br>
-          You can monitor the status of your update on your user page.
+          You can monitor the status of your update on your user page.<br><br>
+          You will automatically receive an e-mail as to the outcome from <tt>noreply@blocklandglass.com</tt>
           ';
         }
       ?>

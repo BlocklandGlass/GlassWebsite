@@ -1,4 +1,6 @@
 <?php
+  $_PAGETITLE = "Password Recovery | Blockland Glass";
+
 	require_once dirname(__DIR__) . '/../private/autoload.php';
 	session_start();
 
@@ -64,7 +66,7 @@
 	  ?>
 		<h2>Password Recovery</h2>
 		<p>
-			Please enter a your new password for <strong><?php echo $userObj->getUsername() ?></strong> below.
+			Please enter your new password below:
 		</p>
 	  <form method="post" action="resetPassword.php?token=<?php echo urlencode($_REQUEST['token']); ?>&id=<?php echo ($_REQUEST['id']+0) ?>">
 	    <table class="formtable" style="width: 100%;">

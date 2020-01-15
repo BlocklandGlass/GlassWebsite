@@ -31,7 +31,7 @@ use Glass\UserManager;
 					</form><?php
 				} else {
 					?>
-					<li><a href="/login.php" class="navbtn" onclick="document.getElementById('loginForm').submit(); return false;">Log In</a></li>
+					<li><a href="/login.php" class="navbtn" onclick="document.getElementById('loginForm').submit(); return false;">Login</a></li>
 					<form class="hidden" id="loginForm" action="/login.php" method="post">
 						<input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
 						<input type="hidden" name="redirect" value="<?php echo(htmlspecialchars($_SERVER['REQUEST_URI'])); ?>">

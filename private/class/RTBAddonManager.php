@@ -103,8 +103,12 @@ class RTBAddonManager {
   }
 
   public static function getFromType($type, $start = 0, $max = 15) {
+    if($start == $max) {
+      $start = 0;
+    }
+
     $db = new DatabaseManager();
-    $res = $db->query("SELECT `title`,`id`,`description`,`author`,`glass_id` FROM `rtb_addons` WHERE `type`='" . $type . "' ORDER BY `title` ASC LIMIT " . $db->sanitize($start) . "," . $db->sanitize($max));
+    $res = $db->query("SELECT `title`,`id`,`description`,`author`,`glass_id` FROM `rtb_addons` WHERE `type`='" . $type . "' ORDER BY `title` ASC LIMIT " . $db->sanitize($max) . " OFFSET " . $db->sanitize($start));
 
     $ret = array();
     while($obj = $res->fetch_object()) {
@@ -229,13 +233,14 @@ class RTBAddonManager {
     return false;
   }
 
-  public static function acceptReclaim($id, $bool) {
+  public static function acceptReclaim($id) {
     $db = new DatabaseManager();
-    if($bool) {
-      $db->update("rtb_addons", ["id"=>$id], ["approved"=>1]);
-    } else {
-      $db->update("rtb_addons", ["id"=>$id], ["approved"=>null]);
-    }
+    $db->update("rtb_addons", ["id"=>$id], ["approved"=>1]);
+  }
+
+  public static function rejectReclaim($id) {
+    $db = new DatabaseManager();
+    $db->update("rtb_addons", ["id"=>$id], ["approved"=>null]);
   }
 
   public static function searchByName($name) {
@@ -277,7 +282,9 @@ class RTBAddonManager {
       `downloads_web` int(11) NOT NULL DEFAULT 0,
       `downloads_ingame` int(11) NOT NULL DEFAULT 0,
 
-      `approved` INT(1) NULL DEFAULT NULL)")) {
+      `approved` INT(1) NULL DEFAULT NULL,
+
+      PRIMARY KEY (`id`))")) {
       throw new \Exception("Error creating rtb_addons table: " . $database->error());
     }
   }

@@ -23,35 +23,30 @@
 <style>
   .status {
     background-color: black;
-    color: white;
+    color: black;
     padding: 4px;
-    font-style: italic;
-    border-radius: 8px;
-    border-bottom: 2px solid black;
-    margin: 0 auto;
-    width: 110px;
-    font-size: 0.9em;
+    margin-left: 20px;
+    border-radius: 0;
+    text-align: center;
+    display: inline-block;
+    font-weight: bold;
   }
 
   .status.deleted {
     background-color: lightgray;
-    border-bottom: 2px solid gray;
   }
 
   .status.approved {
     background-color: yellowgreen;
-    border-bottom: 2px solid green;
+    color: white;
   }
 
   .status.rejected {
-    background-color: red;
-    border-bottom: 2px solid darkred;
+    background-color: coral;
   }
 
   .status.awaiting-review {
     background-color: gold;
-    border-bottom: 2px solid orange;
-    color: black;
   }
 </style>
 <div class="maincontainer">
@@ -79,7 +74,6 @@
 				<tr>
 					<th></th>
 					<th style="text-align: left !important">Title</th>
-					<th>Status</th>
 					<th>Downloads</th>
 					<th>Options</th>
 				</tr>
@@ -127,7 +121,29 @@
 
             echo '<td><img src="/img/icons32/' . $board->getIcon() . '.png"/></td>';
 
-            echo '<td style="text-align: left !important"><a href="/addons/addon.php?id=' . $ao->getId() . '"><span style="font-size: 1.2em; font-weight:bold;">' . $ao->getName() . '</span></a></td>';
+            if($ao->getDeleted()) {
+              $status = '<div class="status deleted">Deleted</div>';
+            } else if($ao->getApproved()) {
+              if($up != null) {
+                $version = $up->getVersion();
+
+                if($up->isPending()) {
+                  $status = '<div class="status awaiting-review">Pending Review (v' . $version . ')</div>';
+                } else if($up->isRejected()) {
+                  $status = '<div class="status rejected">Rejected (v' . $version . ')</div>';
+                } else {
+                  $status = '<div class="status approved">Approved (v' . $version . ')</div>';
+                }
+              } else {
+                $status = '<div class="status approved">Approved</div>';
+              }
+            } else if($ao->isRejected()) {
+              $status = '<div class="status rejected">Rejected</div>';
+            } else {
+              $status = '<div class="status awaiting-review">Pending Review</div>';
+            }
+
+            echo '<td style="text-align: left !important"><a href="/addons/addon.php?id=' . $ao->getId() . '"><span style="font-size: 1.2em; font-weight:bold;">' . $ao->getName() . '</span></a>' . $status . '</td>';
 
             $up = AddonManager::getUpdates($ao);
 
@@ -135,33 +151,11 @@
               $up = $up[0];
             }
 
-            if($ao->getDeleted()) {
-              echo '<td><div class="status deleted">Deleted</div></td>';
-            } else if($ao->getApproved()) {
-              if($up != null) {
-                $version = $up->getVersion();
-                
-                if($up->isPending()) {
-                  echo '<td><div class="status awaiting-review">Pending Review (v' . $version . ')</div></td>';
-                } else if($up->isRejected()) {
-                  echo '<td><div class="status rejected">Rejected (v' . $version . ')</div></td>';
-                } else {
-                  echo '<td><div class="status approved">Approved (v' . $version . ')</div></td>';
-                }
-              } else {
-                echo '<td><div class="status approved">Approved</div></td>';
-              }
-            } else if($ao->isRejected()) {
-              echo '<td><div class="status rejected">Rejected</div></td>';
-            } else {
-              echo '<td><div class="status awaiting-review">Pending Review</div></td>';
-            }
-
             echo '<td>' . ($ao->getDownloads('web')+$ao->getDownloads('ingame')) . '</td>';
 
             echo '
             <td style="font-size: 0.8em;">';
-            
+
             if($ao->isRejected()) {
               // todo: resubmission
               // echo '<a href="#" class="btn small green">Resubmit</a>';
@@ -169,7 +163,7 @@
             } else {
               echo '<a href="/addons/update.php?id=' . $ao->getId() . '" class="btn small green">Update</a>';
             }
-            
+
             echo '
               <a href="/addons/manage.php?id=' . $ao->getId() . '" class="btn small blue">Manage</a>
               <a href="/stats/addon.php?id=' . $ao->getId() . '" class="btn small purple">Stats</a>

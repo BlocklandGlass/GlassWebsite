@@ -42,10 +42,11 @@
     <h2>Upload Successful</h2>
     <p>
       Your add-on was uploaded successfully.<br>
-      It will now be carefully inspected by the add-on moderation team.
+      It will now be carefully inspected by the add-on moderation team.<br><br>
+      You will automatically receive an e-mail as to the outcome from <tt>noreply@blocklandglass.com</tt>
     </p>
     <p>
-      <a href="/addons/addon.php?id=<?php echo $_GET['id']; ?>">View your add-on.</a><br>
+      <a href="/addons/addon.php?id=<?php echo $_GET['id']; ?>">View your add-on's page.</a><br>
       <a href="/user/">View all your content.</a>
     </p>
   </div>

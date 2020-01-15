@@ -16,7 +16,7 @@
   $addonData = RTBAddonManager::getAddonFromId($_GET['id']);
 
   if($addonData->glass_id != 0 || $addonData->approved == 1) {
-    die('Add-on already imported.');
+    die('Add-on already imported or pending approval.');
   }
 
   $ret = null;

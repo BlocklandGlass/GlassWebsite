@@ -11,6 +11,8 @@
     die('Invalid BLID.');
   }
 
+  $current = UserManager::getCurrent();
+
 	$hasAccount = true;
 
 	if($blid > 0) {
@@ -170,21 +172,48 @@
 			</thead>
 			<tbody>
 				<?php
+          $addonCount = 0;
 
-				$addons = AddonManager::getFromBLID($userObject->getBLID(), ["deleted"=>0, "approved"=>1]);
-				foreach($addons as $aid) {
-					$addon = AddonManager::getFromId($aid);
-					$name = $addon->getName();
-					$downloads = $addon->getTotalDownloads();
-					$users = StatUsageManager::getActiveUsers($aid, 7);
+          $addons = AddonManager::getFromBLID($userObject->getBLID(), ["deleted"=>0, "approved"=>1]);
+          $addonCount += count($addons);
+          foreach($addons as $aid) {
+            $addon = AddonManager::getFromId($aid);
+            $name = $addon->getName();
+            $downloads = $addon->getTotalDownloads();
+            $users = StatUsageManager::getActiveUsers($aid, 7);
 
-					echo "<tr><td><a href=\"/addons/addon.php?id=$aid\">$name</a></td><td>$downloads</td><td>$users</td>";
-				}
+            echo "<tr><td><a href=\"/addons/addon.php?id=$aid\">$name</a></td><td>$downloads</td><td>$users</td>";
+          }
 
-				if(sizeof($addons) == 0) {
-					echo '<tr><td colspan="3" style="text-align: center">No uploaded content.</td></tr>';
-				}
+          if($current && $current->inGroup("Reviewer")) {
+            $addons = AddonManager::getFromBLID($userObject->getBLID(), ["deleted"=>0, "approved"=>-1]);
+            $addonCount += count($addons);
+            foreach($addons as $aid) {
+              $addon = AddonManager::getFromId($aid);
+              $name = $addon->getName();
+              $downloads = $addon->getTotalDownloads();
+              $users = StatUsageManager::getActiveUsers($aid, 7);
 
+              echo "<tr><td><a href=\"/addons/addon.php?id=$aid\"><span style=\"color: red;\">Rejected: $name</span></a></td><td>$downloads</td><td>$users</td>";
+            }
+          }
+
+          if($current && $current->inGroup("Administrator")) {
+            $addons = AddonManager::getFromBLID($userObject->getBLID(), ["deleted"=>1]);
+            $addonCount += count($addons);
+            foreach($addons as $aid) {
+              $addon = AddonManager::getFromId($aid);
+              $name = $addon->getName();
+              $downloads = $addon->getTotalDownloads();
+              $users = StatUsageManager::getActiveUsers($aid, 7);
+
+              echo "<tr><td><a href=\"/addons/addon.php?id=$aid\"><span style=\"color: lightgray;\">Deleted: $name</span></a></td><td>$downloads</td><td>$users</td>";
+            }
+          }
+
+          if($addonCount == 0) {
+            echo '<tr><td colspan="3" style="text-align: center">No uploaded content.</td></tr>';
+          }
 				?>
 			</tbody>
 		</table>
