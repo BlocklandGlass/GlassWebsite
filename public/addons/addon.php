@@ -54,7 +54,7 @@
   $screenshots = ScreenshotManager::getScreenshotsFromAddon($addonObject->getId());
   if(count($screenshots) > 0) {
     $ss = ScreenshotManager::getFromId($screenshots[0]);
-    $_PAGEIMAGE = $ss->getThumbUrl();
+    $_PAGEIMAGE = $ss->getUrl();
   }
 
   $_PAGETITLE = $addonObject->getName() . " - " . $boardObject->getName() . " | Blockland Glass";

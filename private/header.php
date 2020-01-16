@@ -89,6 +89,7 @@
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="og:site_name" content="Blockland Glass" />
     <meta name="og:type" content="website" />
+    <meta name="theme-color" content="#2ecc71" />
 		<?php
       if(isset($_PAGEIMAGE)) {
         echo '<meta name="og:image" content="' . $_PAGEIMAGE . '" />';
