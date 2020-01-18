@@ -68,7 +68,7 @@ $dlg->date = time();
 
 $res = array($dlg);
 
-$news = NewsManager::getNews(0, 10);
+$news = NewsManager::getNews(0, 4);
 foreach($news as $newsObj) {
   $msg = new \stdClass();
   $msg->type = "message";

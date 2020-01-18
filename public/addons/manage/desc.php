@@ -6,11 +6,11 @@ $dat = require dirname(__DIR__) . "/../../private/json/manageAddon.php";
   <tbody>
     <tr>
       <td><strong>Title</strong></td>
-      <td><input type="text" name="addonname" value="<?php echo $dat['addon']->name; ?>"/></td>
+      <td><input type="text" name="addonname" value="<?php echo htmlspecialchars($dat['addon']->name); ?>"/></td>
     </tr>
     <tr>
       <td><strong>Summary</strong></td>
-      <td><input type="text" name="summary" maxlength="150" value="<?php echo $dat['addon']->summary; ?>"/></td>
+      <td><input type="text" name="summary" maxlength="150" value="<?php echo htmlspecialchars($dat['addon']->summary); ?>"/></td>
     </tr>
     <tr>
       <td><strong>Description</strong></td>

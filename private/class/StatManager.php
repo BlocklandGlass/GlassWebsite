@@ -63,7 +63,7 @@ class StatManager {
 		}
 
 		$db = new DatabaseManager();
-		$res = $db->query("SELECT `$sql` FROM `addon_stats` WHERE `aid`=" . $db->sanitize($id));
+		$res = $db->query("SELECT `$sql` FROM `addon_stats` WHERE `aid`='" . $db->sanitize($id) . "'");
 		if($res->num_rows > 0) {
 			$sum = $res->fetch_object()->$sql;
 		} else {
@@ -85,9 +85,16 @@ class StatManager {
 	public static function downloadAddon($addon, $context = "web", $ip = false) {
 		$database = new DatabaseManager();
 		StatManager::verifyTable($database);
+    
+    $aid = $addon->getId();
+    
+		$res = $database->query("SELECT * FROM `addon_stats` WHERE `aid`='$aid'");
+    if($addon->getApproved() && $res->num_rows == 0) {
+      StatManager::addStatsToAddon($aid);
+		}
 
 		if($ip !== false) {
-			if(!StatManager::canDoIncrement($ip, $addon->getId(), $context)) {
+			if(!StatManager::canDoIncrement($ip, $aid, $context)) {
 				return true;
 			}
 		}
@@ -104,8 +111,8 @@ class StatManager {
 			`totalDownloads` = (`totalDownloads` + 1),
 			`iterationDownloads` = (`iterationDownloads` + 1),
 			`$sql` = (`$sql` + 1)
-			WHERE `aid` = '" . $addon->getID() . "'")) {
-			throw new \Exception("failed to register new download: " . $database->error());
+			WHERE `aid` = '$aid'")) {
+			throw new \Exception("Failed to register new download: " . $database->error());
 		}
 		return true;
 	}
@@ -153,16 +160,12 @@ class StatManager {
 		$database = new DatabaseManager();
 		StatManager::verifyTable($database);
 
-		$addon = AddonManager::getFromID($aid);
-
-		if(!$addon->getApproved()) {
-			return; //only create for approved add-ons
-		}
-
 		if(!$database->query("INSERT INTO `addon_stats` (`aid`) VALUES ('" .
 			$database->sanitize($aid) . "')")) {
 			throw new \Exception("Database Error: " . $database->error());
 		}
+    
+    return true;
 	}
 
 	public static function getAllAddonDownloads($type) {

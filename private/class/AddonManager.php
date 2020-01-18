@@ -97,7 +97,7 @@ class AddonManager {
 	 */
 	public static function rejectUpdate($id) {
     AddonManager::sendRejectedUpdateEmail($id);
-    
+
 		$db = new DatabaseManager();
 		$id = $db->sanitize($id);
 		$db->query("UPDATE `addon_updates` SET `approved`=b'0' WHERE `id`='$id'");
@@ -229,10 +229,10 @@ class AddonManager {
 		NotificationManager::createNotification($manager, '$2 was approved by $1', $params);
     AddonManager::sendAcceptedAddonEmail($id);
 
-		StatManager::addStatsToAddon($id);
-
 		$database = new DatabaseManager();
 		$database->query("UPDATE `addon_addons` SET `approved`='1', `board`='" . $database->sanitize($board) . "' WHERE `id`='" . $database->sanitize($id) . "'");
+
+    StatManager::addStatsToAddon($id);
 	}
 
 	/**
@@ -888,7 +888,7 @@ class AddonManager {
 		if($update->status !== null) {
 			throw new \Exception("Attempted to approve already approved update");
 		}
-    
+
     AddonManager::sendAcceptedUpdateEmail($id);
 
 		$update->status = true;
