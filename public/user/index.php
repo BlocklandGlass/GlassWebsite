@@ -124,6 +124,12 @@
             if($ao->getDeleted()) {
               $status = '<div class="status deleted">Deleted</div>';
             } else if($ao->getApproved()) {
+              $up = AddonManager::getUpdates($ao);
+
+              if(count($up) > 0) {
+                $up = $up[0];
+              }
+
               if($up != null) {
                 $version = $up->getVersion();
 
@@ -144,12 +150,6 @@
             }
 
             echo '<td style="text-align: left !important"><a href="/addons/addon.php?id=' . $ao->getId() . '"><span style="font-size: 1.2em; font-weight:bold;">' . $ao->getName() . '</span></a>' . $status . '</td>';
-
-            $up = AddonManager::getUpdates($ao);
-
-            if(count($up) > 0) {
-              $up = $up[0];
-            }
 
             echo '<td>' . ($ao->getDownloads('web')+$ao->getDownloads('ingame')) . '</td>';
 
