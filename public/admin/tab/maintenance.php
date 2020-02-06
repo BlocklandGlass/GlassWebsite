@@ -99,7 +99,7 @@
   <input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
   <fieldset>
     <legend>Import</legend>
-    <p style="color: red;">To be completed.</p>
+    <p style="color: grey;">To be completed.</p>
     <input type="submit" name="import_database" value="Import Database" disabled>
   </fieldset>
 </form>
@@ -108,7 +108,8 @@
   <input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
   <fieldset>
     <legend>Export</legend>
-    <p>The following button will perform a database export.</p>
+    <p>The following button will perform a database export.<br>
+    This can take a while depending on how large the database is, <strong>do not close the page.</strong></p>
     <input type="submit" name="export_database" value="Export Database">
   </fieldset>
 </form>
