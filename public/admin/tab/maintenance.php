@@ -90,4 +90,25 @@
     <p>The following button will remove all empty comments in the database.</p>
     <input type="submit" name="cleanup_empty_comments" value="Cleanup Empty Comments">
   </fieldset>
+
+</form>
+
+<h3>Database</h3>
+
+<form method="post" action="/admin/database/import.php">
+  <input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
+  <fieldset>
+    <legend>Import</legend>
+    <p style="color: red;">To be completed.</p>
+    <input type="submit" name="import_database" value="Import Database" disabled>
+  </fieldset>
+</form>
+
+<form method="post" action="/admin/database/export.php">
+  <input type="hidden" name="csrftoken" value="<?php echo($_SESSION['csrftoken']); ?>">
+  <fieldset>
+    <legend>Export</legend>
+    <p>The following button will perform a database export.</p>
+    <input type="submit" name="export_database" value="Export Database">
+  </fieldset>
 </form>
