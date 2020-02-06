@@ -181,7 +181,7 @@ class GroupManager {
 			throw new \Exception("Newly generated group not found!");
 		}
 
-		if($database->query("INSERT INTO `group_usermap` (`gid`, `blid`, `administrator`), ('" . $database->sanitize($group->getId()) . "', '" . $database->sanitize($user->getBLID()) . "', '1')")) {
+		if($database->query("INSERT INTO `group_usermap` (`gid`, `blid`, `administrator`) VALUES ('" . $database->sanitize($group->getId()) . "', '" . $database->sanitize($user->getBLID()) . "', '1')")) {
 			throw new \Exception("Failed to add leader to new group");
 		}
 		return true;
