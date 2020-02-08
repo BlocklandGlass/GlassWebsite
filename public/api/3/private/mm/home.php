@@ -24,6 +24,10 @@ foreach($recent as $ao) {
     continue;
   }
 
+  if($ao->getBoard()->getName() == "Bargain Bin") {
+    continue;
+  }
+
   $o = new \stdClass();
   $o->id = $ao->getId();
   $o->name = $ao->getName();
@@ -47,9 +51,9 @@ foreach($recentUpdates as $r) {
     continue;
   }
 
-  // bargain bin gone
-  // if($ao->getBoard() == 10) // bargain bin
-    // continue;
+  if($ao->getBoard()->getName() == "Bargain Bin") {
+    continue;
+  }
 
   $o = new \stdClass();
   $o->id = $ao->getId();
