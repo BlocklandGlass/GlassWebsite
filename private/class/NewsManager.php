@@ -14,8 +14,7 @@ class NewsManager {
   public static function getNews($offset = false, $count = false) {
     $db = new DatabaseManager();
     NewsManager::verifyTable($db);
-    $sql = "SELECT * FROM `news`";
-    $sql .= " ORDER BY `id` DESC";
+    $sql = "SELECT * FROM `news` ORDER BY `id` DESC";
     if($offset !== false && $count !== false) {
       $sql .= " LIMIT " . $db->sanitize($offset) . "," . $db->sanitize($count);
     }

@@ -24,14 +24,16 @@ foreach($recent as $ao) {
     continue;
   }
 
-  if($ao->getBoard()->getName() == "Bargain Bin") {
+  $board = BoardManager::getFromId($ao->getBoard());
+
+  if($board->getName() == "Bargain Bin") {
     continue;
   }
 
   $o = new \stdClass();
   $o->id = $ao->getId();
   $o->name = $ao->getName();
-  $o->board = BoardManager::getFromID($ao->getBoard())->getName();
+  $o->board = $board->getName();
 
   $un = utf8_encode(UserLog::getCurrentUsername($ao->getManagerBLID()));
   if($un === false) {
@@ -51,7 +53,9 @@ foreach($recentUpdates as $r) {
     continue;
   }
 
-  if($ao->getBoard()->getName() == "Bargain Bin") {
+  $board = BoardManager::getFromId($ao->getBoard());
+
+  if($board->getName() == "Bargain Bin") {
     continue;
   }
 
