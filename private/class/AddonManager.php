@@ -96,7 +96,9 @@ class AddonManager {
 	 * @param int $id The update id to reject
 	 */
 	public static function rejectUpdate($id) {
-    AddonManager::sendRejectedUpdateEmail($id);
+        $update = AddonManager::getUpdate($id);
+        $aid = $update->getAddon()->getId();
+        AddonManager::sendRejectedUpdateEmail($aid);
 
 		$db = new DatabaseManager();
 		$id = $db->sanitize($id);
@@ -867,6 +869,30 @@ class AddonManager {
 	}
 
 	/**
+	 * Returns update corresponding to an addon by ID
+	 *
+	 * @param AddonObject $addon Addon object to get updates for
+	 *
+	 * @return AddonUpdateObject[]
+	 */
+	public static function getUpdate($id) {
+		$database = new DatabaseManager();
+		AddonManager::verifyTable($database);
+		$resource = $database->query("SELECT * FROM `addon_updates` WHERE `id`='" . $database->sanitize($id) . "' ORDER BY `submitted` DESC");
+
+		if(!$resource) {
+			throw new \Exception("Database error: " . $database->error());
+		}
+
+		$row = $resource->fetch_object();
+        $update = new AddonUpdateObject($row);
+
+		$resource->close();
+
+		return $update;
+	}
+
+	/**
 	 * Returns all pending updates
 	 *
 	 * @return AddonUpdateObject[]
@@ -905,7 +931,8 @@ class AddonManager {
 			throw new \Exception("Attempted to approve already approved update");
 		}
 
-    AddonManager::sendAcceptedUpdateEmail($id);
+        $aid = $update->getAddon()->getId();
+        AddonManager::sendAcceptedUpdateEmail($aid);
 
 		$update->status = true;
 
