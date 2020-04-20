@@ -276,6 +276,10 @@ class AddonManager {
 
   public static function sendAcceptedAddonEmail($id) {
     $addon = AddonManager::getFromId($id);
+
+    if($addon->getManagerBLID() == false)
+      return false;
+
     $user = UserManager::getFromId($addon->getManagerBLID());
 
 		$body = "Greetings " . $user->getUsername() . ",";
@@ -293,6 +297,10 @@ class AddonManager {
 
   public static function sendAcceptedUpdateEmail($id) {
     $addon = AddonManager::getFromId($id);
+
+    if($addon->getManagerBLID() == false)
+      return false;
+
     $user = UserManager::getFromId($addon->getManagerBLID());
 
 		$body = "Greetings " . $user->getUsername() . ",";
@@ -310,6 +318,10 @@ class AddonManager {
 
   public static function sendRejectedAddonEmail($id) {
     $addon = AddonManager::getFromId($id);
+
+    if($addon->getManagerBLID() == false)
+      return false;
+
     $user = UserManager::getFromId($addon->getManagerBLID());
 
 		$body = "Greetings " . $user->getUsername() . ",";
@@ -333,6 +345,10 @@ class AddonManager {
 
   public static function sendRejectedUpdateEmail($id) {
     $addon = AddonManager::getFromId($id);
+
+    if($addon->getManagerBLID() == false)
+      return false;
+
     $user = UserManager::getFromId($addon->getManagerBLID());
 
 		$body = "Greetings " . $user->getUsername() . ",";
