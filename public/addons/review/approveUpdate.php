@@ -27,7 +27,7 @@
         try {
           AddonManager::approveUpdate($update);
         } catch(Exception $e) {
-
+          echo($e->getMessage());
         }
         header('Location: updates.php');
       } else if($_POST['action'] == "Reject") {
