@@ -63,9 +63,6 @@ switch($action) {
       }
     }
 
-    // TODO remove this at 4.2 also
-    $require_daa = false;
-
     if($authType == "daa" || $require_daa !== false) {
 
       // send back DAA keys so they can proceed
