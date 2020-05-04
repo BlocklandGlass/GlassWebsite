@@ -100,7 +100,7 @@
 			}
 
 			if($user->inGroup("Beta") || $user->inGroup("Reviewer")) {
-			$ret->beta = true;
+				$ret->beta = true;
 			}
 		}
 

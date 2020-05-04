@@ -10,6 +10,8 @@ use Glass\NotificationManager;
 use Glass\UserManager;
 use Glass\UserLog;
 
+$SAFE_MODE = true;
+
 
 $action = $_REQUEST['action'] ?? false;
 $ident  = $_GET['ident'] ?? false;
@@ -75,6 +77,12 @@ switch($action) {
         $ret->role = $require_daa;
       }
     } else {
+
+      if ($SAFE_MODE) {
+        $ret->status = "failed";
+        $ret->message = "Blockland Glass is in safe mode, general authentication is disabled.";
+        break;
+      }
 
       // start normal auth, no DAA
       $success = $client->attemptBlocklandAuth();
