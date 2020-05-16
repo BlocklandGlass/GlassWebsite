@@ -10,7 +10,7 @@ use Glass\NotificationManager;
 use Glass\UserManager;
 use Glass\UserLog;
 
-$SAFE_MODE = true;
+$SAFE_MODE = false;
 
 
 $action = $_REQUEST['action'] ?? false;
