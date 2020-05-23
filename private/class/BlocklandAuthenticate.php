@@ -3,6 +3,8 @@ namespace Glass;
 
 class BlocklandAuthenticate {
 	public static function BlocklandAuthenticate($username, $ip = false) {
+		return false;
+		
 		if($ip === false) {
 			$ip = $_SERVER['REMOTE_ADDR'];
 		}

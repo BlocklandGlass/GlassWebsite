@@ -118,21 +118,25 @@ setInterval(nextImage, 5000);
 				Glass enables you to preview servers before you join them, viewing the server's preview image and player list. On top of that, we allow you to mark favorite servers, giving you notifications about the server's status and allowing you to view and join it from the main menu. Glass also allows servers to have their own custom loading screen images, similar to how maps images worked before shadows and shaders.
 			</p>
 		</div>
-		<div>
-			<h3>Live Stats</h3>
-	    <p>
-	      Right now, there are <strong><?php
-	      echo number_format(StatManager::getMasterServerStats()['servers']);
-	      ?></strong> Blockland servers online with <strong><?php
-	      echo $ct = number_format(StatManager::getMasterServerStats()['users']);
-	      ?></strong> <?php echo ($ct == 1 ? "user" : "users") ?>. <sup title="Blockland servers with Glass installed are also included in the users statistic.">(disclaimer)</sup><br>
-        Glass has delivered a total of <a href="stats/"><?php
-	      $web = StatManager::getAllAddonDownloads("web")+0;
-	      $ingame = StatManager::getAllAddonDownloads("ingame")+0;
-	      $updates = StatManager::getAllAddonDownloads("updates")+0;
-	      echo number_format($web+$ingame); ?></strong></a> add-on downloads and <strong><?php echo number_format($updates); ?></strong> updates.
-	    </p>
-		</div>
+		
+		<?php if (1 == 0) { ?>
+			<div>
+				<h3>Live Stats</h3>
+		    <p>
+		      Right now, there are <strong><?php
+		      echo number_format(StatManager::getMasterServerStats()['servers']);
+		      ?></strong> Blockland servers online with <strong><?php
+		      echo $ct = number_format(StatManager::getMasterServerStats()['users']);
+		      ?></strong> <?php echo ($ct == 1 ? "user" : "users") ?>. <sup title="Blockland servers with Glass installed are also included in the users statistic.">(disclaimer)</sup><br>
+	        Glass has delivered a total of <a href="stats/"><?php
+		      $web = StatManager::getAllAddonDownloads("web")+0;
+		      $ingame = StatManager::getAllAddonDownloads("ingame")+0;
+		      $updates = StatManager::getAllAddonDownloads("updates")+0;
+		      echo number_format($web+$ingame); ?></strong></a> add-on downloads and <strong><?php echo number_format($updates); ?></strong> updates.
+		    </p>
+			</div>
+		<?php } ?>
+
 		<div>
 			<h3>Want to get involved?</h3>
 	    <p>
