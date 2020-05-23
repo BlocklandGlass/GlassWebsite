@@ -149,7 +149,9 @@ switch($action) {
 
       if($name == $client->getUsername() && $blid == $client->getBlid()) {
         // do blockland auth
-        $success = $client->attemptBlocklandAuth();
+        // $success = $client->attemptBlocklandAuth();
+
+        $success = true; // bypass blockland auth because we authed with the account
         if($success) {
 
           $ret->status = "success";
