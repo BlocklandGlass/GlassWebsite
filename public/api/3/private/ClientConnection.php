@@ -49,7 +49,7 @@ class ClientConnection {
     $this->blid = $array[0];
     $this->name = $array[1];
     $this->ip = $array[2];
-    $this->joinIp = $array[3] ?? false;
+    $this->joinToken = $array[3] ?? false;
 
     //don't set account data until run through BlocklandAuth
     $unique = false;
