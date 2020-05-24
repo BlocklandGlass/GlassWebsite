@@ -68,6 +68,8 @@ class BlocklandAuthenticate {
 
     $result = curl_exec($ch);
 
+		error_log($result);
+
     curl_close ($ch);
 
 		$lines = preg_split('/\r\n|\r|\n/', trim($result));

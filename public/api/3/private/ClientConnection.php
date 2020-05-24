@@ -51,21 +51,15 @@ class ClientConnection {
     $this->ip = $array[2];
     $this->joinIp = $array[3] ?? false;
 
-    if(sizeof($array) > 3) {
-      $this->accountData = json_decode($array[3]);
-      $this->blAuthed = $array[4];
-      $this->identifier = $array[5];
-    } else {
-      //don't set account data until run through BlocklandAuth
-      $unique = false;
-      while(!$unique) { //avoiding the extremely rare case of a random id being non-unique
-        $ident = base64_encode(rand());
-        if(apcu_fetch("clientConnection_" . $ident) === false) {
-          $unique = true;
-        }
+    //don't set account data until run through BlocklandAuth
+    $unique = false;
+    while(!$unique) { //avoiding the extremely rare case of a random id being non-unique
+      $ident = base64_encode(rand());
+      if(apcu_fetch("clientConnection_" . $ident) === false) {
+        $unique = true;
       }
-      $this->identifier = $ident;
     }
+    $this->identifier = $ident;
   }
 
   function __destruct() {
