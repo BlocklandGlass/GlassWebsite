@@ -6,6 +6,7 @@ require_once dirname(__FILE__) . "/BlocklandAuth.php";
 use Glass\UserManager;
 use Glass\UserLog;
 use Glass\DigestAccessAuthentication;
+use Glass\BlocklandAuthenticate;
 
 class ClientConnection {
   private $blid;
@@ -105,15 +106,18 @@ class ClientConnection {
     return $this->ip == $ip;
   }
 
-  function attemptBlocklandAuth() {
-    $res = BlocklandAuth::checkAuth(utf8_encode($this->name), $this->ip, $this->blid);
+  function attemptBlocklandAuth($joinToken) {
+    $res = BlocklandAuthenticate::BlocklandAuthenticate3($this->blid, $joinToken);
+    // $res = BlocklandAuth::checkAuth(utf8_encode($this->name), $this->ip, $this->blid);
 
     if($res == false) {
       // debug
       error_log("Blockland Auth failed for " . utf8_encode($this->name) . " - " . $this->ip . " - " . $this->blid);
     }
 
-    return $res;
+    $this->name = $res;
+
+    return true;
   }
 
   function attemptServerAuth() {

@@ -42,14 +42,17 @@ if($ident) {
 
 switch($action) {
   case "ident":
-    $username = $_REQUEST['username'] ?? false;
-    $blid     = $_REQUEST['blid']     ?? false;
-    $authType = $_REQUEST['authType'] ?? "default"; // daa or default
+    $authType  = $_REQUEST['authType'] ?? "default"; // daa or default
+
+    $joinToken = $_REQUEST['joinToken'] ?? false;
+    $blid      = $_REQUEST['blid']      ?? false;
+    $steamid   = $_REQUEST['steamid']   ?? false;
+    $username  = $_REQUEST['username']   ?? false;
 
 
 
     // check parameters
-    if($username === false || $blid === false) badParameters();
+    if($joinToken === false || $blid === false || $steamid === false || $username === false) badParameters();
 
     $client = new ClientConnection(array($blid, $username, $ip));
 
@@ -64,6 +67,8 @@ switch($action) {
         $require_daa = "Moderator";
       }
     }
+
+    $require_daa = false; // yet again implementing this while we figure things out
 
     if($authType == "daa" || $require_daa !== false) {
 
@@ -85,7 +90,7 @@ switch($action) {
       }
 
       // start normal auth, no DAA
-      $success = $client->attemptBlocklandAuth();
+      $success = $client->attemptBlocklandAuth($joinToken);
       if($success) {
         // blockland authenticated
         $ret->status = "success";
