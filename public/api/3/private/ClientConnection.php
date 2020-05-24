@@ -107,7 +107,7 @@ class ClientConnection {
   }
 
   function attemptBlocklandAuth($joinToken) {
-    $res = BlocklandAuthenticate::BlocklandAuthenticate3($this->blid, $joinToken);
+    $res = BlocklandAuthenticate::BlocklandAuthenticateToken($this->blid, $joinToken);
     // $res = BlocklandAuth::checkAuth(utf8_encode($this->name), $this->ip, $this->blid);
 
     if($res == false) {

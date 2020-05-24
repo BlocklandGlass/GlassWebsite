@@ -47,7 +47,7 @@ switch($action) {
     $joinToken = $_REQUEST['joinToken'] ?? false;
     $blid      = $_REQUEST['blid']      ?? false;
     $steamid   = $_REQUEST['steamid']   ?? false;
-    $username  = $_REQUEST['username']   ?? false;
+    $username  = $_REQUEST['username']  ?? false;
 
 
 
