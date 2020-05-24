@@ -68,8 +68,6 @@ switch($action) {
       }
     }
 
-    $require_daa = false; // yet again implementing this while we figure things out
-
     if($authType == "daa" || $require_daa !== false) {
 
       // send back DAA keys so they can proceed
@@ -154,9 +152,8 @@ switch($action) {
 
       if($name == $client->getUsername() && $blid == $client->getBlid()) {
         // do blockland auth
-        // $success = $client->attemptBlocklandAuth();
+        $success = $client->attemptBlocklandAuth($joinToken);
 
-        $success = true; // bypass blockland auth because we authed with the account
         if($success) {
 
           $ret->status = "success";
