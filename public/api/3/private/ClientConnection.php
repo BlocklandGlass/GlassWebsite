@@ -12,6 +12,7 @@ class ClientConnection {
   private $blid;
   private $name;
   private $ip;
+  private $joinToken;
 
   private $accountData;
   private $blAuthed = false;
