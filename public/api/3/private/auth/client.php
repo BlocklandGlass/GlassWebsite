@@ -54,7 +54,7 @@ switch($action) {
     // check parameters
     if($joinToken === false || $blid === false || $steamid === false || $username === false) badParameters();
 
-    $client = new ClientConnection(array($blid, $username, $ip));
+    $client = new ClientConnection(array($blid, $username, $ip, $joinToken));
 
 
     // check if DAA is required
@@ -88,7 +88,7 @@ switch($action) {
       }
 
       // start normal auth, no DAA
-      $success = $client->attemptBlocklandAuth($joinToken);
+      $success = $client->attemptBlocklandAuth();
       if($success) {
         // blockland authenticated
         $ret->status = "success";
@@ -152,7 +152,7 @@ switch($action) {
 
       if($name == $client->getUsername() && $blid == $client->getBlid()) {
         // do blockland auth
-        $success = $client->attemptBlocklandAuth($joinToken);
+        $success = $client->attemptBlocklandAuth();
 
         if($success) {
 

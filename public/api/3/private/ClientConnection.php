@@ -48,6 +48,7 @@ class ClientConnection {
     $this->blid = $array[0];
     $this->name = $array[1];
     $this->ip = $array[2];
+    $this->joinIp = $array[3] ?? false;
 
     if(sizeof($array) > 3) {
       $this->accountData = json_decode($array[3]);
@@ -106,8 +107,8 @@ class ClientConnection {
     return $this->ip == $ip;
   }
 
-  function attemptBlocklandAuth($joinToken) {
-    $res = BlocklandAuthenticate::BlocklandAuthenticateToken($this->blid, $joinToken);
+  function attemptBlocklandAuth() {
+    $res = BlocklandAuthenticate::BlocklandAuthenticateToken($this->blid, $this->joinToken);
     // $res = BlocklandAuth::checkAuth(utf8_encode($this->name), $this->ip, $this->blid);
 
     if($res == false) {
