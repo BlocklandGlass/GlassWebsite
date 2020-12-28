@@ -16,12 +16,12 @@
   $user = UserManager::getCurrent();
 
   if($user && $user->inGroup("Reviewer") && !$addonObject->getApproved() || $addonObject->isRejected() && !$addonObject->getDeleted()) {
-    header('Location: http://' . AWSFileManager::getBucket() . '/addons/' . $id);
+    header('Location: https://' . AWSFileManager::getBucket() . '/addons/' . $id);
   } else {
     if($addonObject->getApproved() && !$addonObject->isRejected() && !$addonObject->getDeleted()) {
       StatManager::downloadAddon($addonObject, "web", $_SERVER['REMOTE_ADDR']);
 
-      header('Location: http://' . AWSFileManager::getBucket() . '/addons/' . $id);
+      header('Location: https://' . AWSFileManager::getBucket() . '/addons/' . $id);
     } else {
       header("Location: /addons");
     }
