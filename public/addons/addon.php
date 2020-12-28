@@ -54,7 +54,7 @@
   $screenshots = ScreenshotManager::getScreenshotsFromAddon($addonObject->getId());
   if(count($screenshots) > 0) {
     $ss = ScreenshotManager::getFromId($screenshots[0]);
-    $_PAGEIMAGE = $ss->getUrl();
+    $_PAGEIMAGE = "https://" . $ss->getUrl();
   }
 
   $_PAGETITLE = $addonObject->getName() . " - " . $boardObject->getName() . " | Blockland Glass";
@@ -368,7 +368,7 @@
         $ss = ScreenshotManager::getFromId($sid);
         echo "<div class=\"image-preview\" style=\"padding: 5px; margin: 10px 10px; background-color: #eee; display:inline-block; width: 128px; vertical-align: middle\" ssid=\"" . $sid . "\">";
         //echo "<a target=\"_blank\" href=\"/addons/screenshot.php?id=" . $sid . "\">";
-        echo "<img src=\"" . $ss->getThumbUrl() . "\" /></a>";
+        echo "<img src=\"https://" . $ss->getThumbUrl() . "\" /></a>";
         echo "</div>";
       }
     ?>

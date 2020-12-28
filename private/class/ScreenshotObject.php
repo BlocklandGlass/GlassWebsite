@@ -19,8 +19,8 @@ class ScreenshotObject {
 		$this->name = $resource->name;
 		$this->filename = $resource->filename;
 		$this->description = $resource->description;
-		$this->url = "http://s3.amazonaws.com/" . urlencode(AWSFileManager::getBucket()) . "/screenshots/" . $this->id;
-		$this->thumburl = "http://s3.amazonaws.com/" . urlencode(AWSFileManager::getBucket()) . "/screenshots/thumb/" . $this->id;
+		$this->url = urlencode(AWSFileManager::getBucket()) . "/screenshots/" . $this->id;
+		$this->thumburl = urlencode(AWSFileManager::getBucket()) . "/screenshots/thumb/" . $this->id;
 		$this->x = $resource->x;
 		$this->y = $resource->y;
 		$this->ext = @$resource->ext;

@@ -62,8 +62,8 @@ foreach($screens as $sid) {
   $ss = ScreenshotManager::getFromId($sid);
   $screenshot = new \stdClass();
   $screenshot->id = $ss->getId();
-  $screenshot->url = $ss->getUrl();
-  $screenshot->thumbnail = $ss->getThumbUrl();
+  $screenshot->url = "http://" . $ss->getUrl();
+  $screenshot->thumbnail = "http://" . $ss->getThumbUrl();
   $screenshot->extent =  $ss->getX() . " " . $ss->getY();
   $ret->screenshots[] = $screenshot;
 }
