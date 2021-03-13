@@ -26,7 +26,7 @@ if(!$action) {
 }
 
 $client = false;
-if($ident) {
+if($ident && $ident != '') {
   $client = ClientConnection::loadFromIdentifier($ident);
 
   if($client === false || !$client->checkIp($ip) || $client->isServer()) {
